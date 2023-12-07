@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ezen_jeonju.myapp.persistance.MemberService_Mapper">
+
+<select id="memberIdCheck" parameterType="String" resultType="int">
+SELECT COUNT(*) AS cnt FROM member WHERE MEMBERID=#{memberId}
+</select>
+
+<insert id="memberInsert" parameterType="mv">
+INSERT INTO member(MEMBERID,MEMBERPWD,MEMBERNAME,MEMBERPHONE)
+VALUES(#{memberId},#{memberPwd},#{memberName},#{memberPhone})
+</insert>
+
+<select id="memberLogin" parameterType="String" resultType="mv">
+SELECT midx, memberId, MemberName, MemberPwd From member
+WHERE memberId=#{memberId};
+</select>
+
+</mapper>
