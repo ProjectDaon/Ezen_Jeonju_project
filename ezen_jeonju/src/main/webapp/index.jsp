@@ -14,5 +14,8 @@
 <a href="<%=request.getContextPath()%>/member/memberLogout.do">로그아웃</a>
 <%} %>
 <a href="<%=request.getContextPath()%>/member/memberJoin.do">회원가입</a>
+
+<a href="<%=request.getContextPath()%>/notice/noticeWrite.do">글쓰기</a>
+<a href="<%=request.getContextPath()%>/notice/noticeList.do">글목록</a>
 </body>
 </html>

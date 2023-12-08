@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ezen_jeonju.myapp.persistance.NoticeService_Mapper">
+
+<insert id="noticeWrite" parameterType="nv" >
+INSERT INTO notice(midx, noticeSubject, noticeCategory, noticeArticle, noticeFileName, noticeFilePath)
+VALUES(#{midx}, #{noticeSubject}, #{noticeCategory}, #{noticeArticle}, #{noticeFileName}, #{noticeFilePath})
+</insert>
+
+<select id="noticeList" resultType="nv">
+SELECT nidx, noticeSubject, noticeCategory, noticeWriteday FROM notice
+WHERE noticeYN='N' order by 1 desc
+</select>
+
+<select id="noticeContents" parameterType="int" resultType="nv">
+SELECT nidx, noticeSubject, noticeCategory, convert(noticeArticle using utf8) as noticeArticle, noticeFileName, noticeFilePath, noticeWriteday FROM notice
+WHERE nidx = #{nidx}
+</select>
+</mapper>

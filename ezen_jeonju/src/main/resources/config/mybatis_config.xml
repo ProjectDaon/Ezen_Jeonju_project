@@ -4,5 +4,6 @@
 <configuration> 
 <typeAliases>
  <typeAlias alias="mv" type="com.ezen_jeonju.myapp.domain.MemberVo"/>
+ <typeAlias alias="nv" type="com.ezen_jeonju.myapp.domain.NoticeVo"/>
 </typeAliases>
 </configuration>

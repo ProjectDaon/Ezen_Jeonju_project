@@ -18,7 +18,7 @@
 	<!-- bean은 스프링한테 객체생성요청하게 담아놓는곳 -->
 	<bean id="db" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property> 
-		<property name="url" value="jdbc:mysql://192.168.0.30:3306/ezenjeonju?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true"></property>
+		<property name="url" value="jdbc:mysql://192.168.0.30:3306/ezenjeonju?characterEncoding=UTF-8&amp;useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true"></property>
 		<property name="username" value="ezen"></property>
 		<property name="password" value="1234"></property>
 	</bean>	
