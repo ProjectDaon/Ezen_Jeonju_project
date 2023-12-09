@@ -5,19 +5,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="./css/navbar.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-3.1.0.js"></script>
 </head>
 <body>
-<script src="./js/nav-bar.js"></script>
+<script src="../js/nav-bar.js"></script>
 <header class="navigation" id="navigation">
 	<nav class="nav-bar" style="height: 82px;">
 		<h1>
 			<a href="index.jsp">
-				<img src="./images/logo.png">
+				<img src="../images/logo.png">
 			</a>
 		</h1>
 		<div class="menu-wrap">
@@ -73,11 +72,5 @@
 	
 </header>
 
-
-<br><br><br>
-<br><br><br>
-<br><br><br>
-<a href="<%=request.getContextPath()%>/notice/noticeWrite.do">글쓰기</a>
-<a href="<%=request.getContextPath()%>/notice/noticeList.do">글목록</a>
 </body>
 </html>

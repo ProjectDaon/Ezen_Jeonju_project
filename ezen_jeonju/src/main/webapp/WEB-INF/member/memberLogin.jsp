@@ -5,9 +5,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="../css/navbar.css">
+<link rel="stylesheet"  href="../css/memberLogin.css">
+<script src="http://code.jquery.com/jquery-3.1.0.js"></script>
 </head>
 <body>
 <script type="text/javascript">
+$(document).ready( function() {
+	$('#headers').load("../nav/nav.jsp");
+
+});
+
 function check(){
 	var fm = document.frm;
 	
@@ -28,19 +36,23 @@ function check(){
 }
 
 </script>
+<div id="headers"></div>
+<br><br><br><br><br>
 <form name="frm" action="" method="" value="">
 	<div id="loginBox">
-		<div id="text">Login</div>
+		<section id="toptitle" class="toptitle">
+			<div class="innerwrap">
+				<h4 class="tit">Login</h4>
+			</div>
+		</section>
 		<table>
 			<tr>
 				<th id="loginId">아이디</th>
-				<td><input type="text" name="memberId" id="memberId" value=""
-					placeholder="아이디 입력"></td>
+				<td><input type="text" name="memberId" id="memberId" value="" placeholder="아이디 입력"></td>
 			</tr>
 			<tr>
 				<th id="LoginPassword">비밀번호</th>
-				<td><input type="password" name="memberPwd" id="memberPwd" value=""
-					placeholder="비밀번호 입력" onkeypress="if(event.keyCode == 13){ check(); return;}"></td>
+				<td><input type="password" name="memberPwd" id="memberPwd" value=""	placeholder="비밀번호 입력" onkeypress="if(event.keyCode == 13){ check(); return;}"></td>
 			</tr>
 		</table>
 		<div>
@@ -48,5 +60,6 @@ function check(){
 		</div>
 	</div>
 	</form>
+	<a href="<%=request.getContextPath()%>/member/memberJoin.do">회원가입</a>
 </body>
 </html>
