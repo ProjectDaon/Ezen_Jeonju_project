@@ -1,7 +1,15 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,windows,eclipse
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,windows,eclipse
 
+
+target
+/target/
+.springBeans
 pom.properties
+MANIFEST.MF
+*.log
+.factorypath
+settings.json
 
 ### Eclipse ###
 .metadata
