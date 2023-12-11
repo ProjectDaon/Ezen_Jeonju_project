@@ -79,5 +79,6 @@
 <br><br><br>
 <a href="<%=request.getContextPath()%>/notice/noticeWrite.do">글쓰기</a>
 <a href="<%=request.getContextPath()%>/notice/noticeList.do">글목록</a>
+<a href="<%=request.getContextPath()%>/notice/noticeList.do">글목록</a>
 </body>
 </html>
