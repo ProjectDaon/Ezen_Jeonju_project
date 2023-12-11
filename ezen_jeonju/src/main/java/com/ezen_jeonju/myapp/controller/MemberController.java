@@ -47,8 +47,9 @@ public class MemberController {
 		if(mv!=null&&bcryptPasswordEncoder.matches(memberPwd, mv.getMemberPwd())) {
 			session.setAttribute("midx",mv.getMidx());
 			session.setAttribute("memberName", mv.getMemberName());
+			session.setAttribute("memberGrade", mv.getMemberGrade());
 			
-			//1È¸¿ë ¸ğµ¨Å¬·¡½º RedirectAttribute
+			//1íšŒìš© ëª¨ë¸í´ë˜ìŠ¤ redirectAttribute
 //			rttr.addAttribute("midx", mv.getMidx());
 //			rttr.addAttribute("memberName", mv.getMemberName());
 			
@@ -58,7 +59,7 @@ public class MemberController {
 				path="index.jsp";
 			}
 		}else {
-			rttr.addFlashAttribute("msg", "¾ÆÀÌµğ¿Í ºñ¹Ğ¹øÈ£¸¦ È®ÀÎÇØÁÖ¼¼¿ä.");
+			rttr.addFlashAttribute("msg", "ì•„ì´ë””ì™€ ë¹„ë°€ë²ˆí˜¸ë¥¼ í™•ì¸í•´ì£¼ì„¸ìš”.");
 			path="member/memberLogin.do";
 		}
 		return "redirect:/"+path;
@@ -72,17 +73,17 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/memberJoinAction.do")
-	public String memberJoinAction(MemberVo mv) { // input °´Ã¼µéÀÇ °ªÀ» ¹ÙÀÎµùÇÑ´Ù.
+	public String memberJoinAction(MemberVo mv) { // input ê°ì²´ë“¤ì˜ ê°’ì„ ë°”ì¸ë”©í•œë‹¤.
 
 		
 		String memberPwd2 = bcryptPasswordEncoder.encode(mv.getMemberPwd());
 		mv.setMemberPwd(memberPwd2); 
 		
 
-		// Ã³¸®ÇÏ´Â ÀÔ·Â ·ÎÁ÷
+		// ì²˜ë¦¬í•˜ëŠ” ì…ë ¥ ë¡œì§
 		int value = ms.memberInsert(mv);
 
-		return "redirect:/"; // Æ÷¿öµå¹æ½ÄÀÌ ¾Æ´Ñ sendRedirect¹æ½Ä
+		return "redirect:/"; // í¬ì›Œë“œë°©ì‹ì´ ì•„ë‹Œ sendRedirect ë°©ì‹
 	}
 	
 	@ResponseBody

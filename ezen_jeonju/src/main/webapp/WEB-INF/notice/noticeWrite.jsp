@@ -29,6 +29,7 @@ function goWrite(){
 	
 	fm.action ="<%=request.getContextPath()%>/notice/noticeWriteAction.do"; 
     fm.method = "post"; 
+    fm.enctype= "multipart/form-data";
     fm.submit();
     return;
 }
@@ -43,7 +44,7 @@ function goWrite(){
 		<option value="축제">축제</option>
 	</select>
 	<textarea id="summernote" name="noticeArticle"></textarea>
-	<input type="file" name="noticeFile">
+	<input type="file" name="noticeFileName">
 	<input type="button" value="글쓰기" onclick="goWrite()">
 </form>
 <script>

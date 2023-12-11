@@ -1,12 +1,15 @@
 package com.ezen_jeonju.myapp.domain;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class NoticeVo {
 	private int nidx;
 	private int midx;
 	private String noticeSubject;
 	private String noticeCategory;
 	private String noticeArticle;
-	private String noticeFileName;
+	private MultipartFile noticeFileName;
+	private String noticeUploadedFileName;
 	private String noticeFilePath;
 	private String noticeWriteday;
 	private String noticeYN;
@@ -41,12 +44,6 @@ public class NoticeVo {
 	public void setNoticeArticle(String noticeArticle) {
 		this.noticeArticle = noticeArticle;
 	}
-	public String getNoticeFileName() {
-		return noticeFileName;
-	}
-	public void setNoticeFileName(String noticeFileName) {
-		this.noticeFileName = noticeFileName;
-	}
 	public String getNoticeFilePath() {
 		return noticeFilePath;
 	}
@@ -64,5 +61,17 @@ public class NoticeVo {
 	}
 	public void setNoticeYN(String noticeYN) {
 		this.noticeYN = noticeYN;
+	}
+	public MultipartFile getNoticeFileName() {
+		return noticeFileName;
+	}
+	public void setNoticeFileName(MultipartFile noticeFileName) {
+		this.noticeFileName = noticeFileName;
+	}
+	public String getNoticeUploadedFileName() {
+		return noticeUploadedFileName;
+	}
+	public void setNoticeUploadedFileName(String noticeUploadedFileName) {
+		this.noticeUploadedFileName = noticeUploadedFileName;
 	}
 }

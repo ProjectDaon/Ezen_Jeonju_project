@@ -6,7 +6,7 @@
 
 <insert id="noticeWrite" parameterType="nv" >
 INSERT INTO notice(midx, noticeSubject, noticeCategory, noticeArticle, noticeFileName, noticeFilePath)
-VALUES(#{midx}, #{noticeSubject}, #{noticeCategory}, #{noticeArticle}, #{noticeFileName}, #{noticeFilePath})
+VALUES(#{midx}, #{noticeSubject}, #{noticeCategory}, #{noticeArticle}, #{noticeUploadedFileName}, #{noticeFilePath})
 </insert>
 
 <select id="noticeList" resultType="nv">

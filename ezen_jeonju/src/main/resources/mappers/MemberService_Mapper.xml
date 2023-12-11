@@ -14,7 +14,7 @@ VALUES(#{memberId},#{memberPwd},#{memberName},#{memberPhone})
 </insert>
 
 <select id="memberLogin" parameterType="String" resultType="mv">
-SELECT midx, memberId, MemberName, MemberPwd From member
+SELECT midx, memberId, MemberName, MemberPwd, MemberGrade From member
 WHERE memberId=#{memberId};
 </select>
 

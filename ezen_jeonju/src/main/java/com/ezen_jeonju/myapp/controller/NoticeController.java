@@ -2,6 +2,7 @@ package com.ezen_jeonju.myapp.controller;
 
 import java.util.ArrayList;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ezen_jeonju.myapp.domain.NoticeVo;
 import com.ezen_jeonju.myapp.service.NoticeService;
+import com.ezen_jeonju.myapp.util.UploadFileUtiles;
 
 @Controller
 @RequestMapping(value = "/notice")
@@ -19,6 +22,9 @@ public class NoticeController {
 	
 	@Autowired
 	NoticeService ns;
+	
+	@Resource(name="uploadPath")
+	String uploadPath;
 	
 	@RequestMapping(value = "/noticeWrite.do")
 	public String noticeWrite() {
@@ -28,9 +34,18 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value = "/noticeWriteAction.do")
-	public String noticeWriteAction(NoticeVo nv, HttpSession session) {
-		System.out.println(nv.getNoticeArticle());
+	public String noticeWriteAction(NoticeVo nv, HttpSession session) throws Exception{
+		MultipartFile file = nv.getNoticeFileName();
+		String uploadedFileName="";
+		if(!file.getOriginalFilename().equals("")) {
+			//업로드 시작
+			uploadedFileName = UploadFileUtiles.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
+		}
+		System.out.println("uploadFileName: "+uploadedFileName);
 		nv.setMidx(Integer.parseInt(session.getAttribute("midx").toString()));
+		nv.setNoticeUploadedFileName(uploadedFileName);
+		nv.setNoticeFilePath(uploadPath);
+		
 		ns.noticeWrite(nv);
 		
 		return "redirect:/index.jsp";
