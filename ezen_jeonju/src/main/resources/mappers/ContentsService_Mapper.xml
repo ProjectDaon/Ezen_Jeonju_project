@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="con.ezen_jeonju.myapp.persistance.ContentsService_Mapper">
+<mapper namespace="com.ezen_jeonju.myapp.persistance.ContentsService_Mapper">
 
 <insert id="contentsWrite" parameterType="cv">
 INSERT INTO contents(midx, contentsCategory, contentsSubject, contentsArticle, contentsWriteday)
-VALUES(#{mix}, #{contentsCategory}, #{contentsSubject}, #{contentsArticle}, #{contentsWriteday})
+VALUES(#{midx}, #{contentsCategory}, #{contentsSubject}, #{contentsArticle}, #{contentsWriteday})
 </insert>
 
 <select id="sightsList" resultType="cv">	<!-- like table과 join해서 좋아요도 출력해야함 -->

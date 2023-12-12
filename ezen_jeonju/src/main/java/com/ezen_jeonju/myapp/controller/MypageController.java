@@ -32,17 +32,23 @@ public class MypageController {
 	
 	@RequestMapping(value = "/personalInfo.do")
 	public String personalInfo(HttpSession session, Model model) {
-		
-		int midx = Integer.parseInt(session.getAttribute("midx").toString());
-		String memberName = (String) session.getAttribute("memberName");
-		String memberPhone = "";
-		memberPhone = ms.getMemberPhone(midx);
-		MemberVo mv = new MemberVo();
-
-		mv.setMemberName(memberName);
-		mv.setMemberPhone(memberPhone);
-		
-		model.addAttribute("mv",mv);
+		if(session.getAttribute("kakao")==null) {
+			int midx = Integer.parseInt(session.getAttribute("midx").toString());
+			String memberName = (String) session.getAttribute("memberName");
+			String memberPhone = "";
+			memberPhone = ms.getMemberPhone(midx);
+			MemberVo mv = new MemberVo();
+			
+			mv.setMemberName(memberName);
+			mv.setMemberPhone(memberPhone);
+			
+			model.addAttribute("mv",mv);
+			
+		}
+		else {
+			String memberName = (String) session.getAttribute("memberName");
+			String memberEmail = (String) session.getAttribute("memberName");
+		}
 		return "mypage/personalInfo";
 		
 	}
