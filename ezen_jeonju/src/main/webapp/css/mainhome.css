@@ -1,62 +1,169 @@
 @charset "UTF-8";
 
-    .main-slide { margin-top: 55px; text-align: center;}
-    .main-slide-img div { position: relative;  width: 100%; height: 750px;}
-    .main-slide-img button {position: absolute; z-index: 10; top: 50%; transform: translateY(-50%); 
-        width: 71px; height: 71px; border-radius: 100%; background:rgba(0,0,0,.5); border:none;}
-    .main-slide-img button:before{font-family: 'xeicon'; color:#fff; font-size: 44px;}
-    .main-slide-img button.slick-prev {left:50px; font-size: 0; color:transparent;}
-    .main-slide-img button.slick-prev::before {content:"\e93b";}
-    .main-slide-img button.slick-next {right:50px; font-size: 0; color:transparent;}
-    .main-slide-img button.slick-next::before {content:"\e93e";}
+.main-slide { 
+	margin-top: 55px; 
+	text-align: center;
+}
+
+.main-slide-img div { 
+	position: relative;  
+	width: 100%; 
+	height: 850px;
+}
+
+.main-slide-img button {
+	position: absolute; 
+	z-index: 10; 
+	top: 50%; 
+	transform: translateY(-50%); 
+	width: 71px; 
+	height: 71px; 
+	border-radius: 100%; 
+	background:rgba(0,0,0,.5); 
+	border:none;
+}
     
-    .main-slide-img div a {
-    display: block;
-    width: 100%;
-    height: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    }
+.main-slide-img button:before{
+	font-family: 'xeicon'; 
+	color:#fff; 
+	font-size: 44px;
+}
 
-    .main-text {
-        display: flex;
-        position: relative;
-        width : 1000px;
-        height: 74px;
-        object-fit: cover;
-        font-size: 23px;
-        margin-top: -2%;
-        z-index: 11;
-        margin-right: 500px;
-        background-color: #fff;
-        border: 0px;
-        left: 0;
-        right: 0;
-        margin-left: auto;
-        margin-right: auto;
-        box-shadow: -1px 0px 5px rgb(0,0,0,0.2);
-        padding-left : 30px;
-    }
-    .main-text a {
-        text-decoration: none;
-        color: black;
-        
-    }
+.main-slide-img button.slick-prev {
+	left:50px; 
+	font-size: 0; 
+	color:transparent;
+}
 
-    .main-slide-text {
-        width : 850px;
-    }
-    .main-slide-text .slide_txt{
-    	font-size: 26px;
-        text-overflow: ellipsis;
-		overflow: hidden;
-		white-space: nowrap;
-		width: 100%;
-	    padding-right: 10px;
-    }
+.main-slide-img button.slick-prev::before {
+	content:"\e93b";
+}
 
-    .main-slide-page {
-        width : 75px;
-        padding-top: 25px;
-    }
+.main-slide-img button.slick-next {
+	right:50px; 
+	font-size: 0; 
+	color:transparent;
+}
+
+.main-slide-img button.slick-next::before {
+	content:"\e93e";
+}
+
+.main-slide-img div a {
+	display: block;
+	width: 100%;
+	height: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.main-text {
+    display: flex;
+    position: relative;
+    width : 1000px;
+    height: 80px;
+    object-fit: cover;
+    font-size: 19px;
+    margin-top: -2%;
+    z-index: 11;
+    margin-right: 500px;
+    background-color: #fff;
+    border: 0px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: -1px 0px 5px rgb(0,0,0,0.2);
+    padding-left : 30px;
+}
+.main-text a {
+    text-decoration: none;
+    color: black;
+    
+}
+
+.main-slide-text {
+    width : 850px;
+}
+.main-slide-text .slide_txt{
+	font-size: 26px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	width: 100%;
+
+}
+
+.main-slide-page {
+    width : 75px;
+    padding-top: 30px;
+}
+
+.second-slide {
+	text-align: center;
+	width: 100%;
+	margin-top: 100px;
+	margin-bottom: 50px;
+}
+
+.second-slide-img div { 
+	position: relative;  
+	width: 100%;
+	height: 400px;
+	padding-right: 7px;
+	padding-left: 7px;
+	
+}
+
+.second-slide-img div .thumbnail{ 
+	width: 100%;
+	height: 350px;
+	
+}
+
+.second-slide-img div img{ 
+	width: 100%;
+	height: 100%;
+	
+}
+
+
+.second-slide-img div a{ 
+	text-decoration-line: none;
+}
+.second-slide-img div p{
+	position: relative;
+	width: 100%;
+	height: 50px;
+	
+	
+}
+
+.second-slide .second-title{
+    order: 1;
+    padding-left: 10%;
+    padding-bottom: 2%;
+    padding-top: 20px;
+    width: 700px;
+    float:left;
+    font-size: calc(14px + 1.1vw);
+    
+    
+}
+
+.second-slide .second-controll{
+    order: 2;
+    padding-right: 10%;
+    padding-bottom: 2%;
+    padding-top: 20px;
+    width: 700px;
+    float:right;
+    font-size: calc(14px + 1.1vw);
+    
+    
+}
+
+
+
+

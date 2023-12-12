@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="./css/navbar.css">
@@ -15,34 +16,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
-
-<script>
-    $(document).ready(function(){
-        $('.main-slide-img').slick({
-            autoplay: true,
-            autoplaySpeed: 3000,
-            asNavFor: '.main-slide-text'
-        });
-
-        $('.main-slide-text').slick({
-            autoplay: true,
-            autoplaySpeed: 3000,
-            slideToShow: 1,
-            slideToScroll: 1,
-            vertical : true,
-            verticalSwiping : true,
-            arrows: false,
-            asNavFor: '.main-slide-img'
-
-        });
-        
-        $('.main-slide-text').on('afterChange', function(event, slick, currentSlide){
-            $('.main-current-num').text(currentSlide + 1);
-        });
-    });
-
-
-</script>
 </head>
 <body>
 <script src="./js/nav-bar.js"></script>
@@ -111,12 +84,12 @@
 
 <section class="main-slide">
     <div class="main-slide-img">
-	    <div><a href="#" style="background-image: url('./images/295.jpg');"></a></div>
-	    <div><a href="#" style="background-image: url('./images/295.jpg');"></a></div>
-	    <div><a href="#" style="background-image: url('./images/295.jpg');"></a></div>
-	    <div><a href="#" style="background-image: url('./images/295.jpg');"></a></div>
-	    <div><a href="#" style="background-image: url('./images/295.jpg');"></a></div>
-	    <div><a href="#" style="background-image: url('./images/295.jpg');"></a></div>
+	    <div><a href="#" style="background-image: url('./images/test.jpg');"></a></div>
+	    <div><a href="#" style="background-image: url('./images/test2.jpg');"></a></div>
+	    <div><a href="#" style="background-image: url('./images/test3.jpg');"></a></div>
+	    <div><a href="#" style="background-image: url('./images/test.jpg');"></a></div>
+	    <div><a href="#" style="background-image: url('./images/test2.jpg');"></a></div>
+	    <div><a href="#" style="background-image: url('./images/test3.jpg');"></a></div>
     </div>
     <div class="main-text">
         <div class="main-slide-text">
@@ -132,12 +105,34 @@
             <span>/</span>
             <span class="main-total-num">6</span>
         </div>  
-        <div class="admin-click" style="font-size: 17px; width: 75px; display:none;">
-            <div><a href="#"><p style="padding-top: 10px;">배너 등록</p></a></div>
-        </div>
+	    <div class="admin-click" style="font-size: 17px;">
+	        <div><a href="#"><p style="padding-top: 7px; width: 50px;" >배너 등록</p></a></div>
+	    </div>
+    </div>
+</section>
+<section class="second-slide">
+	<div class="second-title">
+	<span style="font-size:52px;">지금 전주는</span>
+	<span style="font-size:24px;">어디가 좋을까?</span>
+	</div>
+	<div class="second-controll">
+		<span class="prevArrow">이전</span>
+		<span class="prevArrow">중지</span>
+	    <span class="nextArrow">다음</span> 
+	</div>
+    <div class="second-slide-img">
+	    <div><a href="#"><div class="thumbnail"><img src="./images/test.jpg"></div><p>이거되냐고1</p></a></div>
+	    <div><a href="#"><div class="thumbnail"><img src="./images/test2.jpg"></div><p>이거되냐고2</p></a></div>
+	    <div><a href="#"><div class="thumbnail"><img src="./images/test3.jpg"></div><p>이거되냐고3</p></a></div>
+	    <div><a href="#"><div class="thumbnail"><img src="./images/test.jpg"></div><p>이거되냐고4</p></a></div>
+	    <div><a href="#"><div class="thumbnail"><img src="./images/test2.jpg"></div><p>이거되냐고5</p></a></div>
+	    <div><a href="#"><div class="thumbnail"><img src="./images/test3.jpg"></div><p>이거되냐고6</p></a></div>
     </div>
 </section>
 
 
+
 </body>
 </html>
+
+<script src="./js/mainhome.js"></script>
