@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="con.ezen_jeonju.myapp.persistance.ContentsService_Mapper">
+
+<insert id="contentsWrite" parameterType="cv">
+INSERT INTO contents(midx, contentsCategory, contentsSubject, contentsArticle, contentsWriteday)
+VALUES(#{mix}, #{contentsCategory}, #{contentsSubject}, #{contentsArticle}, #{contentsWriteday})
+</insert>
+
+<select id="sightsList" resultType="cv">	<!-- like table과 join해서 좋아요도 출력해야함 -->
+SELECT cidx, contentsSubject, contentsViewCount, contentsReviewCount FROM contents
+WHERE contentsCategory = '명소' AND contentsYN = 'N' ORDER BY 1 desc
+</select>
+
+<select id="foodList" resultType="cv">
+SELECT cidx, contentsSubject, contentsViewCount, contentsReviewCount FROM contents
+WHERE contentsCategory = '음식' AND contentsYN = 'N' ORDER BY 1 desc
+</select>
+
+<select id="contentsArticle" parameterType="int" resultType="cv">
+SELECT cidx, contentsSubject, contentsArticle, contentsViewCount, contentsReviewCount, contentsWriteday FROM contents
+WHERE contentsYN = 'N' ORDER BY 1 desc
+</select>
+</mapper>
