@@ -16,15 +16,19 @@ INSERT INTO member(MEMBERID,MEMBERPWD,MEMBERNAME,MEMBERPHONE)
 VALUES(#{memberId},#{memberPwd},#{memberName},#{memberPhone})
 </insert>
 
-<insert id="kakaoMemberInsert" parameterType="kd">
+<insert id="KakaoMemberInsert" parameterType="kd">
 INSERT INTO member(MEMBERID, MEMBERPWD, MEMBERNAME, MEMBEREMAIL)
 VALUES(#{memberId}, #{memberPwd}, #{memberName}, #{memberEmail})
 </insert>
 
 <select id="memberLogin" parameterType="String" resultType="mv">
 SELECT midx, memberId, MemberName, MemberPwd, MemberGrade From member
-WHERE memberId=#{memberId};
+WHERE memberId=#{memberId}
 </select>
 
+<select id="KakaoMemberLogin" parameterType="String" resultType="mv">
+SELECT midx, memberId, MemberName, MemberGrade, MemberEmail from member
+WHERE memberId=#{memberId}
+</select>
 
 </mapper>

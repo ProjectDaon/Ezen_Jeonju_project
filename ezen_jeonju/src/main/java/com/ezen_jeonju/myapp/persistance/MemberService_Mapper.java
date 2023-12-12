@@ -9,4 +9,5 @@ public interface MemberService_Mapper {
 	public MemberVo memberLogin(String memberId);
 	public int memberIdCheckKakao(String memberId);
 	public int KakaoMemberInsert(KakaoDTO kd);
+	public MemberVo KakaoMemberLogin(String memberId);
 }

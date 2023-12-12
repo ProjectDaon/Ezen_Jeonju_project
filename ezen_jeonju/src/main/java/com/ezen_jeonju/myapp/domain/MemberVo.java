@@ -6,6 +6,7 @@ public class MemberVo {
 	private String memberPwd;
 	private String memberName;
 	private String memberPhone;
+	private String memberEmail;
 	private String memberGrade;
 	private String memberSigninDate;
 	
@@ -50,5 +51,11 @@ public class MemberVo {
 	}
 	public void setMemberSigninDate(String memberSigninDate) {
 		this.memberSigninDate = memberSigninDate;
+	}
+	public String getMemberEmail() {
+		return memberEmail;
+	}
+	public void setMemberEmail(String memberEmail) {
+		this.memberEmail = memberEmail;
 	}
 }
