@@ -74,16 +74,15 @@ public class MemberController {
         int idCheck = ms.memberIdCheckKakao(userInfo.getMemberId());
         if(idCheck == 0) {
         	//회원등록 안되어있을 시 등록
-        	
-        }else {
-        	//회원등록 되어있을 시 정보추출
+        	ms.KakaoMemberInsert(userInfo);
         }
+        //회원등록 되어있을 시 정보추출
+        MemberVo mv = ms.KakaoMemberLogin(userInfo.getMemberId());
+        session.setAttribute("midx", mv.getMidx());
+        session.setAttribute("memberName", mv.getMemberName());
+        session.setAttribute("memberGrade", mv.getMemberGrade());
+        session.setAttribute("memberEmail", mv.getMemberEmail());
         
-//        session.setAttribute("midx", userInfo.get("midx"));
-//        session.setAttribute("memberName", userInfo.get("nickname"));
-//        session.setAttribute("memberGrade", "일반회원");
-//        session.setAttribute("memberEmail", userInfo.get("email"));
-//        session.setAttribute("kakao", "kakaoLogin");
        
 		return "redirect:/";
 	}

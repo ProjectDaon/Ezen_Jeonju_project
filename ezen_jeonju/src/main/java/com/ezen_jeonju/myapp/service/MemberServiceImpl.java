@@ -47,8 +47,14 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public int KakaoMemberInsert(KakaoDTO kd) {
-		int value = 0;
+		int value = msm.KakaoMemberInsert(kd);
 		return value;
+	}
+
+	@Override
+	public MemberVo KakaoMemberLogin(String memberId) {
+		MemberVo mv = msm.KakaoMemberLogin(memberId);
+		return mv;
 	}
 
 }

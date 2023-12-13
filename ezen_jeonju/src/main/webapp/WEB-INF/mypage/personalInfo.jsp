@@ -8,7 +8,8 @@
 <script src="http://code.jquery.com/jquery-3.1.0.js"></script>
 </head>
 <body>
-이름: ${mv.memberName}
-연락처: ${mv.memberPhone}
+이름: ${mv.memberName}<br>
+연락처: ${mv.memberPhone}<br>
+이메일: ${mv.memberEmail}
 </body>
 </html>
