@@ -20,11 +20,18 @@ public class ScheduleController {
 	
 	
 	@RequestMapping(value = "/scheduleWrite.do")
-	public String noticeWrite() {
+	public String scheduleWrite() {
 
 		
 		return "schedule/scheduleWrite";
 	}
 	
+	@RequestMapping(value = "/scheduleList.do")
+	public String schedulepractice() {
 
+		
+		return "schedule/scheduleList";
+	}
+
+	
 }
