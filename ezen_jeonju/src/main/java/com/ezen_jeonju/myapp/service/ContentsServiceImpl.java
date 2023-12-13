@@ -12,7 +12,7 @@ import com.ezen_jeonju.myapp.persistance.ContentsService_Mapper;
 @Service
 public class ContentsServiceImpl implements ContentsService{
 
-	private ContentsService_Mapper csm;
+	public ContentsService_Mapper csm;
 	
 	@Autowired
 	public ContentsServiceImpl(SqlSession sqlSession) {

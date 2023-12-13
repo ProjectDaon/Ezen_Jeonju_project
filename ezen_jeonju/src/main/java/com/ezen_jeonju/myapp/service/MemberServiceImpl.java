@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ezen_jeonju.myapp.domain.KakaoDTO;
 import com.ezen_jeonju.myapp.domain.MemberVo;
 import com.ezen_jeonju.myapp.persistance.MemberService_Mapper;
 
@@ -35,6 +36,24 @@ public class MemberServiceImpl implements MemberService{
 	public MemberVo memberLogin(String memberId) {
 		MemberVo mv = null;
 		mv = msm.memberLogin(memberId);
+		return mv;
+	}
+
+	@Override
+	public int memberIdCheckKakao(String memberId) {
+		int value = msm.memberIdCheckKakao(memberId);
+		return value;
+	}
+
+	@Override
+	public int KakaoMemberInsert(KakaoDTO kd) {
+		int value = msm.KakaoMemberInsert(kd);
+		return value;
+	}
+
+	@Override
+	public MemberVo KakaoMemberLogin(String memberId) {
+		MemberVo mv = msm.KakaoMemberLogin(memberId);
 		return mv;
 	}
 
