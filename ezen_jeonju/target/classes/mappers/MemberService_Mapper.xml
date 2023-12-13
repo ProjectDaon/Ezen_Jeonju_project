@@ -7,18 +7,10 @@
 <select id="memberIdCheck" parameterType="String" resultType="int">
 SELECT COUNT(*) AS cnt FROM member WHERE MEMBERID=#{memberId}
 </select>
-<select id="memberIdCheckKakao" parameterType="String" resultType="int">
-SELECT COUNT(*) AS cnt FROM member WHERE MEMBERID=#{memberId}
-</select>
 
 <insert id="memberInsert" parameterType="mv">
 INSERT INTO member(MEMBERID,MEMBERPWD,MEMBERNAME,MEMBERPHONE)
 VALUES(#{memberId},#{memberPwd},#{memberName},#{memberPhone})
-</insert>
-
-<insert id="KakaoMemberInsert" parameterType="kd">
-INSERT INTO member(MEMBERID, MEMBERPWD, MEMBERNAME, MEMBEREMAIL)
-VALUES(#{memberId}, #{memberPwd}, #{memberName}, #{memberEmail})
 </insert>
 
 <select id="memberLogin" parameterType="String" resultType="mv">
@@ -26,9 +18,34 @@ SELECT midx, memberId, MemberName, MemberPwd, MemberGrade From member
 WHERE memberId=#{memberId}
 </select>
 
+<!-- ************************카카오*************************************** -->
+<select id="memberIdCheckKakao" parameterType="String" resultType="int">
+SELECT COUNT(*) AS cnt FROM member WHERE MEMBERID=#{memberId}
+</select>
+
+<insert id="KakaoMemberInsert" parameterType="kd">
+INSERT INTO member(MEMBERID, MEMBERPWD, MEMBERNAME, MEMBEREMAIL)
+VALUES(#{memberId}, #{memberPwd}, #{memberName}, #{memberEmail})
+</insert>
+
 <select id="KakaoMemberLogin" parameterType="String" resultType="mv">
 SELECT midx, memberId, MemberName, MemberGrade, MemberEmail from member
 WHERE memberId=#{memberId}
 </select>
 
+
+<!-- *****************************네이버*********************************** -->
+<select id="memberIdCheckNaver" parameterType="String" resultType="int">
+SELECT COUNT(*) AS cnt FROM member WHERE MEMBERID=#{memberId}
+</select>
+
+<insert id="NaverMemberInsert" parameterType="nd">
+INSERT INTO member(MEMBERID, MEMBERPWD, MEMBERNAME, MEMBEREMAIL, MEMBERPHONE)
+VALUES(#{memberId}, #{memberPwd}, #{memberName}, #{memberEmail}, #{memberPhone})
+</insert>
+
+<select id="NaverMemberLogin" parameterType="String" resultType="mv">
+SELECT midx, memberId, MemberName, MemberGrade, MemberEmail, MemberPhone from member
+WHERE memberId=#{memberId}
+</select>
 </mapper>

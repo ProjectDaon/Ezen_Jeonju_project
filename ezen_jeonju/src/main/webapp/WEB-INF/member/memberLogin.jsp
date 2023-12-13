@@ -63,12 +63,15 @@ function check(){
 	
 	
 	</form>
-	<a href="<%=request.getContextPath()%>/member/memberJoin.do">회원가입</a>
+	<a href="<%=request.getContextPath()%>/member/memberJoin.do">회원가입</a><br>
 
 
 <a id="kakao-login-btn" href="<%=request.getContextPath()%>/member/KakaoMemberLogin.do">
-  <img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="222"
-    alt="카카오 로그인 버튼" />
+	<img src="../images/kakao_login_medium_narrow.png" width="200" height="50" alt="카카오 로그인 버튼" />
+</a>
+<br>
+<a id="naver-login-btn" href="<%=request.getContextPath()%>/member/naverMemberLogin.do">
+	<img src="../images/naver_login.png" width="200" height="50" alt="네이버 로그인 버튼"/>
 </a>
 
 

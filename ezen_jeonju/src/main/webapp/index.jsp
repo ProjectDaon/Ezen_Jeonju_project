@@ -67,12 +67,12 @@
         </div>
         <div class="my-menu-element">
             <div class="login-element">
-                
+                <%if(session.getAttribute("midx")==null){%>
                 <a class="login" href="<%=request.getContextPath()%>/member/memberLogin.do">로그인</a>
-                
+                <%} else{ %>
                 <a href="<%=request.getContextPath()%>/member/memberLogout.do">로그아웃</a>
-                
-                <a href="#">마이페이지</a>
+                <%} %>
+                <a href="<%=request.getContextPath()%>/mypage/userMypage.do">마이페이지</a>
             </div>
         </div>
     </nav>

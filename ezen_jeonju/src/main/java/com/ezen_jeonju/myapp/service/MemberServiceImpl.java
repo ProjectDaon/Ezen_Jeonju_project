@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.ezen_jeonju.myapp.domain.KakaoDTO;
 import com.ezen_jeonju.myapp.domain.MemberVo;
+import com.ezen_jeonju.myapp.domain.NaverDTO;
 import com.ezen_jeonju.myapp.persistance.MemberService_Mapper;
 
 @Service
@@ -38,23 +39,50 @@ public class MemberServiceImpl implements MemberService{
 		mv = msm.memberLogin(memberId);
 		return mv;
 	}
-
+/*----------------------카카오----------------------------*/
 	@Override
 	public int memberIdCheckKakao(String memberId) {
+		//아이디 여부 체크
 		int value = msm.memberIdCheckKakao(memberId);
 		return value;
 	}
 
 	@Override
 	public int KakaoMemberInsert(KakaoDTO kd) {
+		//카카오 회원 등록
 		int value = msm.KakaoMemberInsert(kd);
 		return value;
 	}
 
 	@Override
 	public MemberVo KakaoMemberLogin(String memberId) {
+		//카카오 회원 로그인(for 세션저장)
 		MemberVo mv = msm.KakaoMemberLogin(memberId);
 		return mv;
 	}
+/*--------------------------------------------------------*/
+	
+/*---------------------네이버-------------------------------*/
+	@Override
+	public int memberIdCheckNaver(String memberId) {
+		//아이디 여부 체크
+		int value = msm.memberIdCheckNaver(memberId);
+		return value;
+	}
 
+	@Override
+	public int NaverMemberInsert(NaverDTO nd) {
+		//네이버 회원 등록
+		int value = msm.NaverMemberInsert(nd);
+		return value;
+	}
+
+	@Override
+	public MemberVo NaverMemberLogin(String memberId) {
+		MemberVo mv = msm.NaverMemberLogin(memberId);
+		return mv;
+	}
+
+	
+	
 }
