@@ -41,7 +41,7 @@
 							<p class="large-text">여행일정</p>
 						</div>
 						<ul class="depth-2">
-							<li><a href="#">여행공유</a></li>
+							<li><a href="<%=request.getContextPath()%>/schedule/scheduleList.do">여행공유</a></li>
 						</ul>
 					</div>
 				</li>
