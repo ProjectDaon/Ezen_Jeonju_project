@@ -64,64 +64,182 @@
 
 </style>
 <script>
+    <!--전주 음식점 api 불러오는 함수-->
+    function getJeonju() {
+        let obj = document.getElementById("jj");
+
+        fetch("https://api.odcloud.kr/api/15076735/v1/uddi:98edad48-0892-4621-8741-cdff64f99c79?page=1&perPage=10&serviceKey=%2BUFeyGq0yCyRGAnfn2BZHmpxwulEWArLYaKEKRMZZSGW85K8Gxlkum5LSZjUcypheIifRSpj1kFDOTS3yFa5wQ%3D%3D")
+            .then((response) => response.json())
+            .then((data) => {
+                data.data.forEach((restaurant) => {
+                    let newP = document.createElement("p");
+                    let restaurantName = restaurant['식당명'];
+                    newP.innerHTML = "<a href='#' onclick='addToTable(\"" + restaurantName + "\")'>" + restaurantName + "</a>";
+                    obj.appendChild(newP);
+                });
+            });
+    }
+
+    //음식점이름 클릭하면 테이블 cell로 음식점 이름이동
+    function addToTable(restaurantName) {
+        let tableCell = document.getElementById("addSchedule");
+        tableCell.innerHTML = restaurantName;
+    }
+</script>
+<script>
 	<!--테이블 생성함수-->
     function createTable(parentElementId, columnCount) {
-      
-        // 테이블있으면 삭제하고 생성
-        var existingTable = document.getElementById(parentElementId).querySelector('table');
-        if (existingTable) {
-            existingTable.remove();
-        }
+    // 테이블이 있으면 삭제하고 생성
+    var existingTable = document.getElementById(parentElementId).querySelector('table');
+    if (existingTable) {
+        existingTable.remove();
+    }
 
-        // 부모 요소 가져오기
-        var parentElement = document.getElementById(parentElementId);
-        let startDate = new Date(document.getElementById("startDate").value);
-        let endDatePeriod = document.getElementById("endDate").value;
+    // 부모 요소 가져오기
+    var parentElement = document.getElementById(parentElementId);
+    let startDate = new Date(document.getElementById("startDate").value);
+    let endDatePeriod = document.getElementById("endDate").value;
 
-        // 테이블 요소 생성
-        var table = document.createElement('table');
+    // 테이블 요소 생성
+    var table = document.createElement('table');
+    table.id = 'dragDropTable';
 
-        var thead = document.createElement('thead');
-        var trHeader = document.createElement('tr');
-        for (var i = 1; i <= columnCount; i++) {
-            var th = document.createElement('th');
-            th.textContent = 'Day ' + i + ': '  +(startDate.getMonth()+1)+'월'+ startDate.getDate()+'일';
+    var thead = document.createElement('thead');
+    var trHeader = document.createElement('tr');
+    for (var i = 1; i <= columnCount; i++) {
+        var th = document.createElement('th');
+        th.textContent = 'Day ' + i + ': '  +(startDate.getMonth()+1)+'월'+ startDate.getDate()+'일';
 
-            // 헤더 셀에 스타일 추가
-            th.style.height = '50px';
-            th.style.width = '300px';
-            th.style.maxHeight = '50px';
-            th.style.whiteSpace = 'nowrap';
+        // 헤더 셀에 스타일 추가
+        th.style.height = '50px';
+        th.style.width = '300px';
+        th.style.maxHeight = '50px';
+        th.style.whiteSpace = 'nowrap';
 
-            startDate.setDate(startDate.getDate()+1);
-            trHeader.appendChild(th);
-        }
-        thead.appendChild(trHeader);
-        table.appendChild(thead);
+        startDate.setDate(startDate.getDate()+1);
+        trHeader.appendChild(th);
+    }
+    thead.appendChild(trHeader);
+    table.appendChild(thead);
 
-        // 테이블 바디 생성 (임시 데이터로 5개의 행 추가)
-        var tbody = document.createElement('tbody');
-        for (var j = 1; j <= 5; j++) {
-            var trBody = document.createElement('tr');
-            for (var k = 1; k <= columnCount; k++) {
-                var td = document.createElement('td');
-                td.textContent = "";
+    // 테이블 바디 생성 (임시 데이터로 5개의 행 추가)
+    var tbody = document.createElement('tbody');
+    for (var j = 1; j <= 5; j++) {
+        var trBody = document.createElement('tr');
+        for (var k = 1; k <= columnCount; k++) {
+            if((j==1) && (k>1)){
+                
+                continue;  
+            }
 
+
+            var td = document.createElement('td');
+            td.textContent = "";
+            
             // 바디 셀에 스타일 추가
             td.style.height = '50px';
             td.style.width = '300px';
-            th.style.maxHeight = '50px';
+            td.style.maxHeight = '50px';
             td.style.whiteSpace = 'nowrap';
 
-        trBody.appendChild(td);
-    }
-    tbody.appendChild(trBody);
-}
-table.appendChild(tbody);
+            trBody.appendChild(td);
 
-        // 부모 요소에 테이블 추가
-        parentElement.appendChild(table);
+
+        }
+        tbody.appendChild(trBody);
     }
+
+    // 첫 번째 행의 colspan 설정
+    var firstRow = tbody.querySelector('tr');
+    var firstCell = firstRow.querySelector('td');
+    firstCell.colSpan = columnCount;
+    firstCell.textContent = "장소를 누르시고 원하는 시간대에 드래그하세요";
+    firstCell.id = 'addSchedule';
+    table.appendChild(tbody);
+
+    // 부모 요소에 테이블 추가
+    parentElement.appendChild(table);
+
+   
+    // 드래그 시작한 요소의 참조를 저장하는 변수
+    let dragSrcElement = null;
+
+    // 드래그 시작 이벤트 핸들러
+    function handleDragStart(e) {
+        // 드래그 시작한 요소의 참조 저장
+        dragSrcElement = this;
+        // 드래그 효과 설정
+        e.dataTransfer.effectAllowed = 'move';
+        // 드래그 데이터 설정 (텍스트/HTML 형식)
+        e.dataTransfer.setData('text/html', this.innerHTML);
+        // 드래그 중인 행에 클래스 추가하여 투명도 적용
+        this.classList.add('dragged');
+    }
+
+    // 드래그 중인 상태에서 다른 요소 위로 이동할 때 발생하는 이벤트 핸들러
+    function handleDragOver(e) {
+        // 기본 동작 방지
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+        // 드래그 가능한 효과 설정
+        e.dataTransfer.dropEffect = 'move';
+        return false;
+    }
+
+    // 드래그 중인 상태에서 요소에 진입했을 때 발생하는 이벤트 핸들러
+    function handleDragEnter() {
+        // 드래그 중인 행에 클래스 추가하여 시각적 효과 적용
+        this.classList.add('over');
+    }
+
+    // 드래그 중인 상태에서 요소에서 빠져나갈 때 발생하는 이벤트 핸들러
+    function handleDragLeave() {
+        // 드래그 중인 행에서 클래스 제거하여 시각적 효과 제거
+        this.classList.remove('over');
+    }
+
+    // 드롭이 일어났을 때 발생하는 이벤트 핸들러
+    function handleDrop(e) {
+        // 이벤트 전파 방지
+        if (e.stopPropagation) {
+            e.stopPropagation();
+        }
+
+        // 드래그 소스와 드롭 대상이 다를 경우만 처리
+        if (dragSrcElement !== this) {
+            // 드래그 소스의 내용을 드롭 대상으로 이동
+            dragSrcElement.innerHTML = this.innerHTML;
+            // 드롭 대상의 내용을 드래그 소스로 이동
+            this.innerHTML = e.dataTransfer.getData('text/html');
+        }
+
+        return false;
+    }
+
+    // 드래그 종료 시 발생하는 이벤트 핸들러
+    function handleDragEnd() {
+        // 드래그 중인 행의 투명도 클래스 제거
+        this.classList.remove('dragged');
+        // 드롭 대상의 시각적 효과 클래스 제거
+        items.forEach(function (item) {
+            item.classList.remove('over');
+        });
+    }
+
+    // 테이블의 모든 행을 선택하여 드래그 이벤트 리스너 등록
+    const items = document.querySelectorAll('#dragDropTable tbody td');
+    items.forEach(function(item) {
+        item.draggable = true;
+        item.addEventListener('dragstart', handleDragStart, false);
+        item.addEventListener('dragover', handleDragOver, false);
+        item.addEventListener('dragenter', handleDragEnter, false);
+        item.addEventListener('dragleave', handleDragLeave, false);
+        item.addEventListener('drop', handleDrop, false);
+        item.addEventListener('dragend', handleDragEnd, false);
+    });
+
+}
 
 
     function createPeriod() {
@@ -200,6 +318,8 @@ table.appendChild(tbody);
 
 </form>
 
+<button onclick="getJeonju()">음식점</button>
+<div id="jj"></div><br>
 <table>
     <tr id="schedulePeriod" value="">
         <!-- 기간 표시 엘리먼트 -->
@@ -210,16 +330,18 @@ table.appendChild(tbody);
 <table id="timetbl">
         <thead><th>시간</th></thead>
         <tbody>
+            <tr><td></td></tr>
             <tr><td>08:00</td></tr>
             <tr><td>09:00</td></tr>
+            <tr><td>10:00</td></tr>
             <tr><td>11:00</td></tr>
-            <tr><td>12:00</td></tr>
-            <tr><td>13:00</td></tr>
         </tbody>
 </table>
 
 
 <div id="table-container"></div>
 </div>
+
+
 </body>
 </html>
