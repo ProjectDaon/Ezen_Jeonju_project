@@ -7,18 +7,60 @@
 <style>
 	table {
 		border-collapse: collapse;
-		width: 100%;
+		
 	}
 
 	th, td {
 		border: 1px solid #ddd;
-		padding: 8px;
+		padding: 16px;
 		text-align: left;
+
 	}
 
 	th {
 		background-color: #f2f2f2;
 	}
+
+    #schedulePeriod{
+        text-align: center;
+    }
+
+    #timetbl{
+       width:50px; 
+    }
+
+    #scheduletbl{
+        display: flex; 
+        flex-direction: row;
+        width: 600px;
+        height: 300px;
+        overflow: scroll;
+    }
+
+    #timetbl td {
+        text-align: center; /* Optional: center the text inside the td */
+        height: 50px;
+    }
+
+    #timetbl th {
+        text-align: center; /* Optional: center the text inside the td */
+        height: 50px;
+    }
+    #table-container tbody th {
+    height: 50px; /* 각 셀의 높이를 50px로 설정 */
+    width: 300px; /* 각 셀의 너비를 200px로 설정 */
+    max-height: 50px; /* 최대 너비를 200px로 설정 */
+    white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */ 
+    }
+
+    #table-container tbody td {
+    
+    height: 50px; /* 각 셀의 높이를 50px로 설정 */
+    width: 300px; /* 각 셀의 너비를 200px로 설정 */
+    max-height: 50px; /* 최대 너비를 200px로 설정 */
+    white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
+}
+
 
 </style>
 <script>
@@ -39,12 +81,17 @@
         // 테이블 요소 생성
         var table = document.createElement('table');
 
-        // 테이블 헤더 생성
         var thead = document.createElement('thead');
         var trHeader = document.createElement('tr');
         for (var i = 1; i <= columnCount; i++) {
             var th = document.createElement('th');
             th.textContent = 'Day ' + i + ': '  +(startDate.getMonth()+1)+'월'+ startDate.getDate()+'일';
+
+            // 헤더 셀에 스타일 추가
+            th.style.height = '50px';
+            th.style.width = '300px';
+            th.style.maxHeight = '50px';
+            th.style.whiteSpace = 'nowrap';
 
             startDate.setDate(startDate.getDate()+1);
             trHeader.appendChild(th);
@@ -59,12 +106,18 @@
             for (var k = 1; k <= columnCount; k++) {
                 var td = document.createElement('td');
                 td.textContent = "";
-				//td.textContent = 'Row ' + j + ', Col ' + k;
-                trBody.appendChild(td);
-            }
-            tbody.appendChild(trBody);
-        }
-        table.appendChild(tbody);
+
+            // 바디 셀에 스타일 추가
+            td.style.height = '50px';
+            td.style.width = '300px';
+            th.style.maxHeight = '50px';
+            td.style.whiteSpace = 'nowrap';
+
+        trBody.appendChild(td);
+    }
+    tbody.appendChild(trBody);
+}
+table.appendChild(tbody);
 
         // 부모 요소에 테이블 추가
         parentElement.appendChild(table);
@@ -104,7 +157,12 @@
         schedulePeriod.innerHTML = startDatePeriod + " ~ " + endDatePeriod;
 
         // 추가: 동적으로 테이블 생성
+        if(endDatePeriod == startDatePeriod){
+            createTable('table-container', 1);
+        }
+        else{
         createTable('table-container', dayDifference+1);
+        }
     }
 </script>
 </head>
@@ -146,8 +204,22 @@
     <tr id="schedulePeriod" value="">
         <!-- 기간 표시 엘리먼트 -->
     </tr>
-    <td></td>
 </table>
+
+<div id = "scheduletbl">
+<table id="timetbl">
+        <thead><th>시간</th></thead>
+        <tbody>
+            <tr><td>08:00</td></tr>
+            <tr><td>09:00</td></tr>
+            <tr><td>11:00</td></tr>
+            <tr><td>12:00</td></tr>
+            <tr><td>13:00</td></tr>
+        </tbody>
+</table>
+
+
 <div id="table-container"></div>
+</div>
 </body>
 </html>
