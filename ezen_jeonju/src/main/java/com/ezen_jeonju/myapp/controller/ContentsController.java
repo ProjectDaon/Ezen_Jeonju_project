@@ -44,7 +44,6 @@ public class ContentsController {
 		cv.setMidx(Integer.parseInt(session.getAttribute("midx").toString()));
 	//	cv.setNoticeUploadedFileName(uploadedFileName);
 	//	cv.setNoticeFilePath(uploadPath);
-		System.out.println("제목: "+cv.getContentsSubject()+" 위도: "+cv.getContentsLatitude()+" 경도: "+cv.getContentsLongitude());
 		cs.contentsWrite(cv);
 		String category = cv.getContentsCategory();
 		
@@ -74,7 +73,6 @@ public class ContentsController {
 	public String contentsArticle(@RequestParam("cidx") int cidx, Model model) {
 		cs.contentsViewCountUpdate(cidx);
 		ContentsVo cv = cs.contentsArticle(cidx);
-		System.out.println("위도: "+cv.getContentsLatitude());
 		model.addAttribute("cv", cv);
 		return "/contents/contentsArticle";
 	}
@@ -96,14 +94,7 @@ public class ContentsController {
 		return "redirect:/contents/contentsArticle.do?cidx="+cv.getCidx();
 	}
 	
-	/*
-	 * @RequestMapping(value="/contentsDelete.do") public String
-	 * contentsdelete(@RequestParam("cidx") int cidx, Model model) {
-	 * 
-	 * ContentsVo cv = cs.contentsArticle(cidx); model.addAttribute("cv", cv);
-	 * 
-	 * return "/contents/contentsDelete"; }
-	 */
+
 	@RequestMapping(value="/contentsDeleteAction.do")
 	public String contentsDeleteAction(@RequestParam("cidx") int cidx, @RequestParam("category") String category) {	
 
