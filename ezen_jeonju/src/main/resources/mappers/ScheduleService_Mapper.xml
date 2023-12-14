@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ezen_jeonju.myapp.persistance.ScheduleService_Mapper">
+<insert id="scheduleWrite" parameterType="sv">
+insert into scheduleroot(scheduleSubject,scheduleStartDate,scheduleEndDate,scheduleShare,midx) 
+values(#{scheduleSubject},#{scheduleStartDate},#{scheduleEndDate},#{scheduleShare},#{midx});
+</insert>
+
+<select id="scheduleList" resultType="sv">
+select * from scheduleroot where scheduleYN='N' and scheduleShare='Y';
+</select>
+
+</mapper>
