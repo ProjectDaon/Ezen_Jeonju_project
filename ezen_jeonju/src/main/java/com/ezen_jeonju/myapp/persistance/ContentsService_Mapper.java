@@ -9,4 +9,7 @@ public interface ContentsService_Mapper {
 	public ArrayList<ContentsVo> sightsList();
 	public ArrayList<ContentsVo> foodList();
 	public ContentsVo contentsArticle(int cidx);
+	public int contentsModify(ContentsVo cv);
+	public int contentsDelete(int cidx);
+	public int contentsViewCountUpdate(int cidx);
 }
