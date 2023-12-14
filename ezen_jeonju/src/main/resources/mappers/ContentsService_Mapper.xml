@@ -5,8 +5,8 @@
 <mapper namespace="com.ezen_jeonju.myapp.persistance.ContentsService_Mapper">
 
 <insert id="contentsWrite" parameterType="cv">
-INSERT INTO contents(midx, contentsCategory, contentsSubject, contentsArticle, contentsWriteday)
-VALUES(#{midx}, #{contentsCategory}, #{contentsSubject}, #{contentsArticle}, #{contentsWriteday})
+INSERT INTO contents(midx, contentsCategory, contentsSubject, contentsArticle)
+VALUES(#{midx}, #{contentsCategory}, #{contentsSubject}, #{contentsArticle})
 </insert>
 
 <select id="sightsList" resultType="cv">	<!-- like table과 join해서 좋아요도 출력해야함 -->
@@ -20,7 +20,22 @@ WHERE contentsCategory = '음식' AND contentsYN = 'N' ORDER BY 1 desc
 </select>
 
 <select id="contentsArticle" parameterType="int" resultType="cv">
-SELECT cidx, contentsSubject, contentsArticle, contentsViewCount, contentsReviewCount, contentsWriteday FROM contents
-WHERE contentsYN = 'N' ORDER BY 1 desc
+SELECT cidx, contentsCategory, contentsSubject, convert(contentsArticle using utf8) as contentsArticle, contentsViewCount, contentsReviewCount, contentsWriteday FROM contents
+WHERE cidx = #{cidx}
 </select>
+
+<update id="contentsModify" parameterType="cv">
+update contents set contentsCategory = #{contentsCategory}, contentsSubject = #{contentsSubject}, contentsArticle = #{contentsArticle}
+where cidx=#{cidx} <!-- and pwd = #{pwd} -->
+</update>
+
+<update id="contentsDelete" parameterType="int">
+update contents set contentsYN = 'Y' , contentsWriteday = now() 
+where cidx=#{cidx}
+</update>
+
+<update id="contentsViewCountUpdate" parameterType="int">
+update contents set contentsViewCount = contentsViewCount+1 where cidx=#{cidx}
+</update>
+
 </mapper>

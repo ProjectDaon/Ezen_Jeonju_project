@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>contentsWrite</title>
+<title>컨텐츠 작성</title>
+<link rel="stylesheet" href="../css/navbar.css">
 <!-- include libraries(jQuery, bootstrap) -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -17,6 +18,19 @@
 
 </head>
 <body>
+<script type="text/javascript">
+$(document).ready( function() {
+	//가져올때 navbar.css도 같이 가져올 것
+	$('#headers').load("../nav/nav.jsp");
+
+});
+</script>
+<div id="headers"></div>
+
+<br><br><br>
+<br><br><br>
+<br><br><br>
+
 <script>
 function goWrite(){
 	var fm = document.frm;
@@ -34,23 +48,31 @@ function goWrite(){
     return;
 }
 </script>
-<form name="frm">
-	제목 <input type="text" name="contentsSubject"> 
-	분류
-	<select name="contentsCategory">
-		<option value="명소">명소</option>
-		<option value="음식">음식</option>
-	</select>
-	<textarea id="summernote" name="contentsArticle"></textarea>
-	<input type="file" name="contentsFileName">
-	<input type="button" value="글쓰기" onclick="goWrite()">
-</form>
-<script>
-$(document).ready(function() {
-  $('#summernote').summernote({
-    lang: 'ko-KR' // default: 'en-US'
-  });
-});
-</script>
+<div class="panel-heading">글 작성하기</div>
+	<div class="panel-body">
+		<form name="frm">
+			<div class="form-group">
+				<label>카테고리</label>
+				<select name="contentsCategory">
+					<option value="명소">명소</option>
+					<option value="음식">음식</option>
+				</select>
+			</div> 
+			<div>
+				<label>제목</label>
+				<input type="text" name="contentsSubject">
+			</div>
+			<textarea id="summernote" name="contentsArticle"></textarea>
+			<input type="file" name="contentsFileName">
+			<input type="button" value="등록" onclick="goWrite()">
+		</form>
+	<script>
+	$(document).ready(function() {
+	  $('#summernote').summernote({
+	    lang: 'ko-KR' // default: 'en-US'
+	  });
+	});
+	</script>
+	</div>
 </body>
 </html>
