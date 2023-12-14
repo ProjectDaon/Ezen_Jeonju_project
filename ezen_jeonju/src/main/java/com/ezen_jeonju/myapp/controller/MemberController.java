@@ -144,7 +144,7 @@ public class MemberController {
         return access_Token;
     }
 
-
+	//유저정보
 	 public KakaoDTO getKakaoUserInfo (String access_Token) {
 
 	    //    요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
