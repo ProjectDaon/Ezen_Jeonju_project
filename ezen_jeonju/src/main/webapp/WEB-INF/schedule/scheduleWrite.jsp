@@ -67,17 +67,41 @@
     <!--전주 음식점 api 불러오는 함수-->
     function getJeonju() {
         let obj = document.getElementById("jj");
-
+        let existingPs = obj.querySelectorAll('p');
+        existingPs.forEach((p) => {
+            p.remove();
+        });
+        
         fetch("https://api.odcloud.kr/api/15076735/v1/uddi:98edad48-0892-4621-8741-cdff64f99c79?page=1&perPage=10&serviceKey=%2BUFeyGq0yCyRGAnfn2BZHmpxwulEWArLYaKEKRMZZSGW85K8Gxlkum5LSZjUcypheIifRSpj1kFDOTS3yFa5wQ%3D%3D")
             .then((response) => response.json())
             .then((data) => {
-                data.data.forEach((restaurant) => {
+                data.data.forEach((place) => {
                     let newP = document.createElement("p");
-                    let restaurantName = restaurant['식당명'];
-                    newP.innerHTML = "<a href='#' onclick='addToTable(\"" + restaurantName + "\")'>" + restaurantName + "</a>";
+                    let placeName = place['식당명'];
+                    newP.innerHTML = "<a href='#' onclick='addToTable(\"" + placeName + "\")'>" + placeName + "</a>";
                     obj.appendChild(newP);
                 });
             });
+    }
+
+    function getHotplace(){
+        let obj = document.getElementById("jj");
+        let existingPs = obj.querySelectorAll('p');
+        existingPs.forEach((p) => {
+            p.remove();
+        });
+
+        fetch("https://api.odcloud.kr/api/15125431/v1/uddi:3f24f89a-940d-4512-88d7-80b993cd28b8?page=1&perPage=10&serviceKey=%2BUFeyGq0yCyRGAnfn2BZHmpxwulEWArLYaKEKRMZZSGW85K8Gxlkum5LSZjUcypheIifRSpj1kFDOTS3yFa5wQ%3D%3D")
+            .then((response) => response.json())
+            .then((data) => {
+                data.data.forEach((place) => {
+                    let newP = document.createElement("p");
+                    let placeName = place['관광명소명'];
+                    newP.innerHTML = "<a href='#' onclick='addToTable(\"" + placeName + "\")'>" + placeName + "</a>";
+                    obj.appendChild(newP);
+                });
+            });
+
     }
 
     //음식점이름 클릭하면 테이블 cell로 음식점 이름이동
@@ -296,7 +320,13 @@
             fm.scheduleSubject.focus();
             return;
         }
-
+        else if (fm.scheduleStartDate.value == "") {
+            alert('날짜를 입력해주세요');
+            fm.scheduleStartDate.focus();
+            return;
+        }
+        
+        
         fm.action = "<%=request.getContextPath()%>/schedule/scheduleWriteAction.do";
         fm.method = "post";
         fm.submit();
@@ -306,11 +336,11 @@
 
 <form name="frm">
     제목 <input type="text" name="scheduleSubject"> <br>
-    기간 <input id="startDate" type="date"> ~ <input id="endDate" type="date">
+    기간 <input id="startDate" type="date" name="scheduleStartDate"> ~ <input id="endDate" type="date" name="scheduleEndDate">
     <a href="javascript:createPeriod()">기간등록</a>
     <br>
     공개여부
-    <select name="noticeCategory">
+    <select name="scheduleShare">
         <option value="Y">예</option>
         <option value="N">아니요</option>
     </select>
@@ -319,6 +349,7 @@
 </form>
 
 <button onclick="getJeonju()">음식점</button>
+<button onclick="getHotplace()">명소</button>
 <div id="jj"></div><br>
 <table>
     <tr id="schedulePeriod" value="">

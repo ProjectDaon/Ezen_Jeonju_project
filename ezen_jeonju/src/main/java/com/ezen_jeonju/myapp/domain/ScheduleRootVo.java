@@ -5,7 +5,6 @@ import java.sql.Date;
 public class ScheduleRootVo {
 	private int sidx;
 	private int midx;
-	private int cidx;
 	private String scheduleSubject;
 	private Date scheduleStartDate;
 	private Date scheduleEndDate;
@@ -26,12 +25,7 @@ public class ScheduleRootVo {
 	public void setMidx(int midx) {
 		this.midx = midx;
 	}
-	public int getCidx() {
-		return cidx;
-	}
-	public void setCidx(int cidx) {
-		this.cidx = cidx;
-	}
+
 	public String getScheduleSubject() {
 		return scheduleSubject;
 	}
