@@ -22,20 +22,20 @@
 		<div class="menu-wrap">
 			<ul class="menu-element">
 				<li class="dep">
-					<a href="#">전주에가면</a>
+					<a href="<%=request.getContextPath()%>/contents/sightList.do">전주에가면</a>
 					<div class="dep-inner" style="display: none;">
 						<div class="inner-sub-title">
 							<p class="large-text">전주에가면</p>
 						</div>
 						<ul class="depth-2">
-							<li><a href="#">명소</a></li>
-							<li><a href="#">음식</a></li>
+							<li><a href="<%=request.getContextPath()%>/contents/sightList.do">명소</a></li>
+							<li><a href="request.getContextPath()%>/contents/foodList.do">음식</a></li>
 							<li><a href="#">영상</a></li>
 						</ul>
 					</div>
 				</li>
 				<li class="dep">
-					<a href="#">여행일정</a>
+					<a href="<%=request.getContextPath()%>/schedule/scheduleList.do">여행일정</a>
 					<div class="dep-inner" style="display: none;">
 						<div class="inner-sub-title">
 							<p class="large-text">여행일정</p>
@@ -46,13 +46,13 @@
 					</div>
 				</li>
 				<li class="dep">
-					<a href="#">공지사항</a>
+					<a href="<%=request.getContextPath()%>/notice/noticeList.do">공지사항</a>
 					<div class="dep-inner" style="display: none;">
 						<div class="inner-sub-title">
 							<p class="large-text">공지사항</p>
 						</div>
 						<ul class="depth-2">
-							<li><a href="#">공지</a></li>
+							<li><a href="<%=request.getContextPath()%>/notice/noticeList.do">공지</a></li>
 						</ul>
 					</div>
 				</li>
