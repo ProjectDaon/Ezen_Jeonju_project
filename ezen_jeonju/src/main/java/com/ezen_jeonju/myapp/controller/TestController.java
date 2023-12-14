@@ -23,7 +23,7 @@ public class TestController {
 	@RequestMapping(value = "/crolling_test")
 	public String crolling_test(Model model) throws Exception {
 		
-		String query = "전주한옥마을";
+		String query = "전주성당";
 		ArrayList<String> al1 = new ArrayList<>();
 		ArrayList<String> al2 = new ArrayList<>();
 		ArrayList<String> al3 = new ArrayList<>();

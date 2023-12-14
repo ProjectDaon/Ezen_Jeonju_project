@@ -40,7 +40,7 @@ function goWrite(){
 		fm.contentsSubject.focus();
 		return;
 	}
-	
+
 	fm.action ="<%=request.getContextPath()%>/contents/contentsWriteAction.do"; 
     fm.method = "post"; 
     fm.enctype= "multipart/form-data";
@@ -64,8 +64,8 @@ function goWrite(){
 			</div>
 			<textarea id="summernote" name="contentsArticle"></textarea>
 			<input type="file" name="contentsFileName">
-			<input type="button" value="등록" onclick="goWrite()">
-		</form>
+			
+		
 	<script>
 	$(document).ready(function() {
 	  $('#summernote').summernote({
@@ -73,6 +73,65 @@ function goWrite(){
 	  });
 	});
 	</script>
+	<input type="text" id="addr" value="" size="70" class="inp_out" placeholder="주소를 입력해 주세요">
+	<span class="btn h22"><input type="button" value="좌표 검색" onclick="goChk();return false;"></span>
+	<div id="clickLatlng"></div>
+	<div id="map" style="width:500px;height:400px;"></div>
+	</form>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dbee45d6252968c16f0f651bb901ef42&libraries=services"></script>
+	<script>
+	
+	
+	function goChk(){
+	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+	var options = { //지도를 생성할 때 필요한 기본 옵션
+		center: new kakao.maps.LatLng(35.82406050330023, 127.14816812319762), //지도의 중심좌표.
+		level: 3 //지도의 레벨(확대, 축소 정도)
+	};
+	
+	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+	
+		var addr = document.getElementById("addr").value;
+		var mapContainer = document.getElementById("map");
+		var coord = document.getElementById("clickLatlng");
+		
+		// 주소-좌표 변환 객체를 생성합니다
+		var geocoder = new kakao.maps.services.Geocoder();
+		
+		//주소로 좌표 검색
+		geocoder.addressSearch(addr, function(result, status) {
+		
+		
+			// 정상적으로 검색이 완료됐으면 
+		     if (status === kakao.maps.services.Status.OK) {
+
+		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+		        // 결과값으로 받은 위치를 마커로 표시합니다
+		        var marker = new kakao.maps.Marker({
+		            map: map,
+		            position: coords
+		        });
+		        
+		        var latlng = new kakao.maps.LatLng(result[0].y, result[0].x); 
+
+		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		        map.setCenter(coords);
+		        
+ 		        var message = "클릭한 위치의 위도는<input type='text' name='contentsLatitude' value='"  + latlng.getLat() + "' > 이고, ";
+		        message += "경도는 <input type='text' name='contentsLongitude' value='" + latlng.getLng() + "' >입니다";
+		        
+		        var resultDiv = document.getElementById('clickLatlng'); 
+		        resultDiv.innerHTML = message; 
+		        
+		    } 
+		}); 
+	}
+	
+
+	       
+	</script>
 	</div>
+	<input type="button" value="등록" onclick="goWrite()">
 </body>
 </html>
