@@ -44,10 +44,16 @@ public class ContentsController {
 		cv.setMidx(Integer.parseInt(session.getAttribute("midx").toString()));
 	//	cv.setNoticeUploadedFileName(uploadedFileName);
 	//	cv.setNoticeFilePath(uploadPath);
-		
+		System.out.println("제목: "+cv.getContentsSubject()+" 위도: "+cv.getContentsLatitude()+" 경도: "+cv.getContentsLongitude());
 		cs.contentsWrite(cv);
+		String category = cv.getContentsCategory();
 		
-		return "redirect:/";
+		//System.out.println("넘어온 카테고리: "+category);
+		if(category.equals("명소")) {
+			return "redirect:/contents/sightsList.do";
+		}else {
+			return "redirect:/contents/foodList.do";
+		}
 	}
 	
 	@RequestMapping(value = "/sightsList.do")
@@ -66,9 +72,9 @@ public class ContentsController {
 	
 	@RequestMapping(value = "/contentsArticle.do")
 	public String contentsArticle(@RequestParam("cidx") int cidx, Model model) {
-		
 		cs.contentsViewCountUpdate(cidx);
 		ContentsVo cv = cs.contentsArticle(cidx);
+		System.out.println("위도: "+cv.getContentsLatitude());
 		model.addAttribute("cv", cv);
 		return "/contents/contentsArticle";
 	}
@@ -101,9 +107,6 @@ public class ContentsController {
 	@RequestMapping(value="/contentsDeleteAction.do")
 	public String contentsDeleteAction(@RequestParam("cidx") int cidx, @RequestParam("category") String category) {	
 
-		System.out.println("넘어온 cidx: "+cidx);
-		
-		System.out.println("넘어온 카테고리: "+category);
 		if(category.equals("명소")) {
 			
 			cs.contentsDelete(cidx);

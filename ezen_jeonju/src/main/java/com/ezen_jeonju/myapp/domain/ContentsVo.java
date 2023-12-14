@@ -10,6 +10,8 @@ public class ContentsVo {
 	private int contentsReviewCount;
 	private String contentsWriteday;
 	private String contentsYN;
+	private String contentsLatitude;
+	private String contentsLongitude;
 	
 	public int getCidx() {
 		return cidx;
@@ -64,5 +66,17 @@ public class ContentsVo {
 	}
 	public void setContentsYN(String contentsYN) {
 		this.contentsYN = contentsYN;
+	}
+	public String getContentsLatitude() {
+		return contentsLatitude;
+	}
+	public void setContentsLatitude(String contentsLatitude) {
+		this.contentsLatitude = contentsLatitude;
+	}
+	public String getContentsLongitude() {
+		return contentsLongitude;
+	}
+	public void setContentsLongitude(String contentsLongitude) {
+		this.contentsLongitude = contentsLongitude;
 	}
 }
