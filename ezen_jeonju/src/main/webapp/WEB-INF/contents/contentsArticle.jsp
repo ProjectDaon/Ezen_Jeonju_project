@@ -8,6 +8,10 @@
 <title>Article</title>
 <script src="http://code.jquery.com/jquery-latest.js"></script> 
 <link rel="stylesheet" href="../css/navbar.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-3.1.0.js"></script>
 </head>
 <body>
 <script type="text/javascript">
@@ -18,6 +22,7 @@ $(document).ready( function() {
 });
 </script>
 <div id="headers"></div>
+
 <br><br><br>
 <br><br><br>
 <br><br><br>

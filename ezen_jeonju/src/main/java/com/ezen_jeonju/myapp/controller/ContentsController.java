@@ -46,8 +46,14 @@ public class ContentsController {
 	//	cv.setNoticeFilePath(uploadPath);
 		System.out.println("제목: "+cv.getContentsSubject()+" 위도: "+cv.getContentsLatitude()+" 경도: "+cv.getContentsLongitude());
 		cs.contentsWrite(cv);
+		String category = cv.getContentsCategory();
 		
-		return "redirect:/";
+		//System.out.println("넘어온 카테고리: "+category);
+		if(category.equals("명소")) {
+			return "redirect:/contents/sightsList.do";
+		}else {
+			return "redirect:/contents/foodList.do";
+		}
 	}
 	
 	@RequestMapping(value = "/sightsList.do")

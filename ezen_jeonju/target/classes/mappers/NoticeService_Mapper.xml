@@ -18,4 +18,15 @@ WHERE noticeYN='N' order by 1 desc
 SELECT nidx, noticeSubject, noticeCategory, convert(noticeArticle using utf8) as noticeArticle, noticeFileName, noticeFilePath, noticeWriteday FROM notice
 WHERE nidx = #{nidx}
 </select>
+
+<update id="noticeModify" parameterType="nv">
+update notice set noticeCategory = #{noticeCategory}, noticeSubject = #{noticeSubject}, noticeArticle = #{noticeArticle}
+where nidx=#{nidx}
+</update>
+
+<update id="noticeDelete" parameterType="int">
+update notice set noticeYN = 'Y' , noticeWriteday = now() 
+where nidx=#{nidx}
+</update>
+
 </mapper>

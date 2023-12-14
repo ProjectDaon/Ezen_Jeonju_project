@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ezen_jeonju.myapp.domain.ContentsVo;
 import com.ezen_jeonju.myapp.domain.NoticeVo;
 import com.ezen_jeonju.myapp.service.NoticeService;
 import com.ezen_jeonju.myapp.util.UploadFileUtiles;
@@ -48,7 +49,7 @@ public class NoticeController {
 		
 		ns.noticeWrite(nv);
 		
-		return "redirect:/index.jsp";
+		return "redirect:/notice/noticeList.do";
 	}
 	
 	@RequestMapping(value = "/noticeList.do")
@@ -65,4 +66,24 @@ public class NoticeController {
 		model.addAttribute("nv", nv);
 		return "/notice/noticeContents";
 	}
+	
+	@RequestMapping(value="/noticeModify.do")
+	public String noticeModify(@RequestParam("nidx") int nidx, Model model) {		
+		NoticeVo nv = ns.noticeContents(nidx);		
+		model.addAttribute("nv", nv);
+		return "/notice/noticeModify";
+	}
+	
+	@RequestMapping(value="/noticeModifyAction.do")
+	public String noticeModifyAction(NoticeVo nv) {		
+		ns.noticeModify(nv);
+		return "redirect:/notice/noticeContents.do?nidx="+nv.getNidx();
+	}
+	
+	@RequestMapping(value="/noticeDeleteAction.do")
+	public String noticeDeleteAction(@RequestParam("nidx") int nidx, @RequestParam("category") String category) {	
+		ns.noticeDelete(nidx);
+		return "redirect:/notice/noticeList.do";
+		
+	}	
 }
