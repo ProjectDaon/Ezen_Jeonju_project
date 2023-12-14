@@ -1,6 +1,7 @@
 package com.ezen_jeonju.myapp.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +42,24 @@ public class ContentsServiceImpl implements ContentsService{
 	public ContentsVo contentsArticle(int cidx) {
 		ContentsVo cv = csm.contentsArticle(cidx);
 		return cv;
+	}
+	
+	@Override
+	public int contentsModify(ContentsVo cv) {
+		int value = csm.contentsModify(cv);
+		return value;
+	}
+	
+	@Override
+	public int contentsDelete(int cidx) {
+		
+		int value = csm.contentsDelete(cidx);
+		return value;
+	}
+	
+	@Override
+	public int contentsViewCountUpdate(int cidx) {
+		int value = csm.contentsViewCountUpdate(cidx);
+		return value;
 	}
 }

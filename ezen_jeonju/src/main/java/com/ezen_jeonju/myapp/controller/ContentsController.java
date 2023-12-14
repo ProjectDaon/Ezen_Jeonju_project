@@ -28,7 +28,6 @@ public class ContentsController {
 	 */
 	@RequestMapping(value = "/contentsWrite.do")
 	public String contentsWrite() {
-
 		
 		return "contents/contentsWrite";
 	}
@@ -48,14 +47,14 @@ public class ContentsController {
 		
 		cs.contentsWrite(cv);
 		
-		return "redirect:/index.jsp";
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value = "/sightsList.do")
 	public String sightsList(Model model) {
 		ArrayList<ContentsVo> cvlist = cs.sightsList();
 		model.addAttribute("cvlist",cvlist);
-		return "/contents/sigthsList";
+		return "/contents/sightsList";
 	}
 	
 	@RequestMapping(value = "/foodList.do")
@@ -66,10 +65,55 @@ public class ContentsController {
 	}
 	
 	@RequestMapping(value = "/contentsArticle.do")
-	public String contentsArticle(@RequestParam("cidx") String cidx, Model model) {
-		int cidx_i = Integer.parseInt(cidx);
-		ContentsVo cv = cs.contentsArticle(cidx_i);
+	public String contentsArticle(@RequestParam("cidx") int cidx, Model model) {
+		
+		cs.contentsViewCountUpdate(cidx);
+		ContentsVo cv = cs.contentsArticle(cidx);
 		model.addAttribute("cv", cv);
 		return "/contents/contentsArticle";
 	}
+	
+	@RequestMapping(value="/contentsModify.do")
+	public String contentsModify(@RequestParam("cidx") int cidx, Model model) {		
+		
+		ContentsVo cv = cs.contentsArticle(cidx);		
+		model.addAttribute("cv", cv);
+		
+		return "/contents/contentsModify";
+	}
+	
+	@RequestMapping(value="/contentsModifyAction.do")
+	public String contentsModifyAction(ContentsVo cv) {		
+		
+		cs.contentsModify(cv);
+				
+		return "redirect:/contents/contentsArticle.do?cidx="+cv.getCidx();
+	}
+	
+	/*
+	 * @RequestMapping(value="/contentsDelete.do") public String
+	 * contentsdelete(@RequestParam("cidx") int cidx, Model model) {
+	 * 
+	 * ContentsVo cv = cs.contentsArticle(cidx); model.addAttribute("cv", cv);
+	 * 
+	 * return "/contents/contentsDelete"; }
+	 */
+	@RequestMapping(value="/contentsDeleteAction.do")
+	public String contentsDeleteAction(@RequestParam("cidx") int cidx, @RequestParam("category") String category) {	
+
+		System.out.println("넘어온 cidx: "+cidx);
+		
+		System.out.println("넘어온 카테고리: "+category);
+		if(category.equals("명소")) {
+			
+			cs.contentsDelete(cidx);
+			return "redirect:/contents/sightsList.do";
+			
+		}else {
+			
+			cs.contentsDelete(cidx);
+			return "redirect:/contents/foodList.do";
+		}
+				
+	}	
 }
