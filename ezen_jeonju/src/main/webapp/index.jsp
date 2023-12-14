@@ -29,31 +29,31 @@
         <div class="menu-wrap">
             <ul class="menu-element">
                 <li class="dep">
-                    <a href="#">전주에가면</a>
+                    <a href="<%=request.getContextPath()%>/contents/sightList.do">전주에가면</a>
                     <div class="dep-inner" style="display: none;">
                         <div class="inner-sub-title">
                             <p class="large-text">전주에가면</p>
                         </div>
                         <ul class="depth-2">
-                            <li><a href="#">명소</a></li>
-                            <li><a href="#">음식</a></li>
+                            <li><a href="<%=request.getContextPath()%>/contents/sightList.do">명소</a></li>
+                            <li><a href="<%=request.getContextPath()%>/contents/foodList.do">음식</a></li>
                             <li><a href="#">영상</a></li>
                         </ul>
                     </div>
                 </li>
                 <li class="dep">
-                    <a href="#">여행일정</a>
+                    <a href="<%=request.getContextPath()%>/schedule/scheduleList.do">여행일정</a>
                     <div class="dep-inner" style="display: none;">
                         <div class="inner-sub-title">
                             <p class="large-text">여행일정</p>
                         </div>
                         <ul class="depth-2">
-                            <li><a href="#">여행공유</a></li>
+                            <li><a href="<%=request.getContextPath()%>/schedule/scheduleList.do">여행공유</a></li>
                         </ul>
                     </div>
                 </li>
                 <li class="dep">
-                    <a href="#">공지사항</a>
+                    <a href="<%=request.getContextPath()%>/notice/noticeList.do">공지사항</a>
                     <div class="dep-inner" style="display: none;">
                         <div class="inner-sub-title">
                             <p class="large-text">공지사항</p>
@@ -81,15 +81,17 @@
 
 <i class="xi-angle-left"></i>
 <i class="xi-angle-right"></i>	
+<i class="xi-angle-left-thin"></i>
+<i class="xi-angle-right-thin"></i>
 
 <section class="main-slide">
     <div class="main-slide-img">
-	    <div><a href="#" style="background-image: url('./images/test.jpg');"></a></div>
-	    <div><a href="#" style="background-image: url('./images/test2.jpg');"></a></div>
-	    <div><a href="#" style="background-image: url('./images/test3.jpg');"></a></div>
-	    <div><a href="#" style="background-image: url('./images/test.jpg');"></a></div>
-	    <div><a href="#" style="background-image: url('./images/test2.jpg');"></a></div>
-	    <div><a href="#" style="background-image: url('./images/test3.jpg');"></a></div>
+	    <div><a href="#"><img src="images/test.jpg"></a></div>
+	    <div><a href="#"><img src="images/test2.jpg"></a></div>
+	    <div><a href="#"><img src="images/test3.jpg"></a></div>
+	    <div><a href="#"><img src="images/test.jpg"></a></div>
+	    <div><a href="#"><img src="images/test2.jpg"></a></div>
+	    <div><a href="#"><img src="images/test3.jpg"></a></div>
     </div>
     <div class="main-text">
         <div class="main-slide-text">
@@ -100,35 +102,82 @@
             <div><a href="#"><p class="slide_txt">안녕하세요5</p></a></div>
             <div><a href="#"><p class="slide_txt">안녕하세요6</p></a></div>
         </div>
-        <div class="main-slide-page">
+    	    <div class="main-slide-page">
             <span class="main-current-num">1</span>
             <span>/</span>
             <span class="main-total-num">6</span>
         </div>  
-	    <div class="admin-click" style="font-size: 17px;">
-	        <div><a href="#"><p style="padding-top: 7px; width: 50px;" >배너 등록</p></a></div>
-	    </div>
+    </div>
+   	<div class="admin-click">
+        <div><a class="btn-more" href="#"><span>배너등록 +</span></a></div>
     </div>
 </section>
 <section class="second-slide">
-	<div class="second-title">
-	<span style="font-size:52px;">지금 전주는</span>
-	<span style="font-size:24px;">어디가 좋을까?</span>
+    <div class="sub-title">
+		<span class="title1">지금 전주는</span>
+		<span class="title2">어디가 좋을까?</span>
 	</div>
 	<div class="second-controll">
-		<span class="prevArrow">이전</span>
-		<span class="prevArrow">중지</span>
-	    <span class="nextArrow">다음</span> 
+		<div><a class="btn-more" href="#"><span>더 보기 +</span></a></div>
 	</div>
-    <div class="second-slide-img">
-	    <div><a href="#"><div class="thumbnail"><img src="./images/test.jpg"></div><p>이거되냐고1</p></a></div>
-	    <div><a href="#"><div class="thumbnail"><img src="./images/test2.jpg"></div><p>이거되냐고2</p></a></div>
-	    <div><a href="#"><div class="thumbnail"><img src="./images/test3.jpg"></div><p>이거되냐고3</p></a></div>
-	    <div><a href="#"><div class="thumbnail"><img src="./images/test.jpg"></div><p>이거되냐고4</p></a></div>
-	    <div><a href="#"><div class="thumbnail"><img src="./images/test2.jpg"></div><p>이거되냐고5</p></a></div>
-	    <div><a href="#"><div class="thumbnail"><img src="./images/test3.jpg"></div><p>이거되냐고6</p></a></div>
+    <div class="second-slide-1">
+        <div class="second-slide-2">
+            <div class="second-slide-3"><a href="#"><div class="thumbnail"><img src="images/test.jpg"></div><p class="slide_txt">얼마나 길게 쓸 수 있는데 너는 어디까지 나올 수 있는데 이거 설마 넘어가니 안넘어가니 확인해보자 어디 보여줘</p></a></div>
+            <div class="second-slide-3"><a href="#"><div class="thumbnail"><img src="images/test2.jpg"></div><p class="slide_txt">이거되냐고2</p></a></div>
+            <div class="second-slide-3"><a href="#"><div class="thumbnail"><img src="images/test3.jpg"></div><p class="slide_txt">이거되냐고3</p></a></div>
+            <div class="second-slide-3"><a href="#"><div class="thumbnail"><img src="images/test.jpg"></div><p class="slide_txt">이거되냐고4</p></a></div>
+            <div class="second-slide-3"><a href="#"><div class="thumbnail"><img src="images/test2.jpg"></div><p class="slide_txt">이거되냐고5</p></a></div>
+            <div class="second-slide-3"><a href="#"><div class="thumbnail"><img src="images/test3.jpg"></div><p class="slide_txt">이거되냐고6</p></a></div>
+        </div>
     </div>
 </section>
+<section class="hot-3">
+	<div class="sub-title">
+		<span class="title1">전주 인기 여행</span>
+		<span class="title2">나도 가볼까? </span>
+	</div>
+    <div class="inner">
+        <div class="hot-3-list">
+            <a href="#"><div><img src="images/test.jpg"><p class="slide_txt">징그럽다 htmlzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</p></div></a>
+            <a href="#"><div><img src="images/test2.jpg"><p class="slide_txt">징그럽다 css</p></div></a>
+            <a href="#"><div><img src="images/test3.jpg"><p class="slide_txt">태그지옥</p></div></a>
+        </div>  
+    </div>
+</section>
+<section class="exhibition">
+	<div class="sub-title">
+		<span class="show-title">공연</span>
+        <span class="event-title">행사</span>
+        <span class="exhibition-title">전시</span>
+        <a href="#"><span>더 보기 +</span></a>
+	</div>
+    <div class="inner">
+        <div class="exhibition-list">
+            <a href="#"><div><img src="images/test.jpg"><p class="slide_txt">징그럽다 htmlzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</p></div></a>
+            <a href="#"><div><img src="images/test2.jpg"><p class="slide_txt">징그럽다 css</p></div></a>
+            <a href="#"><div><img src="images/test3.jpg"><p class="slide_txt">태그지옥</p></div></a>
+            <a href="#"><div><img src="images/test3.jpg"><p class="slide_txt">태그지옥</p></div></a>
+        </div>
+    </div>
+</section>
+<section class="video">
+	<div class="sub-title">
+		<span class="title1">전주를 더 보고 싶으면?</span>
+	</div>
+    <div class="inner">
+        <div class="video-list">
+            <a href="#"><div><img src="images/test.jpg"><p class="slide_txt">징그럽다 htmlzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</p></div></a>
+            <a href="#"><div><img src="images/test2.jpg"><p class="slide_txt">징그럽다 css</p></div></a>
+            <a href="#"><div><img src="images/test3.jpg"><p class="slide_txt">태그지옥</p></div></a>
+            <a href="#"><div><img src="images/test3.jpg"><p class="slide_txt">태그지옥</p></div></a>
+            <a href="#"><div><img src="images/test3.jpg"><p class="slide_txt">태그지옥</p></div></a>
+        </div>  
+    </div>
+</section>
+
+<footer >
+    <div style="width :100%; height : 200px; background-color: brown;"></div>
+</footer>
 
 
 
