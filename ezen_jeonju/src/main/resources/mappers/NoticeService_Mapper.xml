@@ -9,9 +9,25 @@ INSERT INTO notice(midx, noticeSubject, noticeCategory, noticeArticle, noticeFil
 VALUES(#{midx}, #{noticeSubject}, #{noticeCategory}, #{noticeArticle}, #{noticeUploadedFileName}, #{noticeFilePath})
 </insert>
 
-<select id="noticeList" resultType="nv">
+<sql id = "search">
+<if test="searchType != null and searchType.equals('noticeSubject')">
+	and noticeSubject like concat('%',#{keyword},'%')
+</if>
+<if test="searchType != null and searchType.equals('noticeCategory')">
+	and noticeCategory like concat('%',#{keyword},'%')
+</if>
+</sql>
+
+<select id="noticeList" parameterType="scri" resultType="nv">
 SELECT nidx, noticeSubject, noticeCategory, noticeWriteday FROM notice
-WHERE noticeYN='N' order by 1 desc
+WHERE noticeYN='N'
+<include refid="search"/>
+order by nidx desc limit #{page}, #{perPageNum}
+</select>
+
+<select id = "noticeTotalCount" parameterType="scri" resultType="int">
+select count(*) as cnt from notice where noticeYN="N" 
+<include refid="search"/>
 </select>
 
 <select id="noticeContents" parameterType="int" resultType="nv">
