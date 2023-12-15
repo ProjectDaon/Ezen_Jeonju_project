@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ezen_jeonju.myapp.domain.ScheduleRootVo;
 import com.ezen_jeonju.myapp.service.ScheduleService;
@@ -45,6 +46,13 @@ public class ScheduleController {
 		
 		return "schedule/scheduleList";
 	}
-
+    @RequestMapping(value="/scheduleContents.do")
+    public String boardContents(@RequestParam("sidx") int sidx, Model model){
+    	ScheduleRootVo sv = ss.scheduleContents(sidx);
+    	model.addAttribute("sv",sv);
+    	
+    	return "/schedule/scheduleContents";
+    	
+    }
 	
 }

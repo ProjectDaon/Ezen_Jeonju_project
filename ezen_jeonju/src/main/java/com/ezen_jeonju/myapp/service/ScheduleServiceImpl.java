@@ -37,4 +37,14 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 		return list;
 	}
+
+
+	@Override
+	public ScheduleRootVo scheduleContents(int sidx) {
+		ssm.scheduleViewCount(sidx);
+		ScheduleRootVo sv = ssm.scheduleContents(sidx);
+		return sv;
+	}
+	
+
 }

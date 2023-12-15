@@ -13,4 +13,12 @@ values(#{scheduleSubject},#{scheduleStartDate},#{scheduleEndDate},#{scheduleShar
 select * from scheduleroot where scheduleYN='N' and scheduleShare='Y';
 </select>
 
+<select id="scheduleContents" resultType="sv" parameterType="int">
+select * from scheduleroot where sidx=#{sidx};
+</select>
+
+<update id="scheduleViewCount" parameterType="int">
+update scheduleroot set scheduleViewCount=scheduleViewCount+1 where sidx = #{sidx};
+</update>
+
 </mapper>
