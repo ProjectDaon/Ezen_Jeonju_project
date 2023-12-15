@@ -32,8 +32,8 @@
     #scheduletbl{
         display: flex; 
         flex-direction: row;
-        width: 600px;
-        height: 300px;
+        width: 1200px;
+        height: 800px;
         overflow: scroll;
     }
 
@@ -148,7 +148,7 @@
 
     // 테이블 바디 생성 (임시 데이터로 5개의 행 추가)
     var tbody = document.createElement('tbody');
-    for (var j = 1; j <= 5; j++) {
+    for (var j = 1; j <= 16; j++) {
         var trBody = document.createElement('tr');
         for (var k = 1; k <= columnCount; k++) {
             if((j==1) && (k>1)){
@@ -366,6 +366,17 @@
             <tr><td>09:00</td></tr>
             <tr><td>10:00</td></tr>
             <tr><td>11:00</td></tr>
+            <tr><td>12:00</td></tr>
+            <tr><td>13:00</td></tr>
+            <tr><td>14:00</td></tr>
+            <tr><td>15:00</td></tr>
+            <tr><td>16:00</td></tr>
+            <tr><td>17:00</td></tr>
+            <tr><td>18:00</td></tr>
+            <tr><td>19:00</td></tr>
+            <tr><td>20:00</td></tr>
+            <tr><td>21:00</td></tr>
+            <tr><td>22:00</td></tr>
         </tbody>
 </table>
 

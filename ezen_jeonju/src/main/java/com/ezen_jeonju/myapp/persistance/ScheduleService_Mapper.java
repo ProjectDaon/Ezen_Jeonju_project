@@ -10,4 +10,9 @@ public interface ScheduleService_Mapper {
 	public int scheduleWrite(ScheduleRootVo sv);
 
 	public ArrayList<ScheduleRootVo> scheduleList();
+	
+	public ScheduleRootVo scheduleContents(int sidx);
+
+	public void scheduleViewCount(int sidx);
+	
 }

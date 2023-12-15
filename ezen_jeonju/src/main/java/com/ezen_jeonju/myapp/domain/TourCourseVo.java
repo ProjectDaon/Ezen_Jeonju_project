@@ -10,10 +10,8 @@ public class TourCourseVo {
 	private String tourCourseTime;
 	private String tourCoursePlace;
 	private String tourCourseLatitude;
-	private double tourCourseLongitude;
-	
-	DecimalFormat df1 = new DecimalFormat("000.000000"); //경도
-	DecimalFormat df2 = new DecimalFormat("00.000000"); //위도
+	private String tourCourseLongitude;
+
 	
 	
 	public int getTcidx() {
@@ -52,10 +50,10 @@ public class TourCourseVo {
 	public void setTourCourseLatitude(String tourCourseLatitude) {
 		this.tourCourseLatitude = tourCourseLatitude;
 	}
-	public double getTourCourseLongitude() {
+	public String String() {
 		return tourCourseLongitude;
 	}
-	public void setTourCourseLongitude(double tourCourseLongitude) {
+	public void setTourCourseLongitude(String tourCourseLongitude) {
 		this.tourCourseLongitude = tourCourseLongitude;
 	}
 
