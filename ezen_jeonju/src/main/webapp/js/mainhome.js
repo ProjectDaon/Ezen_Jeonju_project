@@ -40,7 +40,7 @@ $(document).ready(function(){
 		autoplay: true,
 		autoplaySpeed: 3000,
 		centerMode: true,
-		centerPadding: '60px',
+		centerPadding: '30px',
 		slidesToShow: 3.7,
 		responsive: [
 		  {	
@@ -48,16 +48,16 @@ $(document).ready(function(){
 			settings: {
 			  centerMode: true,
 			  centerPadding: '40px',
-			  slidesToShow: 3
+			  slidesToShow: 5
 			}
 		  },
 		  {
-			breakpoint: 480,
+			breakpoint: 1200,
 			settings: {
 			  arrows: false,
 			  centerMode: true,
 			  centerPadding: '40px',
-			  slidesToShow: 1
+			  slidesToShow: 3
 			}
 		  }
 		]

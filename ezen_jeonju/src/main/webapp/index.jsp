@@ -23,7 +23,7 @@
     <nav class="nav-bar" style="height: 82px;">
         <h1>
             <a href="index.jsp">
-                <img src="./images/logo.png">
+                <img src="images/logo.png">
             </a>
         </h1>
         <div class="menu-wrap">
@@ -86,12 +86,13 @@
 
 <section class="main-slide">
     <div class="main-slide-img">
+	    <div><a href="#"><img src="images/test8.jpg"></a></div>
+	    <div><a href="#"><img src="images/test9.jpg"></a></div>
+	    <div><a href="#"><img src="images/test10.jpg"></a></div>
 	    <div><a href="#"><img src="images/test.jpg"></a></div>
 	    <div><a href="#"><img src="images/test2.jpg"></a></div>
 	    <div><a href="#"><img src="images/test3.jpg"></a></div>
-	    <div><a href="#"><img src="images/test.jpg"></a></div>
-	    <div><a href="#"><img src="images/test2.jpg"></a></div>
-	    <div><a href="#"><img src="images/test3.jpg"></a></div>
+        <div><a href="#"><img src="images/test.jpg"></a></div>
     </div>
     <div class="main-text">
         <div class="main-slide-text">
@@ -100,7 +101,8 @@
             <div><a href="#"><p class="slide_txt">얼마나 길게 쓸 수 있는데 너는 어디까지 나올 수 있는데 이거 설마 넘어가니 안넘어가니 확인해보자 어디 보여줘</p></a></div>
             <div><a href="#"><p class="slide_txt">안녕하세요4</p></a></div>
             <div><a href="#"><p class="slide_txt">안녕하세요5</p></a></div>
-            <div><a href="#"><p class="slide_txt">안녕하세요6</p></a></div>
+            <div><a href="#"><p class="slide_txt">전주로 떠나는 여행, 먹고 자고 놀고, 아주 끝장내자!</p></a></div>
+            <div><a href="#"><p class="slide_txt">안녕하세요7</p></a></div>
         </div>
     	    <div class="main-slide-page">
             <span class="main-current-num">1</span>
@@ -122,9 +124,9 @@
 	</div>
     <div class="second-slide-1">
         <div class="second-slide-2">
-            <div class="second-slide-3"><a href="#"><div class="thumbnail"><img src="images/test.jpg"></div><p class="slide_txt">얼마나 길게 쓸 수 있는데 너는 어디까지 나올 수 있는데 이거 설마 넘어가니 안넘어가니 확인해보자 어디 보여줘</p></a></div>
-            <div class="second-slide-3"><a href="#"><div class="thumbnail"><img src="images/test2.jpg"></div><p class="slide_txt">이거되냐고2</p></a></div>
-            <div class="second-slide-3"><a href="#"><div class="thumbnail"><img src="images/test3.jpg"></div><p class="slide_txt">이거되냐고3</p></a></div>
+            <div class="second-slide-3"><a href="#"><div class="thumbnail"><img src="images/test10.jpg"></div><p class="slide_txt">얼마나 길게 쓸 수 있는데 너는 어디까지 나올 수 있는데 이거 설마 넘어가니 안넘어가니 확인해보자 어디 보여줘</p></a></div>
+            <div class="second-slide-3"><a href="#"><div class="thumbnail"><img src="images/test9.jpg"></div><p class="slide_txt">이거되냐고2</p></a></div>
+            <div class="second-slide-3"><a href="#"><div class="thumbnail"><img src="images/test8.jpg"></div><p class="slide_txt">이거되냐고3</p></a></div>
             <div class="second-slide-3"><a href="#"><div class="thumbnail"><img src="images/test.jpg"></div><p class="slide_txt">이거되냐고4</p></a></div>
             <div class="second-slide-3"><a href="#"><div class="thumbnail"><img src="images/test2.jpg"></div><p class="slide_txt">이거되냐고5</p></a></div>
             <div class="second-slide-3"><a href="#"><div class="thumbnail"><img src="images/test3.jpg"></div><p class="slide_txt">이거되냐고6</p></a></div>
@@ -132,11 +134,11 @@
     </div>
 </section>
 <section class="hot-3">
-	<div class="sub-title">
-		<span class="title1">전주 인기 여행</span>
-		<span class="title2">나도 가볼까? </span>
-	</div>
     <div class="inner">
+        <div class="sub-title">
+            <span class="title1">전주 인기 여행</span>
+            <span class="title2">나도 가볼까? </span>
+        </div>
         <div class="hot-3-list">
             <a href="#"><div><img src="images/test.jpg"><p class="slide_txt">징그럽다 htmlzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</p></div></a>
             <a href="#"><div><img src="images/test2.jpg"><p class="slide_txt">징그럽다 css</p></div></a>
@@ -145,38 +147,63 @@
     </div>
 </section>
 <section class="exhibition">
-	<div class="sub-title">
-		<span class="show-title">공연</span>
-        <span class="event-title">행사</span>
-        <span class="exhibition-title">전시</span>
-        <a href="#"><span>더 보기 +</span></a>
-	</div>
     <div class="inner">
+        <div class="sub-title">
+            <span class="show-title">공연</span>
+            <span class="event-title">행사</span>
+            <span class="exhibition-title">전시</span>
+            <a href="#"><span>더 보기 +</span></a>
+        </div>
         <div class="exhibition-list">
             <a href="#"><div><img src="images/test.jpg"><p class="slide_txt">징그럽다 htmlzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</p></div></a>
             <a href="#"><div><img src="images/test2.jpg"><p class="slide_txt">징그럽다 css</p></div></a>
             <a href="#"><div><img src="images/test3.jpg"><p class="slide_txt">태그지옥</p></div></a>
-            <a href="#"><div><img src="images/test3.jpg"><p class="slide_txt">태그지옥</p></div></a>
+            <a href="#"><div><img src="images/test.jpg"><p class="slide_txt">태그지옥</p></div></a>
         </div>
     </div>
+
 </section>
 <section class="video">
-	<div class="sub-title">
-		<span class="title1">전주를 더 보고 싶으면?</span>
-	</div>
     <div class="inner">
-        <div class="video-list">
-            <a href="#"><div><img src="images/test.jpg"><p class="slide_txt">징그럽다 htmlzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</p></div></a>
-            <a href="#"><div><img src="images/test2.jpg"><p class="slide_txt">징그럽다 css</p></div></a>
-            <a href="#"><div><img src="images/test3.jpg"><p class="slide_txt">태그지옥</p></div></a>
-            <a href="#"><div><img src="images/test3.jpg"><p class="slide_txt">태그지옥</p></div></a>
-            <a href="#"><div><img src="images/test3.jpg"><p class="slide_txt">태그지옥</p></div></a>
-        </div>  
+        <div class="sub-title">
+            <span class="title1">전주를 더 보고 싶다면?</span>
+        </div>
+        <div class="sns-list">
+            <a href="#" class="youtube-icon">
+                <i class="xi-youtube-play"></i>
+            </a>
+            <a href="#" class="naver-icon">
+                <i class="xi-naver"></i>
+            </a>
+            <a href="#" class="instagram-icon">
+                <i class="xi-instagram"></i>
+            </a>
+            <a href="#" class="facebook-icon">
+                <i class="xi-facebook"></i>
+            </a>
+        </div>
+        <ul class="video-list">
+            <li><a href="#"><div><img src="images/test10.jpg"><p class="slide_txt">인간극장 발표대장 다온</p></div></a></li>
+            <li><a href="#"><div><img src="images/test9.jpg"><p class="slide_txt">인간극장 민정</p></div></a></li>
+            <li><a href="#"><div><img src="images/test8.jpg"><p class="slide_txt">인간극장 대희</p></div></a></li>
+            <li><a href="#"><div><img src="images/test3.jpg"><p class="slide_txt">인간극장 건도</p></div></a></li>
+        </ul>           
     </div>
 </section>
+<footer>
+    <div class="inner">
+	    <div class="footer-text">
+	    	<p>
+	    		(99999) 전라북도 전주시 이젠 개발자가 되고 싶어 대표전화 : 000)999-0000
+	    	</p>
+		   	<p>
+			   	Copyright Ezen-Developer Team All rights  reserved
+		   	</p>
+    	</div>
+   	</div>
 
-<footer >
-    <div style="width :100%; height : 200px; background-color: brown;"></div>
+
+    
 </footer>
 
 

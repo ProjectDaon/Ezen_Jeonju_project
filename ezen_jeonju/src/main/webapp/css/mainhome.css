@@ -28,6 +28,8 @@ a {
     height: 100%;
     object-fit: cover; 
 	display: block;
+	border-bottom-left-radius: 12%;
+	border-bottom-right-radius: 12%;
 }
 
 .main-slide-img button {
@@ -164,10 +166,11 @@ a {
     width: 100%;
     font-size: calc(14px + 1.1vw);
     text-align: left;
+	font-weight: 500;
 }
 
 .sub-title .title2{
-	font-size: calc(14px + 0.2vw);
+	font-size: calc(14px + 0.3vw);
     margin-left: 30px;
     color: #666;
     max-width: 386px;
@@ -229,6 +232,11 @@ a {
     display: block;
     box-sizing: border-box;
  }
+ 
+ 
+ .slick-list {
+	margin: -2px -20px;
+}
 
  .second-slide-3 {
     margin: 2px 20px;
@@ -244,14 +252,13 @@ a {
 } 
 
  .thumbnail img {
-	overflow: hidden;
-    max-width: 417px;
-    max-height: 320px;
-    width: 100%;
-    height: 100%;
-    min-width: 100%;
-    min-height: 100%;
+ 	overflow: hidden;
+ 	width : 417px;
+ 	height : 320px;
+ 	object-fit:cover;
     border-radius: 30px;
+    width : 100%;
+
 	
 } 
 
@@ -312,15 +319,16 @@ a {
 /* section hot-3 */
 .hot-3{
     width: 100%;
+    padding-top: 2%;
     padding: 5%;
     background-color: #f1fbfd
 }
 
 .hot-3 .sub-title{
-	padding-left: 7%;
+	padding-left: 10px;
 }
 
-.hot-3 .inner {
+.inner {
     max-width: 1500px;
     width: 100%;
     margin: 0 auto;
@@ -338,7 +346,7 @@ a {
 	float: left;
 	width: 33%;
 	height: 100%;
-	padding : 20px;
+	padding : 15px;
 }
 
 .hot-3-list div img{
@@ -382,9 +390,9 @@ a {
 }
 
 .exhibition .sub-title{
-	padding-left: 7%;
+	padding-left: 0%;
 	float: left;
-	width: 28%;
+	width: 15%;
 	font-weight: 800;
 }
 
@@ -396,31 +404,28 @@ a {
 	font-size: 30px;
 }
 
-.exhibition .inner {
-    max-width: 1500px;
-    width: 100%;
-    margin: 0 auto;
 
-}
 .exhibition-list{
 	position: relative;
 	display: block;
 	width: 100%;
-	height: 350px;
+	height: 450px;
 	text-align: center;
 }
 
 .exhibition-list div{
 	float: left;
-	width: 25%;
+	width: 21%;
 	height: 100%;
 	padding : 20px;
+	
 }
 
 .exhibition-list div img{
 	width: 100%;
 	height: 100%;
-	border-radius: 15%;
+	object-fit: cover;
+	box-shadow: -1px 0px 20px rgb(0,0,0,0.2);
 }
 
 
@@ -449,41 +454,92 @@ a {
 
 /* section video */
 
-.video{
-    width: 100%;
-    padding: 5%;
-    background-color: #f1fbfd
+.video {
+	padding: 5%
+	
 }
 
 .video .sub-title{
-	padding-left: 7%;
+	padding-left: 10px;
+	text-align: center;
 }
 
-.video .inner {
-    max-width: 1500px;
-    width: 100%;
-    margin: 0 auto;
-
+.video .sns-list {
+	align-items: center;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 1em;
+	display: flex;
 }
+
+.sns-list a {
+	margin: 5px;	
+	height: 50px;
+	width: 50px;
+	display: flex;
+	border-radius: 50%;
+	text-align: center;
+	font-size: 1.7rem;
+	align-items: center;
+	justify-content: center;
+}
+
+.youtube-icon{
+	background: #e7161a;
+}
+
+.youtube-icon .xi-youtube-play{
+background: #e7161a;
+color: #fff;
+}
+
+.naver-icon{
+	background: #5bb433;
+}
+.naver-icon .xi-naver{
+background: #5bb433;
+color: #fff;
+}
+
+.instagram-icon{
+	background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+}
+
+.instagram-icon .xi-instagram{
+	color: #fff;
+}
+
+.facebook-icon{
+	background: #4867aa;
+}
+
+.facebook-icon .xi-facebook {
+    background: #4867aa;
+	color: #fff;
+}
+
+
 .video-list{
 	position: relative;
 	display: block;
 	width: 100%;
-	height: 400px;
+	height: 320px;
 	text-align: center;
 }
 
 .video-list div{
 	float: left;
-	width: 33%;
+	width: 25%;
 	height: 100%;
-	padding : 20px;
+	padding : 15px;
 }
 
 .video-list div img{
 	width: 100%;
-	height: 100%;
+	height: 280px;
 	border-radius: 15%;
+	object-fit: cover;
+	
 }
 
 
@@ -509,6 +565,25 @@ a {
 	transform: scale(1.05);
 }
 
+
+
+
+
+footer {
+	display: block;
+    background-color: #eef5fb;
+    padding: 2% 5% 4%;
+    clear: both;
+}
+
+.footer-text {
+		isplay: flex;
+	    align-items: left;
+	    flex-wrap: wrap;
+}
+
+
+
 /* media 1500px */
 
 @media screen and (max-width: 1500px){
@@ -532,12 +607,18 @@ a {
 	}
 
 	.hot-3-list{
-		height: 280px;
+		height: 320px;
 	}
 
 	.exhibition-list{
 		height: 250px;
 	}
 
-
+	body section {
+		padding : 2%
+	}
+	
+	.video-list div img{
+		height: 180px;
+	}
 }  
