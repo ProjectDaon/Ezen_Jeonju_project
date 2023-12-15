@@ -6,8 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ezen_jeonju.myapp.domain.ContentsVo;
 import com.ezen_jeonju.myapp.domain.NoticeVo;
+import com.ezen_jeonju.myapp.domain.SearchCriteria;
 import com.ezen_jeonju.myapp.persistance.NoticeService_Mapper;
 
 @Service
@@ -25,10 +25,20 @@ public class NoticeServiceImpl implements NoticeService{
 		return value;
 	}
 	@Override
-	public ArrayList<NoticeVo> noticeList() {
-		ArrayList<NoticeVo> nv = nsm.noticeList();
+	public ArrayList<NoticeVo> noticeList(SearchCriteria scri) {
 		
+		int value = (scri.getPage()-1)*10;
+		scri.setPage(value);
+		
+		ArrayList<NoticeVo> nv = nsm.noticeList(scri);
 		return nv;
+	}
+	
+	@Override
+	public int noticeTotalCount(SearchCriteria scri) {
+		
+		int value = nsm.noticeTotalCount(scri);
+		return value;
 	}
 	
 	@Override

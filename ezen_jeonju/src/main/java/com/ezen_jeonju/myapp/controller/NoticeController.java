@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ezen_jeonju.myapp.domain.ContentsVo;
 import com.ezen_jeonju.myapp.domain.NoticeVo;
 import com.ezen_jeonju.myapp.service.NoticeService;
 import com.ezen_jeonju.myapp.util.UploadFileUtiles;
+import com.ezen_jeonju.myapp.domain.PageMaker;
+import com.ezen_jeonju.myapp.domain.SearchCriteria;
 
 @Controller
 @RequestMapping(value = "/notice")
@@ -24,13 +25,14 @@ public class NoticeController {
 	@Autowired
 	NoticeService ns;
 	
+	@Autowired(required=false)
+	private PageMaker pm;
+	
 	@Resource(name="uploadPath")
 	String uploadPath;
 	
 	@RequestMapping(value = "/noticeWrite.do")
 	public String noticeWrite() {
-
-		
 		return "notice/noticeWrite";
 	}
 	
@@ -53,9 +55,15 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value = "/noticeList.do")
-	public String noticeList(Model model) {
-		ArrayList<NoticeVo> nvlist = ns.noticeList();
+	public String noticeList(SearchCriteria scri, Model model) {
+		
+		int totalCount = ns.noticeTotalCount(scri);
+		pm.setScri(scri);
+		pm.setTotalCount(totalCount);
+		
+		ArrayList<NoticeVo> nvlist = ns.noticeList(scri);
 		model.addAttribute("nvlist",nvlist);
+		model.addAttribute("pm", pm);
 		return "/notice/noticeList";
 	}
 	
