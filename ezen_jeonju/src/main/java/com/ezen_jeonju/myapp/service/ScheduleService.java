@@ -11,4 +11,6 @@ public interface ScheduleService {
 	
 	public ArrayList<ScheduleRootVo> scheduleList();
 
+	public ScheduleRootVo scheduleContents(int sidx);
+
 }

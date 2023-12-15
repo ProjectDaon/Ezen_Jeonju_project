@@ -24,9 +24,9 @@
 		<tr>
 		<td>${sv.sidx}</td>
 		<td class="subject">
-		
+		<a href="${pageContext.request.contextPath}/schedule/scheduleContents.do?sidx=${sv.sidx}">
 		${sv.scheduleSubject}
-				
+		</a>					
 		</td>
 		<td>${sv.scheduleViewCount}</td>
 		<td>${sv.scheduleWriteday}</td>
@@ -34,7 +34,6 @@
 	</c:forEach>
 </tbody>	
 </table>	
-	
     <a href="<%=request.getContextPath()%>/schedule/scheduleWrite.do">여행일정 만들기</a>
 </body>
 </html>
