@@ -182,6 +182,9 @@
                 <i class="xi-facebook"></i>
             </a>
         </div>
+        <div class="video-more">
+			<div><a class="btn-more" href="#"><span>더 보기 +</span></a></div>
+		</div>
         <ul class="video-list">
             <li><a href="#"><div><img src="images/test10.jpg"><p class="slide_txt">인간극장 발표대장 다온</p></div></a></li>
             <li><a href="#"><div><img src="images/test9.jpg"><p class="slide_txt">인간극장 민정</p></div></a></li>
@@ -201,9 +204,6 @@
 		   	</p>
     	</div>
    	</div>
-
-
-    
 </footer>
 
 

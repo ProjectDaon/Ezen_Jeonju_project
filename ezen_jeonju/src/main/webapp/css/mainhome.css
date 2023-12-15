@@ -556,6 +556,11 @@ color: #fff;
 	
 }
 
+.video .video-more{
+text-align: right;
+padding-right : 5%;
+}
+
 
 .video-list div {
 	transition: 0.2s;	
