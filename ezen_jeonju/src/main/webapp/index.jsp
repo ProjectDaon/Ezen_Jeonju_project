@@ -1,13 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>이젠 전주 홈페이지</title>
+    <title>Insert title here</title>
     <link rel="stylesheet" href="./css/navbar.css">
     <link rel="stylesheet" href="./css/mainhome.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,15 +13,74 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" href="http://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 </head>
 
 <body>
 <script src="./js/nav-bar.js"></script>
+<script>
+function toggleMenu() {
+    var test = document.getElementById("test");
+    var submenus = test.querySelectorAll(".menu-hamburger-list ul");
+
+    // 메뉴 토글
+    test.style.display = (test.style.display === "none" || test.style.display === "") ? "block" : "none";
+
+    // 메뉴가 숨겨질 때 하위 메뉴들을 모두 감추기
+    if (test.style.display === "none") {
+        submenus.forEach(function(submenu) {
+            submenu.style.display = "none";
+        });
+    }
+}
+    // 브라우저 창 크기 변화 감지   
+    window.addEventListener('resize', function() {
+        var test = document.getElementById("test");
+    
+    // 창 크기가 1200px 이상인 경우
+        if (window.innerWidth > 1200) {
+            test.style.display = "none";
+        }
+    });
+
+    function toggleSubMenu(submenuClassName) {
+    var submenus = document.querySelectorAll(".menu-hamburger-list ul");
+    
+    submenus.forEach(function(submenu) {
+        if (submenu.className === submenuClassName) {
+            submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
+        } else {
+            submenu.style.display = "none";
+        }
+    });
+}
+
+    // 클릭 이벤트 처리
+    document.addEventListener('DOMContentLoaded', function() {
+        var submenu1 = document.querySelector(".submenu-title-1");
+        var submenu2 = document.querySelector(".submenu-title-2");
+        var submenu3 = document.querySelector(".submenu-title-3");
+
+        document.querySelector(".submenu-title-1").addEventListener("click", function() {
+            toggleSubMenu("submenu-title-1");
+        });
+
+        document.querySelector(".submenu-title-2").addEventListener("click", function() {
+            toggleSubMenu("submenu-title-2");
+        });
+
+        document.querySelector(".submenu-title-3").addEventListener("click", function() {
+            toggleSubMenu("submenu-title-3");
+        });
+    });
+
+    
+</script>
 
 <header class="navigation" id="navigation">
-    <nav class="nav-bar" style="height: 82px;">
+    <nav class="nav-bar">
         <h1>
             <a href="index.jsp">
                 <img src="images/logo.png">
@@ -78,7 +135,49 @@
                 <a href="<%=request.getContextPath()%>/mypage/userMypage.do">마이페이지</a>
             </div>
         </div>
+        <div class="menu-hamburger" onclick="toggleMenu()">
+            <i class="xi-bars"></i>
+        </div>
     </nav>
+        <div class="test" id="test">
+            <div class="login-box">
+                <%if(session.getAttribute("midx")==null){%>
+                <a class="login" href="<%=request.getContextPath()%>/member/memberLogin.do">로그인</a>
+                <%} else{ %>
+                <a href="<%=request.getContextPath()%>/member/memberLogout.do">로그아웃</a>
+                <%} %>
+                <a href="<%=request.getContextPath()%>/mypage/userMypage.do">마이페이지</a>
+            </div>
+            <div class="menu-hamburger-list">
+                <div class="menu-list-wrap">
+                    <div class="menu-title" onclick="toggleSubMenu('submenu-title-1')">
+                        <p>전주에가면</p>
+                    </div>
+                    <ul class="submenu-title-1">
+                        <li><a href="<%=request.getContextPath()%>/contents/sightList.do">명소</a></li>
+                        <li><a href="<%=request.getContextPath()%>/contents/foodList.do">음식</a></li>
+                        <li><a href="#">영상</a></li>
+                    </ul>
+                </div>
+                <div class="menu-list-wrap">
+                    <div class="menu-title" onclick="toggleSubMenu('submenu-title-2')">
+                        <p>여행일정</p>
+                    </div>
+                    <ul class="submenu-title-2">
+                        <li><a href="<%=request.getContextPath()%>/schedule/scheduleList.do">여행공유</a></li>
+                    </ul>
+                </div>
+                <div class="menu-list-wrap">
+                    <div class="menu-title" onclick="toggleSubMenu('submenu-title-3')">
+                        <p>공지사항</p>
+                    </div>
+                    <ul class="submenu-title-3">
+                        <li><a href="#">공지</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+ 
 </header>
 
 <div class="main-contents">
@@ -87,7 +186,6 @@
             <div><a href="#"><img class="first-visual-img" src="images/1920785.jpg"></a></div>
             <div><a href="#"><img class="first-visual-img" src="images/1920785.jpg"></a></div>
             <div><a href="#"><img class="first-visual-img" src="images/1920785.jpg"></a></div>
-
         </div>
         <div class="first-text">
             <div class="first-text-list">

@@ -62,27 +62,28 @@ $(document).ready(function(){
 
      function calculateSlidesToShow() {
 	 	var viewportWidth = $(window).width();
-	 	console.log("뷰포트" + viewportWidth);
+	 	//console.log("뷰포트" + viewportWidth);
 	
 	
 	 	// breakpoint가 1500 이하인 경우 이미지 넓이를 280으로 변경
 	 	var imageWidth = 417;
-        console.log("이미지넓이" + imageWidth);
+        //console.log("이미지넓이" + imageWidth);
 
 
 	 	var totalwidth = imageWidth;
-         console.log("토탈넓이" + totalwidth);
+        //console.log("토탈넓이" + totalwidth);
 
 	
 	 	// 반올림하여 소수점 한자리까지 표시
 	 	var slidesToShow = Math.round(viewportWidth / totalwidth * 10) / 10;
-	 	console.log("개수" + slidesToShow);
+	 	//console.log("개수" + slidesToShow);
 	
 	 	return slidesToShow;
 	 }
 	
 	$('.second-visual-list').slick({
 		pauseOnHover: true,
+        autoplay: true,
 		autoplaySpeed: 3000,
 		centerMode: true,
 		centerPadding: '60px',
