@@ -2,19 +2,22 @@ package com.ezen_jeonju.myapp.controller;
 
 import java.util.ArrayList;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezen_jeonju.myapp.domain.ContentsVo;
 import com.ezen_jeonju.myapp.service.ContentsService;
-import com.ezen_jeonju.myapp.util.UploadFileUtiles;
 
 @Controller
 @RequestMapping(value = "/contents")
@@ -110,4 +113,24 @@ public class ContentsController {
 		}
 				
 	}	
+	
+	@ResponseBody
+	@RequestMapping(value="/searchAddrs.do")
+	public JSONObject searchAddrs(@RequestParam("keyword") String keyword) throws Exception {		
+		JSONObject js = new JSONObject();
+		String address = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query="+keyword;
+		Document rawData = Jsoup.connect(address).get();
+		
+		Elements search = rawData.select("div.vV_z_");
+		String addrResult = "";
+		
+		for(Element option : search) {
+			//System.out.println(option);
+			
+			addrResult = search.select(".LDgIH").text();
+			//System.out.println("넘어온거:" +addrResult);
+		}
+		js.put("addrResult", addrResult);
+		return js;
+	}
 }

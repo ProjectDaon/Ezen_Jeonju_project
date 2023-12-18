@@ -15,7 +15,30 @@
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script src="../summernote/summernote-ko-KR.js"></script>
+<style>
+.tagify{    
+  width: 100%;
+  max-width: 700px;
+}
 
+.tagify--outside{
+    border: 0;
+}
+
+.tagify--outside .tagify__input{
+  order: -1;
+  flex: 100%;
+  border: 1px solid var(--tags-border-color);
+  margin-bottom: 1em;
+  transition: .1s;
+}
+
+.tagify--outside .tagify__input:hover{ border-color:var(--tags-hover-border-color); }
+.tagify--outside.tagify--focus .tagify__input{
+  transition:0s;
+  border-color: var(--tags-focus-border-color);
+}
+</style>
 </head>
 <body>
 <script type="text/javascript">
@@ -47,6 +70,27 @@ function goWrite(){
     fm.submit();
     return;
 }
+
+$(document).ready(function(){
+    $('#searchButton').on('click', function(){
+    	
+      var keyword = $('#searchAddr').val();
+      
+      $.ajax({
+  		type: "post",
+  		url: "${pageContext.request.contextPath}/contents/searchAddrs.do?keyword="+keyword,
+		dataType: "json",
+		success: function(data){
+			$('#addr').val(data.addrResult);
+		},
+		error: function(request, status, error) {
+	        alert(data);
+	        alert("status : " + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	      }
+  	});
+    });
+  });
+
 </script>
 <div class="panel-heading">글 작성하기</div>
 	<div class="panel-body">
@@ -60,12 +104,28 @@ function goWrite(){
 			</div> 
 			<div>
 				<label>제목</label>
-				<input type="text" name="contentsSubject">
+				<input type="text" name="contentsSubject"><br>
+				<script src="https://unpkg.com/@yaireo/tagify"></script>
+				<!-- 폴리필 (구버젼 브라우저 지원) -->
+				<script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+				<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+				
+				<!-- 해시 태그 정보를 저장할 input 태그. (textarea도 지원) -->
+				태그<input name='basic'>
+				
+				<script>
+				    const input = document.querySelector('input[name=basic]');
+				    let tagify = new Tagify(input); // initialize Tagify
+				    
+				    // 태그가 추가되면 이벤트 발생
+				    tagify.on('add', function() {
+				      console.log(tagify.value); // 입력된 태그 정보 객체
+				    })
+				</script>
 			</div>
 			<textarea id="summernote" name="contentsArticle"></textarea>
 			<input type="file" name="contentsFileName">
 			
-		
 	<script>
 	$(document).ready(function() {
 	  $('#summernote').summernote({
@@ -73,6 +133,11 @@ function goWrite(){
 	  });
 	});
 	</script>
+	
+	<input type="text" id="searchAddr" class="inp_out" size="70" placeholder="찾고자 하는 주소를 검색해주세요">
+	<input type="button" value="검색" id="searchButton">
+	<br>
+	
 	<input type="text" id="addr" value="" size="70" class="inp_out" placeholder="주소를 입력해 주세요">
 	<span class="btn h22"><input type="button" value="좌표 검색" onclick="goChk();return false;"></span>
 	<div id="clickLatlng"></div>
@@ -118,8 +183,8 @@ function goWrite(){
 		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 		        map.setCenter(coords);
 		        
- 		        var message = "클릭한 위치의 위도는<input type='text' name='contentsLatitude' value='"  + latlng.getLat() + "' > 이고, ";
-		        message += "경도는 <input type='text' name='contentsLongitude' value='" + latlng.getLng() + "' >입니다";
+ 		        var message = "<input type='hidden' name='contentsLatitude' value='"  + latlng.getLat() + "' > ";
+		        message += " <input type='hidden' name='contentsLongitude' value='" + latlng.getLng() + "' >";
 		        
 		        var resultDiv = document.getElementById('clickLatlng'); 
 		        resultDiv.innerHTML = message; 
@@ -128,10 +193,10 @@ function goWrite(){
 		}); 
 	}
 	
-
+	
 	       
 	</script>
-	</div>
-	<input type="button" value="등록" onclick="goWrite()">
+</div>
+<input type="button" value="등록" onclick="goWrite()">
 </body>
 </html>
