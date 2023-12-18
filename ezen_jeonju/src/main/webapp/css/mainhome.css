@@ -610,13 +610,19 @@ footer .inner{
     }
 }
 
-@media screen and (max-width: 900px){
+@media screen and (max-width: 1200px){
     .admin-click{
         display: none;
     }
     .second-visual-list .slick-slide{
         margin: 2px 10px;
-        }
+    }
+    .video-more{
+        display: none;
+    }
 
+    .first-visual {
+        padding-top: 52px;
+    }
 
 }

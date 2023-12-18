@@ -30,11 +30,16 @@ ul, li{
     left: 0;
     top: 0;
     right: 0;
-    z-index: 100000;
+    z-index: 1000;
     background: #fff;
-    height: 90px;
+    height: 86px;
     border-bottom: 1px solid #e7eff2;
 }
+
+.nav-bar {
+    height: 82px;
+}
+
 .nav-bar h1{
 	width: 151px;
     height: 137px;
@@ -43,7 +48,8 @@ ul, li{
     text-align: center;
     box-sizing: border-box;
     position: absolute;
-	left: 30px;
+	left: 10%;
+    z-index: 1000;
 }
 
 .nav-bar a{
@@ -56,7 +62,7 @@ ul, li{
 .nav-bar img{
 	display: block;
 	width: 150px;
-	vertical-align: top;
+    z-index: 1000;
 }
 
 img {
@@ -67,7 +73,7 @@ img {
 .nav-bar .menu-element{
 	max-width: 1920px;
 	margin: 0 auto;
-	padding-left: 200px;
+	padding-left: 20%;
 }
 
 .nav-bar .menu-element li{
@@ -92,7 +98,7 @@ img {
     height: 255px;
     background: #fff;
     position: absolute;
-    top: 90px;
+    top: 86px;
     left: 0;
     z-index: -1;
     box-shadow: 0 5px 10px 0 rgba(0,0,0,.1);
@@ -137,6 +143,11 @@ img {
     width: 1000px;
 }
 
+.dep-inner .depth-2 li a:hover {
+	color: #2172dd;
+}
+
+
 .dep-inner .inner-sub-title{
 	float: left;
     text-align: left;
@@ -163,3 +174,132 @@ img {
     margin-top: 7px;
     text-align: left;
 }
+
+.menu-hamburger{
+    position: absolute;
+    right: 30px;
+    top:10px;
+    font-size: 40px;
+    display: none;
+    color: #FFCDA3;
+    
+}
+
+.menu-hamburger i{
+    font-size: 45px;
+    cursor: pointer;
+}
+
+.test {
+    display: none;
+    animation: slidedown 0.3s ease-out;
+    height: 400px;
+    width: 100%;
+    background-color: #ffffff;
+    top: 0;
+    left: 0;
+    text-align: left;
+    padding: 50px 100px;
+    display: flex;
+    z-index: 1;
+
+}
+
+@keyframes slidedown {
+    from {
+        opacity: 0;
+        transform: translateY(-400px)
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px)
+    }
+}
+
+.test .login-box{
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+
+.menu-list-wrap {
+    border: 1px solid rgb(0, 0, 0);
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.test .menu-title p{
+    padding: 15px;
+    cursor: pointer;
+    margin: 0;
+}
+
+.test .menu-hamburger-list ul{
+    display: none;
+    animation: subtitle-slidedown 0.2s ease-out;
+    padding: 15px;
+    background-color: #fcf3ec;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+}
+
+.menu-hamburger-list ul li {
+    padding: 10px;
+}
+
+
+@keyframes subtitle-slidedown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px)
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px)
+    }
+}
+
+
+@media screen and (max-width: 1500px){
+    .nav-bar h1{
+        left: 30px;
+    }
+    .nav-bar .menu-element{
+        padding-left: 200px;
+    }
+} 
+
+@media screen and (max-width: 1200px){
+    .menu-wrap{
+        display: none;
+    }
+    .my-menu-element{
+        display: none;
+    }
+
+    .navigation{
+        height: 60px;
+    }
+
+    .nav-bar{
+        height: 60px;
+        
+    }
+    .nav-bar img{
+        width: 100px;
+    }
+
+    .nav-bar h1{
+        width: 100px;
+        height: 90px;
+    }
+
+    .menu-hamburger{
+        display: block;
+    }
+    .test {
+        display: none;
+    }
+
+}    
