@@ -57,7 +57,6 @@ $(document).ready( function() {
 <script>
 function goWrite(){
 	var fm = document.frm;
-	
 	if(fm.contentsSubject.value==""){
 		alert('제목을 입력해주세요');
 		fm.contentsSubject.focus();
@@ -111,10 +110,10 @@ $(document).ready(function(){
 				<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 				
 				<!-- 해시 태그 정보를 저장할 input 태그. (textarea도 지원) -->
-				태그<input name='basic'>
+				태그<input name='contentsHashtag'>
 				
 				<script>
-				    const input = document.querySelector('input[name=basic]');
+				    const input = document.querySelector('input[name=contentsHashtag]');
 				    let tagify = new Tagify(input); // initialize Tagify
 				    
 				    // 태그가 추가되면 이벤트 발생

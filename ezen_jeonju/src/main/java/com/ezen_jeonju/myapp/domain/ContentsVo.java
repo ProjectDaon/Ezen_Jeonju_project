@@ -1,5 +1,7 @@
 package com.ezen_jeonju.myapp.domain;
 
+import org.json.simple.JSONObject;
+
 public class ContentsVo {
 	private int cidx;
 	private int midx;
@@ -12,6 +14,7 @@ public class ContentsVo {
 	private String contentsYN;
 	private String contentsLatitude;
 	private String contentsLongitude;
+	private String contentsHashtag;
 	
 	public int getCidx() {
 		return cidx;
@@ -78,5 +81,11 @@ public class ContentsVo {
 	}
 	public void setContentsLongitude(String contentsLongitude) {
 		this.contentsLongitude = contentsLongitude;
+	}
+	public String getContentsHashtag() {
+		return contentsHashtag;
+	}
+	public void setContentsHashtag(String contentsHashtag) {
+		this.contentsHashtag = contentsHashtag;
 	}
 }

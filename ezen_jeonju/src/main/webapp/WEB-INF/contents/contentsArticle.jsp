@@ -12,6 +12,21 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-3.1.0.js"></script>
+<style>
+ul.listul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+li.listli {
+  margin-right: 10px; /* 각 항목 사이의 간격 조절 */
+  padding: 5px;
+  border: 1px solid #ddd; /* 테두리 추가 */
+  border-radius: 5px; /* 테두리의 모서리를 둥글게 만듦 */
+}
+</style>
 </head>
 <body>
 <script type="text/javascript">
@@ -32,6 +47,12 @@ cidx: ${cv.cidx} <br>
 작성일: ${cv.contentsWriteday} <br>
 조회수: ${cv.contentsViewCount} <br>
 내용: ${cv.contentsArticle} <br>
+해시태그
+<ul class="listul">
+    <c:forEach var="item" items="${hashtag}">
+        <li class="listli">${item.value}</li>
+    </c:forEach>
+</ul>
 
 <div id="map" style="width:500px;height:400px;"></div>
 <input type="hidden" id="latitude" value="${cv.contentsLatitude}">
