@@ -121,23 +121,5 @@ public class ContentsController {
 				
 	}	
 	
-	@ResponseBody
-	@RequestMapping(value="/searchAddrs.do")
-	public JSONObject searchAddrs(@RequestParam("keyword") String keyword) throws Exception {		
-		JSONObject js = new JSONObject();
-		String address = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query="+keyword;
-		Document rawData = Jsoup.connect(address).get();
-		
-		Elements search = rawData.select("div.vV_z_");
-		String addrResult = "";
-		
-		for(Element option : search) {
-			//System.out.println(option);
-			
-			addrResult = search.select(".LDgIH").text();
-			//System.out.println("넘어온거:" +addrResult);
-		}
-		js.put("addrResult", addrResult);
-		return js;
-	}
+
 }
