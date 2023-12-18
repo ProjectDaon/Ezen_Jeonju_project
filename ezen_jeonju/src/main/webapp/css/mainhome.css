@@ -1,144 +1,132 @@
-@charset "UTF-8";
 
-
-
-body{
-	box-sizing: border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-
-.main-slide { 
-	margin-top: 55px; 
-	text-align: center;
+body, div, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, p, form, fieldset, table, tr, th, td {
+    margin: 0;
+    padding: 0;
 }
-
 a {
     text-decoration: none;
     color: #555;
 }
 
-.main-slide-img div { 
-	position: relative;  
-	width: 100%; 
-	height: 75vh;
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
 }
 
-.main-slide-img div img { 
-    width: 100%;
-    height: 100%;
-    object-fit: cover; 
-	display: block;
-	border-bottom-left-radius: 12%;
-	border-bottom-right-radius: 12%;
+img {
+    border: none;
+    vertical-align: top;
 }
 
-.main-slide-img button {
-	position: absolute; 
-	z-index: 10; 
-	top: 50%; 
-	transform: translateY(-50%); 
-	width: 71px; 
-	height: 71px; 
-	border-radius: 100%; 
-	background:rgba(0,0,0,.5); 
-	border:none;
-}
-    
-.main-slide-img button:before{
-	font-family: 'xeicon'; 
-	color:#fff; 
-	font-size: 44px;
+button {
+    font-family: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    overflow: visible;
+    white-space: nowrap;
+    font-size: 23px;
+    font-weight: 300;
 }
 
-.main-slide-img button.slick-prev {
-	left:50px; 
-	font-size: 0; 
-	color:transparent;
-}
 
-.main-slide-img button.slick-prev::before {
-	content:"\e93b";
-}
 
-.main-slide-img button.slick-next {
-	right:50px; 
-	font-size: 0; 
-	color:transparent;
-}
 
-.main-slide-img button.slick-next::before {
-	content:"\e93e";
-}
-
-.main-slide-img div a {
-	display: block;
-	width: 100%;
-	height: 100%;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
-}
-
-.main-text {
+.main-contents {
     display: flex;
+    flex-direction: column;
+}
+
+/* 첫 화면 배너 슬라이드 */
+
+.first-visual{
+    padding-top: 82px;
+}
+
+
+.first-visual-list {
     position: relative;
-    width : 55vw;
-    height: 80px;
-    object-fit: cover;
-    font-size: 19px;
-    margin-top: -2%;
-    z-index: 11;
-    margin-right: 500px;
+}
+
+.first-visual-list .first-visual-img{
+    width: 100%;
+}
+
+.first-text {
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-top: -70px;
+    position: relative;
+    z-index: 1;
     background-color: #fff;
-    border: 0px;
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: -1px 0px 5px rgb(0,0,0,0.2);
-	padding-left: 30px;
-
-}
-.main-text a {
-    text-decoration: none;
-    color: black;
-    
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    padding: 20px 30px;
 }
 
-.main-slide-text {
-    width : 85%;
-}
-.main-slide-text .slide_txt{
-	font-size: 26px;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	white-space: nowrap;
-	width: 100%;
-
+.first-text-list {
+    max-width: calc(100% - 135px);
+    margin: 0;
 }
 
-.main-slide-page {
-    width : 75px;
-    padding-top: 30px;
+.first-text .slide-txt {
+    font-size: 26px;
+    color: #333;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+    padding-right: 10px;
+    line-height: normal;
+    margin: 0%;
 }
 
+.first-control {
+    font-size: 23px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
 
-/* home *button */
+.first-control .page {
+    margin-right: 10px;
+}
 
+.btn-area {
+    display: flex;
+}
 
 .admin-click {
 	display : flex;
 	position : absolute;
-	right : 1%
+    right: -17%
 }
 
+
+.video-more{
+    display : flex; 
+	position : absolute;
+    right: 5%;
+    top: 40%
+}
 
 .btn-more {
     border: 1px solid #ddd;
     background-color: #fff;
-    border-radius: 30px;
+    border-radius: 5px;
     padding: 8px 15px 8px 20px;
-    align-items: center;
     font-size: 25px;
 }
 
@@ -150,18 +138,23 @@ a {
 }
 
 
+/* 두 번째 슬라이드 화면 */
 
-/* section second */
+.second-visual {
+	width: 100%;
+	margin-top: 6%;
+	margin-bottom: 50px;
+	position: relative;
+}
 
-.sub-title{
-	padding-left: 10%;
-    padding-top: 20px;
+.title-section{
+    padding : 30px;
     width: 100%;
 	text-align: left;
 }
 
-.sub-title .title1{
-    padding-left: 1%;
+.title-section .title1{
+    padding-left: 10%;
     padding-top: 20px;
     width: 100%;
     font-size: calc(14px + 1.1vw);
@@ -169,7 +162,7 @@ a {
 	font-weight: 500;
 }
 
-.sub-title .title2{
+.title-section .title2{
 	font-size: calc(14px + 0.3vw);
     margin-left: 30px;
     color: #666;
@@ -177,74 +170,26 @@ a {
 
 }
 
-.second-slide .second-controll{
-    padding-right: 10%;
-    padding-bottom: 25px;
-    width: 100%;
-    text-align: right;
-}
 
-
-/* second slide */
-
-.second-slide {
-	text-align: center;
-	width: 100%;
-	margin-top: 6%;
-	margin-bottom: 50px;
-	position: relative;
-}
-
-
-  .second-slide-1 {
-	position: relative;
-} 
-
-.second-slide-2{
-	position: relative;
-	top: 0;
-	left: 0;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	
-	
-}
-
-.second-slide-3 .thumbnail {
+.second-visual-list .thumbnail {
 	transition: 0.2s;	
 }
 
-.second-slide-3 .thumbnail:hover {
+.second-visual-list .thumbnail:hover {
 	transform: scale(1.05);
 }
 
 
- .slick-slide {
-    display: none;
-    float: left;
-    height: 100%;
-    min-height: 1px;
-} 
-
- .slick-slider {
-    position: relative;
-    display: block;
-    box-sizing: border-box;
- }
- 
- 
- .slick-list {
-	margin: -2px -20px;
-}
-
- .second-slide-3 {
+ .second-visual-list .slick-slide{
     margin: 2px 20px;
-	max-width: 100%;
-	max-height: 450px;
-	
-	
  }
+
+
+.second-visual-list .slick-list {
+    order: 2;
+    padding-top: 20px!important;
+    margin-top: -20px;
+}
 
  .thumbnail{
 	position: relative;
@@ -252,35 +197,37 @@ a {
 } 
 
  .thumbnail img {
- 	overflow: hidden;
- 	width : 417px;
- 	height : 320px;
- 	object-fit:cover;
+	overflow: hidden;
+    max-width: 417px;
+    max-height: 277px;
+    width: 100%;
+    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
     border-radius: 30px;
-    width : 100%;
 
 	
 } 
 
-.second-slide-3 .slide_txt{
+.second-visual-list .slide-txt {
+    max-width: 417px;
     font-size: 18px;
     color: #333;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 15px;
     padding: 0 30px;
     text-align: center;
     line-height: initial;
     word-break: keep-all;
-	
-	
 }
+
 
 /* section second 슬라이드 버튼 */
 
-.second-slide-2 button {
+.second-visual-list button {
 	position: absolute; 
 	z-index: 10; 
-	top: 35%; 
+	top: 45%; 
 	transform: translateY(-50%); 
 	width: 55px; 
 	height: 55px; 
@@ -289,74 +236,128 @@ a {
 	border:none;
 }
 
-.second-slide-2 button:before{
+.second-visual-list button:before{
 	font-family: 'xeicon'; 
 	color:#fff; 
 	font-size: 33px;
 }
 
-.second-slide-2 button.slick-prev {
+.second-visual-list button.slick-prev {
 	left:35px; 
 	font-size: 0; 
 	color:transparent;
 }
 
-.second-slide-2 button.slick-prev::before {
+.second-visual-list button.slick-prev::before {
 	content:"\e93b";
 }
 
-.second-slide-2 button.slick-next {
+.second-visual-list button.slick-next {
 	right:35px; 
 	font-size: 0; 
 	color:transparent;
 }
 
-.second-slide-2 button.slick-next::before {
+.second-visual-list button.slick-next::before {
 	content:"\e93e";
 }
 
 
-/* section hot-3 */
-.hot-3{
+/* 세번째 인기여행3 */
+.inner{
+    position: relative;
+    margin: 0 auto;
+    width: 1500px;
+    height: auto;
+}
+
+.third-visual .title1{
+    padding-left: 0%;
+
+}
+.third-visual {
     width: 100%;
-    padding-top: 2%;
     padding: 5%;
-    background-color: #f1fbfd
+    background-color: #fff4ec;
 }
 
-.hot-3 .sub-title{
-	padding-left: 10px;
-}
-
-.inner {
+.third-visual .inner {
     max-width: 1500px;
     width: 100%;
+	height: auto;
     margin: 0 auto;
-
-}
-.hot-3-list{
-	position: relative;
-	display: block;
-	width: 100%;
-	height: 400px;
-	text-align: center;
 }
 
-.hot-3-list div{
-	float: left;
-	width: 33%;
-	height: 100%;
-	padding : 15px;
+.third-visual .hot3-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: -2%;
 }
 
-.hot-3-list div img{
-	width: 100%;
-	height: 100%;
-	border-radius: 15%;
+.third-visual .hot-item {
+    width: 32%;
+}
+
+.third-visual a {
+    display: block;
+    position: relative;
+}
+
+.third-visual .hot-item:nth-child(1) .box-wrap, .third-visual .hot-item:nth-child(2) .box-wrap, .third-visual .hot-item:nth-child(3) .box-wrap {
+    max-width: 481px;
+    max-height: 369px;
+}
+
+.third-visual .box-wrap {
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.third-visual .hot-item:nth-child(1) .box-img, .third-visual .hot-item:nth-child(2) .box-img, .third-visual .hot-item:nth-child(3) .box-img {
+    padding-top: 77%;
+}
+
+.third-visual .box-img {
+    display: block;
+    position: relative;
+    padding-top: 100%;
+}
+
+.third-visual .box-img img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;   
+    bottom: 0;
+    border-radius: 20px;
+    transform: scale(1);
+}
+
+.third-visual .hot-item:nth-child(1) .tit, .third-visual .hot-item:nth-child(2) .tit, .third-visual .hot-item:nth-child(3) .tit {
+    text-align: center;
+    font-size: calc(14px + 0.4vw);
+    font-weight: 500;
+    color: #333;
+    margin-top: 5%;
+}
+
+.third-visual .hot-item .tit {
+    word-break: auto-phrase;
+    line-height: normal;
+}
+
+.third-visual .title_wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5%;
 }
 
 
-.hot-3 .slide_txt{
+.third-visual-3 .slide_txt{
 	font-size: 20px;
 	color: #050505;
 	font-weight: 500;
@@ -370,16 +371,16 @@ a {
 }
 
 
-.hot-3-list div {
+.box-wrap {
 	transition: 0.2s;	
 }
 
-.hot-3-list div:hover {
+.box-wrap:hover {
 	transform: scale(1.05);
 }
 
 
-/* section-exhibition */
+/* 네번째 공연,행사,전시 */
 
 .exhibition{
     width: 100%;
@@ -409,7 +410,6 @@ a {
 	position: relative;
 	display: block;
 	width: 100%;
-	height: 450px;
 	text-align: center;
 }
 
@@ -423,13 +423,11 @@ a {
 
 .exhibition-list div img{
 	width: 100%;
-	height: 100%;
-	object-fit: cover;
 	box-shadow: -1px 0px 20px rgb(0,0,0,0.2);
 }
 
 
-.exhibition .slide_txt{
+.exhibition .slide-txt{
 	font-size: 20px;
 	color: #333;
 	font-weight: 500;
@@ -451,17 +449,23 @@ a {
 	transform: scale(1.05);
 }
 
-
-/* section video */
+/* 4번째 유튜브 영상 */
 
 .video {
-	padding: 5%
-	
+	padding: 5%;
+    width: 100%;
+    display: flex;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-.video .sub-title{
-	padding-left: 10px;
+.video .title-section{
 	text-align: center;
+}
+.video .title-section .title1{
+	padding: 0;
+    color: #ffffff;
 }
 
 .video .sns-list {
@@ -523,37 +527,30 @@ color: #fff;
 	position: relative;
 	display: block;
 	width: 100%;
-	height: 320px;
 	text-align: center;
-}
+    margin-top: 5.5em;
+}   
 
 .video-list div{
 	float: left;
 	width: 25%;
-	height: 100%;
-	padding : 15px;
+	padding : 10px;
 }
 
 .video-list div img{
 	width: 100%;
-	height: 280px;
-	border-radius: 15%;
-	object-fit: cover;
-	
 }
 
-
-.video .slide_txt{
-	font-size: 20px;
-	color: #050505;
-	font-weight: 500;
-	padding-left: 20px;
-	padding-right: 20px;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	white-space: nowrap;
-	width: 100%;
-	
+.video-list .slide-txt {
+    width: auto;
+    font-size: 18px;
+    color: #333;
+    width: 100%;
+    margin-top: 15px;
+    padding: 0 30px;
+    text-align: center;
+    line-height: initial;
+    word-break: keep-all;
 }
 
 
@@ -566,59 +563,60 @@ color: #fff;
 }
 
 
-
-
-
 footer {
 	display: block;
-    background-color: #eef5fb;
-    padding: 2% 5% 4%;
+    background-color:  #fee4ce;
+    padding: 4% 5% 4%;
     clear: both;
 }
 
 .footer-text {
-		isplay: flex;
 	    align-items: left;
 	    flex-wrap: wrap;
 }
 
+footer .inner{
+    width: 100%
+}
 
 
-/* media 1500px */
 
 @media screen and (max-width: 1500px){
-	.second-slide-3 .thumbnail img {
+    .first-text {
+        padding: 20px;
+        max-width: 900px;
+        margin-top: -50px;
+    }
+
+    .first-text-list .slide-txt {
+        font-size: 22px;
+    }
+    
+    .second-visual-list .thumbnail img {
 		max-width: 280px;
 		max-height: 214px;;
 	}
+    .second-visual-list .slick-slide{
+        margin: 2px 15px;
+    }
 
-	.second-slide-3 {
-		margin: 2px 15px;
-		max-height: 300px;
-	}
+    .exhibition-list div{
+        width: 21%;
+        padding : 10px;
+        
+    }
+    .title-section{
+        padding: 15px;
+    }
+}
 
-	.second-slide-3 .slide_txt{
-		margin-top: 20px;
-		margin-bottom: 20px;
-		font-size: 14px;	
-	}
-	.sub-title .title2{
-		display: none;
-	}
+@media screen and (max-width: 900px){
+    .admin-click{
+        display: none;
+    }
+    .second-visual-list .slick-slide{
+        margin: 2px 10px;
+        }
 
-	.hot-3-list{
-		height: 320px;
-	}
 
-	.exhibition-list{
-		height: 250px;
-	}
-
-	body section {
-		padding : 2%
-	}
-	
-	.video-list div img{
-		height: 180px;
-	}
-}  
+}
