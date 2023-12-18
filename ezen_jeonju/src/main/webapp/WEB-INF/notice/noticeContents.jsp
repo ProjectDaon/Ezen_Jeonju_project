@@ -33,7 +33,13 @@ nidx: ${nv.nidx} <br>
 내용: ${nv.noticeArticle} <br>
 첨부파일: ${nv.noticeFileName} <br>
 파일경로: ${nv.noticeFilePath} <br>
+해시태그:
+<c:forEach var="item" items="${hashtag}">
+${item.value}
+</c:forEach>
 
+<div>
 <a href="${pageContext.request.contextPath}/notice/noticeModify.do?nidx=${nv.nidx}">수정하기</a>
+</div>
 </body>
 </html>

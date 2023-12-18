@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,7 +57,7 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value = "/noticeList.do")
-	public String noticeList(SearchCriteria scri, Model model) {
+	public String noticeList(SearchCriteria scri, Model model, HttpSession session) {
 		
 		int totalCount = ns.noticeTotalCount(scri);
 		pm.setScri(scri);
@@ -64,21 +66,45 @@ public class NoticeController {
 		ArrayList<NoticeVo> nvlist = ns.noticeList(scri);
 		model.addAttribute("nvlist",nvlist);
 		model.addAttribute("pm", pm);
+		
+		// 검색어 입력 유지
+		String keyword = (String)scri.getKeyword();
+		if(keyword != null) {
+			session.setAttribute("keyword", keyword);
+		}
+		
+		// 카테고리 선택 유지
+		String searchType = (String)scri.getSearchType();
+		if(searchType != null) {
+			session.setAttribute("searchType", searchType);
+		}
+		
 		return "/notice/noticeList";
 	}
 	
 	@RequestMapping(value = "/noticeContents.do")
-	public String noticeContents(@RequestParam("nidx") String nidx,Model model) {
-		int nidx_i = Integer.parseInt(nidx);
-		NoticeVo nv = ns.noticeContents(nidx_i);
+	public String noticeContents(@RequestParam("nidx") int nidx, Model model) throws Exception {
+		NoticeVo nv = ns.noticeContents(nidx);
+		String hashtagList = nv.getNoticeHashtag();
+		JSONParser parser = new JSONParser();
+		JSONArray jsonArrayObj;
+		jsonArrayObj = (JSONArray) parser.parse(hashtagList);
+		
 		model.addAttribute("nv", nv);
+		model.addAttribute("hashtag", jsonArrayObj);
 		return "/notice/noticeContents";
 	}
 	
 	@RequestMapping(value="/noticeModify.do")
-	public String noticeModify(@RequestParam("nidx") int nidx, Model model) {		
-		NoticeVo nv = ns.noticeContents(nidx);		
+	public String noticeModify(@RequestParam("nidx") int nidx, Model model) throws Exception {		
+		NoticeVo nv = ns.noticeContents(nidx);
+		String hashtagList = nv.getNoticeHashtag();
+		JSONParser parser = new JSONParser();
+		JSONArray jsonArrayObj;
+		jsonArrayObj = (JSONArray) parser.parse(hashtagList);
+		
 		model.addAttribute("nv", nv);
+		model.addAttribute("hashtag", jsonArrayObj);
 		return "/notice/noticeModify";
 	}
 	
