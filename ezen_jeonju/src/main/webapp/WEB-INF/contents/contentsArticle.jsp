@@ -50,7 +50,7 @@ cidx: ${cv.cidx} <br>
 해시태그
 <ul class="listul">
     <c:forEach var="item" items="${hashtag}">
-        <li class="listli">${item.value}</li>
+        <li class="listli">#${item.value}</li>
     </c:forEach>
 </ul>
 
