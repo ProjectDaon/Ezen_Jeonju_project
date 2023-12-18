@@ -2,19 +2,25 @@ package com.ezen_jeonju.myapp.controller;
 
 import java.util.ArrayList;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezen_jeonju.myapp.domain.ContentsVo;
 import com.ezen_jeonju.myapp.service.ContentsService;
-import com.ezen_jeonju.myapp.util.UploadFileUtiles;
 
 @Controller
 @RequestMapping(value = "/contents")
@@ -33,21 +39,19 @@ public class ContentsController {
 	}
 	
 	@RequestMapping(value = "/contentsWriteAction.do")
-	public String contentsWriteAction(ContentsVo cv, HttpSession session) throws Exception{
+	public String contentsWriteAction(ContentsVo cv, HttpSession session) {
 	//	MultipartFile file = cv.getNoticeFileName();
 	//	String uploadedFileName="";
 	//	if(!file.getOriginalFilename().equals("")) {
 			//업로드 시작
 	//		uploadedFileName = UploadFileUtiles.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
 	//	}
-	//	System.out.println("uploadFileName: "+uploadedFileName);
 		cv.setMidx(Integer.parseInt(session.getAttribute("midx").toString()));
 	//	cv.setNoticeUploadedFileName(uploadedFileName);
 	//	cv.setNoticeFilePath(uploadPath);
 		cs.contentsWrite(cv);
 		String category = cv.getContentsCategory();
-		
-		//System.out.println("넘어온 카테고리: "+category);
+
 		if(category.equals("명소")) {
 			return "redirect:/contents/sightsList.do";
 		}else {
@@ -70,10 +74,16 @@ public class ContentsController {
 	}
 	
 	@RequestMapping(value = "/contentsArticle.do")
-	public String contentsArticle(@RequestParam("cidx") int cidx, Model model) {
+	public String contentsArticle(@RequestParam("cidx") int cidx, Model model) throws Exception {
 		cs.contentsViewCountUpdate(cidx);
 		ContentsVo cv = cs.contentsArticle(cidx);
+		String hashtagList = cv.getContentsHashtag();
+		JSONParser parser = new JSONParser();
+		JSONArray jsonArrayObj;
+		jsonArrayObj = (JSONArray) parser.parse(hashtagList);
+		
 		model.addAttribute("cv", cv);
+		model.addAttribute("hashtag", jsonArrayObj);
 		return "/contents/contentsArticle";
 	}
 	
@@ -110,4 +120,6 @@ public class ContentsController {
 		}
 				
 	}	
+	
+
 }
