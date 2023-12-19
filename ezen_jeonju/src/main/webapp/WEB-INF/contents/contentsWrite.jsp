@@ -92,8 +92,8 @@ function goWrite(){
 	
 	<br>
 	
-	<input type="hidden" id="contentsLatitude"name="contentsLatitude" value="">
-	<input type="hidden" id="contentsLongitude" name="contentsLongitude" value="">
+	<input type="text" id="contentsLatitude"name="contentsLatitude" value="">
+	<input type="text" id="contentsLongitude" name="contentsLongitude" value="">
 	</form>
 	<div class="map_wrap">
     <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
@@ -102,7 +102,7 @@ function goWrite(){
         <div class="option">
             <div>
                 <form onsubmit="searchPlaces(); return false;">
-                    키워드 : <input type="text" value="전주" id="keyword" size="15"> 
+                    키워드 : <input type="text" value="" id="keyword" size="15"> 
                     <button type="submit">검색하기</button> 
                 </form>
             </div>

@@ -105,16 +105,29 @@ function goDelete(){
 			</div> 
 			<div>
 				<label>제목</label>
-				<input type="text" name="contentsSubject" value="<%=cv.getContentsSubject()%>">
+				<input type="text" name="contentsSubject" value="<%=cv.getContentsSubject()%>"><br>
+				<script src="https://unpkg.com/@yaireo/tagify"></script>
+				<!-- 폴리필 (구버젼 브라우저 지원) -->
+				<script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+				<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+				
+				태그<input name='contentsHashtag'>
+				
+				<script>
+				    const input = document.querySelector('input[name=contentsHashtag]');
+				    var tags = '${values}';
+				    input.value=tags;
+				    let tagify = new Tagify(input); // initialize Tagify
+				    
+				    // 태그가 추가되면 이벤트 발생
+				    tagify.on('add', function() {
+				      console.log(tagify.value); // 입력된 태그 정보 객체
+				    })
+				</script>
 			</div>
 			<textarea id="summernote" name="contentsArticle"><%=cv.getContentsArticle() %></textarea>
 
-<!-- 	<tr>
-		<th>비밀번호</th>
-		<td>
-		<input type="password" name="pwd">		
-		</td>
-		</tr> -->		
+		
 			<input type="file" name="contentsFileName">
 			<input type="button" value="수정" onclick="goModify()">
 			<input type="button" value="삭제" onclick="goDelete()">

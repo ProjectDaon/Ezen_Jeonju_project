@@ -26,21 +26,28 @@ function searchPlaces() {
     var keyword = document.getElementById('keyword').value;
 
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
-        alert('키워드를 입력해주세요!');
         return false;
     }
 
+    //전주지역 범위 설정
+    var bounds = new kakao.maps.LatLngBounds(
+        new kakao.maps.LatLng(35.7936, 127.0856), // 서쪽 위 좌표
+        new kakao.maps.LatLng(35.8549, 127.1921)  // 동쪽 아래 좌표
+    );
+
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-    ps.keywordSearch( keyword, placesSearchCB); 
+    ps.keywordSearch(keyword, function(data, status, pagination) {
+        placesSearchCB(data, status, pagination, bounds);
+    }); 
 }
 
 // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
-function placesSearchCB(data, status, pagination) {
+function placesSearchCB(data, status, pagination, bounds) {
     if (status === kakao.maps.services.Status.OK) {
 
         // 정상적으로 검색이 완료됐으면
         // 검색 목록과 마커를 표출합니다
-        displayPlaces(data);
+        displayPlaces(data, bounds);
 
         // 페이지 번호를 표출합니다
         displayPagination(pagination);
@@ -58,12 +65,12 @@ function placesSearchCB(data, status, pagination) {
     }
 }
 
-function displayPlaces(places) {
+function displayPlaces(places, bounds) {
 
     var listEl = document.getElementById('placesList'), 
     menuEl = document.getElementById('menu_wrap'),
     fragment = document.createDocumentFragment(), 
-    bounds = new kakao.maps.LatLngBounds(), 
+
     listStr = '';
     
     // 검색 결과 목록에 추가된 항목들을 제거합니다
@@ -122,7 +129,50 @@ function getListItem(index, places) {
     el.innerHTML = itemStr;
     el.className = 'item';
 
+    // 검색 결과 항목 Element에 클릭 이벤트를 추가합니다
+    el.addEventListener('click', function() {
+        // 마커를 클릭한 경우, 해당 마커의 정보를 출력하거나 다른 이벤트를 처리할 수 있습니다.
+        var clickedMarker = markers[index];
+        var clickedPosition = clickedMarker.getPosition();
+        alert('클릭한 마커의 위도: ' + clickedPosition.getLat() + ', 경도: ' + clickedPosition.getLng());
+        // 원하는 이벤트 처리를 추가하세요.
+    });
+    
     return el;
+}
+
+//마커 이미지 설정
+var markerImageUrl = 'https://cdn-icons-png.flaticon.com/512/5860/5860579.png', 
+    markerImageSize = new kakao.maps.Size(40, 42), // 마커 이미지의 크기
+    markerImageOptions = { 
+        offset : new kakao.maps.Point(18, 40)// 마커 좌표에 일치시킬 이미지 안의 좌표
+    };
+
+// 마커 이미지를 생성한다
+var markerImage = new kakao.maps.MarkerImage(markerImageUrl, markerImageSize, markerImageOptions);
+
+
+// 지도에 마커를 생성하고 표시한다
+var setmarker = new kakao.maps.Marker({
+    position: new kakao.maps.LatLng(35.82406050330023, 127.14816812319762), // 마커의 좌표
+    image : markerImage, // 마커의 이미지
+    map: map // 마커를 표시할 지도 객체
+});
+
+// 마커 클릭 이벤트 핸들러
+function onMarkerClick(marker, index) {
+	setmarker.setMap(null);
+    // 클릭한 마커의 정보를 출력하거나 원하는 작업을 수행합니다.
+    var clickedPosition = marker.getPosition();
+    
+    var contentsLatitude = clickedPosition.getLat();
+    var contentsLongitude = clickedPosition.getLng();
+
+    setmarker.setMap(map);
+    setmarker.setPosition(clickedPosition);
+	
+    $('#contentsLatitude').val(contentsLatitude);
+    $('#contentsLongitude').val(contentsLongitude);
 }
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
@@ -142,6 +192,10 @@ function addMarker(position, idx, title) {
 
     marker.setMap(map); // 지도 위에 마커를 표출합니다
     markers.push(marker);  // 배열에 생성된 마커를 추가합니다
+
+    kakao.maps.event.addListener(marker, 'click', function() {
+        onMarkerClick(marker, idx);
+    });
 
     return marker;
 }
@@ -190,20 +244,6 @@ function removeAllChildNods(el) {
         el.removeChild (el.lastChild);
     }
 }
-var marker = new kakao.maps.Marker(), // 클릭한 위치를 표시할 마커입니다
-    infowindow = new kakao.maps.InfoWindow({zindex:1}); 
-
-marker.setMap(map);
-    kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
-        // 클릭한 위도, 경도 정보를 가져옵니다 
-        var latlng = mouseEvent.latLng;
-        marker.setPosition(latlng);
-        var contentsLatitude = latlng.getLat();
-        var contentsLongitude = latlng.getLng();
-        
-        $('#contentsLatitude').val(contentsLatitude);
-        $('#contentsLongitude').val(contentsLongitude);
-    });
 
 
 // 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다

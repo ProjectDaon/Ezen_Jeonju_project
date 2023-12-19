@@ -88,11 +88,33 @@ public class ContentsController {
 	}
 	
 	@RequestMapping(value="/contentsModify.do")
-	public String contentsModify(@RequestParam("cidx") int cidx, Model model) {		
+	public String contentsModify(@RequestParam("cidx") int cidx, Model model) throws Exception {		
 		
-		ContentsVo cv = cs.contentsArticle(cidx);		
+		ContentsVo cv = cs.contentsArticle(cidx);
+		String hashtagList = cv.getContentsHashtag();
+		JSONParser parser = new JSONParser();
+		JSONArray jsonArrayObj;
+		jsonArrayObj = (JSONArray) parser.parse(hashtagList);
+		
+		StringBuilder result = new StringBuilder();	
+        String values = "";
+        // JSONArray를 순회하면서 값을 추출하여 문자열로 추가
+        for (Object obj : jsonArrayObj) {
+            JSONObject jsonObj = (JSONObject) obj;
+            String value = (String) jsonObj.get("value");
+
+            // 문자열을 콤마로 구분하여 추가
+            result.append(value).append(", ");
+        }
+
+        // 마지막 콤마와 공백 제거
+        if (result.length() > 0) {
+            result.setLength(result.length() - 2);
+        }
+        values = result.toString();
+        System.out.println(values);
 		model.addAttribute("cv", cv);
-		
+		model.addAttribute("values", values);
 		return "/contents/contentsModify";
 	}
 	
