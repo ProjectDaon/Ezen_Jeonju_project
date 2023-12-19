@@ -68,9 +68,8 @@ public class NoticeController {
 		model.addAttribute("pm", pm);
 		
 		// 검색어 입력 유지
-		String keyword = (String)scri.getKeyword();
-		if(keyword != null) {
-			session.setAttribute("keyword", keyword);
+		String keyword = (String)scri.getKeyword(); if(keyword != null) {
+		session.setAttribute("keyword", keyword); 
 		}
 		
 		// 카테고리 선택 유지

@@ -15,7 +15,6 @@
 <body>
 <script type="text/javascript">
 $(document).ready( function() {
-	//가져올때 navbar.css도 같이 가져올 것
 	$('#headers').load("../nav/nav.jsp");
 
 });
