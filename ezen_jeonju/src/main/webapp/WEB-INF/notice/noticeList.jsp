@@ -36,7 +36,6 @@
 <body>
 <script type="text/javascript">
 $(document).ready( function() {
-	//가져올때 navbar.css도 같이 가져올 것
 	$('#headers').load("../nav/nav.jsp");
 
 });
@@ -51,23 +50,26 @@ $(document).ready( function() {
 <h3>공지</h3>
 <br>
 
-<form name="frm" method="post">
+<form name="frm" method="get">
 <div class="filter">
 <input type = hidden name="searchType" value="noticeCategory">
-<button type="submit" name="keywordFilter" value="공연">공연</button>
-<button type="submit" name="keywordFilter" value="전시">전시</button>
-<button type="submit" name="keywordFilter" value="축제">축제</button>
-<button type="submit" name="keywordFilter" value="행사">행사</button>
+<button type="submit" name="keyword" value="">전체</button>
+<button type="submit" name="keyword" value="공연">공연</button>
+<button type="submit" name="keyword" value="전시">전시</button>
+<button type="submit" name="keyword" value="축제">축제</button>
+<button type="submit" name="keyword" value="행사">행사</button>
 </div>
-<c:set var="keywordFilter" value="${pm.scri.keywordFilter}" />
-<c:set var="parm" value="&searchType=${pm.scri.searchType}&keywordFilter=${pm.scri.keywordFilter}" />
+<c:set var="keyword" value="${pm.scri.keyword}" />
+<c:set var="parm" value="&searchType=${pm.scri.searchType}&keyword=${pm.scri.keyword}" />
 </form>
+
 <br>
+
 <form action="">
 <div class="search">
 	<select name="searchType">
-		<option value="noticeCategory" <%if(session.getAttribute("searchType") != null && session.getAttribute("searchType").equals("noticeCartegory")) {%> selected <%}%>>카테고리</option>
 		<option value="noticeSubject" <%if(session.getAttribute("searchType") != null && session.getAttribute("searchType").equals("noticeSubject")) {%> selected <%}%>>제목</option>
+		<option value="noticeArticle" <%if(session.getAttribute("searchType") != null && session.getAttribute("searchType").equals("noticeArticle")) {%> selected <%}%>>내용</option>
 	</select>
 	<input type="text" name="keyword" <%if(session.getAttribute("keyword") != null) {%>
 	value="<%= session.getAttribute("keyword") %>"
@@ -80,8 +82,8 @@ $(document).ready( function() {
 </form>
 
 <div class="totalCount">
-<span>총(전체)
-<i>${pm.totalCount}</i>
+<span style="font-weight:bold;">전체
+<i style="color:red;">${pm.totalCount}</i>
 건</span>
 </div>
 
@@ -92,6 +94,7 @@ $(document).ready( function() {
 			<th>카테고리</th>
 			<th>제목</th>
 			<th>작성일</th>
+			<th>이미지</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -101,6 +104,7 @@ $(document).ready( function() {
 			<td>${nv.noticeCategory}</td>
 			<td><a href="${pageContext.request.contextPath}/notice/noticeContents.do?nidx=${nv.nidx}">${nv.noticeSubject}</a></td>
 			<td>${nv.noticeWriteday}</td>
+			<td><a href="${pageContext.request.contextPath}/notice/noticeContents.do?nidx=${nv.nidx}"><img src="${pageContext.request.contextPath}/images/망고.jpg"></a></td>
 		</tr>
 		</c:forEach>
 	</tbody>
