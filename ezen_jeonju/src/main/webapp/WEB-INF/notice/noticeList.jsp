@@ -52,25 +52,38 @@ $(document).ready( function() {
 <br>
 
 <form name="frm" method="post">
-<div class="searchType">
-<input type="submit" name="keyword" value="공연">
-<input type="submit" name="keyword" value="전시">
-<input type="submit" name="keyword" value="축제">
-<input type="submit" name="keyword" value="행사">
+<div class="filter">
+<input type = hidden name="searchType" value="noticeCategory">
+<button type="submit" name="keywordFilter" value="공연">공연</button>
+<button type="submit" name="keywordFilter" value="전시">전시</button>
+<button type="submit" name="keywordFilter" value="축제">축제</button>
+<button type="submit" name="keywordFilter" value="행사">행사</button>
 </div>
-
+<c:set var="keywordFilter" value="${pm.scri.keywordFilter}" />
+<c:set var="parm" value="&searchType=${pm.scri.searchType}&keywordFilter=${pm.scri.keywordFilter}" />
+</form>
 <br>
-
+<form action="">
 <div class="search">
 	<select name="searchType">
-		<option value="noticeCategory">카테고리</option>
-		<option value="noticeSubject">제목</option>
+		<option value="noticeCategory" <%if(session.getAttribute("searchType") != null && session.getAttribute("searchType").equals("noticeCartegory")) {%> selected <%}%>>카테고리</option>
+		<option value="noticeSubject" <%if(session.getAttribute("searchType") != null && session.getAttribute("searchType").equals("noticeSubject")) {%> selected <%}%>>제목</option>
 	</select>
-	<input type="text" name="keyword">
+	<input type="text" name="keyword" <%if(session.getAttribute("keyword") != null) {%>
+	value="<%= session.getAttribute("keyword") %>"
+	<%}%>>
 	<!-- <button type="button" id="searchBtn">검색</button> -->
-	<input type="submit" name="sbt" value="검색">
+	<button type="submit" name="sbt">검색</button>
 </div>
+<c:set var="keyword" value="${pm.scri.keyword}" />
+<c:set var="parm" value="&searchType=${pm.scri.searchType}&keyword=${pm.scri.keyword}" />
 </form>
+
+<div class="totalCount">
+<span>총(전체)
+<i>${pm.totalCount}</i>
+건</span>
+</div>
 
 <table>
 	<thead>
@@ -95,8 +108,6 @@ $(document).ready( function() {
 
 <a href="<%=request.getContextPath()%>/notice/noticeWrite.do">글쓰기</a>
 
-<c:set var="keyword" value="${pm.scri.keyword}" />
-<c:set var="parm" value="&searchType=${pm.scri.searchType}&keyword=${pm.scri.keyword}" />
 <div class="paging">
 <c:if test="${pm.prev == true}">
 <a class="pagePreview" href = "${pageContext.request.contextPath}/notice/noticeList.do?page=${pm.startPage-1}">

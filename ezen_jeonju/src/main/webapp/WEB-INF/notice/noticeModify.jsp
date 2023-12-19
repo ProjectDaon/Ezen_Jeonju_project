@@ -22,13 +22,17 @@ NoticeVo nv = (NoticeVo)request.getAttribute("nv");
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script src="../summernote/summernote-ko-KR.js"></script>
 
+<!-- 해시태그 source -->
+<script src="https://unpkg.com/@yaireo/tagify"></script>
+<!-- 폴리필 (구버젼 브라우저 지원) -->
+<script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+
 </head>
 <body>
 <script type="text/javascript">
 $(document).ready( function() {
-	//가져올때 navbar.css도 같이 가져올 것
 	$('#headers').load("../nav/nav.jsp");
-
 });
 </script>
 <div id="headers"></div>
@@ -93,7 +97,7 @@ function goDelete(){
 		<input type="hidden" name="nidx" value="<%=nv.getNidx()%>">
 			<div class="form-group">
 				<label>카테고리</label>
-				<input type="text" id="noticeCategorySelected" name="noticeCategorySelected" value="<%=nv.getNoticeCategory()%>">
+				<input type="text" id="noticeCategorySelected" name="noticeCategorySelected" value="<%=nv.getNoticeCategory()%>" placeholder="카테고리를 선택해주세요.">
 				<select id="noticeCategory" name="noticeCategory">
 					<option value="">선택</option>
 					<option value="공연">공연</option>
@@ -107,13 +111,27 @@ function goDelete(){
 				<input type="text" name="noticeSubject" value="<%=nv.getNoticeSubject()%>">
 			</div>
 			<textarea id="summernote" name="noticeArticle"><%=nv.getNoticeArticle() %></textarea>
-
-<!-- 	<tr>
-		<th>비밀번호</th>
-		<td>
-		<input type="password" name="pwd">		
-		</td>
-		</tr> -->		
+			<div class="hashTagArea">
+				<label>해시태그</label>
+				<c:forEach var="item" items="${hashtag}">
+				<input name='noticeHashtag' value="${item.value}">
+				</c:forEach>
+				<script>
+				var input = document.querySelector('input[name="noticeHashtag"]'),
+			
+				// init Tagify script on the above inputs
+				tagify = new Tagify(input, {
+				whitelist: ["공연", "전시", "축제", "행사"], // 화이트리스트 배열
+				maxTags: 1, // 최대 허용 태그 갯수
+					dropdown: {
+					maxItems: 4,           // 드롭다운 메뉴에서 몇개 정도 항목을 보여줄지
+					classname: "tags-look", // 드롭다운 메뉴 엘리먼트 클래스 이름. 이걸로 css 선택자로 쓰면 된다.
+					enabled: 0,             // 단어 몇글자 입력했을떄 추천 드롭다운 메뉴가 나타날지
+					closeOnSelect: false    // 드롭다운 메뉴에서 태그 선택하면 자동으로 꺼지는지 안꺼지는지
+					}
+				})
+			</script>
+			</div>
 			<input type="file" name="noticeFileName">
 			<input type="button" value="수정" onclick="goModify()">
 			<input type="button" value="삭제" onclick="goDelete()">
