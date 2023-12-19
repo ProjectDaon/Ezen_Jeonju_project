@@ -38,12 +38,12 @@
     }
 
     #timetbl td {
-        text-align: center; /* Optional: center the text inside the td */
+        text-align: center; 
         height: 50px;
     }
 
     #timetbl th {
-        text-align: center; /* Optional: center the text inside the td */
+        text-align: center;
         height: 50px;
     }
     #table-container tbody th {
@@ -63,6 +63,7 @@
 
 
 </style>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
     <!--전주 음식점 api 불러오는 함수-->
     function getJeonju() {
@@ -111,7 +112,22 @@
     }
 </script>
 <script>
-	<!--테이블 생성함수-->
+
+	function addDays(dateString, days) {
+	    var currentDate = new Date(dateString);
+	    currentDate.setDate(currentDate.getDate() + days);
+	
+	    var year = currentDate.getFullYear();
+	    
+	    // 월이 한 자리 수인 경우 앞에 0을 추가
+	    var month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+	    
+	    // 일이 한 자리 수인 경우 앞에 0을 추가
+	    var day = currentDate.getDate().toString().padStart(2, '0');
+	    
+	    return year + '-' + month + '-' + day;
+	}
+		<!--일정 테이블 생성함수-->
     function createTable(parentElementId, columnCount) {
     // 테이블이 있으면 삭제하고 생성
     var existingTable = document.getElementById(parentElementId).querySelector('table');
@@ -165,12 +181,19 @@
             td.style.width = '300px';
             td.style.maxHeight = '50px';
             td.style.whiteSpace = 'nowrap';
-
+           
+            //행 열 아이디 부여
+            td.id = j+'_'+k;
+            
+            //날짜 시간 장소
+            var hour = j+6;
+            
+            $(td).attr("name", addDays($('#startDate').val(), k) + "_" + hour);
             trBody.appendChild(td);
 
-
         }
-        tbody.appendChild(trBody);
+
+       	tbody.appendChild(trBody);
     }
 
     // 첫 번째 행의 colspan 설정
@@ -306,32 +329,59 @@
         createTable('table-container', dayDifference+1);
         }
     }
+    
 </script>
 </head>
 <body>
 
 <script>
+
+
     <!-- 글 작성 함수 -->
+    
     function goWrite() {
         var fm = document.frm;
+        var tbodyCells = document.querySelectorAll('#dragDropTable tbody td');
+        var tourCourseTime 
+        var tourCourseDate 
+        var jsonArray 	= new Array();
+    	//각 td 엘리먼트를 순회하면서 텍스트가 있는지 확인
+    	tbodyCells.forEach(function(td) {
+    	 // 텍스트가 있는 경우
+    	 if ((td.textContent.trim() !== "") &&(td.textContent !== "장소를 누르시고 원하는 시간대에 드래그하세요")) {
+    	     // 원하는 작업 수행
+    	     console.log('td 엘리먼트:', td.textContent);
 
-        if (fm.scheduleSubject.value == "") {
+    	     	var jsonObj = new Object();
+	    		var tourCoursePlace = td.textContent;
+	    	    var underscoreIndex = td.getAttribute('name').indexOf("_");
+	    	    var tourCourseDate = td.getAttribute('name').substring(0, underscoreIndex);
+	    	    var tourCourseTime = td.getAttribute('name').substring(underscoreIndex+1); 
+    	      
+	    	    console.log('장소: ' + td.textContent + ' 날짜: ' +  tourCourseDate + ' 시간: ' + tourCourseTime);
+    	 }
+    	});
+    
+    	
+
+       if (fm.scheduleSubject.value == "") {
             alert('제목을 입력해주세요');
             fm.scheduleSubject.focus();
-            return;
-        }
+           return;
+       }
         else if (fm.scheduleStartDate.value == "") {
             alert('날짜를 입력해주세요');
-            fm.scheduleStartDate.focus();
-            return;
-        }
+           fm.scheduleStartDate.focus();
+           return;
+       }
+       
         
-        
-        fm.action = "<%=request.getContextPath()%>/schedule/scheduleWriteAction.do";
-        fm.method = "post";
-        fm.submit();
-        return;
-    }
+       fm.action = "<%=request.getContextPath()%>/schedule/scheduleWriteAction.do";
+       fm.method = "post";
+       fm.submit();
+      return;
+   }
+    
 </script>
 
 <form name="frm">
@@ -344,13 +394,8 @@
         <option value="Y">예</option>
         <option value="N">아니요</option>
     </select>
-    <input type="button" value="글쓰기" onclick="goWrite()"> <br>
+    <input id="write" type="button" value="글쓰기" onclick="goWrite()"> <br>
 
-</form>
-
-<button onclick="getJeonju()">음식점</button>
-<button onclick="getHotplace()">명소</button>
-<div id="jj"></div><br>
 <table>
     <tr id="schedulePeriod" value="">
         <!-- 기간 표시 엘리먼트 -->
@@ -380,9 +425,12 @@
         </tbody>
 </table>
 
-
 <div id="table-container"></div>
 </div>
+</form>
+<button onclick="getJeonju()">음식점</button>
+<button onclick="getHotplace()">명소</button>
+<div id="jj"></div><br>
 
 
 </body>
