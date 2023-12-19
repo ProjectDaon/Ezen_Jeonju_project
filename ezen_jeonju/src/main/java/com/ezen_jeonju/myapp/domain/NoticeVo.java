@@ -13,6 +13,7 @@ public class NoticeVo {
 	private String noticeFilePath;
 	private String noticeWriteday;
 	private String noticeYN;
+	private String noticeHashtag;
 	
 	public int getNidx() {
 		return nidx;
@@ -73,5 +74,11 @@ public class NoticeVo {
 	}
 	public void setNoticeUploadedFileName(String noticeUploadedFileName) {
 		this.noticeUploadedFileName = noticeUploadedFileName;
+	}
+	public String getNoticeHashtag() {
+		return noticeHashtag;
+	}
+	public void setNoticeHashtag(String noticeHashtag) {
+		this.noticeHashtag = noticeHashtag;
 	}
 }

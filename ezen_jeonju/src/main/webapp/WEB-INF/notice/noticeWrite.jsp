@@ -16,13 +16,45 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script src="../summernote/summernote-ko-KR.js"></script>
 
+<!-- 해시태그 source -->
+<script src="https://unpkg.com/@yaireo/tagify"></script>
+<!-- 폴리필 (구버젼 브라우저 지원) -->
+<script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.tagify{    
+  width: 100%;
+  max-width: 700px;
+}
+
+.tags-look .tagify__dropdown__item{
+  display: inline-block;
+  border-radius: 3px;
+  padding: .3em .5em;
+  border: 1px solid #CCC;
+  background: #F3F3F3;
+  margin: .2em;
+  font-size: .85em;
+  color: black;
+  transition: 0s;
+}
+
+.tags-look .tagify__dropdown__item--active{
+  color: black;
+}
+
+.tags-look .tagify__dropdown__item:hover{
+  background: lightyellow;
+  border-color: gold;
+}
+</style>
+
 </head>
 <body>
 <script type="text/javascript">
 $(document).ready( function() {
-	//가져올때 navbar.css도 같이 가져올 것
 	$('#headers').load("../nav/nav.jsp");
-
 });
 </script>
 <div id="headers"></div>
@@ -68,84 +100,24 @@ function goWrite(){
 			<input type="file" name="noticeFileName">
 			<input type="button" value="등록" onclick="goWrite()">
 			
-			<div class="tr_hashTag_area">
-				<p><strong>해시태그 구현</strong></p>
-				<div class="form-group">
-				<input type="hidden" value="" name="tag" id="rdTag" />
-				</div>
-				
-				<ul id="tag-list"></ul>
-				
-				<div class="form-group">
-				<input type="text" id="tag" size="7" placeholder="엔터로 해시태그를 등록해주세요." style="width: 300px;"/>
-				</div>
+			<div class="hashTagArea">
+				해시태그<input name='noticeHashtag'>
 			</div>
 			<script>
-    $(document).ready(function () {
-        var tag = {};
-        var counter = 0;
-
-        // 입력한 값을 태그로 생성한다.
-        function addTag (value) {
-            tag[counter] = value;
-            counter++; // del-btn 의 고유 id 가 된다.
-        }
-
-        // tag 안에 있는 값을 array type 으로 만들어서 넘긴다.
-        function marginTag () {
-            return Object.values(tag).filter(function (word) {
-                return word !== "";
-            });
-        }
-    
-        // 서버에 제공
-        $("#tag-form").on("submit", function (e) {
-            var value = marginTag(); // return array
-            $("#rdTag").val(value); 
-
-            $(this).submit();
-        });
-
-        $("#tag").on("keypress", function (e) {
-            var self = $(this);
-
-            //엔터나 스페이스바 눌렀을때 실행
-            if (e.key === "Enter" || e.keyCode == 32) {
-
-                var tagValue = self.val(); // 값 가져오기
-
-                // 해시태그 값 없으면 실행X
-                if (tagValue !== "") {
-
-                    // 같은 태그가 있는지 검사한다. 있다면 해당값이 array 로 return 된다.
-                    var result = Object.values(tag).filter(function (word) {
-                        return word === tagValue;
-                    })
-                
-                    // 해시태그가 중복되었는지 확인
-                    if (result.length == 0) { 
-                        $("#tag-list").append("<li class='tag-item'>"+tagValue+"<span class='del-btn' idx='"+counter+"'>x</span></li>");
-                        addTag(tagValue);
-                        self.val("");
-                    } else {
-                        alert("태그값이 중복됩니다.");
-                    }
-                }
-                e.preventDefault(); // SpaceBar 시 빈공간이 생기지 않도록 방지
-            }
-        });
-
-        // 삭제 버튼 
-        // 인덱스 검사 후 삭제
-        $(document).on("click", ".del-btn", function (e) {
-            var index = $(this).attr("idx");
-            tag[index] = "";
-            $(this).parent().remove();
-        });
-})
-</script>
+			var input = document.querySelector('input[name="noticeHashtag"]'),
 			
-			
+			// init Tagify script on the above inputs
+			tagify = new Tagify(input, {
+			whitelist: ["공연", "전시", "축제", "행사"], // 화이트리스트 배열
+			maxTags: 1, // 최대 허용 태그 갯수
+				dropdown: {
+				maxItems: 4,           // 드롭다운 메뉴에서 몇개 정도 항목을 보여줄지
+				classname: "tags-look", // 드롭다운 메뉴 엘리먼트 클래스 이름. 이걸로 css 선택자로 쓰면 된다.
+				enabled: 0,             // 단어 몇글자 입력했을떄 추천 드롭다운 메뉴가 나타날지
+				closeOnSelect: false    // 드롭다운 메뉴에서 태그 선택하면 자동으로 꺼지는지 안꺼지는지
+				}
+			})
+			</script>
 		</form>
 	<script>
 	$(document).ready(function() {

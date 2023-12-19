@@ -5,8 +5,8 @@
 <mapper namespace="com.ezen_jeonju.myapp.persistance.NoticeService_Mapper">
 
 <insert id="noticeWrite" parameterType="nv" >
-INSERT INTO notice(midx, noticeSubject, noticeCategory, noticeArticle, noticeFileName, noticeFilePath)
-VALUES(#{midx}, #{noticeSubject}, #{noticeCategory}, #{noticeArticle}, #{noticeUploadedFileName}, #{noticeFilePath})
+INSERT INTO notice(midx, noticeSubject, noticeCategory, noticeArticle, noticeFileName, noticeFilePath, noticeHashtag)
+VALUES(#{midx}, #{noticeSubject}, #{noticeCategory}, #{noticeArticle}, #{noticeUploadedFileName}, #{noticeFilePath}, #{noticeHashtag})
 </insert>
 
 <sql id = "search">
@@ -31,12 +31,13 @@ select count(*) as cnt from notice where noticeYN="N"
 </select>
 
 <select id="noticeContents" parameterType="int" resultType="nv">
-SELECT nidx, noticeSubject, noticeCategory, convert(noticeArticle using utf8) as noticeArticle, noticeFileName, noticeFilePath, noticeWriteday FROM notice
+SELECT nidx, noticeSubject, noticeCategory, convert(noticeArticle using utf8) as noticeArticle, noticeFileName, noticeFilePath, noticeWriteday, noticeHashtag
+FROM notice
 WHERE nidx = #{nidx}
 </select>
 
 <update id="noticeModify" parameterType="nv">
-update notice set noticeCategory = #{noticeCategory}, noticeSubject = #{noticeSubject}, noticeArticle = #{noticeArticle}
+update notice set noticeCategory = #{noticeCategory}, noticeSubject = #{noticeSubject}, noticeArticle = #{noticeArticle}, noticeHashtag = #{noticeHashtag}
 where nidx=#{nidx}
 </update>
 
