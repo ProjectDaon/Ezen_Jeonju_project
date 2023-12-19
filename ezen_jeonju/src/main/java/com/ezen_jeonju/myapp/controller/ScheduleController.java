@@ -51,8 +51,8 @@ public class ScheduleController {
     	ScheduleRootVo sv = ss.scheduleContents(sidx);
     	model.addAttribute("sv",sv);
     	
-    	return "/schedule/scheduleContents";
     	
+    	return "/schedule/scheduleContents";
     }
 	
 }
