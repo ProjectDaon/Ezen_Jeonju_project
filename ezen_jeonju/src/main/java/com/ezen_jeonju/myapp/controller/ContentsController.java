@@ -1,25 +1,27 @@
 package com.ezen_jeonju.myapp.controller;
 
-import java.nio.file.Path;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ezen_jeonju.myapp.domain.ContentsVo;
 import com.ezen_jeonju.myapp.service.ContentsService;
@@ -29,15 +31,13 @@ import com.ezen_jeonju.myapp.util.UploadFileUtiles;
 @RequestMapping(value = "/contents")
 public class ContentsController {
 	
-	@Resource(name="uploadPath")
-	private String uploadPath;
 	
 	@Autowired
 	ContentsService cs;
+	private ServletContext servletContext;
 	
-	/*
-	 * @Resource(name="uploadPath") String uploadPath;
-	 */
+	 @Resource(name="uploadPath") String uploadPath;
+	 
 	@RequestMapping(value = "/contentsWrite.do")
 	public String contentsWrite() {
 		
@@ -45,19 +45,21 @@ public class ContentsController {
 	}
 	
 	@RequestMapping(value = "/contentsWriteAction.do")
-	public String contentsWriteAction(ContentsVo cv, HttpSession session) throws Exception {
+	public String contentsWriteAction(ContentsVo cv, HttpSession session, MultipartHttpServletRequest request) throws Exception {
 		MultipartFile file = cv.getUploadFileName();
 		cv.setOriginFileName(file.getOriginalFilename());
 		cv.setFileSize(file.getSize());
 		
+		String path = request.getSession().getServletContext().getRealPath("/uploadFile/contents");
+		
 		String uploadedFileName = "";
 		if(!file.getOriginalFilename().equals("")) {
 			//업로드 시작
-			uploadedFileName = UploadFileUtiles.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
+			uploadedFileName = UploadFileUtiles.uploadFile(path, file.getOriginalFilename(), file.getBytes());
 		}
 		cv.setStoredFileName(uploadedFileName.substring(12));
 		cv.setMidx(Integer.parseInt(session.getAttribute("midx").toString()));
-		cv.setFilePath(uploadPath);
+		cv.setFilePath(path);
 		cs.contentsWrite(cv);
 		String category = cv.getContentsCategory();
 
@@ -98,15 +100,7 @@ public class ContentsController {
 		return "/contents/contentsArticle";
 	}
 	
-	@GetMapping(value="/display")
-	public ResponseEntity<Resource> display(@RequestParam("filename") String filename){
-		String path = uploadPath;
-		Resource resource = (Resource) new FileSystemResource(uploadPath+filename);
-		
-		HttpHeaders header = new HttpHeaders();
-		Path filePath = null;
-		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
-	}
+
 	@RequestMapping(value="/contentsModify.do")
 	public String contentsModify(@RequestParam("cidx") int cidx, Model model) throws Exception {		
 		
@@ -161,7 +155,36 @@ public class ContentsController {
 			return "redirect:/contents/foodList.do";
 		}
 				
-	}	
+	}
 	
-
+	@RequestMapping(value="/youtube.do")
+	public String youtube(Model model) throws Exception{
+		return "contents/youtube";
+	}
+	
+	public void getYoutube(String nextToken) throws IOException{
+		
+		String apikey = "AIzaSyA-Gxe4RPySUsdzLv0CR00m1QOKM8rfLjE";
+		String channelId = "UCsf5L9ZCtI0nPCqN2aL_4DQ";
+		String UPplaylistid ="UUsf5L9ZCtI0nPCqN2aL_4DQ";
+		
+		String apiUrl = "https://www.googleapis.com/youtube/v3/playlistItems?key="+ apikey
+				  + "&playlistId="+ UPplaylistid
+				  + "&part=snippet&fields=nextPageToken,pageInfo,items(id,snippet(publishedAt,title,description,thumbnails(high(url)),resourceId(videoId)))&order=date&maxResults=50";
+		
+		
+		//HttpURLConnection con = (HttpURLConnection) url.openConnection();
+		//con.setRequestMethod("GET");
+		
+		//BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(),"UTF-8"));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+//		while((inputLine = br.readLine()) != null) {
+//			response.append(inputLine);
+//		}
+//		br.close();
+		
+		return ;
+	}
+	
 }

@@ -30,7 +30,7 @@
 						<ul class="depth-2">
 							<li><a href="<%=request.getContextPath()%>/contents/sightsList.do">명소</a></li>
 							<li><a href="<%=request.getContextPath()%>/contents/foodList.do">음식</a></li>
-							<li><a href="#">영상</a></li>
+							<li><a href="<%=request.getContextPath()%>/contents/youtube.do">영상</a></li>
 						</ul>
 					</div>
 				</li>

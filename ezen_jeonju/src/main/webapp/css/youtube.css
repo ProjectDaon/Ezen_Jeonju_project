@@ -1,0 +1,32 @@
+@charset "UTF-8";
+.container{
+	
+	margin-top: 200px;
+}
+.video-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.video-table td {
+    width: 25%;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.video-thumbnail {
+    max-width: 100%;
+    height: auto;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination li {
+    margin: 0 5px;
+    cursor: pointer;
+}
