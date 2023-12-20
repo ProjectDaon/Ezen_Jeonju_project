@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -72,7 +73,7 @@ public class NoticeController {
 		session.setAttribute("keyword", keyword); 
 		}
 		
-		// 카테고리 선택 유지
+		// 검색타입 선택 유지
 		String searchType = (String)scri.getSearchType();
 		if(searchType != null) {
 			session.setAttribute("searchType", searchType);
@@ -102,8 +103,24 @@ public class NoticeController {
 		JSONArray jsonArrayObj;
 		jsonArrayObj = (JSONArray) parser.parse(hashtagList);
 		
+		StringBuilder result = new StringBuilder();	
+		String values = "";
+		// JSONArray를 순회하면서 값을 추출하여 문자열로 추가
+		for (Object obj : jsonArrayObj) {
+			JSONObject jsonObj = (JSONObject) obj;
+			String value = (String) jsonObj.get("value");
+			
+			result.append(value).append(", ");
+		}
+		
+		// 마지막 문자는 콤마와 공백 제거
+		if (result.length() > 0) {
+			result.setLength(result.length() - 2);
+		}
+		values = result.toString();
 		model.addAttribute("nv", nv);
-		model.addAttribute("hashtag", jsonArrayObj);
+		/* model.addAttribute("hashtag", jsonArrayObj); */
+		model.addAttribute("values", values);
 		return "/notice/noticeModify";
 	}
 	

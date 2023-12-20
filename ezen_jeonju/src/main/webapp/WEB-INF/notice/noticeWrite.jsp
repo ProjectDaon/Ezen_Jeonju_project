@@ -96,9 +96,8 @@ function goWrite(){
 				<label>제목</label>
 				<input type="text" name="noticeSubject">
 			</div>
+			
 			<textarea id="summernote" name="noticeArticle"></textarea>
-			<input type="file" name="noticeFileName">
-			<input type="button" value="등록" onclick="goWrite()">
 			
 			<div class="hashTagArea">
 				해시태그<input name='noticeHashtag'>
@@ -108,8 +107,8 @@ function goWrite(){
 			
 			// init Tagify script on the above inputs
 			tagify = new Tagify(input, {
-			whitelist: ["공연", "전시", "축제", "행사"], // 화이트리스트 배열
-			maxTags: 1, // 최대 허용 태그 갯수
+			whitelist: ["#공연", "#전시", "#축제", "#행사"], // 화이트리스트 배열
+			maxTags: 10, // 최대 허용 태그 갯수
 				dropdown: {
 				maxItems: 4,           // 드롭다운 메뉴에서 몇개 정도 항목을 보여줄지
 				classname: "tags-look", // 드롭다운 메뉴 엘리먼트 클래스 이름. 이걸로 css 선택자로 쓰면 된다.
@@ -118,6 +117,9 @@ function goWrite(){
 				}
 			})
 			</script>
+			
+			<input type="file" name="noticeFileName">
+			<input type="button" value="등록" onclick="goWrite()">
 		</form>
 	<script>
 	$(document).ready(function() {
