@@ -3,6 +3,7 @@ package com.ezen_jeonju.myapp.persistance;
 import java.util.ArrayList;
 
 import com.ezen_jeonju.myapp.domain.ScheduleRootVo;
+import com.ezen_jeonju.myapp.domain.TourCourseVo;
 
 //마이바티스용 메소드 정의
 public interface ScheduleService_Mapper {
@@ -15,4 +16,7 @@ public interface ScheduleService_Mapper {
 
 	public void scheduleViewCount(int sidx);
 	
+	public int tourCourseInsert(TourCourseVo tv);
+	
+	public ArrayList<TourCourseVo> tourCourseContents(int sidx);
 }

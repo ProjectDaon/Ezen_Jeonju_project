@@ -5,20 +5,37 @@
 
 <mapper namespace="com.ezen_jeonju.myapp.persistance.ScheduleService_Mapper">
 <insert id="scheduleWrite" parameterType="sv">
-insert into scheduleroot(scheduleSubject,scheduleStartDate,scheduleEndDate,scheduleShare,midx) 
-values(#{scheduleSubject},#{scheduleStartDate},#{scheduleEndDate},#{scheduleShare},#{midx});
+<!-- sidx 생성된 후 sidx가 tourCourse 에 들어감 -->
+<selectKey resultType="int" keyProperty="sidx"  order="AFTER">
+select max(sidx) as sidx from scheduleroot
+</selectKey>
+insert into scheduleroot(scheduleSubject,scheduleStartDate,scheduleEndDate,scheduleShareYN,midx) 
+values(#{scheduleSubject},#{scheduleStartDate},#{scheduleEndDate},#{scheduleShareYN},#{midx});
 </insert>
 
 <select id="scheduleList" resultType="sv">
-select * from scheduleroot where scheduleYN='N' and scheduleShare='Y';
+select * from scheduleroot where scheduleDelYN='N' and scheduleShareYN='Y';
 </select>
 
 <select id="scheduleContents" resultType="sv" parameterType="int">
 select * from scheduleroot where sidx=#{sidx};
 </select>
 
+<select id="tourCourseContents" resultType="tv" parameterType="int">
+select t.tourCourseDate, t.tourCourseTime, t.tourCoursePlace
+from scheduleroot s
+join tourcourse t ON s.sidx = t.sidx
+where s.sidx = #{sidx}
+order by t.tourCourseDate asc, t.tourCourseTime asc;
+</select>
+
 <update id="scheduleViewCount" parameterType="int">
 update scheduleroot set scheduleViewCount=scheduleViewCount+1 where sidx = #{sidx};
 </update>
+
+<insert id="tourCourseInsert" parameterType="tv">
+insert into tourcourse(sidx,tourCourseDate,tourCourseTime,tourCoursePlace) 
+values(#{sidx},#{tourCourseDate},#{tourCourseTime},#{tourCoursePlace});
+</insert>
 
 </mapper>
