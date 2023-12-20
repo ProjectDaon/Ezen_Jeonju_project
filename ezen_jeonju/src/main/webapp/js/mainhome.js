@@ -1,5 +1,4 @@
-$(document).ready(function(){
-
+$(document).ready(function(){  
     $('#btn-play').hide();
 
     $('#btn-play').click(function(){
@@ -95,6 +94,13 @@ $(document).ready(function(){
 		$('.second-visual-list').slick('slickSetOption', 'slidesToShow', calculateSlidesToShow());
 	});
 
-
-
+    document.addEventListener('scroll', function () {
+        var topLink = document.querySelector('.top-view');
+        if (window.scrollY > 200) { 
+          topLink.style.display = 'block';
+        } else {
+          topLink.style.display = 'none';
+        }
+      });
 });
+

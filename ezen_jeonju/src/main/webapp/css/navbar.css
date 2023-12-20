@@ -137,7 +137,7 @@ img {
 .dep .dep-inner{
 /*     display: none; */
     position: absolute;
-    left: 15%;
+    left: 22%;
     top: 130px;
     z-index: 1;
     width: 1000px;
@@ -190,7 +190,7 @@ img {
     cursor: pointer;
 }
 
-.test {
+.menu-hamburger-area {
     display: none;
     animation: slidedown 0.3s ease-out;
     height: 400px;
@@ -202,6 +202,7 @@ img {
     padding: 50px 100px;
     display: flex;
     z-index: 1;
+    border-bottom : 1px solid #FFCDA3;
 
 }
 
@@ -216,25 +217,66 @@ img {
     }
 }
 
-.test .login-box{
+.menu-hamburger-area .login-box{
     text-align: right;
     margin-bottom: 20px;
 }
 
 
+.login-box a{
+    border: 1px solid #FFCDA3;
+    right: 2%;
+    bottom: 15%;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.login-box a:hover{
+    background-color: #FFCDA3;
+}
+
+
+
 .menu-list-wrap {
-    border: 1px solid rgb(0, 0, 0);
+    border: 1px solid #FFCDA3;
     margin-bottom: 10px;
     border-radius: 10px;
 }
 
-.test .menu-title p{
+.menu-hamburger-area .menu-title p{
     padding: 15px;
     cursor: pointer;
     margin: 0;
 }
 
-.test .menu-hamburger-list ul{
+.menu-hamburger-area .menu-title p::after {
+    content: "";
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    background: url(../images/arrow_black.png) no-repeat 0 0 / contain;
+    right: 120px;
+    transition: transform 0.3s;
+}
+
+.menu-hamburger-area .menu-title.active p::after {
+    transform: rotate(180deg);
+}
+
+.submenu-title-1,
+.submenu-title-2,
+.submenu-title-3 {
+    display: none;
+}
+
+.menu-hamburger-area .menu-title.active + ul {
+    display: block;
+}
+
+
+.menu-hamburger-area .menu-hamburger-list ul{
     display: none;
     animation: subtitle-slidedown 0.2s ease-out;
     padding: 15px;
@@ -259,6 +301,7 @@ img {
         transform: translateY(0px)
     }
 }
+
 
 
 @media screen and (max-width: 1500px){
@@ -298,7 +341,7 @@ img {
     .menu-hamburger{
         display: block;
     }
-    .test {
+    .menu-hamburger-area {
         display: none;
     }
 

@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+  }
+
 
 * {
     margin: 0;
@@ -51,7 +55,7 @@ button {
 /* 첫 화면 배너 슬라이드 */
 
 .first-visual{
-    padding-top: 82px;
+    padding-top: 62px;
 }
 
 
@@ -579,6 +583,22 @@ footer .inner{
     width: 100%
 }
 
+.top-view{
+    border: 1px solid #666;
+    right: 2%;
+    bottom: 15%;
+    width: 40px;
+    height: 40px;
+    color: #ffffff;
+    background-color: #ffffff;
+    position: fixed;
+    border-radius: 10px;
+    background-image: url(../images/arrow-top.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 10000;
+    
+}
 
 
 @media screen and (max-width: 1500px){
@@ -622,7 +642,7 @@ footer .inner{
     }
 
     .first-visual {
-        padding-top: 52px;
+        padding-top: 22px;
     }
 
 }
