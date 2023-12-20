@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ezen_jeonju.myapp.domain.ScheduleRootVo;
+import com.ezen_jeonju.myapp.domain.TourCourseVo;
 import com.ezen_jeonju.myapp.persistance.ScheduleService_Mapper;
 
 //마이바티스 구현하는 곳
@@ -23,10 +24,18 @@ public class ScheduleServiceImpl implements ScheduleService{
 	
 	
 	@Override
-	public int scheduleWrite(ScheduleRootVo sv) {
+	public int scheduleWrite(ScheduleRootVo sv, ArrayList<TourCourseVo> tv) {
 		
 		int value = ssm.scheduleWrite(sv);
-		
+		int sidx = sv.getSidx();
+		for(int i=0; i<tv.size(); i++) {
+			TourCourseVo getTv = new TourCourseVo();
+			getTv.setTourCourseDate(tv.get(i).getTourCourseDate());
+			getTv.setTourCourseTime(tv.get(i).getTourCourseTime());
+			getTv.setTourCoursePlace(tv.get(i).getTourCoursePlace());
+			getTv.setSidx(sidx);
+			ssm.tourCourseInsert(getTv);
+		}
 		
 		return value;
 				
@@ -45,6 +54,13 @@ public class ScheduleServiceImpl implements ScheduleService{
 		ScheduleRootVo sv = ssm.scheduleContents(sidx);
 		return sv;
 	}
+
+	@Override
+	public ArrayList<TourCourseVo> tourCourseContents(int sidx) {
+		ArrayList<TourCourseVo> tlist = ssm.tourCourseContents(sidx);
+		return tlist;
+	}
+
 	
 
 }

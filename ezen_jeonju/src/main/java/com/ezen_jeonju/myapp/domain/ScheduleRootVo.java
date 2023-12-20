@@ -1,16 +1,14 @@
 package com.ezen_jeonju.myapp.domain;
 
-import java.sql.Date;
-
-public class ScheduleRootVo {
+public class ScheduleRootVo extends TourCourseVo{
 	private int sidx;
 	private int midx;
 	private String scheduleSubject;
-	private Date scheduleStartDate;
-	private Date scheduleEndDate;
-	private String scheduleShare;
+	private String scheduleStartDate;
+	private String scheduleEndDate;
+	private String scheduleShareYN;
 	private int scheduleViewCount;
-	private String scheduleYN;
+	private String scheduleDelYN;
 	private String scheduleWriteday;
 	
 	public int getSidx() {
@@ -32,35 +30,36 @@ public class ScheduleRootVo {
 	public void setScheduleSubject(String scheduleSubject) {
 		this.scheduleSubject = scheduleSubject;
 	}
-	public Date getScheduleStartDate() {
+	public String getScheduleStartDate() {
 		return scheduleStartDate;
 	}
-	public void setScheduleStartDate(Date scheduleStartDate) {
+	public void setScheduleStartDate(String scheduleStartDate) {
 		this.scheduleStartDate = scheduleStartDate;
 	}
-	public Date getScheduleEndDate() {
+	public String getScheduleEndDate() {
 		return scheduleEndDate;
 	}
-	public void setScheduleEndDate(Date scheduleEndDate) {
+	public void setScheduleEndDate(String scheduleEndDate) {
 		this.scheduleEndDate = scheduleEndDate;
 	}
-	public String getScheduleShare() {
-		return scheduleShare;
-	}
-	public void setScheduleShare(String scheduleShare) {
-		this.scheduleShare = scheduleShare;
-	}
+
 	public int getScheduleViewCount() {
 		return scheduleViewCount;
 	}
 	public void setScheduleViewCount(int scheduleViewCount) {
 		this.scheduleViewCount = scheduleViewCount;
 	}
-	public String getScheduleYN() {
-		return scheduleYN;
+	public String getScheduleShareYN() {
+		return scheduleShareYN;
 	}
-	public void setScheduleYN(String scheduleYN) {
-		this.scheduleYN = scheduleYN;
+	public void setScheduleShareYN(String scheduleShareYN) {
+		this.scheduleShareYN = scheduleShareYN;
+	}
+	public String getscheduleDelYN() {
+		return scheduleDelYN;
+	}
+	public void setscheduleDelYN(String scheduleDelYN) {
+		this.scheduleDelYN = scheduleDelYN;
 	}
 	public String getScheduleWriteday() {
 		return scheduleWriteday;
