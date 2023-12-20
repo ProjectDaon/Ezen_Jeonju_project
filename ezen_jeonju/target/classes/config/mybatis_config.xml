@@ -3,6 +3,7 @@
  
 <configuration> 
 <typeAliases>
+ <typeAlias alias="mpv" type="com.ezen_jeonju.myapp.domain.MainPageVo"/>
  <typeAlias alias="mv" type="com.ezen_jeonju.myapp.domain.MemberVo"/>
  <typeAlias alias="nv" type="com.ezen_jeonju.myapp.domain.NoticeVo"/>
  <typeAlias alias="cv" type="com.ezen_jeonju.myapp.domain.ContentsVo"/>
