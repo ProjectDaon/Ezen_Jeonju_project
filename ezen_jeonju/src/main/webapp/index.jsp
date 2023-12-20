@@ -23,19 +23,19 @@
     <nav class="nav-bar">
         <h1>
             <a href="index.jsp">
-                <img src="images/logo.png">
+                <img src="./images/logo.png">
             </a>
         </h1>
         <div class="menu-wrap">
             <ul class="menu-element">
                 <li class="dep">
-                    <a href="<%=request.getContextPath()%>/contents/sightList.do">전주에가면</a>
+                    <a href="<%=request.getContextPath()%>/contents/sightsList.do">전주에가면</a>
                     <div class="dep-inner" style="display: none;">
                         <div class="inner-sub-title">
                             <p class="large-text">전주에가면</p>
                         </div>
                         <ul class="depth-2">
-                            <li><a href="<%=request.getContextPath()%>/contents/sightList.do">명소</a></li>
+                            <li><a href="<%=request.getContextPath()%>/contents/sightsList.do">명소</a></li>
                             <li><a href="<%=request.getContextPath()%>/contents/foodList.do">음식</a></li>
                             <li><a href="#">영상</a></li>
                         </ul>
@@ -94,7 +94,7 @@
                         <p>전주에가면</p>
                     </div>
                     <ul class="submenu-title-1" style="display: none;">
-                        <li><a href="<%=request.getContextPath()%>/contents/sightList.do">명소</a></li>
+                        <li><a href="<%=request.getContextPath()%>/contents/sightsList.do">명소</a></li>
                         <li><a href="<%=request.getContextPath()%>/contents/foodList.do">음식</a></li>
                         <li><a href="#">영상</a></li>
                     </ul>
@@ -122,9 +122,10 @@
 <div id="main-contents" class="main-contents">
     <section class="first-visual">
         <div class="first-visual-list">
-            <div><a href="#"><img class="first-visual-img" src="images/1920785.jpg"></a></div>
-            <div><a href="#"><img class="first-visual-img" src="images/1920785.jpg"></a></div>
-            <div><a href="#"><img class="first-visual-img" src="images/1920785.jpg"></a></div>
+            <div><a href="#"><img class="first-visual-img" src="./images/1920785.jpg"></a></div>
+            <div><a href="#"><img class="first-visual-img" src="./images/1920785.jpg"></a></div>
+            <div><a href="#"><img class="first-visual-img" src="./images/1920785.jpg"></a></div>
+            <div><a href="#"><img class="first-visual-img" src="./images/1920785.jpg"></a></div>
         </div>
         <div class="first-text">
             <div class="first-text-list">
@@ -155,7 +156,7 @@
                 </div>
             </div>
             <div class="admin-click">
-                <div><a class="btn-more" href="#"><span>배너등록 +</span></a></div>
+                <div><a class="btn-more" href="<%=request.getContextPath()%>/main/mainpage.do"><span>배너등록 +</span></a></div>
             </div>
         </div>
     </section>
@@ -167,13 +168,13 @@
             </h2>
         </div>
         <div class="second-visual-list">
-            <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="images/417320-1.jpg"></div><p class="slide-txt">이거되냐고</p></a></div>
-            <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="images/417320-2.jpg"></div><p class="slide-txt">이거되냐고2</p></a></div>
-            <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="images/417320-1.jpg"></div><p class="slide-txt">이거되냐고3</p></a></div>
-            <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="images/417320-2.jpg"></div><p class="slide-txt">이거되냐고4</p></a></div>
-            <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="images/417320-1.jpg"></div><p class="slide-txt">길게되는건지 적당히만 하자</p></a></div>
-            <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="images/417320-2.jpg"></div><p class="slide-txt">길게되는건지 적당히만 하자</p></a></div>
-            <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="images/417320-1.jpg"></div><p class="slide-txt">길게되는건지 적당히만 하자</p></a></div>
+            <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="./images/417320-1.jpg"></div><p class="slide-txt">이거되냐고</p></a></div>
+            <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="./images/417320-2.jpg"></div><p class="slide-txt">이거되냐고2</p></a></div>
+            <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="./images/417320-1.jpg"></div><p class="slide-txt">이거되냐고3</p></a></div>
+            <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="./images/417320-2.jpg"></div><p class="slide-txt">이거되냐고4</p></a></div>
+            <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="./images/417320-1.jpg"></div><p class="slide-txt">길게되는건지 적당히만 하자</p></a></div>
+            <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="./images/417320-2.jpg"></div><p class="slide-txt">길게되는건지 적당히만 하자</p></a></div>
+            <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="./images/417320-1.jpg"></div><p class="slide-txt">길게되는건지 적당히만 하자</p></a></div>
         </div>
     </section>
     <section class="third-visual">
@@ -228,10 +229,10 @@
                 </div>
             </div>
             <div class="exhibition-list">
-                <a href="#"><div><img src="images/400560.jpg"><p class="slide-txt">징그럽다 htmlzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</p></div></a>
-                <a href="#"><div><img src="images/400560.jpg"><p class="slide-txt">징그럽다 css</p></div></a>
-                <a href="#"><div><img src="images/400560.jpg"><p class="slide-txt">태그지옥</p></div></a>
-                <a href="#"><div><img src="images/400560.jpg"><p class="slide-txt">태그지옥</p></div></a>
+                <a href="#"><div><img src="./images/400560.jpg"><p class="slide-txt">징그럽다 htmlzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</p></div></a>
+                <a href="#"><div><img src="./images/400560.jpg"><p class="slide-txt">징그럽다 css</p></div></a>
+                <a href="#"><div><img src="./images/400560.jpg"><p class="slide-txt">태그지옥</p></div></a>
+                <a href="#"><div><img src="./images/400560.jpg"><p class="slide-txt">태그지옥</p></div></a>
             </div>
         </div>
     </section>
