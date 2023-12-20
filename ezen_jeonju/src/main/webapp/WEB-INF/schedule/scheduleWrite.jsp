@@ -188,7 +188,7 @@
             //날짜 시간 장소
             var hour = j+6;
             
-            $(td).attr("name", addDays($('#startDate').val(), k) + "_" + hour);
+            $(td).attr("name", addDays($('#startDate').val(), k-1) + "_" + hour);
             trBody.appendChild(td);
 
         }
@@ -345,42 +345,85 @@
         var tourCourseTime 
         var tourCourseDate 
         var jsonArray 	= new Array();
+    	var scheduleSubject = fm.scheduleSubject.value;
+	    var scheduleStartDate = fm.scheduleStartDate.value;
+	    var scheduleEndDate = fm.scheduleEndDate.value;
+	    var scheduleShareYN = fm.scheduleShareYN.value;
     	//각 td 엘리먼트를 순회하면서 텍스트가 있는지 확인
     	tbodyCells.forEach(function(td) {
     	 // 텍스트가 있는 경우
-    	 if ((td.textContent.trim() !== "") &&(td.textContent !== "장소를 누르시고 원하는 시간대에 드래그하세요")) {
-    	     // 원하는 작업 수행
-    	     console.log('td 엘리먼트:', td.textContent);
+    	 
+	    	 if ((td.textContent.trim() !== "") &&(td.textContent !== "장소를 누르시고 원하는 시간대에 드래그하세요")) {
+	    	     // 원하는 작업 수행
+	    	     console.log('td 엘리먼트:', td.textContent);
 
-    	     	var jsonObj = new Object();
-	    		var tourCoursePlace = td.textContent;
-	    	    var underscoreIndex = td.getAttribute('name').indexOf("_");
-	    	    var tourCourseDate = td.getAttribute('name').substring(0, underscoreIndex);
-	    	    var tourCourseTime = td.getAttribute('name').substring(underscoreIndex+1); 
-    	      
-	    	    console.log('장소: ' + td.textContent + ' 날짜: ' +  tourCourseDate + ' 시간: ' + tourCourseTime);
-    	 }
+	    	     	var jsonObj = new Object();
+
+		    		var tourCoursePlace = td.textContent;
+		    	    var underscoreIndex = td.getAttribute('name').indexOf("_");
+		    	    tourCourseDate = td.getAttribute('name').substring(0, underscoreIndex);
+		    	    tourCourseTime = td.getAttribute('name').substring(underscoreIndex+1); 
+	    	      	
+		    	    //jsonObj.sidx = $(this).val();
+		    	    
+					jsonObj.tourCourseDate = tourCourseDate;
+					jsonObj.tourCourseTime = tourCourseTime;
+					jsonObj.tourCoursePlace = tourCoursePlace;
+					jsonObj = JSON.stringify(jsonObj);
+					jsonArray.push(JSON.parse(jsonObj));
+
+				
+	    	    //console.log('장소: ' + td.textContent + ' 날짜: ' +  tourCourseDate + ' 시간: ' + tourCourseTime);
+    	 
+    	 			
+    	 	}
     	});
-    
+    	let arrays = JSON.stringify(jsonArray);
     	
-
-       if (fm.scheduleSubject.value == "") {
+        if (fm.scheduleSubject.value == "") {
             alert('제목을 입력해주세요');
             fm.scheduleSubject.focus();
-           return;
-       }
+            return;
+        }
         else if (fm.scheduleStartDate.value == "") {
             alert('날짜를 입력해주세요');
-           fm.scheduleStartDate.focus();
-           return;
-       }
-       
-        
-       fm.action = "<%=request.getContextPath()%>/schedule/scheduleWriteAction.do";
+            fm.scheduleStartDate.focus();
+            return;
+         
+        }	  
+        $.ajax({
+			type : "post",
+			url : "<%=request.getContextPath()%>/schedule/scheduleWriteAction.do",
+			data : {
+				scheduleShareYN:scheduleShareYN,
+				scheduleSubject:scheduleSubject,
+				scheduleStartDate:scheduleStartDate,
+				scheduleEndDate:scheduleEndDate,
+				tourCourseDate:tourCourseDate,
+				tourCourseTime:tourCourseTime,
+				Array:arrays
+			},
+			dataType : "json",
+			success : function(data){
+    			if(data.value == 0){
+					alert("입력오류");	    				
+    			}else{
+	    			alert("출석이 완료되었습니다.");
+    			}				
+			},
+			error : function(request, status, error){
+				//alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				return;
+			} 
+	});
+        var loc = "<%=request.getContextPath()%>/schedule/scheduleList.do";
+		location.href=loc;
+	   	return;
+}
+<%--   fm.action = "<%=request.getContextPath()%>/schedule/scheduleWriteAction.do";
        fm.method = "post";
        fm.submit();
-      return;
-   }
+      return; --%>
     
 </script>
 
@@ -390,7 +433,7 @@
     <a href="javascript:createPeriod()">기간등록</a>
     <br>
     공개여부
-    <select name="scheduleShare">
+    <select name="scheduleShareYN">
         <option value="Y">예</option>
         <option value="N">아니요</option>
     </select>

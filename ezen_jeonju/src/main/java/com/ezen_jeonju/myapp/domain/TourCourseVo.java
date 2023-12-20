@@ -6,7 +6,7 @@ import java.text.DecimalFormat;
 public class TourCourseVo {
 	private int tcidx;
 	private int sidx;
-	private Date tourCourseDate;
+	private String tourCourseDate;
 	private String tourCourseTime;
 	private String tourCoursePlace;
 	private String tourCourseLatitude;
@@ -26,10 +26,10 @@ public class TourCourseVo {
 	public void setSidx(int sidx) {
 		this.sidx = sidx;
 	}
-	public Date getTourCourseDate() {
+	public String getTourCourseDate() {
 		return tourCourseDate;
 	}
-	public void setTourCourseDate(Date tourCourseDate) {
+	public void setTourCourseDate(String tourCourseDate) {
 		this.tourCourseDate = tourCourseDate;
 	}
 	public String getTourCourseTime() {
