@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,6 +42,9 @@ $(document).ready( function() {
 <br><br><br>
 <br><br><br>
 <br><br><br>
+
+<img src="display?name=${cv.storedFileName}" />
+<img src="<%=request.getContextPath()%>/display?name=64775f47-19f7-4ce2-98e4-2014caec8383_logo_color.png" />
 
 cidx: ${cv.cidx} <br>
 제목: ${cv.contentsSubject} <br>

@@ -1,12 +1,12 @@
 package com.ezen_jeonju.myapp.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ezen_jeonju.myapp.domain.AttachFileVo;
 import com.ezen_jeonju.myapp.domain.ContentsVo;
 import com.ezen_jeonju.myapp.persistance.ContentsService_Mapper;
 
@@ -23,6 +23,10 @@ public class ContentsServiceImpl implements ContentsService{
 	@Override
 	public int contentsWrite(ContentsVo cv) {
 		int value = csm.contentsWrite(cv);
+		int cidx = cv.getCidx();
+		if(cv.getFilePath()!=null) {
+			csm.contentsFileUpload(cv);
+		}
 		return value;
 	}
 	
@@ -41,6 +45,13 @@ public class ContentsServiceImpl implements ContentsService{
 	@Override
 	public ContentsVo contentsArticle(int cidx) {
 		ContentsVo cv = csm.contentsArticle(cidx);
+		try {
+			AttachFileVo af = csm.contentsFileload(cidx);
+			cv.setStoredFileName(af.getStoredFileName());
+			cv.setFilePath(af.getFilePath());
+		}catch (Exception e) {
+			
+		}
 		return cv;
 	}
 	

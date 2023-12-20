@@ -1,30 +1,36 @@
 package com.ezen_jeonju.myapp.controller;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ezen_jeonju.myapp.domain.ContentsVo;
 import com.ezen_jeonju.myapp.service.ContentsService;
+import com.ezen_jeonju.myapp.util.UploadFileUtiles;
 
 @Controller
 @RequestMapping(value = "/contents")
 public class ContentsController {
+	
+	@Resource(name="uploadPath")
+	private String uploadPath;
 	
 	@Autowired
 	ContentsService cs;
@@ -39,16 +45,19 @@ public class ContentsController {
 	}
 	
 	@RequestMapping(value = "/contentsWriteAction.do")
-	public String contentsWriteAction(ContentsVo cv, HttpSession session) {
-	//	MultipartFile file = cv.getNoticeFileName();
-	//	String uploadedFileName="";
-	//	if(!file.getOriginalFilename().equals("")) {
+	public String contentsWriteAction(ContentsVo cv, HttpSession session) throws Exception {
+		MultipartFile file = cv.getUploadFileName();
+		cv.setOriginFileName(file.getOriginalFilename());
+		cv.setFileSize(file.getSize());
+		
+		String uploadedFileName = "";
+		if(!file.getOriginalFilename().equals("")) {
 			//업로드 시작
-	//		uploadedFileName = UploadFileUtiles.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
-	//	}
+			uploadedFileName = UploadFileUtiles.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
+		}
+		cv.setStoredFileName(uploadedFileName.substring(12));
 		cv.setMidx(Integer.parseInt(session.getAttribute("midx").toString()));
-	//	cv.setNoticeUploadedFileName(uploadedFileName);
-	//	cv.setNoticeFilePath(uploadPath);
+		cv.setFilePath(uploadPath);
 		cs.contentsWrite(cv);
 		String category = cv.getContentsCategory();
 
@@ -59,6 +68,7 @@ public class ContentsController {
 		}
 	}
 	
+
 	@RequestMapping(value = "/sightsList.do")
 	public String sightsList(Model model) {
 		ArrayList<ContentsVo> cvlist = cs.sightsList();
@@ -82,11 +92,21 @@ public class ContentsController {
 		JSONArray jsonArrayObj;
 		jsonArrayObj = (JSONArray) parser.parse(hashtagList);
 		
+		
 		model.addAttribute("cv", cv);
 		model.addAttribute("hashtag", jsonArrayObj);
 		return "/contents/contentsArticle";
 	}
 	
+	@GetMapping(value="/display")
+	public ResponseEntity<Resource> display(@RequestParam("filename") String filename){
+		String path = uploadPath;
+		Resource resource = (Resource) new FileSystemResource(uploadPath+filename);
+		
+		HttpHeaders header = new HttpHeaders();
+		Path filePath = null;
+		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
+	}
 	@RequestMapping(value="/contentsModify.do")
 	public String contentsModify(@RequestParam("cidx") int cidx, Model model) throws Exception {		
 		

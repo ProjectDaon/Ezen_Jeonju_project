@@ -80,7 +80,7 @@ function goWrite(){
 				</script>
 			</div>
 			<textarea id="summernote" name="contentsArticle"></textarea>
-			<input type="file" name="contentsFileName">
+			<input type="file" name="uploadFileName">
 			
 	<script>
 	$(document).ready(function() {

@@ -2,6 +2,7 @@ package com.ezen_jeonju.myapp.persistance;
 
 import java.util.ArrayList;
 
+import com.ezen_jeonju.myapp.domain.AttachFileVo;
 import com.ezen_jeonju.myapp.domain.ContentsVo;
 
 public interface ContentsService_Mapper {
@@ -12,4 +13,6 @@ public interface ContentsService_Mapper {
 	public int contentsModify(ContentsVo cv);
 	public int contentsDelete(int cidx);
 	public int contentsViewCountUpdate(int cidx);
+	public Integer contentsFileUpload(ContentsVo cv);
+	public AttachFileVo contentsFileload(int cidx);
 }

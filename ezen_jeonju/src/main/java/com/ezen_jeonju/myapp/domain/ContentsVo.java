@@ -1,8 +1,7 @@
 package com.ezen_jeonju.myapp.domain;
 
-import org.json.simple.JSONObject;
 
-public class ContentsVo {
+public class ContentsVo extends AttachFileVo{
 	private int cidx;
 	private int midx;
 	private String contentsCategory;
