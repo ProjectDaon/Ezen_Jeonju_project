@@ -1,11 +1,5 @@
 package com.ezen_jeonju.myapp.controller;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
@@ -158,33 +152,10 @@ public class ContentsController {
 	}
 	
 	@RequestMapping(value="/youtube.do")
-	public String youtube(Model model) throws Exception{
+	public String youtube(@RequestParam("page") int page ,Model model) throws Exception{
+		model.addAttribute("page",page);
 		return "contents/youtube";
 	}
 	
-	public void getYoutube(String nextToken) throws IOException{
-		
-		String apikey = "AIzaSyA-Gxe4RPySUsdzLv0CR00m1QOKM8rfLjE";
-		String channelId = "UCsf5L9ZCtI0nPCqN2aL_4DQ";
-		String UPplaylistid ="UUsf5L9ZCtI0nPCqN2aL_4DQ";
-		
-		String apiUrl = "https://www.googleapis.com/youtube/v3/playlistItems?key="+ apikey
-				  + "&playlistId="+ UPplaylistid
-				  + "&part=snippet&fields=nextPageToken,pageInfo,items(id,snippet(publishedAt,title,description,thumbnails(high(url)),resourceId(videoId)))&order=date&maxResults=50";
-		
-		
-		//HttpURLConnection con = (HttpURLConnection) url.openConnection();
-		//con.setRequestMethod("GET");
-		
-		//BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(),"UTF-8"));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-//		while((inputLine = br.readLine()) != null) {
-//			response.append(inputLine);
-//		}
-//		br.close();
-		
-		return ;
-	}
-	
+
 }
