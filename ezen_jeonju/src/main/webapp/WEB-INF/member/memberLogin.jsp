@@ -40,40 +40,55 @@ function check(){
 <div id="headers"></div>
 <br><br><br><br><br>
 <form name="frm" action="" method="" value="">
-	<div id="loginBox">
+	<div class="loginBox" id="loginBox">
+		<div>
 		<section id="toptitle" class="toptitle">
 			<div class="innerwrap">
 				<h4 class="tit">Login</h4>
 			</div>
 		</section>
-		<table>
+		<table class="loginInput">
 			<tr>
-				<th id="loginId">아이디</th>
+				<th id="loginId">ID</th>
+			</tr>
+			<tr>
 				<td><input type="text" name="memberId" id="memberId" value="" placeholder="아이디 입력"></td>
 			</tr>
 			<tr>
-				<th id="LoginPassword">비밀번호</th>
+			<td height="10px"></td>
+			</tr>
+			<tr>
+				<th id="LoginPassword">Password</th>
+			</tr>
+			<tr>
 				<td><input type="password" name="memberPwd" id="memberPwd" value=""	placeholder="비밀번호 입력" onkeypress="if(event.keyCode == 13){ check(); return;}"></td>
 			</tr>
+			<tr>
+				<td style="text-align: center">
+					<div>
+						<button type="button" class="loginbtn" onclick="check();"><span>로그인</span></button>
+					</div>
+				</td>
+			</tr>
 		</table>
-		<div>
-			<a href="#" id="button" onclick="check();">로그인</a>
 		</div>
 	</div>
-	
-	
-	</form>
-	<a href="<%=request.getContextPath()%>/member/memberJoin.do">회원가입</a><br>
-
-
-<a id="kakao-login-btn" href="<%=request.getContextPath()%>/member/KakaoMemberLogin.do">
-	<img src="../images/kakao_login_medium_narrow.png" width="200" height="50" alt="카카오 로그인 버튼" />
-</a>
+</form>
+<div class="seperator">-간편로그인-</div>
+<div class="socialLogin">
 <br>
-<a id="naver-login-btn" href="<%=request.getContextPath()%>/member/naverMemberLogin.do">
-	<img src="../images/naver_login.png" width="200" height="50" alt="네이버 로그인 버튼"/>
+<div>
+<a id="kakao-login-btn" href="<%=request.getContextPath()%>/member/KakaoMemberLogin.do">
+	<img src="../images/kakao_login.png" width="50" height="50" alt="카카오 로그인 버튼" />
 </a>
+<a id="naver-login-btn" href="<%=request.getContextPath()%>/member/naverMemberLogin.do">
+	<img src="../images/naver_login.png" width="50" height="50" alt="네이버 로그인 버튼"/>
+</a>
+</div>
+</div>
 
-
+	<div class="signup">
+		<a href="<%=request.getContextPath()%>/member/memberJoin.do">회원가입</a><br>
+	</div>
 </body>
 </html>

@@ -8,16 +8,64 @@ section{
 	max-width: 1300px;
     width: 100%;
     margin: 5% auto;
-    overflow: hidden;
-    word-wrap: break-word;
 }
-
+.loginInput td{
+	text-align: center;
+	margin-bottom: 20px;
+}
+.loginInput td input{
+	width: 200px;
+	height: 30px;
+}
+.loginInput th{
+	text-align: left;
+	font-size: 15px;
+	padding-left: 10px;
+}
 h4{
 	font-weight: 500;
     text-align: center;
     font-size: 42px;
     color: #222;
-    margin: unset;
+    margin: 50px;
     line-height: normal;
     font-family: 'Noto Sans KR', sans-serif;
+}
+.loginBox{
+	display: flex;
+	justify-content: center;
+}
+.loginbtn{
+	background: white;
+	width: 200px;
+	height: 40px;
+	margin: 10px;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	box-shadow: rgba(223, 134, 20, 1) 0 0px 0px 2px inset;
+	color: rgba(223, 134, 20, 1);
+	border: none;
+}
+.loginbtn:hover{
+	color: rgba(255, 255, 255, 0.85);
+	box-shadow: rgba(223, 134, 20, 1) 0 0px 0px 40px inset;
+}
+.loginbtn span{
+	font-size: 18px;
+	font-weight: bold;
+}
+.signup{
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	margin-top: 30px;
+}
+.socialLogin{
+	display: flex;
+	justify-content: center;
+}
+.seperator{
+	display: flex;
+	justify-content: center;
 }
