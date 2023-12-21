@@ -21,12 +21,20 @@
 		background-color: #f2f2f2;
 	}
 
+	#jj{
+		width:200px;
+	}
+	
     #schedulePeriod{
         text-align: center;
     }
 
     #timetbl{
        width:50px; 
+    }
+    #totaltbl{
+    	display: flex; 
+        flex-direction: row;
     }
 
     #scheduletbl{
@@ -35,6 +43,7 @@
         width: 1200px;
         height: 800px;
         overflow: scroll;
+        margin-left: 200px;
     }
 
     #timetbl td {
@@ -66,25 +75,32 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
     <!--전주 음식점 api 불러오는 함수-->
+    let currentPage = 1;
+    const itemsPerPage = 10;
+    
     function getJeonju() {
         let obj = document.getElementById("jj");
         let existingPs = obj.querySelectorAll('p');
         existingPs.forEach((p) => {
             p.remove();
         });
-        
-        fetch("https://api.odcloud.kr/api/15076735/v1/uddi:98edad48-0892-4621-8741-cdff64f99c79?page=1&perPage=10&serviceKey=%2BUFeyGq0yCyRGAnfn2BZHmpxwulEWArLYaKEKRMZZSGW85K8Gxlkum5LSZjUcypheIifRSpj1kFDOTS3yFa5wQ%3D%3D")
+
+        let startIdx = (currentPage - 1) * itemsPerPage;
+        let endIdx = startIdx + itemsPerPage;
+
+        fetch("https://api.odcloud.kr/api/15076735/v1/uddi:98edad48-0892-4621-8741-cdff64f99c79?page=1&perPage=105&serviceKey=%2BUFeyGq0yCyRGAnfn2BZHmpxwulEWArLYaKEKRMZZSGW85K8Gxlkum5LSZjUcypheIifRSpj1kFDOTS3yFa5wQ%3D%3D")
             .then((response) => response.json())
             .then((data) => {
-                data.data.forEach((place) => {
+                data.data.slice(startIdx, endIdx).forEach((place) => {
                     let newP = document.createElement("p");
                     let placeName = place['식당명'];
                     newP.innerHTML = "<a href='#' onclick='addToTable(\"" + placeName + "\")'>" + placeName + "</a>";
                     obj.appendChild(newP);
                 });
             });
+        $('#pageIndex').text(currentPage);
+   
     }
-
     function getHotplace(){
         let obj = document.getElementById("jj");
         let existingPs = obj.querySelectorAll('p');
@@ -103,6 +119,23 @@
                 });
             });
 
+    }
+    
+    function nextPage() {
+        if (currentPage > 11) {
+            alert('마지막 페이지입니다.');
+        } else {
+            currentPage++;
+            getJeonju();
+        }
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            
+            getJeonju();
+        }
     }
 
     //음식점이름 클릭하면 테이블 cell로 음식점 이름이동
@@ -408,7 +441,7 @@
     			if(data.value == 0){
 					alert("입력오류");	    				
     			}else{
-	    			alert("출석이 완료되었습니다.");
+	    			//alert("완료");
     			}				
 			},
 			error : function(request, status, error){
@@ -416,17 +449,19 @@
 				return;
 			} 
 	});
+        alert("글이 작성되었습니다");
+        
         var loc = "<%=request.getContextPath()%>/schedule/scheduleList.do";
 		location.href=loc;
 	   	return;
 }
-<%--   fm.action = "<%=request.getContextPath()%>/schedule/scheduleWriteAction.do";
-       fm.method = "post";
-       fm.submit();
-      return; --%>
     
 </script>
-
+<button onclick="getJeonju()">음식점</button>
+<button onclick="getHotplace()">명소</button>
+<button onclick="prevPage()">Previous</button>
+<b id=pageIndex></b>
+<button onclick="nextPage()">Next</button>
 <form name="frm">
     제목 <input type="text" name="scheduleSubject"> <br>
     기간 <input id="startDate" type="date" name="scheduleStartDate"> ~ <input id="endDate" type="date" name="scheduleEndDate">
@@ -439,42 +474,50 @@
     </select>
     <input id="write" type="button" value="글쓰기" onclick="goWrite()"> <br>
 
+
 <table>
     <tr id="schedulePeriod" value="">
+    	
         <!-- 기간 표시 엘리먼트 -->
     </tr>
 </table>
 
-<div id = "scheduletbl">
-<table id="timetbl">
-        <thead><th>시간</th></thead>
-        <tbody>
-            <tr><td></td></tr>
-            <tr><td>08:00</td></tr>
-            <tr><td>09:00</td></tr>
-            <tr><td>10:00</td></tr>
-            <tr><td>11:00</td></tr>
-            <tr><td>12:00</td></tr>
-            <tr><td>13:00</td></tr>
-            <tr><td>14:00</td></tr>
-            <tr><td>15:00</td></tr>
-            <tr><td>16:00</td></tr>
-            <tr><td>17:00</td></tr>
-            <tr><td>18:00</td></tr>
-            <tr><td>19:00</td></tr>
-            <tr><td>20:00</td></tr>
-            <tr><td>21:00</td></tr>
-            <tr><td>22:00</td></tr>
-        </tbody>
-</table>
+<div id="totaltbl">
 
-<div id="table-container"></div>
+<div id="jj"></div>
+	<div id = "scheduletbl">
+	<table id="timetbl">
+	        <thead><th>시간</th></thead>
+	        <tbody>
+	            <tr><td></td></tr>
+	            <tr><td>08:00</td></tr>
+	            <tr><td>09:00</td></tr>
+	            <tr><td>10:00</td></tr>
+	            <tr><td>11:00</td></tr>
+	            <tr><td>12:00</td></tr>
+	            <tr><td>13:00</td></tr>
+	            <tr><td>14:00</td></tr>
+	            <tr><td>15:00</td></tr>
+	            <tr><td>16:00</td></tr>
+	            <tr><td>17:00</td></tr>
+	            <tr><td>18:00</td></tr>
+	            <tr><td>19:00</td></tr>
+	            <tr><td>20:00</td></tr>
+	            <tr><td>21:00</td></tr>
+	            <tr><td>22:00</td></tr>
+	        </tbody>
+	</table>
+
+	<div id="table-container">
+		<table>
+			<thead>
+				<th style="height:50px; width:1200px">기간을 등록해주세요 ! </th>
+			<thead>
+		</table>
+	</div>
+	</div>
 </div>
 </form>
-<button onclick="getJeonju()">음식점</button>
-<button onclick="getHotplace()">명소</button>
-<div id="jj"></div><br>
-
 
 </body>
 </html>

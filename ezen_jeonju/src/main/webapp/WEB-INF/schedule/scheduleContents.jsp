@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <style>
     #scheduletbl{
         display: flex; 
@@ -14,12 +16,44 @@
         height: 800px;
         overflow: scroll;
     }
-
+	.scheduletbl th,tr,td{
+		border: 1px solid black;
+		border-collapse: collapse;
+	}
 </style>
-
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+$(document).ready(function () {
+	var sidx = ${sidx};
+	getTourCourse(sidx);
+    
+});
+function getTourCourse(sidx){
+	$.ajax({
+		type : "post",
+		url : "${pageContext.request.contextPath}/schedule/getTourCourse.do",
+		data : {
+			"sidx" : sidx
+		},
+		dataType : "json",
+		success : function(data){
+			$(data).each(function(){
+				
+				var td_id = "#"+this.tourCourseDate+"_"+this.tourCourseTime;
+				$(td_id).html(this.tourCoursePlace);
+				
+			});
+		},
+		error: function(request, status, error){
+			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	});
+}
+</script>
 
 </head>
 <body>
+
 <h1>일정 내용</h1>
 		<table border=1 style="width:600px;">
 		<tr>
@@ -32,38 +66,39 @@
 		</tr>
 		</table>
 		<br>
-		<div id = "scheduletbl">		
+		<div class="scheduletbl" id = "scheduletbl">		
 		<table id="timetbl">
-        <thead><th>시간</th></thead>
+        <thead>
+        <tr>
+        <th>시간</th>
+        <c:forEach var="dl" items="${dateList}">
+        	<th>${dl}</th>
+        </c:forEach>
+        <tr>
+        </thead>
         <tbody>
-            <tr><td></td></tr>
-            <tr><td>08:00</td></tr>
-            <tr><td>09:00</td></tr>
-            <tr><td>10:00</td></tr>
-            <tr><td>11:00</td></tr>
-            <tr><td>12:00</td></tr>
-            <tr><td>13:00</td></tr>
-            <tr><td>14:00</td></tr>
-            <tr><td>15:00</td></tr>
-            <tr><td>16:00</td></tr>
-            <tr><td>17:00</td></tr>
-            <tr><td>18:00</td></tr>
-            <tr><td>19:00</td></tr>
-            <tr><td>20:00</td></tr>
-            <tr><td>21:00</td></tr>
-            <tr><td>22:00</td></tr>
+        <c:forEach var="hour" begin="8" end="22">
+		    <tr>
+		    	<c:choose>
+		    		<c:when test="${hour lt 10}">
+		    			<td>0${hour}:00</td>
+		    	 	</c:when>
+		    	 	<c:otherwise>
+		    			<td>${hour}:00</td>
+		    	 	</c:otherwise>
+		    	</c:choose>
+		        
+		        <c:forEach var="dl" items="${dateList}">
+		        
+		        	<td id="${dl}_${hour}"></td>
+		        
+		        </c:forEach>	
+		    </tr>
+		</c:forEach>
+
         </tbody>
 		</table>	
 		
-		<table id="coursetbl" border="1" style="width:600px;">
-     
-		<tr>
-		    <c:forEach var="tv" items="${tlist}">
-		        <th>${tv.tourCourseDate}</th>
-		    </c:forEach>
-		</tr>
-
-		</table>
 </div>
 </body>
 </html>
