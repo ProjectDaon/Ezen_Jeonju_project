@@ -120,9 +120,9 @@
 			var pageLink = "";
             for (let i = 1; i <= totalpage; i++) {
             	if(page==i){
-	                pageLink = '<li class="active"><a href="/contents/youtube.do?page=' + i + '">' + i + '</a></li>';
+	                pageLink = '<li class="active"><a href="<%=request.getContextPath()%>/contents/youtube.do?page=' + i + '">' + i + '</a></li>';
             	}else{
-	                pageLink = '<li><a href="/contents/youtube.do?page=' + i + '">' + i + '</a></li>';
+	                pageLink = '<li><a href="<%=request.getContextPath()%>/contents/youtube.do?page=' + i + '">' + i + '</a></li>';
             	}
                 paginationElement.append(pageLink);
             }
