@@ -1,8 +1,10 @@
 package com.ezen_jeonju.myapp.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
@@ -14,8 +16,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.ezen_jeonju.myapp.domain.AttachFileVo;
+import com.ezen_jeonju.myapp.domain.Criteria;
 import com.ezen_jeonju.myapp.domain.NoticeVo;
+import com.ezen_jeonju.myapp.service.AttachFileService;
 import com.ezen_jeonju.myapp.service.NoticeService;
 import com.ezen_jeonju.myapp.util.UploadFileUtiles;
 import com.ezen_jeonju.myapp.domain.PageMaker;
@@ -31,6 +37,10 @@ public class NoticeController {
 	@Autowired(required=false)
 	private PageMaker pm;
 	
+	@Autowired
+	AttachFileService afs;
+	private ServletContext servletContext;
+	
 	@Resource(name="uploadPath")
 	String uploadPath;
 	
@@ -40,17 +50,25 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value = "/noticeWriteAction.do")
-	public String noticeWriteAction(NoticeVo nv, HttpSession session) throws Exception{
-		MultipartFile file = nv.getNoticeFileName();
+	public String noticeWriteAction(AttachFileVo af, NoticeVo nv, HttpSession session, MultipartHttpServletRequest request) throws Exception{
+		MultipartFile file = af.getUploadFileName();
+		af.setOriginalFileName(file.getOriginalFilename());
+		af.setCategory("공지");
+		String path = uploadPath+File.separator+"notice";
 		String uploadedFileName="";
 		if(!file.getOriginalFilename().equals("")) {
 			//업로드 시작
-			uploadedFileName = UploadFileUtiles.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
+			uploadedFileName = UploadFileUtiles.uploadFile(path, file.getOriginalFilename(), file.getBytes());
 		}
-		System.out.println("uploadFileName: "+uploadedFileName);
+		af.setThumbnailFilePath(uploadedFileName);
+		af.setStoredFilePath(uploadedFileName.substring(0,12)+uploadedFileName.substring(14));
+		
+		System.out.println("af값 확인:"+af.getStoredFilePath());
+		
+		afs.imageFileUpload(af);
+		nv.setAidx(af.getAidx());
+		System.out.println("컨트롤러에서 aidx 확인:"+af.getAidx());
 		nv.setMidx(Integer.parseInt(session.getAttribute("midx").toString()));
-		nv.setNoticeUploadedFileName(uploadedFileName);
-		nv.setNoticeFilePath(uploadPath);
 		
 		ns.noticeWrite(nv);
 		
@@ -58,12 +76,13 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value = "/noticeList.do")
-	public String noticeList(SearchCriteria scri, Model model, HttpSession session) {
+	public String noticeList(Criteria cri, SearchCriteria scri, Model model, HttpSession session) {
 		
 		int totalCount = ns.noticeTotalCount(scri);
+		pm.setCri(cri);
 		pm.setScri(scri);
 		pm.setTotalCount(totalCount);
-		
+				
 		ArrayList<NoticeVo> nvlist = ns.noticeList(scri);
 		model.addAttribute("nvlist",nvlist);
 		model.addAttribute("pm", pm);
@@ -79,6 +98,8 @@ public class NoticeController {
 			session.setAttribute("searchType", searchType);
 		}
 		
+		/* model.addAttribute("keyword", keyword); */
+		
 		return "/notice/noticeList";
 	}
 	
@@ -89,7 +110,9 @@ public class NoticeController {
 		JSONParser parser = new JSONParser();
 		JSONArray jsonArrayObj;
 		jsonArrayObj = (JSONArray) parser.parse(hashtagList);
+		AttachFileVo af = afs.imageFileLoad(nv.getAidx());
 		
+		model.addAttribute("af",af);
 		model.addAttribute("nv", nv);
 		model.addAttribute("hashtag", jsonArrayObj);
 		return "/notice/noticeContents";
