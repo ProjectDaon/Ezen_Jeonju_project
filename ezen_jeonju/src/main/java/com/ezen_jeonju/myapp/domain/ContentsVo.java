@@ -14,7 +14,7 @@ public class ContentsVo extends AttachFileVo{
 	private String contentsLatitude;
 	private String contentsLongitude;
 	private String contentsHashtag;
-	private int sidx;
+	private int aidx;
 	
 	public int getCidx() {
 		return cidx;
@@ -88,10 +88,10 @@ public class ContentsVo extends AttachFileVo{
 	public void setContentsHashtag(String contentsHashtag) {
 		this.contentsHashtag = contentsHashtag;
 	}
-	public int getSidx() {
-		return sidx;
+	public int getAidx() {
+		return aidx;
 	}
-	public void setSidx(int sidx) {
-		this.sidx = sidx;
+	public void setAidx(int aidx) {
+		this.aidx = aidx;
 	}
 }

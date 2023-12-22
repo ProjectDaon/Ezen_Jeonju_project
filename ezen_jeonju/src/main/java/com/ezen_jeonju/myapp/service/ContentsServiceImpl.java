@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ezen_jeonju.myapp.domain.AttachFileVo;
+import com.ezen_jeonju.myapp.domain.ContentsSearchCriteria;
 import com.ezen_jeonju.myapp.domain.ContentsVo;
 import com.ezen_jeonju.myapp.persistance.AttachFileService_Mapper;
 import com.ezen_jeonju.myapp.persistance.ContentsService_Mapper;
@@ -35,16 +36,16 @@ public class ContentsServiceImpl implements ContentsService{
 	}
 	
 	@Override
-	public ArrayList<ContentsVo> sightsList() {
-		ArrayList<ContentsVo> cv = csm.sightsList();
+	public ArrayList<ContentsVo> contentsList(ContentsSearchCriteria cscri) {
+		
+		int value = (cscri.getPage()-1)*9;
+		cscri.setPage(value);
+		
+		ArrayList<ContentsVo> cv = csm.contentsList(cscri);
+		
 		return cv;
 	}
-	
-	@Override
-	public ArrayList<ContentsVo> foodList() {
-		ArrayList<ContentsVo> cv = csm.foodList();
-		return cv;
-	}
+
 	
 	@Override
 	public ContentsVo contentsArticle(int cidx) {
@@ -77,4 +78,12 @@ public class ContentsServiceImpl implements ContentsService{
 		int value = csm.contentsViewCountUpdate(cidx);
 		return value;
 	}
+
+	@Override
+	public int totalCount(ContentsSearchCriteria cscri) {
+		int value = csm.totalCount(cscri);
+		return value;
+	}
+
+
 }

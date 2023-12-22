@@ -13,13 +13,16 @@ import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ezen_jeonju.myapp.domain.AttachFileVo;
+import com.ezen_jeonju.myapp.domain.ContentsSearchCriteria;
 import com.ezen_jeonju.myapp.domain.ContentsVo;
+import com.ezen_jeonju.myapp.domain.PageMaker;
 import com.ezen_jeonju.myapp.service.AttachFileService;
 import com.ezen_jeonju.myapp.service.ContentsService;
 import com.ezen_jeonju.myapp.util.UploadFileUtiles;
@@ -31,6 +34,8 @@ public class ContentsController {
 	
 	@Autowired
 	ContentsService cs;
+	
+
 	
 	@Autowired
 	AttachFileService afs;
@@ -76,19 +81,38 @@ public class ContentsController {
 	}
 	
 
-	@RequestMapping(value = "/sightsList.do")
-	public String sightsList(Model model) {
-		ArrayList<ContentsVo> cvlist = cs.sightsList();
-		model.addAttribute("cvlist",cvlist);
-		return "/contents/sightsList";
+	@RequestMapping(value = "/{category}/contentsList.do")
+	public String sightsList(@PathVariable("category") String category, ContentsSearchCriteria cscri, Model model, HttpSession session) {
+	    System.out.println(cscri.getPage());
+		
+		switch(category) {
+	        case "sight":
+	            category = "명소";
+	            break;
+	        case "food":
+	            category = "음식";
+	            break;
+	    }
+	    model.addAttribute("category", category);
+	    cscri.setCategory(category);
+	    int totalCount = cs.totalCount(cscri);
+	    PageMaker pm = new PageMaker();
+	    pm.setCscri(cscri);
+	    pm.setTotalCount(totalCount);
+	    
+	    ArrayList<ContentsVo> cvlist = cs.contentsList(cscri);
+	    model.addAttribute("cvlist", cvlist);
+	    model.addAttribute("pm", pm);
+
+	    // 검색어 입력 유지
+	    String keyword = (String) cscri.getKeyword(); 
+	    if (keyword != null) {
+	        session.setAttribute("keyword", keyword); 
+	    }
+	    
+	    return "/contents/contentsList";
 	}
-	
-	@RequestMapping(value = "/foodList.do")
-	public String foodList(Model model) {
-		ArrayList<ContentsVo> cvlist = cs.foodList();
-		model.addAttribute("cvlist",cvlist);
-		return "/contents/foodList";
-	}
+
 	
 	@RequestMapping(value = "/contentsArticle.do")
 	public String contentsArticle(@RequestParam("cidx") int cidx, Model model) throws Exception {

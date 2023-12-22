@@ -21,6 +21,7 @@ public class PageMaker {
 	
 	private SearchCriteria scri;
 	private Criteria cri;
+	private ContentsSearchCriteria cscri;
 	
 	public Criteria getCri() {
 		return cri;
@@ -72,29 +73,28 @@ public class PageMaker {
 	}
 
 	private void calcData() {
-		
-		//1.1에서 5까지 나타나게 설정
-		//페이지번호/5 -> 1/5=0.2 -> 무조건 올림처리(ceil)하면 1*5==5
-		//int형이라 소수점표기가 안되므로 double로 소수점표기 설정
-		//끝 페이지 번호 = (현재 페이지 번호 / 화면에 보여질 페이지 번호의 갯수) * 화면에 보여질 페이지 번호의 갯수
-		endPage = (int)(Math.ceil(scri.getPage()/(double)displayPageNum)*displayPageNum);	
-		
-		//2.endPage를 설정했으면 시작페이지도 설정
-		//시작 페이지 번호 = (끝 페이지 번호 - 화면에 보여질 페이지 번호의 갯수) + 1
-		startPage = (endPage-displayPageNum)+1;
-		
-		//3.실제 페이지 값을 뽑겠다
-		int tempEndPage = (int)Math.ceil(totalCount/(double)scri.getPerPageNum());
-		
-		//4.설정endPage와 실제endPage를 비교한다
-		if(endPage > tempEndPage) {
-			endPage = tempEndPage;
-		}
-		
-		//5.이전다음버튼 유무
-		prev = (startPage == 1 ? false:true);
-		next = (endPage*scri.getPerPageNum()>= totalCount ? false:true);
+	    int perPageNum = (scri != null) ? scri.getPerPageNum() : cscri.getPerPageNum();
+	    int currentPage = (scri != null) ? scri.getPage() : cscri.getPage();
+
+	    // 1. 기본적으로 1에서 10까지 나타나게 설정
+	    endPage = (int) (Math.ceil(currentPage / (double) displayPageNum) * displayPageNum);
+
+	    // 2. endPage를 설정했으면 시작페이지도 설정
+	    startPage = (endPage - displayPageNum) + 1;
+
+	    // 3. 실제 페이지 값을 뽑겠다
+	    int tempEndPage = (int) Math.ceil(totalCount / (double) perPageNum);
+
+	    // 4. 설정 endPage와 실제 endPage를 비교한다
+	    if (endPage > tempEndPage) {
+	        endPage = tempEndPage;
+	    }
+
+	    // 5. 이전 다음 버튼 유무
+	    prev = (startPage == 1) ? false : true;
+	    next = (endPage * perPageNum >= totalCount) ? false : true;
 	}
+	
 	
 	public boolean isPrev() {
 		return prev;
@@ -110,6 +110,14 @@ public class PageMaker {
 
 	public void setNext(boolean next) {
 		this.next = next;
+	}
+
+	public ContentsSearchCriteria getCscri() {
+		return cscri;
+	}
+
+	public void setCscri(ContentsSearchCriteria cscri) {
+		this.cscri = cscri;
 	}
 
 }

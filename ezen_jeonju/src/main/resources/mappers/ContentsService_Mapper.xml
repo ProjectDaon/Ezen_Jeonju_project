@@ -10,19 +10,29 @@ INSERT INTO contents(midx, contentsCategory, contentsSubject, contentsArticle, c
 VALUES(#{midx}, #{contentsCategory}, #{contentsSubject}, #{contentsArticle}, #{contentsLatitude}, #{contentsLongitude}, #{contentsHashtag}, #{aidx})
 </insert>
 
-<select id="sightsList" resultType="cv">	<!-- like table과 join해서 좋아요도 출력해야함 -->
-SELECT cidx, contentsSubject, contentsViewCount, contentsReviewCount FROM contents
-WHERE contentsCategory = '명소' AND contentsYN = 'N' ORDER BY 1 desc
+<sql id="search">
+<if test="search != false">
+	and contentsSubject like concat('%',#{keyword},'%')
+</if>
+</sql>
+
+<select id="contentsList" parameterType="cscri" resultType="cv">
+SELECT cidx, contentsSubject, contentsViewCount, contentsReviewCount, af.thumbnailFilePath as thumbnailFilePath
+FROM contents c
+join attachfile af on c.aidx = af.aidx
+WHERE contentsCategory = #{category} AND contentsYN = 'N' 
+<include refid="search"/>
+order by cidx desc limit #{page}, #{perPageNum}
 </select>
 
-<select id="foodList" resultType="cv">
-SELECT cidx, contentsSubject, contentsViewCount, contentsReviewCount FROM contents
-WHERE contentsCategory = '음식' AND contentsYN = 'N' ORDER BY 1 desc
+<select id = "totalCount" parameterType="cscri" resultType="int">
+select count(*) as cnt from contents where contentsYN="N" and contentsCategory=#{category}
+<include refid="search"/>
 </select>
 
 <select id="contentsArticle" parameterType="int" resultType="cv">
 SELECT cidx, contentsCategory, contentsSubject, convert(contentsArticle using utf8) as contentsArticle, contentsViewCount, contentsReviewCount, 
-		contentsWriteday, contentsLatitude, contentsLongitude, contentsHashtag , aidx
+contentsWriteday, contentsLatitude, contentsLongitude, contentsHashtag , aidx
 FROM contents
 WHERE cidx = #{cidx}
 </select>

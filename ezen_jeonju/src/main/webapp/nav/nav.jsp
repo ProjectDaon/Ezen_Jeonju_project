@@ -8,15 +8,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
-<script src="http://code.jquery.com/jquery-3.1.0.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 </head>
 <body>
-<script src="../js/nav-bar.js"></script>
+<script src="${pageContext.request.contextPath}/js/nav-bar.js"></script>
 <header class="navigation" id="navigation">
 	<nav class="nav-bar" style="height: 82px;">
 		<h1>
 			<a href="/myapp/index.jsp">
-				<img src="../images/logo.png">
+				<img src="${pageContext.request.contextPath}/images/logo.png">
 			</a>
 		</h1>
 		<div class="menu-wrap">
@@ -28,8 +28,8 @@
 							<p class="large-text">전주에가면</p>
 						</div>
 						<ul class="depth-2">
-							<li><a href="<%=request.getContextPath()%>/contents/sightsList.do">명소</a></li>
-							<li><a href="<%=request.getContextPath()%>/contents/foodList.do">음식</a></li>
+							<li><a href="<%=request.getContextPath()%>/contents/sight/contentsList.do">명소</a></li>
+							<li><a href="<%=request.getContextPath()%>/contents/food/contentsList.do">음식</a></li>
 							<li><a href="<%=request.getContextPath()%>/contents/youtube.do?page=1">영상</a></li>
 						</ul>
 					</div>
