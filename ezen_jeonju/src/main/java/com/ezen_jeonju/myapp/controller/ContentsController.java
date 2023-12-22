@@ -1,5 +1,6 @@
 package com.ezen_jeonju.myapp.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.ezen_jeonju.myapp.domain.AttachFileVo;
 import com.ezen_jeonju.myapp.domain.ContentsVo;
+import com.ezen_jeonju.myapp.service.AttachFileService;
 import com.ezen_jeonju.myapp.service.ContentsService;
 import com.ezen_jeonju.myapp.util.UploadFileUtiles;
 
@@ -28,6 +31,9 @@ public class ContentsController {
 	
 	@Autowired
 	ContentsService cs;
+	
+	@Autowired
+	AttachFileService afs;
 	private ServletContext servletContext;
 	
 	 @Resource(name="uploadPath") String uploadPath;
@@ -39,21 +45,26 @@ public class ContentsController {
 	}
 	
 	@RequestMapping(value = "/contentsWriteAction.do")
-	public String contentsWriteAction(ContentsVo cv, HttpSession session, MultipartHttpServletRequest request) throws Exception {
-		MultipartFile file = cv.getUploadFileName();
-		cv.setOriginFileName(file.getOriginalFilename());
-		cv.setFileSize(file.getSize());
+	public String contentsWriteAction(AttachFileVo af, ContentsVo cv, HttpSession session, MultipartHttpServletRequest request) throws Exception {
 		
-		String path = request.getSession().getServletContext().getRealPath("/uploadFile/contents");
-		
+		MultipartFile file = af.getUploadFileName();
+		af.setOriginalFileName(file.getOriginalFilename());
+		af.setCategory("컨텐츠");
+		String path = uploadPath+File.separator+"contents";
 		String uploadedFileName = "";
 		if(!file.getOriginalFilename().equals("")) {
 			//업로드 시작
 			uploadedFileName = UploadFileUtiles.uploadFile(path, file.getOriginalFilename(), file.getBytes());
 		}
-		cv.setStoredFileName(uploadedFileName.substring(12));
+		af.setThumbnailFilePath(uploadedFileName);
+		af.setStoredFilePath(uploadedFileName.substring(0,12)+uploadedFileName.substring(14));
+		
+		System.out.println("af값 확인:"+af.getStoredFilePath());
+		
+		afs.imageFileUpload(af);
+		cv.setAidx(af.getAidx());
+		System.out.println("컨트롤러에서 aidx 확인:"+af.getAidx());
 		cv.setMidx(Integer.parseInt(session.getAttribute("midx").toString()));
-		cv.setFilePath(path);
 		cs.contentsWrite(cv);
 		String category = cv.getContentsCategory();
 
@@ -87,8 +98,9 @@ public class ContentsController {
 		JSONParser parser = new JSONParser();
 		JSONArray jsonArrayObj;
 		jsonArrayObj = (JSONArray) parser.parse(hashtagList);
+		AttachFileVo af = afs.imageFileLoad(cv.getAidx());
 		
-		
+		model.addAttribute("af",af);
 		model.addAttribute("cv", cv);
 		model.addAttribute("hashtag", jsonArrayObj);
 		return "/contents/contentsArticle";

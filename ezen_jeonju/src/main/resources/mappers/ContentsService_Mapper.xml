@@ -5,17 +5,10 @@
 <mapper namespace="com.ezen_jeonju.myapp.persistance.ContentsService_Mapper">
 
 <insert id="contentsWrite" parameterType="cv">
-<selectKey resultType="int" keyProperty="cidx" order="AFTER">
-select max(cidx) as bidx from contents
-</selectKey>
-INSERT INTO contents(midx, contentsCategory, contentsSubject, contentsArticle, contentsLatitude, contentsLongitude, contentsHashtag)
-VALUES(#{midx}, #{contentsCategory}, #{contentsSubject}, #{contentsArticle}, #{contentsLatitude}, #{contentsLongitude}, #{contentsHashtag})
-</insert>
 
-<select id="contentsFileUpload" parameterType="cv">
-INSERT INTO attachFile(cidx, originFileName, storedFileName, filePath, fileSize)
-VALUES(#{cidx}, #{originFileName}, #{storedFileName}, #{filePath}, #{fileSize})
-</select>
+INSERT INTO contents(midx, contentsCategory, contentsSubject, contentsArticle, contentsLatitude, contentsLongitude, contentsHashtag, aidx)
+VALUES(#{midx}, #{contentsCategory}, #{contentsSubject}, #{contentsArticle}, #{contentsLatitude}, #{contentsLongitude}, #{contentsHashtag}, #{aidx})
+</insert>
 
 <select id="sightsList" resultType="cv">	<!-- like table과 join해서 좋아요도 출력해야함 -->
 SELECT cidx, contentsSubject, contentsViewCount, contentsReviewCount FROM contents
@@ -29,7 +22,7 @@ WHERE contentsCategory = '음식' AND contentsYN = 'N' ORDER BY 1 desc
 
 <select id="contentsArticle" parameterType="int" resultType="cv">
 SELECT cidx, contentsCategory, contentsSubject, convert(contentsArticle using utf8) as contentsArticle, contentsViewCount, contentsReviewCount, 
-		contentsWriteday, contentsLatitude, contentsLongitude, contentsHashtag 
+		contentsWriteday, contentsLatitude, contentsLongitude, contentsHashtag , aidx
 FROM contents
 WHERE cidx = #{cidx}
 </select>

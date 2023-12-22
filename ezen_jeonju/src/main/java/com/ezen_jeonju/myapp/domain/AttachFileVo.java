@@ -2,13 +2,12 @@ package com.ezen_jeonju.myapp.domain;
 
 public class AttachFileVo extends UploadFileDTO{
 	private int aidx;
-	private String originFileName;
-	private String storedFileName;
-	private String filePath;
-	private long fileSize;
+	private String originalFileName;
+	private String storedFilePath;
+	private String thumbnailFilePath;
 	private String fileUploadDay;
 	private String fileYN;
-	
+	private String category;
 	
 	public int getAidx() {
 		return aidx;
@@ -16,29 +15,23 @@ public class AttachFileVo extends UploadFileDTO{
 	public void setAidx(int aidx) {
 		this.aidx = aidx;
 	}
-	public String getOriginFileName() {
-		return originFileName;
+	public String getOriginalFileName() {
+		return originalFileName;
 	}
-	public void setOriginFileName(String originFileName) {
-		this.originFileName = originFileName;
+	public void setOriginalFileName(String originalFileName) {
+		this.originalFileName = originalFileName;
 	}
-	public String getStoredFileName() {
-		return storedFileName;
+	public String getStoredFilePath() {
+		return storedFilePath;
 	}
-	public void setStoredFileName(String storedFileName) {
-		this.storedFileName = storedFileName;
+	public void setStoredFilePath(String storedFilePath) {
+		this.storedFilePath = storedFilePath;
 	}
-	public String getFilePath() {
-		return filePath;
+	public String getThumbnailFilePath() {
+		return thumbnailFilePath;
 	}
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
-	}
-	public long getFileSize() {
-		return fileSize;
-	}
-	public void setFileSize(long fileSize) {
-		this.fileSize = fileSize;
+	public void setThumbnailFilePath(String thumbnailFilePath) {
+		this.thumbnailFilePath = thumbnailFilePath;
 	}
 	public String getFileUploadDay() {
 		return fileUploadDay;
@@ -52,4 +45,12 @@ public class AttachFileVo extends UploadFileDTO{
 	public void setFileYN(String fileYN) {
 		this.fileYN = fileYN;
 	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	
+	
 }

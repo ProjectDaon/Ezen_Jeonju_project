@@ -8,12 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.ezen_jeonju.myapp.domain.AttachFileVo;
 import com.ezen_jeonju.myapp.domain.ContentsVo;
+import com.ezen_jeonju.myapp.persistance.AttachFileService_Mapper;
 import com.ezen_jeonju.myapp.persistance.ContentsService_Mapper;
 
 @Service
 public class ContentsServiceImpl implements ContentsService{
 
 	public ContentsService_Mapper csm;
+	public AttachFileService_Mapper asm;
 	
 	@Autowired
 	public ContentsServiceImpl(SqlSession sqlSession) {
@@ -22,11 +24,13 @@ public class ContentsServiceImpl implements ContentsService{
 	
 	@Override
 	public int contentsWrite(ContentsVo cv) {
+//		AttachFileVo af = new AttachFileVo();
+//		af.setUploadFileName(cv.getUploadFileName());
+//		asm.imageFileUpload(af);
+//		cv.setAidx(af.getAidx());
+		
 		int value = csm.contentsWrite(cv);
-		int cidx = cv.getCidx();
-		if(cv.getFilePath()!=null) {
-			csm.contentsFileUpload(cv);
-		}
+
 		return value;
 	}
 	
@@ -45,10 +49,10 @@ public class ContentsServiceImpl implements ContentsService{
 	@Override
 	public ContentsVo contentsArticle(int cidx) {
 		ContentsVo cv = csm.contentsArticle(cidx);
+		
 		try {
 			AttachFileVo af = csm.contentsFileload(cidx);
-			cv.setStoredFileName(af.getStoredFileName());
-			cv.setFilePath(af.getFilePath());
+			cv.setStoredFilePath(af.getStoredFilePath());
 		}catch (Exception e) {
 			
 		}

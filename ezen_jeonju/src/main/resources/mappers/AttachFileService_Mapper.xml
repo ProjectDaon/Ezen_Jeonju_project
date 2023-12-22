@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ezen_jeonju.myapp.persistance.AttachFileService_Mapper">
+
+<insert id="imageFileUpload" parameterType="af">
+<selectKey resultType="int" keyProperty="aidx" order="AFTER">
+select max(aidx) as aidx from attachFile
+</selectKey>
+INSERT INTO attachFile(originalFileName, storedFilePath, thumbnailFilePath, category)
+VALUES(#{originalFileName}, #{storedFilePath},#{thumbnailFilePath},#{category})
+</insert>
+
+<select id="imageFileLoad" parameterType="int" resultType="af">
+SELECT * from attachfile where aidx = #{aidx}
+</select>
+
+</mapper>

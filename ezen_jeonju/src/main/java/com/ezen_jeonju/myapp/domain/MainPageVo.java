@@ -1,8 +1,9 @@
 package com.ezen_jeonju.myapp.domain;
 
-public class MainPageVo {
+public class MainPageVo extends AttachFileVo{
 	private int mpidx;
 	private int midx;
+	private int sidx;
 	private int mainPageSequence;
 	private String mainPageSubject;
 	private String mainPageLink;
@@ -57,5 +58,11 @@ public class MainPageVo {
 	}
 	public void setMainWriteday(String mainWriteday) {
 		this.mainWriteday = mainWriteday;
+	}
+	public int getSidx() {
+		return sidx;
+	}
+	public void setSidx(int sidx) {
+		this.sidx = sidx;
 	}
 }

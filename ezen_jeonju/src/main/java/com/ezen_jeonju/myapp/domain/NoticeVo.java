@@ -2,9 +2,10 @@ package com.ezen_jeonju.myapp.domain;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class NoticeVo {
+public class NoticeVo extends AttachFileVo{
 	private int nidx;
 	private int midx;
+	private int sidx;
 	private String noticeSubject;
 	private String noticeCategory;
 	private String noticeArticle;
@@ -80,5 +81,11 @@ public class NoticeVo {
 	}
 	public void setNoticeHashtag(String noticeHashtag) {
 		this.noticeHashtag = noticeHashtag;
+	}
+	public int getSidx() {
+		return sidx;
+	}
+	public void setSidx(int sidx) {
+		this.sidx = sidx;
 	}
 }
