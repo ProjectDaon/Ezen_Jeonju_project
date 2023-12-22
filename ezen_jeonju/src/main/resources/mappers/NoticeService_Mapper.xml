@@ -5,8 +5,8 @@
 <mapper namespace="com.ezen_jeonju.myapp.persistance.NoticeService_Mapper">
 
 <insert id="noticeWrite" parameterType="nv" >
-INSERT INTO notice(midx, noticeSubject, noticeCategory, noticeArticle, noticeFileName, noticeFilePath, noticeHashtag)
-VALUES(#{midx}, #{noticeSubject}, #{noticeCategory}, #{noticeArticle}, #{noticeUploadedFileName}, #{noticeFilePath}, #{noticeHashtag})
+INSERT INTO notice(midx, noticeSubject, noticeCategory, noticeArticle, noticeHashtag, aidx)
+VALUES(#{midx}, #{noticeSubject}, #{noticeCategory}, #{noticeArticle}, #{noticeHashtag}, #{aidx})
 </insert>
 
 <sql id = "search">
@@ -22,11 +22,14 @@ VALUES(#{midx}, #{noticeSubject}, #{noticeCategory}, #{noticeArticle}, #{noticeU
 </sql>
 
 <select id="noticeList" parameterType="scri" resultType="nv">
-SELECT nidx, noticeSubject, noticeCategory, noticeWriteday FROM notice
+SELECT nidx, noticeSubject, noticeCategory, noticeWriteday, af.thumbnailFilePath as thumbnailFilePath 
+FROM notice n
+join attachfile af on n.aidx = af.aidx
 WHERE noticeYN='N'
 <include refid="search"/>
-order by nidx desc limit #{page}, #{perPageNum}
+order by nidx desc limit 0, #{perPageNum}
 </select>
+
 
 <select id = "noticeTotalCount" parameterType="scri" resultType="int">
 select count(*) as cnt from notice where noticeYN="N" 
@@ -34,9 +37,15 @@ select count(*) as cnt from notice where noticeYN="N"
 </select>
 
 <select id="noticeContents" parameterType="int" resultType="nv">
-SELECT nidx, noticeSubject, noticeCategory, convert(noticeArticle using utf8) as noticeArticle, noticeFileName, noticeFilePath, noticeWriteday, noticeHashtag
+SELECT nidx, noticeSubject, noticeCategory, convert(noticeArticle using utf8) as noticeArticle, 
+		noticeWriteday, noticeHashtag, aidx
 FROM notice
 WHERE nidx = #{nidx}
+</select>
+
+<select id="noticeFileload" parameterType="int" resultType="af">
+SELECT originalFileName, storedFilePath From attachFile
+WHERE nidx=#{nidx}
 </select>
 
 <update id="noticeModify" parameterType="nv">
