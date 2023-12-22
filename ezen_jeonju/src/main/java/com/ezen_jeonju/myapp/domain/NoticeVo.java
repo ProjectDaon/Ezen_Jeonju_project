@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class NoticeVo extends AttachFileVo{
 	private int nidx;
 	private int midx;
-	private int sidx;
+	private int aidx;
 	private String noticeSubject;
 	private String noticeCategory;
 	private String noticeArticle;
@@ -82,10 +82,10 @@ public class NoticeVo extends AttachFileVo{
 	public void setNoticeHashtag(String noticeHashtag) {
 		this.noticeHashtag = noticeHashtag;
 	}
-	public int getSidx() {
-		return sidx;
+	public int getAidx() {
+		return aidx;
 	}
-	public void setSidx(int sidx) {
-		this.sidx = sidx;
+	public void setAidx(int aidx) {
+		this.aidx = aidx;
 	}
 }

@@ -118,7 +118,7 @@ function goWrite(){
 			})
 			</script>
 			
-			<input type="file" name="noticeFileName">
+			<input type="file" name="uploadFileName">
 			<input type="button" value="등록" onclick="goWrite()">
 		</form>
 	<script>

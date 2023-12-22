@@ -1,0 +1,201 @@
+a {
+    text-decoration: none;
+    color: #555;
+}
+
+.inner {
+    position: relative;
+    margin: 0 auto;
+    width: 1300px;
+    /* height: 100%; */
+}
+
+.innerwrap {
+    max-width: 1300px;
+    width: 100%;
+    margin: 5% auto;
+    padding : 0 5%;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+h3 {
+    font-weight: 500;
+    text-align: center;
+    font-size: 42px;
+    color: #222;
+    /* margin: unset; */
+    line-height: normal;
+}
+
+.filter {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.filterBtn {
+    display: inline-block;
+    padding: 5px 20px;
+    margin: 5px;
+    font-size: calc(12px + 0.2vw);
+    font-weight : bold;
+    color: #FFA07A;
+    background-color: white;
+    border: 2px solid #FFA07A;
+    border-radius: 30px;
+    /* border : none;
+    border-bottom : 2px solid #FFA07A; */
+    cursor: pointer;
+}
+
+.filterBtn.active{
+	background: #FFA07A;
+	border-color: #FFA07A;
+	color: white;
+    }
+
+.searchArray {
+    position: relative;
+    height: 40px;
+    /* margin: 0px 0 1.5rem; */
+    overflow: hidden;
+}
+
+.totalCount {
+    padding: 15px 0;
+    float: left;
+}
+
+.search {
+    width: 28%;
+    float: right;
+    padding: 0px 0 0 0;
+    width: auto;
+    position: absolute;
+    right: 1px;
+}
+
+.search select {
+    padding: 5px;
+    cursor: pointer;
+    position: relative;
+    width: auto;
+    height: 38px;
+    border: 1px solid #d5e3e8;
+}
+
+.searchGroup {
+    display: inline-block;
+    width: 14.5rem;
+    position: relative;
+    margin: auto;
+    vertical-align: middle;
+    border: 0;
+}
+
+.searchGroup input {
+    /* float: left; */
+    width: 70%;
+    height: 38px;
+    padding: 0 0 0 20px;
+    /* line-height: 1.5rem; */
+    /* color: #efefef; */
+    z-index: auto;
+    /* box-sizing: border-box; */
+    border: 0;
+    border-bottom: 1px solid #d5e3e8;
+}
+
+/* input box 입력 후 배경색 없애기 */
+input:-webkit-autofill { -webkit-box-shadow: 0 0 0 30px #fff inset ; -webkit-text-fill-color: #000; }
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active { transition: background-color 5000s ease-in-out 0s; }
+
+.sbt {
+    position: absolute;
+    top: 1px;
+    /* width: 64px; */
+    height: 38px;
+    font-size: .75rem;
+    border: none;
+    border-bottom: 1px solid #d5e3e8;
+    background-color: white;
+}
+
+.searchBtnIcon {
+    font-size:20px;
+    cursor: pointer;
+}
+
+.noticeCalendar li {
+    float: left;
+    width: calc(33.33% - 1px);
+    /* margin: 0 44px 0 20px;
+    height: auto; */
+}
+
+.noticeCalendar li span {
+    display: block;
+    padding: 5px 8px;
+    margin: 10px 0;
+    background-color: #7F58AF;
+    width: 77px;
+    text-align: center;
+    color: #fff;
+    font-size: 15px;
+    border-radius: 9px;
+}
+
+.noticeCalendar li p {
+    font-size: 17px;
+    color: #000;
+    line-height: 1.5em;
+    margin-bottom: 10px;
+    font-weight: 500;
+    /* height: 51px; */
+    overflow: hidden;
+}
+
+.write {
+    margin: 30px 0 0;
+    padding: 15px 0;
+    float: left;
+    border-radius: 30px;
+    background-color: #FFA07A;
+    border: 1px solid #FFA07A;
+    cursor: pointer;
+}
+
+.paging {
+    text-align: center;
+    margin: 30px 0 0;
+    font-size: 0;
+    clear: both;
+}
+
+
+.paging a {
+    display: inline-block;
+    text-align: center;
+    min-width: 44px;
+    line-height: 44px;
+    font-size: 16px;
+    vertical-align: middle;
+    border: 1px solid #c9c9c9;
+    margin: 0 1px;
+}
+
+.paging a:hover {
+    background: #333;
+    color: #fff;
+    border: 1px solid #333;
+}
+
+.pageNumber.active {
+    background: #333;
+    color: #fff;
+    border: 1px solid #333;
+}
