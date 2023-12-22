@@ -75,7 +75,6 @@ public class ScheduleController {
 			tv.setTourCoursePlace(tourCoursePlace);
 			list.add(tv);
 	    }
-		//System.out.println(rootValue);
 
 		ss.scheduleWrite(sv,list);
 		
@@ -127,7 +126,7 @@ public class ScheduleController {
     public JSONArray getTourCourse(@RequestParam("sidx") int sidx) {
     	ArrayList<TourCourseVo> tlist = ss.tourCourseContents(sidx);
     	JSONArray array = new JSONArray();
-    	System.out.println(tlist.size());
+
     	for(int i=0; i<tlist.size(); i++) {
     		JSONObject alist = new JSONObject();
     		alist.put("tourCourseDate", tlist.get(i).getTourCourseDate());
@@ -140,4 +139,10 @@ public class ScheduleController {
     	return array;
     }
 	
+    @RequestMapping(value="/map.do")
+    public String map() {
+    	
+    	return "/schedule/map";
+    }
+    
 }

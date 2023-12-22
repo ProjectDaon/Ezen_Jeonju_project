@@ -22,7 +22,7 @@
 	}
 
 	#jj{
-		width:200px;
+		width:150px;
 	}
 	
     #schedulePeriod{
@@ -40,10 +40,10 @@
     #scheduletbl{
         display: flex; 
         flex-direction: row;
-        width: 1200px;
-        height: 800px;
+        width: 800px;
+        height: 600px;
         overflow: scroll;
-        margin-left: 200px;
+        margin-left: 300px;
     }
 
     #timetbl td {
@@ -68,74 +68,130 @@
     width: 300px; /* 각 셀의 너비를 200px로 설정 */
     max-height: 50px; /* 최대 너비를 200px로 설정 */
     white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
-}
+	}
 
+	p {
+	 
+	 white-space: nowrap;
+	
+	}
+	
+	#foodBtn, #placeBtn{
+		
+	display : none;
+		
+	} 
+	
+  #foodBtn.active,
+  #placeBtn.active {
+    display: inline-block;
+  }
 
 </style>
+
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
     <!--전주 음식점 api 불러오는 함수-->
-    let currentPage = 1;
+    let currentPageFood = 1;
+    let currentPagePlace = 1;
     const itemsPerPage = 10;
-    
-    function getJeonju() {
+    let perPage = 55;
+    function getFood() {
+        let obj = document.getElementById("jj");
+        let existingPs = obj.querySelectorAll('p');
+        existingPs.forEach((p) => {
+            p.remove();
+        });
+		//api 가져올 갯수
+        
+        let startIdx = (currentPageFood - 1) * itemsPerPage;
+        let endIdx = startIdx + itemsPerPage;
+
+        fetch("https://api.odcloud.kr/api/15076735/v1/uddi:98edad48-0892-4621-8741-cdff64f99c79?page=" + currentPageFood + "&perPage="+perPage+"&serviceKey=%2BUFeyGq0yCyRGAnfn2BZHmpxwulEWArLYaKEKRMZZSGW85K8Gxlkum5LSZjUcypheIifRSpj1kFDOTS3yFa5wQ%3D%3D")
+            .then((response) => response.json())
+            .then((data) => {
+            	
+            	let List = "<ul>";
+            	
+                data.data.slice(startIdx, endIdx).forEach((place) => {
+                    let newP = document.createElement("p");
+                    let placeName = place['식당명'];
+                    let placelatitude = place['식당위도'];
+                    let placelongitude = place['식당경도'];
+                    newP.innerHTML = "<a href='#' onclick='addToTable(\"" + placeName + "\")'>" + placeName + "</a>";
+                    newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
+                    newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도 자세히보기</a>';
+                    newP.innerHTML += '<span id="placelatitude">'+ placelatitude +'</span>'
+                    newP.innerHTML += '<span id="placelongitude">'+ placelongitude +'</span>'
+                    // newP.innerHTML += `<button onclick="panTo(${restaurant['식당위도']},${restaurant['식당경도']})">좌표이동</button>`;
+                    obj.appendChild(newP);
+                });
+            });
+
+        $('#pageIndex').text(currentPageFood +" / " + (Math.floor(perPage/itemsPerPage) +1) );
+        $('#placeBtn').removeClass('active');
+        $('#foodBtn').addClass('active');
+    }
+
+    function getPlace() {
         let obj = document.getElementById("jj");
         let existingPs = obj.querySelectorAll('p');
         existingPs.forEach((p) => {
             p.remove();
         });
 
-        let startIdx = (currentPage - 1) * itemsPerPage;
+        let startIdx = (currentPagePlace - 1) * itemsPerPage;
         let endIdx = startIdx + itemsPerPage;
 
-        fetch("https://api.odcloud.kr/api/15076735/v1/uddi:98edad48-0892-4621-8741-cdff64f99c79?page=1&perPage=105&serviceKey=%2BUFeyGq0yCyRGAnfn2BZHmpxwulEWArLYaKEKRMZZSGW85K8Gxlkum5LSZjUcypheIifRSpj1kFDOTS3yFa5wQ%3D%3D")
+        fetch("https://api.odcloud.kr/api/15125431/v1/uddi:3f24f89a-940d-4512-88d7-80b993cd28b8?page=" + currentPagePlace + "&perPage=10&serviceKey=%2BUFeyGq0yCyRGAnfn2BZHmpxwulEWArLYaKEKRMZZSGW85K8Gxlkum5LSZjUcypheIifRSpj1kFDOTS3yFa5wQ%3D%3D")
             .then((response) => response.json())
             .then((data) => {
                 data.data.slice(startIdx, endIdx).forEach((place) => {
                     let newP = document.createElement("p");
-                    let placeName = place['식당명'];
-                    newP.innerHTML = "<a href='#' onclick='addToTable(\"" + placeName + "\")'>" + placeName + "</a>";
-                    obj.appendChild(newP);
-                });
-            });
-        $('#pageIndex').text(currentPage);
-   
-    }
-    function getHotplace(){
-        let obj = document.getElementById("jj");
-        let existingPs = obj.querySelectorAll('p');
-        existingPs.forEach((p) => {
-            p.remove();
-        });
-
-        fetch("https://api.odcloud.kr/api/15125431/v1/uddi:3f24f89a-940d-4512-88d7-80b993cd28b8?page=1&perPage=10&serviceKey=%2BUFeyGq0yCyRGAnfn2BZHmpxwulEWArLYaKEKRMZZSGW85K8Gxlkum5LSZjUcypheIifRSpj1kFDOTS3yFa5wQ%3D%3D")
-            .then((response) => response.json())
-            .then((data) => {
-                data.data.forEach((place) => {
-                    let newP = document.createElement("p");
                     let placeName = place['관광명소명'];
+                    let placelatitude = place['위도'];
+                    let placelongitude = place['경도'];
                     newP.innerHTML = "<a href='#' onclick='addToTable(\"" + placeName + "\")'>" + placeName + "</a>";
+                    newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
+                    newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도 자세히보기</a>';
+
                     obj.appendChild(newP);
                 });
             });
 
+        $('#pageIndexPlace').text(currentPagePlace+" / 1");
+        $('#foodBtn').removeClass('active');
+        $('#placeBtn').addClass('active');
+       
     }
-    
+
+    <!-- 페이징 구현 -->
     function nextPage() {
-        if (currentPage > 11) {
+        if (currentPageFood > perPage/10) {
             alert('마지막 페이지입니다.');
         } else {
-            currentPage++;
-            getJeonju();
+            currentPageFood++;
+            getFood();
         }
+        
     }
 
     function prevPage() {
-        if (currentPage > 1) {
-            currentPage--;
-            
-            getJeonju();
+        if (currentPageFood > 1) {
+            currentPageFood--;
+            getFood();
         }
+       
+    }
+
+    function nextPagePlace() {
+        if (currentPagePlace > 0) {
+            alert('마지막 페이지입니다.');
+        } else {
+            currentPagePlace++;
+            getPlace();
+        }
+        
     }
 
     //음식점이름 클릭하면 테이블 cell로 음식점 이름이동
@@ -143,6 +199,8 @@
         let tableCell = document.getElementById("addSchedule");
         tableCell.innerHTML = restaurantName;
     }
+    
+    
 </script>
 <script>
 
@@ -204,7 +262,6 @@
                 
                 continue;  
             }
-
 
             var td = document.createElement('td');
             td.textContent = "";
@@ -330,16 +387,7 @@
         let startDate = new Date(document.getElementById("startDate").value);
         let endDate = new Date(document.getElementById("endDate").value);
 
-        if (startDatePeriod == "") {
-            alert("날짜 설정을 해주세요");
-            return;
-        }else{
-            if(endDatePeriod == ""){
-                endDatePeriod = startDatePeriod;
-            }
-        }
-
-        if (startDate > endDate) {
+        if (startDate > endDate || endDatePeriod == "" || startDatePeriod == "") {
             alert("날짜 설정을 제대로 해주세요");
             return;
         }
@@ -368,8 +416,6 @@
 <body>
 
 <script>
-
-
     <!-- 글 작성 함수 -->
     
     function goWrite() {
@@ -388,7 +434,6 @@
     	 
 	    	 if ((td.textContent.trim() !== "") &&(td.textContent !== "장소를 누르시고 원하는 시간대에 드래그하세요")) {
 	    	     // 원하는 작업 수행
-	    	     console.log('td 엘리먼트:', td.textContent);
 
 	    	     	var jsonObj = new Object();
 
@@ -405,8 +450,6 @@
 					jsonObj = JSON.stringify(jsonObj);
 					jsonArray.push(JSON.parse(jsonObj));
 
-				
-	    	    //console.log('장소: ' + td.textContent + ' 날짜: ' +  tourCourseDate + ' 시간: ' + tourCourseTime);
     	 
     	 			
     	 	}
@@ -418,7 +461,7 @@
             fm.scheduleSubject.focus();
             return;
         }
-        else if (fm.scheduleStartDate.value == "") {
+        else if (fm.scheduleStartDate.value == "" || fm.scheduleEndDate.value == "") {
             alert('날짜를 입력해주세요');
             fm.scheduleStartDate.focus();
             return;
@@ -455,13 +498,30 @@
 		location.href=loc;
 	   	return;
 }
-    
+$(document).ready(function(){
+	   
+	 getFood();
+	   
+	   
+});
+   
 </script>
-<button onclick="getJeonju()">음식점</button>
-<button onclick="getHotplace()">명소</button>
+<button id="food" onclick="getFood()">음식점</button>
+<button id= "place" onclick="getPlace()">명소</button>
+
+<div id="foodBtn">
 <button onclick="prevPage()">Previous</button>
 <b id=pageIndex></b>
 <button onclick="nextPage()">Next</button>
+</div>
+
+<div id="placeBtn">
+<button onclick="prevPagePlace()">Previous</button>
+<b id=pageIndexPlace></b>
+<button onclick="nextPagePlace()">Next</button>
+</div>
+
+
 <form name="frm">
     제목 <input type="text" name="scheduleSubject"> <br>
     기간 <input id="startDate" type="date" name="scheduleStartDate"> ~ <input id="endDate" type="date" name="scheduleEndDate">
@@ -516,8 +576,14 @@
 		</table>
 	</div>
 	</div>
-</div>
 </form>
+<div id="map" style="width:500px;height:400px;"></div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=24905b65af4a0e247d268677c3972e9d"></script>
+<script src="../js/scheduleWrite-map.js"></script>
+</div>
+
+
+</div>
 
 </body>
 </html>
