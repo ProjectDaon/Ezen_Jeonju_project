@@ -95,7 +95,7 @@ public class UploadFileUtiles {
 		BufferedImage destImg = 
 				Scalr.resize(sourceImg, 
 						Scalr.Method.AUTOMATIC, 
-						Scalr.Mode.FIT_TO_HEIGHT,100);
+						Scalr.Mode.FIT_TO_HEIGHT,400);
 		
 		String thumbnailName = 
 				uploadPath + 
