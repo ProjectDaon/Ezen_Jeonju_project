@@ -7,7 +7,8 @@
 }
 
 .top-subject h3{
-	font-size: 42px;
+	font-size: 45px;
+	margin-bottom: 70px;
 }
 .top-list{
 	width: 68%;
@@ -15,6 +16,7 @@
 	justify-content: space-between;
 	margin-left: auto;
 	margin-right: auto;
+	padding-right: 50px;
 }
 .contents-list{
 	margin-top: 20px;
@@ -32,8 +34,9 @@
 
 .contents-list li {
   box-sizing: border-box;
-  width: 33.33%; /* Three columns per row */
+  width: 30%; /* Three columns per row */
   padding: 10px;
+  margin: 10px;
 }
 .contents-list li img{
 	 width: 400px; 
@@ -81,8 +84,40 @@
     text-decoration: none;
 }
 
-.paging a.select {
-    background: #333;
+.pageNumber.active{
+	background: #333;
     color: #fff;
     border: 1px solid #333;
+}
+.searchinput{
+    border: none;
+    border-bottom: 1px solid #c9c9c9;
+    outline: none;
+    font-size: 20px;
+    width: 150px;
+}
+.sbt{
+	background: none;
+	border: none;
+	font-size: 20px;
+	cursor: pointer;
+}
+.writebtn{
+	position: relative;
+	text-align: right;
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+	bottom: 20px;
+	right: 80px;
+}
+.writebtn a{
+	text-decoration: none;
+	border: 1px solid black;
+	border-radius: 5px;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 5px;
+	background: #c9c9c9;
+	color: black;
 }

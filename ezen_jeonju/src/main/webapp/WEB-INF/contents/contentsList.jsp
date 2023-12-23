@@ -41,7 +41,7 @@ $(document).ready( function() {
 	<div class="top-list">
 		<div>총 게시물 수 <strong>${pm.totalCount}</strong></div>
 		<form action="">
-		<div><input name="keyword" type="text"><button type="submit" name="sbt">검색</button></div>
+		<div><input name="keyword" class="searchinput" type="text"><button type="submit" class="sbt" name="sbt"><ion-icon name="search" class="searchBtnIcon"></ion-icon></button></div>
 		</form>
 	</div>
 <div class="contents-list">
@@ -66,8 +66,16 @@ $(document).ready( function() {
 	이전
 	</a>
 	</c:if>
+	<c:set var="nowpage" value="${pm.cscri.page/9+1}" />
 	<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
-	<a class="pageNumber" href="${pageContext.request.contextPath}/contents/${categoryEng}/contentsList.do?page=${i}${parm}">${i}</a>
+	<c:choose>
+	<c:when test="${i == (nowpage-(nowpage%1))}">
+		<a class="pageNumber active" href="${pageContext.request.contextPath}/contents/${categoryEng}/contentsList.do?page=${i}${parm}">${i}</a>
+	</c:when>
+	<c:otherwise>
+		<a class="pageNumber" href="${pageContext.request.contextPath}/contents/${categoryEng}/contentsList.do?page=${i}${parm}">${i}</a>
+	</c:otherwise>
+	</c:choose>
 	</c:forEach>
 	<c:if test="${pm.next == true && pm.endPage>0}">
 	<a class="pageNext" href = "${pageContext.request.contextPath}/contents/${categoryEng}/contentsList.do?page=${pm.endPage+1}">
@@ -76,6 +84,8 @@ $(document).ready( function() {
 	</c:if>
 </div>
 </div>
+<div class="writebtn">
 <a href="<%=request.getContextPath()%>/contents/contentsWrite.do">글쓰기</a>
+</div>
 </body>
 </html>

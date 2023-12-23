@@ -64,11 +64,9 @@ public class ContentsController {
 		af.setThumbnailFilePath(uploadedFileName);
 		af.setStoredFilePath(uploadedFileName.substring(0,12)+uploadedFileName.substring(14));
 		
-		System.out.println("af값 확인:"+af.getStoredFilePath());
 		
 		afs.imageFileUpload(af);
 		cv.setAidx(af.getAidx());
-		System.out.println("컨트롤러에서 aidx 확인:"+af.getAidx());
 		cv.setMidx(Integer.parseInt(session.getAttribute("midx").toString()));
 		cs.contentsWrite(cv);
 		String category = cv.getContentsCategory();
@@ -83,7 +81,6 @@ public class ContentsController {
 
 	@RequestMapping(value = "/{category}/contentsList.do")
 	public String sightsList(@PathVariable("category") String category, ContentsSearchCriteria cscri, Model model, HttpSession session) {
-	    System.out.println(cscri.getPage());
 		
 		switch(category) {
 	        case "sight":
@@ -93,6 +90,9 @@ public class ContentsController {
 	            category = "음식";
 	            break;
 	    }
+		if(cscri.getKeyword()!=null) {
+			cscri.setSearch(true);
+		}
 	    model.addAttribute("category", category);
 	    cscri.setCategory(category);
 	    int totalCount = cs.totalCount(cscri);

@@ -20,11 +20,9 @@ public class Criteria {
 	}
 
 	public void setPage(int page) {
-		if(page <= 0) {
-			this.page = 1;
-		} else {
+
 		this.page = page;
-		}
+		
 	}
 	
 	public int getPerPageNum() {

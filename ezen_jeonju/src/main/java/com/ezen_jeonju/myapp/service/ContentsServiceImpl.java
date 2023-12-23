@@ -37,7 +37,6 @@ public class ContentsServiceImpl implements ContentsService{
 	
 	@Override
 	public ArrayList<ContentsVo> contentsList(ContentsSearchCriteria cscri) {
-		
 		int value = (cscri.getPage()-1)*9;
 		cscri.setPage(value);
 		

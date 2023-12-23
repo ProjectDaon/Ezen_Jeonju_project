@@ -80,8 +80,17 @@ function goWrite(){
 				</script>
 			</div>
 			<textarea id="summernote" name="contentsArticle"></textarea>
-			<input type="file" name="uploadFileName">
-			
+			<div id="customFileUpload">
+        		<input type="file" name="uploadFileName" id="uploadFile">
+       			<label for="uploadFile">썸네일 등록하기</label>
+   		 	</div>
+			    <script>
+			        // 파일 선택 시 파일명을 표시하는 예시 코드
+			        document.getElementById('uploadFile').addEventListener('change', function() {
+			            var fileName = this.value.split('\\').pop();
+			            alert('선택된 파일: ' + fileName);
+			        });
+			    </script>
 	<script>
 	$(document).ready(function() {
 	  $('#summernote').summernote({
@@ -92,8 +101,8 @@ function goWrite(){
 	
 	<br>
 	
-	<input type="text" id="contentsLatitude"name="contentsLatitude" value="">
-	<input type="text" id="contentsLongitude" name="contentsLongitude" value="">
+	<input type="hidden" id="contentsLatitude"name="contentsLatitude" value="">
+	<input type="hidden" id="contentsLongitude" name="contentsLongitude" value="">
 	</form>
 	<div class="map_wrap">
     <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>

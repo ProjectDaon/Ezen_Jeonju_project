@@ -2,7 +2,7 @@ var markers = [];
 var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 var options = { //지도를 생성할 때 필요한 기본 옵션
     center: new kakao.maps.LatLng(35.82406050330023, 127.14816812319762), //지도의 중심좌표.
-    level: 3 //지도의 레벨(확대, 축소 정도)
+    level: 4 //지도의 레벨(확대, 축소 정도)
 }
 
 var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
@@ -51,6 +51,13 @@ function placesSearchCB(data, status, pagination, bounds) {
 
         // 페이지 번호를 표출합니다
         displayPagination(pagination);
+        
+        // 첫 번째 장소에 포커스를 맞추고 지도 레벨을 4로 설정합니다
+        if (data.length > 0) {
+            var placePosition = new kakao.maps.LatLng(data[0].y, data[0].x);
+            map.setCenter(placePosition);
+            map.setLevel(4);
+        }
 
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
 
@@ -92,6 +99,8 @@ function displayPlaces(places, bounds) {
 
 
         fragment.appendChild(itemEl);
+        
+
     }
 
     // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
@@ -134,8 +143,11 @@ function getListItem(index, places) {
         // 마커를 클릭한 경우, 해당 마커의 정보를 출력하거나 다른 이벤트를 처리할 수 있습니다.
         var clickedMarker = markers[index];
         var clickedPosition = clickedMarker.getPosition();
-        alert('클릭한 마커의 위도: ' + clickedPosition.getLat() + ', 경도: ' + clickedPosition.getLng());
         // 원하는 이벤트 처리를 추가하세요.
+        var placePosition = new kakao.maps.LatLng(clickedPosition.getLat(), clickedPosition.getLng());
+            map.setCenter(placePosition);
+            map.setLevel(4);
+        onMarkerClick(clickedMarker,index);
     });
     
     return el;
