@@ -31,8 +31,8 @@ nidx: ${nv.nidx} <br>
 제목: ${nv.noticeSubject} <br>
 작성일: ${nv.noticeWriteday} <br>
 내용: ${nv.noticeArticle} <br>
-첨부파일: ${nv.noticeFileName} <br>
-파일경로: ${nv.noticeFilePath} <br>
+<%-- 첨부파일: ${nv.orginalFileName} <br> --%>
+<%-- 파일경로: ${nv.noticeFilePath} <br> --%>
 해시태그:
 <c:forEach var="item" items="${hashtag}">
 ${item.value}

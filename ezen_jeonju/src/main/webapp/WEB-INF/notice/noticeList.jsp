@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,8 +83,7 @@ $(document).ready( function() {
 			<c:forEach var="nv" items="${nvlist}">
 				<li>
 					<a href="${pageContext.request.contextPath}/notice/noticeContents.do?nidx=${nv.nidx}">
-					<p class="imgwrap"><img src="${pageContext.request.contextPath}/images/2023BUSAN.jpg" style="width:312px; height:428px;">
-					</p>
+					<p class="imgwrap"><img style="width:300px; height:400px;" src="<spring:url value='/img/notice${nv.thumbnailFilePath}'/>"></p>
 					<c:choose>
 						<c:when test="${nv.noticeCategory eq '공연'}">
 							<span style="background-color: #FEB326;">${nv.noticeCategory}</span>
