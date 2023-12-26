@@ -15,7 +15,7 @@
 <header class="navigation" id="navigation">
 	<nav class="nav-bar" style="height: 82px;">
 		<h1>
-			<a href="/myapp/index.jsp">
+			<a href="/index.jsp">
 				<img src="${pageContext.request.contextPath}/images/logo.png">
 			</a>
 		</h1>

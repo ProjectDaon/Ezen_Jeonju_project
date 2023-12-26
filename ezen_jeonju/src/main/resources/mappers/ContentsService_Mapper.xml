@@ -43,7 +43,8 @@ WHERE cidx=#{cidx}
 </select>
 
 <update id="contentsModify" parameterType="cv">
-update contents set contentsCategory = #{contentsCategory}, contentsSubject = #{contentsSubject}, contentsArticle = #{contentsArticle}, contentsHashtag = #{contentsHashtag}
+update contents set contentsCategory = #{contentsCategory}, contentsSubject = #{contentsSubject}, contentsArticle = #{contentsArticle}, contentsHashtag = #{contentsHashtag},
+	contentsLatitude = #{contentsLatitude}, contentsLongitude = #{contentsLongitude}
 where cidx=#{cidx} <!-- and pwd = #{pwd} -->
 </update>
 
