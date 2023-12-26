@@ -2,16 +2,18 @@
     pageEncoding="utf-8"%>
 <%@ page import="com.ezen_jeonju.myapp.domain.ContentsVo" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%> 
 <%
 ContentsVo cv = (ContentsVo)request.getAttribute("cv");
 %>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>컨텐츠 수정</title>
+<script src="http://code.jquery.com/jquery-latest.js"></script> 
 <link rel="stylesheet" href="../css/navbar.css">
+<link rel="stylesheet" href="../css/contentsModify.css">
 <!-- include libraries(jQuery, bootstrap) -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -95,7 +97,7 @@ function goDelete(){
 				<label>카테고리</label>
 				<input type="text" id="contentsCategorySelected" name="contentsCategorySelected" value="<%=cv.getContentsCategory()%>">
 				<select id="contentsCategory" name="contentsCategory">
-					<option value="">선택</option>
+					<option value="<%=cv.getContentsCategory()%>">선택</option>
 					<option value="명소">명소</option>
 					<option value="음식">음식</option>
 <%--					<c:forEach var="cv" items="${courselist}">
@@ -126,12 +128,10 @@ function goDelete(){
 				</script>
 			</div>
 			<textarea id="summernote" name="contentsArticle"><%=cv.getContentsArticle() %></textarea>
-
-		
-			<input type="file" name="contentsFileName">
-			<input type="button" value="수정" onclick="goModify()">
-			<input type="button" value="삭제" onclick="goDelete()">
-		</form>
+			<div id="customFileUpload">
+				<label for="uploadFile">썸네일 등록하기</label>
+				<input type="file" name="uploadFileName" id="uploadFile">
+			</div>
 	<script>
 	$(document).ready(function() {
 	  $('#summernote').summernote({
@@ -139,6 +139,38 @@ function goDelete(){
 	  });
 	});
 	</script>
+	
+	<br>
+	<!-- Map Section -->
+	<input type="hidden" id="contentsLatitude" name="contentsLatitude" value="${cv.contentsLatitude}">
+	<input type="hidden" id="contentsLongitude" name="contentsLongitude" value="${cv.contentsLongitude}">
+	</form>
+	<div class="map_wrap">
+		<div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+	
+		<div id="menu_wrap" class="bg_white">
+			<div class="option">
+				<div>
+					<form onsubmit="searchPlaces(); return false;">
+					 키워드 : <input type="text" value="${cv.contentsSubject}" id="keyword" size="15"> 
+					<button type="submit">검색하기</button> 
+					</form>
+				</div>
+			</div>
+			<hr>
+			<ul id="placesList"></ul>
+				<div id="pagination"></div>
+		</div>
+		<div class="hAddr">
+			<span class="title">지도중심기준 행정동 주소정보</span>
+			<span id="centerAddr"></span>
+		</div>
 	</div>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dbee45d6252968c16f0f651bb901ef42&libraries=services"></script>
+	<script src="../js/contentsModify-map.js"></script>
+	
+		<input type="button" value="수정" onclick="goModify()">
+		<input type="button" value="삭제" onclick="goDelete()">
+	</div>		
 </body>
 </html>
