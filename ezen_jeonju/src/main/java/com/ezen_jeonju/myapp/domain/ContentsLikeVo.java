@@ -1,6 +1,6 @@
 package com.ezen_jeonju.myapp.domain;
 
-public class ContentsLike {
+public class ContentsLikeVo {
 	private int clidx;
 	private int cidx;
 	private int midx;

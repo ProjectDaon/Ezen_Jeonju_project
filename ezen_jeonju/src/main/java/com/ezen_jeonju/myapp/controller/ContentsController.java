@@ -72,9 +72,9 @@ public class ContentsController {
 		String category = cv.getContentsCategory();
 
 		if(category.equals("명소")) {
-			return "redirect:/contents/sightsList.do";
+			return "redirect:/contents/sight/contentsList.do";
 		}else {
-			return "redirect:/contents/foodList.do";
+			return "redirect:/contents/food/contentsList.do";
 		}
 	}
 	

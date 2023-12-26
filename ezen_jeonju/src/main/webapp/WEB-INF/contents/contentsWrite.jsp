@@ -18,20 +18,19 @@
 <script src="../summernote/summernote-ko-KR.js"></script>
 </head>
 <body>
+<div id="headers"></div>
 <script type="text/javascript">
+
 $(document).ready( function() {
 	//가져올때 navbar.css도 같이 가져올 것
 	$('#headers').load("../nav/nav.jsp");
+	
+	$('#summernote').summernote({
+	  lang: 'ko-KR' // default: 'en-US'
+	});
 
 });
-</script>
-<div id="headers"></div>
 
-<br><br><br>
-<br><br><br>
-<br><br><br>
-
-<script>
 function goWrite(){
 	var fm = document.frm;
 	if(fm.contentsSubject.value==""){
@@ -47,9 +46,28 @@ function goWrite(){
     return;
 }
 
+function readURL(input) {
+	if (input.files && input.files[0]) {
+	  var reader = new FileReader();
+	  reader.onload = function(e) {
+	    document.getElementById('preview').src = e.target.result;
+	  };
+	  reader.readAsDataURL(input.files[0]);
+	} else {
+	  document.getElementById('preview').src = "";
+	}
+}
 
 </script>
-<div class="panel-heading">글 작성하기</div>
+<script src="https://unpkg.com/@yaireo/tagify"></script>
+<!-- 폴리필 (구버젼 브라우저 지원) -->
+<script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+
+<div class="contents">
+<div class="panel-heading">
+	<h3>글 작성하기</h3>
+</div>
 	<div class="panel-body">
 		<form name="frm">
 			<div class="form-group">
@@ -58,15 +76,8 @@ function goWrite(){
 					<option value="명소">명소</option>
 					<option value="음식">음식</option>
 				</select>
-			</div> 
-			<div>
 				<label>제목</label>
 				<input type="text" name="contentsSubject"><br>
-				<script src="https://unpkg.com/@yaireo/tagify"></script>
-				<!-- 폴리필 (구버젼 브라우저 지원) -->
-				<script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
-				<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
-				
 				태그<input name='contentsHashtag'>
 				
 				<script>
@@ -81,24 +92,10 @@ function goWrite(){
 			</div>
 			<textarea id="summernote" name="contentsArticle"></textarea>
 			<div id="customFileUpload">
-        		<input type="file" name="uploadFileName" id="uploadFile">
-       			<label for="uploadFile">썸네일 등록하기</label>
+        		<input type="file" name="uploadFileName" id="uploadFile" onchange="readURL(this);">
+       			<label for="uploadFile">메인사진 등록하기</label>
+       			<img id="preview" width="200"/>
    		 	</div>
-			    <script>
-			        // 파일 선택 시 파일명을 표시하는 예시 코드
-			        document.getElementById('uploadFile').addEventListener('change', function() {
-			            var fileName = this.value.split('\\').pop();
-			            alert('선택된 파일: ' + fileName);
-			        });
-			    </script>
-	<script>
-	$(document).ready(function() {
-	  $('#summernote').summernote({
-	    lang: 'ko-KR' // default: 'en-US'
-	  });
-	});
-	</script>
-	
 	<br>
 	
 	<input type="hidden" id="contentsLatitude"name="contentsLatitude" value="">
@@ -130,5 +127,6 @@ function goWrite(){
 
 </div>
 <input type="button" value="등록" onclick="goWrite()">
+</div>
 </body>
 </html>

@@ -9,57 +9,196 @@
 <title>Article</title>
 <script src="http://code.jquery.com/jquery-latest.js"></script> 
 <link rel="stylesheet" href="../css/navbar.css">
+<link rel="stylesheet" href="../css/contentsArticle.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-3.1.0.js"></script>
-<style>
-ul.listul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-}
-
-li.listli {
-  margin-right: 10px; /* 각 항목 사이의 간격 조절 */
-  padding: 5px;
-  border: 1px solid #ddd; /* 테두리 추가 */
-  border-radius: 5px; /* 테두리의 모서리를 둥글게 만듦 */
-}
-</style>
 </head>
 <body>
 <script type="text/javascript">
+var cidx = ${cv.cidx};
+
 $(document).ready( function() {
 	//가져올때 navbar.css도 같이 가져올 것
 	$('#headers').load("../nav/nav.jsp");
-
+	$('#footers').load("../nav/footer.jsp");
+	
+	/*좋아요 부분*/
+	likeCheck();
+	
+	$('#tablist li').click(function(e){
+		var el = $(e.target).closest('li');
+		el.siblings('li').removeClass("on");
+		el.addClass("on");
+		var id_check = el.attr("id");
+		if(id_check === 'tab1'){
+			$('.con-det').css('display','block');
+			$('.con-review').css('display','none');
+			$('.con-blog').css('display','none');
+		}else if(id_check === 'tab2'){
+			$('.con-det').css('display','none');
+			$('.con-review').css('display','block');
+			$('.con-blog').css('display','none');
+			
+		}else{
+			$('.con-det').css('display','none');
+			$('.con-review').css('display','none');
+			$('.con-blog').css('display','block');
+		}
+	});
+	
 });
+function likeCheck(){
+	$.ajax({
+		type : "post",
+		url : "${pageContext.request.contextPath}/contentsLike/contentsLikeCheck.do",
+		dataType : "json",
+		data : {
+				"cidx" : cidx
+		},
+		cache : false,
+		success : function(data){
+			if(data.value != 0){
+				$('.ck').attr('class','ck-on');
+			}else{
+				$('.ck-on').attr('class','ck');
+			}
+		},
+		error : function(){
+			alert("통신오류 실패");
+		}		
+	});
+}
+function likeThis(event){
+	$.ajax({
+		type : "post",
+		url : "${pageContext.request.contextPath}/contentsLike/contentsLike.do",
+		dataType : "json",
+		data : {
+				"cidx" : cidx
+		},
+		cache : false,
+		success : function(data){
+			alert(data.value);
+			likeCheck();
+		},
+		error : function(){
+			alert("통신오류 실패");
+		}		
+	});
+}
+
 </script>
 <div id="headers"></div>
+<div class="contents">
+	<div class="title">
+		<h4>${cv.contentsSubject}</h4>
+<a class="modifylink" href="${pageContext.request.contextPath}/contents/contentsModify.do?cidx=${cv.cidx}">수정하기</a>
+	</div>
+	<div class="mainImg">
+		<img src="<spring:url value='/img/contents/${af.storedFilePath}'/>" />
+	</div>
+	<div class="actionUserBar">
+		<ul class="left">
+			<li>평점 &nbsp<img src="../images/starimg.jpg"></li>
+			<li>조회 &nbsp<strong>${cv.contentsViewCount}</strong></li>
+			<li>리뷰</li>
+		</ul>
+		<div class="right">
+			<a href="#actionUserBar" onclick="likeThis(event);" class="ck">좋아요</a>
+		</div>
+	</div>
+	<div>
+		<h2>해시태그</h2>
+		<ul class="listul">
+		    <c:forEach var="item" items="${hashtag}">
+		        <li class="listli">#${item.value}</li>
+		    </c:forEach>
+		</ul>
+	</div>
+	<div class="tabSection">
+		<div class="tab-wrap">
+			<ul id="tablist" class="tab innerwrap">
+				<li class="on" id="tab1"><button>상세정보</button></li>
+				<li id="tab2"><button>리뷰</button></li>
+				<li id="tab3"><button>블로그리뷰</button></li>
+			</ul>
+		</div>
+		<div class="tab-con innerwrap" id="tab_con">
+			<div class="con-det">
+				${cv.contentsArticle}
+				<div id="map" style="width:500px;height:400px;"></div>
+				<input type="hidden" id="latitude" value="${cv.contentsLatitude}">
+				<input type="hidden" id="longitude" value="${cv.contentsLongitude}">
+			</div>
+			<div class="con-review" style="display:none">
+				<div class="revHead">
+					<div class="title">여행후기</div>
+					<a href="#" class="write"><span>리뷰작성하기</span></a>
+				</div>
+			</div>
+			<div class="con-blog" style="display:none">블로그리뷰</div>
+		</div>
+	</div>
+	<div class="writeReview">
+		<div class="writeReview-header">
+			<h5 class="modal-title" style="color: #fff;font-size: 1.3rem;">리뷰 등록</h5>
+		</div>
+		<form>
+			<div class="rev-container">
+			<table class="rev-contb">
+				<colgroup>
+					<col style="width: 15%">
+					<col style="width: 85%">
+				</colgroup>
+				<tbody>
+					<tr>
+						<th>리뷰장소</td>
+						<td>${cv.contentsSubject}</td>
+					</tr>
+					<tr>
+						<th>평가</td>
+						<td>
+							<div id="rev_star_grade" class="rev-starGrade">
+								<a href="#writeReview" style="cursor: pointer;">
+									<img src="../images/rev-starOn.png" alt="별점1점주기">
+								</a>
+								<a href="#writeReview" style="cursor: pointer;">
+									<img src="../images/rev-starOn.png" alt="별점2점주기">
+								</a>
+								<a href="#writeReview" style="cursor: pointer;">
+									<img src="../images/rev-starOn.png" alt="별점3점주기">
+								</a>
+								<a href="#writeReview" style="cursor: pointer;">
+									<img src="../images/rev-starOn.png" alt="별점4점주기">
+								</a>
+								<a href="#writeReview" style="cursor: pointer;">
+									<img src="../images/rev-starOn.png" alt="별점5점주기">
+								</a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>리뷰내용</th>
+						<td>
+							<div class="rev-text">
+								<textarea rows="4" cols="50" maxlength="1000"></textarea>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		</form>
+		<div class="writebtn">
+			<a href="#" class="rev-basic">등록</a>
+			<a href="#" class="rev-cc">취소</a>
+		</div>
+		</div>
+	</div>
 
-<br><br><br>
-<br><br><br>
-<br><br><br>
 
-<img src="<spring:url value='/img/contents/${af.storedFilePath}'/>" />
-
-cidx: ${cv.cidx} <br>
-제목: ${cv.contentsSubject} <br>
-작성일: ${cv.contentsWriteday} <br>
-조회수: ${cv.contentsViewCount} <br>
-내용: ${cv.contentsArticle} <br>
-해시태그
-<ul class="listul">
-    <c:forEach var="item" items="${hashtag}">
-        <li class="listli">#${item.value}</li>
-    </c:forEach>
-</ul>
-
-<div id="map" style="width:500px;height:400px;"></div>
-<input type="hidden" id="latitude" value="${cv.contentsLatitude}">
-<input type="hidden" id="longitude" value="${cv.contentsLongitude}">
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dbee45d6252968c16f0f651bb901ef42&libraries=services"></script>
 <script>
 	
@@ -83,6 +222,8 @@ cidx: ${cv.cidx} <br>
 	// 마커가 지도 위에 표시되도록 설정합니다
 	marker.setMap(map);
 </script>
-<a href="${pageContext.request.contextPath}/contents/contentsModify.do?cidx=${cv.cidx}">수정하기</a>
+
+</div>
+<div id="footers"></div>
 </body>
 </html>

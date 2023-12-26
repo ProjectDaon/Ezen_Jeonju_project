@@ -7,6 +7,7 @@
  <typeAlias alias="mv" type="com.ezen_jeonju.myapp.domain.MemberVo"/>
  <typeAlias alias="nv" type="com.ezen_jeonju.myapp.domain.NoticeVo"/>
  <typeAlias alias="cv" type="com.ezen_jeonju.myapp.domain.ContentsVo"/>
+ <typeAlias alias="clv" type="com.ezen_jeonju.myapp.domain.ContentsLikeVo"/>
  <typeAlias alias="sv" type="com.ezen_jeonju.myapp.domain.ScheduleRootVo"/>
  <typeAlias alias="tv" type="com.ezen_jeonju.myapp.domain.TourCourseVo"/>
  <typeAlias alias="kd" type="com.ezen_jeonju.myapp.domain.KakaoDTO"/>

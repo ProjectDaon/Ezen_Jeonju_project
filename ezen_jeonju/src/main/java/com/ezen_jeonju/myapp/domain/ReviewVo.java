@@ -6,8 +6,6 @@ public class ReviewVo {
 	private int midx;
 	private String reviewArticle;
 	private int reviewScore;
-	private String reviewPhoto;
-	private String reviewPhotoPath;
 	private String reviewYN;
 	private String reviewWriteday;
 	
@@ -40,18 +38,6 @@ public class ReviewVo {
 	}
 	public void setReviewScore(int reviewScore) {
 		this.reviewScore = reviewScore;
-	}
-	public String getReviewPhoto() {
-		return reviewPhoto;
-	}
-	public void setReviewPhoto(String reviewPhoto) {
-		this.reviewPhoto = reviewPhoto;
-	}
-	public String getReviewPhotoPath() {
-		return reviewPhotoPath;
-	}
-	public void setReviewPhotoPath(String reviewPhotoPath) {
-		this.reviewPhotoPath = reviewPhotoPath;
 	}
 	public String getReviewYN() {
 		return reviewYN;

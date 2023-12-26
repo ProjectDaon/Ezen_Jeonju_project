@@ -1,0 +1,297 @@
+@charset "UTF-8";
+a{
+	text-decoration: none;
+}
+ul.listul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+li.listli {
+  margin-right: 10px; /* 각 항목 사이의 간격 조절 */
+  padding: 5px;
+  border: 1px solid #ddd; /* 테두리 추가 */
+  border-radius: 5px; /* 테두리의 모서리를 둥글게 만듦 */
+}
+.modifylink{
+	position: absolute;
+	right: 20%;
+	top: 30px;
+}
+.contents{
+	margin: 200px auto 100px auto;
+	width: 70%;
+}
+
+.title h4{
+    font-weight: 500;
+    text-align: center;
+    font-size: 42px;
+    color: #222;
+    margin: unset;
+    line-height: normal;
+    margin-bottom: 40px;
+}
+.mainImg{
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+.mainImg img{
+	width: 100%;
+	height: 800px;
+}
+
+.actionUserBar{
+	overflow: unset;
+    height: unset;
+    border: unset;
+    padding: unset;
+    background-color: #fff;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3% 0;
+    margin-top: -68px;
+}
+
+.actionUserBar .left{
+    line-height: unset;
+    padding: unset;
+    width: unset;
+}
+.actionUserBar .left li{
+    float: left;
+    border-right: unset;
+    padding-right: 13px;
+    margin-right: 13px;
+    color: #222;
+    font-weight: 400;
+    font-size: 18px;
+}
+.actionUserBar .left li img{
+    vertical-align: top;
+    display: inline-block;
+    margin: 3px 5px 0 3px;
+}
+.actionUserBar .left li:not(:last-child):after{
+    display: inline-block;
+    content: '';
+    height: 15px;
+    border-right: 1px solid #ddd;
+    padding-right: 20px;
+    vertical-align: middle;
+}
+.actionUserBar .right .ck:before{
+    display: inline-block;
+    content: '';
+    width: 20px;
+    height: 21px;
+    background-image: url(/images/i-heart-line.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: unset;
+    left: unset;
+    top: unset;
+    vertical-align: middle;
+    margin-right: 3px;
+    margin-bottom: 3px;
+}
+.actionUserBar .right .ck-on:before{
+    display: inline-block;
+    content: '';
+    width: 20px;
+    height: 21px;
+    background-image: url(/images/i-heart-full.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: unset;
+    left: unset;
+    top: unset;
+    vertical-align: middle;
+    margin-right: 3px;
+    margin-bottom: 3px;
+}
+.actionUserBar .right a{
+	display: inline-block;
+    font-weight: 400;
+    font-size: 18px;
+    vertical-align: middle;
+    color: #222;
+}
+
+.tabSection{
+	display: block;
+	overflow: hidden;
+}
+.tabSection .tab-wrap{
+	margin-top: unset;
+}
+.tab-wrap .tab{
+	padding: 0;
+	overflow: hidden;
+	display: flex;
+	flex-wrap: wrap;
+}
+.innerwrap{
+	width: 100%;
+	margin: 5% 0;
+}
+.tab-wrap .tab li{
+	width: 33.3%;
+    text-align: center;
+    box-sizing: border-box;
+    display: block;
+    padding: 0 0 20px;
+    cursor: pointer;
+    font-weight: 700;
+    border-bottom: 1px solid #d5e3e8;
+}
+.tab-wrap .tab li.on{
+	position: relative;
+    border-bottom: 6px solid #7328a5;
+    padding: 0 0 14px;
+}
+button{
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    overflow: visible;
+    white-space: nowrap;
+    font-size: 20px;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.tab-con{
+	margin: 0;
+}
+
+/*리뷰단 css*/
+.revHead{
+    position: relative;
+}
+.revHead .title{
+	font-size: 25px;
+    font-weight: 600;
+    color: #000;
+    letter-spacing: -1px;
+    padding: 0 0 9px;
+    position: relative;
+}
+.revHead .write{
+	position: absolute;
+	right: 0;
+	top: -5px;
+}
+.revHead .write span{
+    display: block;
+    padding: 11px 19px;
+    background-color: #0077cb;
+    color: #fff;
+    text-align: center;
+    letter-spacing: -.5px;
+    border-radius: 8px;
+}
+.writeReview{
+	position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0.3rem;
+    outline: 0;
+    margin: 0 auto;
+}
+.writeReview-header{
+	position: relative;
+    background: #1f72b8;
+    text-align: center;
+    padding: 10px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 1rem 1rem;
+    border-bottom: 1px solid #dee2e6;
+    border-top-left-radius: 0.3rem;
+    border-top-right-radius: 0.3rem;
+}
+.rev-container{
+	padding: 20px;
+}
+.rev-contb{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.rev-contb th{
+    font-weight: 600;
+    font-size: 18px;
+    color: #000;
+    letter-spacing: -1.5px;
+    padding: 15px 10px;
+    text-align: left;
+    border-bottom: 1px solid #e4e4e4;
+}
+.rev-contb td {
+    padding: 15px 10px;
+    border-bottom: 1px solid #e4e4e4;
+    letter-spacing: -1px;
+}
+.rev-text{
+	width: 100%;
+}
+textarea{
+	width: 800px;
+    resize: none;
+    padding: 10px;
+    vertical-align: middle;
+    background: #fff;
+    border: 1px solid #e1e1e1;
+    font-weight: 300;
+    color: #000;
+    font-size: 16px;
+    letter-spacing: -.6px;
+    box-shadow: none;
+    border-radius: 0;
+}
+.writeReview .writebtn{
+    text-align: center;
+    margin-bottom: 20px;
+}
+.writeReview .writebtn a{
+	width: 140px;
+    padding: 15px 0;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+}
+.rev-basic {
+    display: inline-block;
+    padding: 9px 12px;
+    font-size: 15px;
+    color: #fff;
+    font-weight: 600;
+    background-color: #0077cb;
+    transition: .3s;
+}
+.rev-cc {
+    display: inline-block;
+    padding: 9px 12px;
+    font-size: 15px;
+    color: #fff;
+    font-weight: 600;
+    background-color: #555;
+    transition: .3s;
+}

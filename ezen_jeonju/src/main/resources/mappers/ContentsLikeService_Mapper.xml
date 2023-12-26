@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen_jeonju.myapp.persistance.ContentsLikeService_Mapper">
+<insert id="likeAction" parameterType="clv">
+INSERT INTO contentsLike(cidx, midx) values(#{cidx},#{midx})
+</insert>
+
+<select id="likeCheck" parameterType="clv" resultType="int">
+select count(clidx) as cnt from contentsLike where midx=#{midx} and cidx=#{cidx}
+</select>
+
+<delete id="likeDelete" parameterType="clv">
+delete from contentsLike where midx=#{midx} and cidx=#{cidx}
+</delete>
+</mapper>
