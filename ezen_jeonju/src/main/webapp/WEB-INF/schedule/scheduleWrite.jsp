@@ -82,10 +82,15 @@
 		
 	} 
 	
-  #foodBtn.active,
-  #placeBtn.active {
+	#foodBtn.active,
+	#placeBtn.active {
+  
     display: inline-block;
-  }
+  	}
+	.customoverlay a{
+		color : black;
+		font-weight:bold;
+	}
 
 </style>
 
@@ -118,11 +123,10 @@
                     let placeName = place['식당명'];
                     let placelatitude = place['식당위도'];
                     let placelongitude = place['식당경도'];
-                    newP.innerHTML = "<a href='#' onclick='addToTable(\"" + placeName + "\")'>" + placeName + "</a>";
+                    newP.innerHTML = "<a href='#' onclick='addToTable(\"" + placeName +","+placelatitude +","+ placelongitude +"\")'>" + placeName + "</a>";
                     newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
                     newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도 자세히보기</a>';
-                    newP.innerHTML += '<span id="placelatitude">'+ placelatitude +'</span>'
-                    newP.innerHTML += '<span id="placelongitude">'+ placelongitude +'</span>'
+
                     // newP.innerHTML += `<button onclick="panTo(${restaurant['식당위도']},${restaurant['식당경도']})">좌표이동</button>`;
                     obj.appendChild(newP);
                 });
@@ -151,7 +155,7 @@
                     let placeName = place['관광명소명'];
                     let placelatitude = place['위도'];
                     let placelongitude = place['경도'];
-                    newP.innerHTML = "<a href='#' onclick='addToTable(\"" + placeName + "\")'>" + placeName + "</a>";
+                    newP.innerHTML =  "<a href='#' onclick='addToTable(\"" + placeName +","+placelatitude +","+ placelongitude +"\")'>" + placeName + "</a>";
                     newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
                     newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도 자세히보기</a>';
 
@@ -165,7 +169,6 @@
        
     }
 
-    <!-- 페이징 구현 -->
     function nextPage() {
         if (currentPageFood > perPage/10) {
             alert('마지막 페이지입니다.');
@@ -193,319 +196,39 @@
         }
         
     }
+ 
+//X눌렀을 때 사라지게하기
+    function Xclose(cell) {
+        // 부모 노드인 <td>를 찾아서 삭제
+    	  cell.parentNode.innerHTML = '';
 
-    //음식점이름 클릭하면 테이블 cell로 음식점 이름이동
-    function addToTable(restaurantName) {
+    } 
+
+    // 음식점 이름을 클릭하면 테이블 셀에 정보를 추가
+    function addToTable(placeName, placeLatitude, placeLongitude) {
         let tableCell = document.getElementById("addSchedule");
-        tableCell.innerHTML = restaurantName;
+        let placeArray = placeName.split(',');
+
+        // 이름 추가
+        tableCell.innerHTML = placeArray[0];
+
+        // X 버튼 및 추가 정보를 담은 input 태그 추가
+        tableCell.innerHTML += "<input type='hidden' value='" + placeArray[0] + "'>";
+        tableCell.innerHTML += "<input type='hidden' value='" + placeArray[1] + "'>";
+        tableCell.innerHTML += "<input type='hidden' value='" + placeArray[2] + "'>";
+		tableCell.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' onclick='Xclose(this);'>X</a>"; 
+
+        // 이후 작업 수행 (panTo 함수 호출 등)
+        panTo(placeArray[0], placeArray[1], placeArray[2]);
     }
-    
-    
+
+  
+
 </script>
-<script>
 
-	function addDays(dateString, days) {
-	    var currentDate = new Date(dateString);
-	    currentDate.setDate(currentDate.getDate() + days);
-	
-	    var year = currentDate.getFullYear();
-	    
-	    // 월이 한 자리 수인 경우 앞에 0을 추가
-	    var month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-	    
-	    // 일이 한 자리 수인 경우 앞에 0을 추가
-	    var day = currentDate.getDate().toString().padStart(2, '0');
-	    
-	    return year + '-' + month + '-' + day;
-	}
-		<!--일정 테이블 생성함수-->
-    function createTable(parentElementId, columnCount) {
-    // 테이블이 있으면 삭제하고 생성
-    var existingTable = document.getElementById(parentElementId).querySelector('table');
-    if (existingTable) {
-        existingTable.remove();
-    }
-
-    // 부모 요소 가져오기
-    var parentElement = document.getElementById(parentElementId);
-    let startDate = new Date(document.getElementById("startDate").value);
-    let endDatePeriod = document.getElementById("endDate").value;
-
-    // 테이블 요소 생성
-    var table = document.createElement('table');
-    table.id = 'dragDropTable';
-
-    var thead = document.createElement('thead');
-    var trHeader = document.createElement('tr');
-    for (var i = 1; i <= columnCount; i++) {
-        var th = document.createElement('th');
-        th.textContent = 'Day ' + i + ': '  +(startDate.getMonth()+1)+'월'+ startDate.getDate()+'일';
-
-        // 헤더 셀에 스타일 추가
-        th.style.height = '50px';
-        th.style.width = '300px';
-        th.style.maxHeight = '50px';
-        th.style.whiteSpace = 'nowrap';
-
-        startDate.setDate(startDate.getDate()+1);
-        trHeader.appendChild(th);
-    }
-    thead.appendChild(trHeader);
-    table.appendChild(thead);
-
-    // 테이블 바디 생성 (임시 데이터로 5개의 행 추가)
-    var tbody = document.createElement('tbody');
-    for (var j = 1; j <= 16; j++) {
-        var trBody = document.createElement('tr');
-        for (var k = 1; k <= columnCount; k++) {
-            if((j==1) && (k>1)){
-                
-                continue;  
-            }
-
-            var td = document.createElement('td');
-            td.textContent = "";
-            
-            // 바디 셀에 스타일 추가
-            td.style.height = '50px';
-            td.style.width = '300px';
-            td.style.maxHeight = '50px';
-            td.style.whiteSpace = 'nowrap';
-           
-            //행 열 아이디 부여
-            td.id = j+'_'+k;
-            
-            //날짜 시간 장소
-            var hour = j+6;
-            
-            $(td).attr("name", addDays($('#startDate').val(), k-1) + "_" + hour);
-            trBody.appendChild(td);
-
-        }
-
-       	tbody.appendChild(trBody);
-    }
-
-    // 첫 번째 행의 colspan 설정
-    var firstRow = tbody.querySelector('tr');
-    var firstCell = firstRow.querySelector('td');
-    firstCell.colSpan = columnCount;
-    firstCell.textContent = "장소를 누르시고 원하는 시간대에 드래그하세요";
-    firstCell.id = 'addSchedule';
-    table.appendChild(tbody);
-
-    // 부모 요소에 테이블 추가
-    parentElement.appendChild(table);
-
-   
-    // 드래그 시작한 요소의 참조를 저장하는 변수
-    let dragSrcElement = null;
-
-    // 드래그 시작 이벤트 핸들러
-    function handleDragStart(e) {
-        // 드래그 시작한 요소의 참조 저장
-        dragSrcElement = this;
-        // 드래그 효과 설정
-        e.dataTransfer.effectAllowed = 'move';
-        // 드래그 데이터 설정 (텍스트/HTML 형식)
-        e.dataTransfer.setData('text/html', this.innerHTML);
-        // 드래그 중인 행에 클래스 추가하여 투명도 적용
-        this.classList.add('dragged');
-    }
-
-    // 드래그 중인 상태에서 다른 요소 위로 이동할 때 발생하는 이벤트 핸들러
-    function handleDragOver(e) {
-        // 기본 동작 방지
-        if (e.preventDefault) {
-            e.preventDefault();
-        }
-        // 드래그 가능한 효과 설정
-        e.dataTransfer.dropEffect = 'move';
-        return false;
-    }
-
-    // 드래그 중인 상태에서 요소에 진입했을 때 발생하는 이벤트 핸들러
-    function handleDragEnter() {
-        // 드래그 중인 행에 클래스 추가하여 시각적 효과 적용
-        this.classList.add('over');
-    }
-
-    // 드래그 중인 상태에서 요소에서 빠져나갈 때 발생하는 이벤트 핸들러
-    function handleDragLeave() {
-        // 드래그 중인 행에서 클래스 제거하여 시각적 효과 제거
-        this.classList.remove('over');
-    }
-
-    // 드롭이 일어났을 때 발생하는 이벤트 핸들러
-    function handleDrop(e) {
-        // 이벤트 전파 방지
-        if (e.stopPropagation) {
-            e.stopPropagation();
-        }
-
-        // 드래그 소스와 드롭 대상이 다를 경우만 처리
-        if (dragSrcElement !== this) {
-            // 드래그 소스의 내용을 드롭 대상으로 이동
-            dragSrcElement.innerHTML = this.innerHTML;
-            // 드롭 대상의 내용을 드래그 소스로 이동
-            this.innerHTML = e.dataTransfer.getData('text/html');
-        }
-
-        return false;
-    }
-
-    // 드래그 종료 시 발생하는 이벤트 핸들러
-    function handleDragEnd() {
-        // 드래그 중인 행의 투명도 클래스 제거
-        this.classList.remove('dragged');
-        // 드롭 대상의 시각적 효과 클래스 제거
-        items.forEach(function (item) {
-            item.classList.remove('over');
-        });
-    }
-
-    // 테이블의 모든 행을 선택하여 드래그 이벤트 리스너 등록
-    const items = document.querySelectorAll('#dragDropTable tbody td');
-    items.forEach(function(item) {
-        item.draggable = true;
-        item.addEventListener('dragstart', handleDragStart, false);
-        item.addEventListener('dragover', handleDragOver, false);
-        item.addEventListener('dragenter', handleDragEnter, false);
-        item.addEventListener('dragleave', handleDragLeave, false);
-        item.addEventListener('drop', handleDrop, false);
-        item.addEventListener('dragend', handleDragEnd, false);
-    });
-
-}
-
-
-    function createPeriod() {
-        let schedulePeriod = document.getElementById("schedulePeriod");
-        let startDatePeriod = document.getElementById("startDate").value;
-        let endDatePeriod = document.getElementById("endDate").value;
-
-        let startDate = new Date(document.getElementById("startDate").value);
-        let endDate = new Date(document.getElementById("endDate").value);
-
-        if (startDate > endDate || endDatePeriod == "" || startDatePeriod == "") {
-            alert("날짜 설정을 제대로 해주세요");
-            return;
-        }
-
-        var timeDifference = endDate.getTime() - startDate.getTime(); // 밀리초 단위의 차이
-        var dayDifference = timeDifference / (1000 * 60 * 60 * 24);
-
-        if (dayDifference > 7) {
-            alert("기간은 최대 일주일까지 가능합니다");
-            return;
-        }
-
-        schedulePeriod.innerHTML = startDatePeriod + " ~ " + endDatePeriod;
-
-        // 추가: 동적으로 테이블 생성
-        if(endDatePeriod == startDatePeriod){
-            createTable('table-container', 1);
-        }
-        else{
-        createTable('table-container', dayDifference+1);
-        }
-    }
-    
-</script>
 </head>
 <body>
 
-<script>
-    <!-- 글 작성 함수 -->
-    
-    function goWrite() {
-        var fm = document.frm;
-        var tbodyCells = document.querySelectorAll('#dragDropTable tbody td');
-        var tourCourseTime 
-        var tourCourseDate 
-        var jsonArray 	= new Array();
-    	var scheduleSubject = fm.scheduleSubject.value;
-	    var scheduleStartDate = fm.scheduleStartDate.value;
-	    var scheduleEndDate = fm.scheduleEndDate.value;
-	    var scheduleShareYN = fm.scheduleShareYN.value;
-    	//각 td 엘리먼트를 순회하면서 텍스트가 있는지 확인
-    	tbodyCells.forEach(function(td) {
-    	 // 텍스트가 있는 경우
-    	 
-	    	 if ((td.textContent.trim() !== "") &&(td.textContent !== "장소를 누르시고 원하는 시간대에 드래그하세요")) {
-	    	     // 원하는 작업 수행
-
-	    	     	var jsonObj = new Object();
-
-		    		var tourCoursePlace = td.textContent;
-		    	    var underscoreIndex = td.getAttribute('name').indexOf("_");
-		    	    tourCourseDate = td.getAttribute('name').substring(0, underscoreIndex);
-		    	    tourCourseTime = td.getAttribute('name').substring(underscoreIndex+1); 
-	    	      	
-		    	    //jsonObj.sidx = $(this).val();
-		    	    
-					jsonObj.tourCourseDate = tourCourseDate;
-					jsonObj.tourCourseTime = tourCourseTime;
-					jsonObj.tourCoursePlace = tourCoursePlace;
-					jsonObj = JSON.stringify(jsonObj);
-					jsonArray.push(JSON.parse(jsonObj));
-
-    	 
-    	 			
-    	 	}
-    	});
-    	let arrays = JSON.stringify(jsonArray);
-    	
-        if (fm.scheduleSubject.value == "") {
-            alert('제목을 입력해주세요');
-            fm.scheduleSubject.focus();
-            return;
-        }
-        else if (fm.scheduleStartDate.value == "" || fm.scheduleEndDate.value == "") {
-            alert('날짜를 입력해주세요');
-            fm.scheduleStartDate.focus();
-            return;
-         
-        }	  
-        $.ajax({
-			type : "post",
-			url : "<%=request.getContextPath()%>/schedule/scheduleWriteAction.do",
-			data : {
-				scheduleShareYN:scheduleShareYN,
-				scheduleSubject:scheduleSubject,
-				scheduleStartDate:scheduleStartDate,
-				scheduleEndDate:scheduleEndDate,
-				tourCourseDate:tourCourseDate,
-				tourCourseTime:tourCourseTime,
-				Array:arrays
-			},
-			dataType : "json",
-			success : function(data){
-    			if(data.value == 0){
-					alert("입력오류");	    				
-    			}else{
-	    			//alert("완료");
-    			}				
-			},
-			error : function(request, status, error){
-				//alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				return;
-			} 
-	});
-        alert("글이 작성되었습니다");
-        
-        var loc = "<%=request.getContextPath()%>/schedule/scheduleList.do";
-		location.href=loc;
-	   	return;
-}
-$(document).ready(function(){
-	   
-	 getFood();
-	   
-	   
-});
-   
-</script>
 <button id="food" onclick="getFood()">음식점</button>
 <button id= "place" onclick="getPlace()">명소</button>
 
@@ -578,12 +301,108 @@ $(document).ready(function(){
 	</div>
 </form>
 <div id="map" style="width:500px;height:400px;"></div>
+
+</div>
+
+</div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=24905b65af4a0e247d268677c3972e9d"></script>
 <script src="../js/scheduleWrite-map.js"></script>
-</div>
+<script type="text/javascript" src ="../js/scheduleWrite-dragDropTable.js"></script>
 
+<script>
+    <!-- 글 작성 함수 -->
+    
+    function goWrite() {
+        var fm = document.frm;
+        var tbodyCells = document.querySelectorAll('#dragDropTable tbody td');
+        var tourCourseTime 
+        var tourCourseDate 
+        var jsonArray 	= new Array();
+    	var scheduleSubject = fm.scheduleSubject.value;
+	    var scheduleStartDate = fm.scheduleStartDate.value;
+	    var scheduleEndDate = fm.scheduleEndDate.value;
+	    var scheduleShareYN = fm.scheduleShareYN.value;
+    	//각 td 엘리먼트를 순회하면서 텍스트가 있는지 확인
+    	tbodyCells.forEach(function(td) {
+    	 // 텍스트가 있는 경우
+    	 
+	    	 if ((td.textContent.trim() !== "") &&(td.textContent !== "장소를 누르시고 원하는 시간대에 드래그하세요")) {
+	    	     // 원하는 작업 수행
 
-</div>
+	    	     	var jsonObj = new Object();
 
+	    	     	var tourCoursePlace = td.querySelector('input:nth-child(1)').value;
+	    	        var tourCourseLatitude = td.querySelector('input:nth-child(2)').value;
+	    	        var tourCourseLongitude = td.querySelector('input:nth-child(3)').value;
+		    		  		
+		    	    var underscoreIndex = td.getAttribute('name').indexOf("_");
+		    	    tourCourseDate = td.getAttribute('name').substring(0, underscoreIndex);
+		    	    tourCourseTime = td.getAttribute('name').substring(underscoreIndex+1); 
+	    	          	    
+					jsonObj.tourCourseDate = tourCourseDate;
+					jsonObj.tourCourseTime = tourCourseTime;
+					jsonObj.tourCoursePlace = tourCoursePlace;
+					jsonObj.tourCourseLatitude = tourCourseLatitude;
+					jsonObj.tourCourseLongitude = tourCourseLongitude;
+					
+					jsonObj = JSON.stringify(jsonObj);
+					jsonArray.push(JSON.parse(jsonObj));
+
+    	 			
+    	 	}
+    	});
+    	let arrays = JSON.stringify(jsonArray);
+    	
+        if (fm.scheduleSubject.value == "") {
+            alert('제목을 입력해주세요');
+            fm.scheduleSubject.focus();
+            return;
+        }
+        else if (fm.scheduleStartDate.value == "" || fm.scheduleEndDate.value == "") {
+            alert('날짜를 입력해주세요');
+            fm.scheduleStartDate.focus();
+            return;
+         
+        }	  
+        $.ajax({
+			type : "post",
+			url : "<%=request.getContextPath()%>/schedule/scheduleWriteAction.do",
+			data : {
+				scheduleShareYN:scheduleShareYN,
+				scheduleSubject:scheduleSubject,
+				scheduleStartDate:scheduleStartDate,
+				scheduleEndDate:scheduleEndDate,
+				tourCourseDate:tourCourseDate,
+				tourCourseTime:tourCourseTime,
+				
+				Array:arrays
+			},
+			dataType : "json",
+			success : function(data){
+    			if(data.value == 0){
+					alert("입력오류");	    				
+    			}else{
+	    			//alert("완료");
+    			}				
+			},
+			error : function(request, status, error){
+				//alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				return;
+			} 
+	});
+        alert("글이 작성되었습니다");
+        
+        var loc = "<%=request.getContextPath()%>/schedule/scheduleList.do";
+		location.href=loc;
+	   	return;
+}
+$(document).ready(function(){
+	   
+	 getFood();
+	   
+	   
+});
+   
+</script>
 </body>
 </html>
