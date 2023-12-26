@@ -69,10 +69,16 @@ public class ScheduleController {
 			String tourCourseDate = (String)insertData.get("tourCourseDate");
 			String tourCourseTime = (String)insertData.get("tourCourseTime");
 			String tourCoursePlace = (String)insertData.get("tourCoursePlace");
+			String tourCourseLatitude = (String)insertData.get("tourCourseLatitude");
+			String tourCourseLongitude = (String)insertData.get("tourCourseLongitude");
 
+			
 			tv.setTourCourseDate(tourCourseDate);
 			tv.setTourCourseTime(tourCourseTime);
 			tv.setTourCoursePlace(tourCoursePlace);
+			tv.setTourCourseLatitude(tourCourseLatitude);
+			tv.setTourCourseLongitude(tourCourseLongitude);
+			
 			list.add(tv);
 	    }
 
