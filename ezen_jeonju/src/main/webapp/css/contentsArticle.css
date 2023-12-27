@@ -8,7 +8,9 @@ ul.listul {
   margin: 0;
   display: flex;
 }
-
+table{
+	border-collapse: collapse;
+}
 li.listli {
   margin-right: 10px; /* 각 항목 사이의 간격 조절 */
   padding: 5px;
@@ -199,7 +201,13 @@ button{
     border-radius: 8px;
 }
 .writeReview{
+	position: fixed;
+	top:0; left: 0; bottom: 0; right: 0;
+	background: rgba(0, 0, 0, 0.8);
+}
+.writeReview-wrap{
 	position: relative;
+	top: 500px;
     display: flex;
     flex-direction: column;
     width: 80%;
@@ -210,6 +218,7 @@ button{
     border-radius: 0.3rem;
     outline: 0;
     margin: 0 auto;
+    z-index: 50;
 }
 .writeReview-header{
 	position: relative;
@@ -266,11 +275,11 @@ textarea{
     box-shadow: none;
     border-radius: 0;
 }
-.writeReview .writebtn{
+.writeReview-wrap .writebtn{
     text-align: center;
     margin-bottom: 20px;
 }
-.writeReview .writebtn a{
+.writeReview-wrap .writebtn a{
 	width: 140px;
     padding: 15px 0;
     text-align: center;
@@ -294,4 +303,94 @@ textarea{
     font-weight: 600;
     background-color: #555;
     transition: .3s;
+}
+
+/*리뷰별점*/
+.rating__star {
+   font-size: 1.3em;
+   cursor: pointer;
+   color: #dabd18b2;
+   transition: filter linear .3s;
+}
+
+.rating__star:hover {
+   filter: drop-shadow(1px 1px 4px gold);
+}
+
+/*리뷰리스트*/
+.revList{
+	margin-top: 20px;
+}
+.revList table{
+	width: 100%;
+	border-top: 1px solid #d5e3e8;
+}
+.revList table td{
+	border-bottom: 1px solid #d5e3e8;
+	padding: 20px 0 20px 0;
+}
+.revList table .rev-writer{
+	width: 20%;
+	text-align: center;
+}
+.writer-wrap .rev-name{
+	font-weight: bold;
+}
+.writer-wrap .rev-date{
+	padding: 10px 0 10px 0;
+	font-size: 0.9em;
+}
+.writer-wrap .rev-score{
+	display: flex;
+	justify-content: center;
+}
+.writer-wrap .rev-score img{
+	width: 15px;
+}
+.rev-contents{
+	color: #707070;
+	width: 70%;
+}
+.rev-del{
+	text-align: center;
+}
+.delBtn{
+	font-weight: 300;
+    font-size: 16px;
+    border: 1px solid #818181;
+    border-radius: 10px;
+    padding: 10px;
+    background: #818181;
+    color: white;
+}
+
+.paging {
+    text-align: center;
+    margin: 30px 0 0;
+    font-size: 0;
+    clear: both;
+}
+
+
+.paging a {
+    display: inline-block;
+    text-align: center;
+    min-width: 44px;
+    line-height: 44px;
+    font-size: 16px;
+    vertical-align: middle;
+    border: 1px solid #c9c9c9;
+    margin: 0 1px;
+}
+
+.paging a:hover {
+    background: #333;
+    color: #fff;
+    border: 1px solid #333;
+}
+
+.pageNumber.active {
+    background: #333;
+    color: #fff;
+    border: 1px solid #333;
 }

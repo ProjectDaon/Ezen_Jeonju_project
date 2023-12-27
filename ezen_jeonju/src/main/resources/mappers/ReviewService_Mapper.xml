@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen_jeonju.myapp.persistance.ReviewService_Mapper">
+
+<insert id="reviewWrite" parameterType="rv">
+INSERT INTO review(cidx, midx, reviewArticle, reviewScore)
+VALUES(#{cidx},#{midx},#{reviewArticle},#{reviewScore})
+</insert>
+
+<select id="reviewList" parameterType="rcri" resultType="rld">
+SELECT ridx,reviewArticle,reviewScore,reviewWriteday,r.midx, m.memberName
+FROM review r
+join member m on r.midx=m.midx
+WHERE reviewYN='N' and cidx=#{cidx}
+order by ridx desc limit #{page},#{perPageNum}
+</select>
+
+<update id="reviewDel" parameterType="int">
+UPDATE review SET reviewYN='Y' WHERE ridx=#{ridx}
+</update>
+
+<select id="reviewTotalCnt" parameterType="int" resultType="int">
+select count(ridx) as cnt from review where reviewYN='N' and cidx=#{cidx}
+</select>
+</mapper>

@@ -8,46 +8,56 @@
 <meta charset="UTF-8">
 <title>Article</title>
 <script src="http://code.jquery.com/jquery-latest.js"></script> 
+<script src="../js/contentsArticle.js"></script> 
 <link rel="stylesheet" href="../css/navbar.css">
 <link rel="stylesheet" href="../css/contentsArticle.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-3.1.0.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 </head>
 <body>
 <script type="text/javascript">
 var cidx = ${cv.cidx};
 
-$(document).ready( function() {
+$(document).ready(function(){
+
+
+
 	//가져올때 navbar.css도 같이 가져올 것
 	$('#headers').load("../nav/nav.jsp");
 	$('#footers').load("../nav/footer.jsp");
 	
-	/*좋아요 부분*/
+	/*좋아요 체크*/
 	likeCheck();
 	
-	$('#tablist li').click(function(e){
-		var el = $(e.target).closest('li');
-		el.siblings('li').removeClass("on");
-		el.addClass("on");
-		var id_check = el.attr("id");
-		if(id_check === 'tab1'){
-			$('.con-det').css('display','block');
-			$('.con-review').css('display','none');
-			$('.con-blog').css('display','none');
-		}else if(id_check === 'tab2'){
-			$('.con-det').css('display','none');
-			$('.con-review').css('display','block');
-			$('.con-blog').css('display','none');
-			
-		}else{
-			$('.con-det').css('display','none');
-			$('.con-review').css('display','none');
-			$('.con-blog').css('display','block');
-		}
+	/*리뷰창 로딩*/
+	reviewList();
+	
+	/*리뷰글쓰기창 열기*/
+	$('#revWrite').click(function(){
+		$.ajax({
+			type : "post",
+			url : "${pageContext.request.contextPath}/review/loginCheck.do",
+			dataType : "json",
+			cache : false,
+			success : function(data){
+				if(data.txt === "pass"){
+					$('#writeReview').css('display','block');
+				}else{
+					alert(data.txt);
+				}
+			},
+			error : function(){
+				alert("통신오류 실패");
+			}		
+		});
+		
 	});
 	
+
 });
 function likeCheck(){
 	$.ajax({
@@ -88,7 +98,138 @@ function likeThis(event){
 		}		
 	});
 }
-
+function reviewWrite(){
+	var fm = document.rev_frm;
+	var score = fm.reviewScore.value;
+	var article = fm.reviewArticle.value;
+	
+	if(score == ""){
+		alert("별점을 등록해주세요");
+		return;
+	}else if(article == ""){
+		alert("리뷰 내용을 작성해주세요");
+		fm.reviewArticle.focus();
+		return;
+	}
+	$.ajax({
+		type : "post",
+		url : "${pageContext.request.contextPath}/review/reviewWrite.do",
+		dataType : "json",
+		data : {
+				"cidx" : cidx,
+				"reviewScore" : score,
+				"reviewArticle" : article
+		},
+		cache : false,
+		success : function(data){
+			if(data.txt === "pass"){
+				alert("글쓰기 완료");
+				$('#writeReview').css('display','none');
+				reviewList();
+			}else{
+				alert(data.txt);
+			}
+		},
+		error : function(){
+			alert("통신오류 실패");
+		}		
+	});
+}
+function reviewList(){
+	$.ajax({
+		type : "post",
+		url : "${pageContext.request.contextPath}/review/reviewList.do",
+		dataType : "json",
+		data : {
+				"cidx" : cidx
+		},
+		cache : false,
+		success : function(data){
+			reviewListPrint(data.list);
+			reviewPaging(data.pm);
+		},
+		error : function(){
+			alert("통신오류 실패");
+		}		
+	});
+}
+function reviewListPaging(page){
+	$.ajax({
+		type : "post",
+		url : "${pageContext.request.contextPath}/review/reviewList.do?page="+page,
+		dataType : "json",
+		data : {
+				"cidx" : cidx
+		},
+		cache : false,
+		success : function(data){
+			reviewListPrint(data.list);
+			reviewPaging(data.pm);
+		},
+		error : function(){
+			alert("통신오류 실패");
+		}		
+	});
+}
+function reviewListPrint(data){
+	var str = "";
+	var delbtn = "";
+	var loginMidx="${sessionScope.midx}";
+	
+	$(data).each(function(){
+		if(loginMidx==this.midx){
+			delbtn = "<button class='delBtn' onclick='reviewDel("+this.ridx+")'>삭제</button>";
+		}else{
+			delbtn= "";
+		}
+		str = str+"<tr><td class='rev-writer'><div class='writer-wrap'><div class='rev-name'>"+this.memberName
+			+"</div><div class='rev-date'>"+this.reviewWriteday
+			+"</div><div class='rev-score'><img src='../images/rev-starOn.png'><div style='margin-left: 5px'>"+this.reviewScore
+			+"</div></div></div></td><td class='rev-contents'>"+this.reviewArticle
+			+"</td><td class='rev-del'>"+delbtn+"</td></tr>";
+	});
+	
+	str = "<table class='listTable'>"+str+"</table>"
+	
+	$('#reviewTable').html(str);
+	return;
+}
+function reviewPaging(data){
+	var paging = "";
+	if(data.prev == true){
+		paging = paging + "<a class='pagePreview' href='#' onclick='reviewListPaging("+data.startPage-1+")'>이전</a>";
+	}
+	//var nowpage = data.cscri.page/9+1;
+	for(var i=data.startPage; i<data.endPage-1; i++){
+		paging = paging + "<a class='pageNumber' href='#' onclick='reviewListPaging("+i+")'>"+i+"</a>";
+	}
+	if(data.next == true && data.endPage>0){
+		paging = paging + "<a class='pageNext' href='#' onclick='reviewListPaging("+(data.endPage+1)+")'>다음</a>";
+	}
+	$('#paging').html(paging);
+}
+function reviewDel(ridx){
+	$.ajax({
+		type : "post",
+		url : "${pageContext.request.contextPath}/review/reviewDel.do",
+		dataType : "json",
+		data : {
+				"ridx" : ridx
+		},
+		cache : false,
+		success : function(data){
+			if(data.txt === "pass"){
+				alert("댓글 삭제 완료");
+				reviewList();
+			}else{
+				alert(data.txt);
+			}
+		},
+		error : function(){
+			alert("통신오류 실패");
+		}		
+	});
+}
 </script>
 <div id="headers"></div>
 <div class="contents">
@@ -135,17 +276,22 @@ function likeThis(event){
 			<div class="con-review" style="display:none">
 				<div class="revHead">
 					<div class="title">여행후기</div>
-					<a href="#" class="write"><span>리뷰작성하기</span></a>
+					<a href="#" class="write" id="revWrite"><span>리뷰작성하기</span></a>
+				</div>
+				<div class="revList" id="revList">
+					<div id="reviewTable"></div>
+					<div class="paging" id="paging"></div>
 				</div>
 			</div>
 			<div class="con-blog" style="display:none">블로그리뷰</div>
 		</div>
 	</div>
-	<div class="writeReview">
+	<div id="writeReview" class="writeReview" style="display:none">
+	<div class="writeReview-wrap">
 		<div class="writeReview-header">
 			<h5 class="modal-title" style="color: #fff;font-size: 1.3rem;">리뷰 등록</h5>
 		</div>
-		<form>
+		<form name="rev_frm">
 			<div class="rev-container">
 			<table class="rev-contb">
 				<colgroup>
@@ -161,21 +307,12 @@ function likeThis(event){
 						<th>평가</td>
 						<td>
 							<div id="rev_star_grade" class="rev-starGrade">
-								<a href="#writeReview" style="cursor: pointer;">
-									<img src="../images/rev-starOn.png" alt="별점1점주기">
-								</a>
-								<a href="#writeReview" style="cursor: pointer;">
-									<img src="../images/rev-starOn.png" alt="별점2점주기">
-								</a>
-								<a href="#writeReview" style="cursor: pointer;">
-									<img src="../images/rev-starOn.png" alt="별점3점주기">
-								</a>
-								<a href="#writeReview" style="cursor: pointer;">
-									<img src="../images/rev-starOn.png" alt="별점4점주기">
-								</a>
-								<a href="#writeReview" style="cursor: pointer;">
-									<img src="../images/rev-starOn.png" alt="별점5점주기">
-								</a>
+								<i class="rating__star far fa-star"></i>
+								<i class="rating__star far fa-star"></i>
+								<i class="rating__star far fa-star"></i>
+								<i class="rating__star far fa-star"></i>
+								<i class="rating__star far fa-star"></i>
+								<input type="hidden" name="reviewScore" id="reviewScore"  value="">
 							</div>
 						</td>
 					</tr>
@@ -183,7 +320,7 @@ function likeThis(event){
 						<th>리뷰내용</th>
 						<td>
 							<div class="rev-text">
-								<textarea rows="4" cols="50" maxlength="1000"></textarea>
+								<textarea rows="4" cols="50" maxlength="1000" id="reviewArticle" name="reviewArticle"></textarea>
 							</div>
 						</td>
 					</tr>
@@ -192,11 +329,12 @@ function likeThis(event){
 		</div>
 		</form>
 		<div class="writebtn">
-			<a href="#" class="rev-basic">등록</a>
-			<a href="#" class="rev-cc">취소</a>
+			<a href="#" class="rev-basic" onclick="reviewWrite();">등록</a>
+			<a href="#" class="rev-cc" id="rev-cc">취소</a>
 		</div>
 		</div>
 	</div>
+
 
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dbee45d6252968c16f0f651bb901ef42&libraries=services"></script>

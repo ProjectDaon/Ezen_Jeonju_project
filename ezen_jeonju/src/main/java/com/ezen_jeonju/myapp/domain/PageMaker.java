@@ -1,11 +1,6 @@
 package com.ezen_jeonju.myapp.domain;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @Component		// PageMaker 가 bean으로 등록이 됨, import
 //하단페이지 네비게이션에 필요한 변수들의 집합 데이터클래스
@@ -22,6 +17,7 @@ public class PageMaker {
 	private SearchCriteria scri;
 	private Criteria cri;
 	private ContentsSearchCriteria cscri;
+	private ReviewCriteria rcri;
 	
 	public Criteria getCri() {
 		return cri;
@@ -73,9 +69,19 @@ public class PageMaker {
 	}
 
 	private void calcData() {
-	    int perPageNum = (scri != null) ? scri.getPerPageNum() : cscri.getPerPageNum();
-	    int currentPage = (scri != null) ? scri.getPage() : cscri.getPage();
-
+	    int perPageNum = 0;
+	    int currentPage = 0;
+	    
+	    if(scri != null) {
+	    	perPageNum = scri.getPerPageNum();
+	    	currentPage = scri.getPage();
+	    }else if(cscri != null) {
+	    	perPageNum = cscri.getPerPageNum();
+	    	currentPage = cscri.getPage();
+	    }else if(rcri != null){
+	    	perPageNum = rcri.getPerPageNum();
+	    	currentPage = rcri.getPage();
+	    }
 	    // 1. 기본적으로 1에서 10까지 나타나게 설정
 	    endPage = (int) (Math.ceil(currentPage / (double) displayPageNum) * displayPageNum);
 
@@ -118,6 +124,14 @@ public class PageMaker {
 
 	public void setCscri(ContentsSearchCriteria cscri) {
 		this.cscri = cscri;
+	}
+
+	public ReviewCriteria getRcri() {
+		return rcri;
+	}
+
+	public void setRcri(ReviewCriteria rcri) {
+		this.rcri = rcri;
 	}
 
 }
