@@ -12,14 +12,19 @@
     #scheduletbl{
         display: flex; 
         flex-direction: row;
-        width: 1200px;
-        height: 800px;
+        width: 900px;
+        height: 600px;
         overflow: scroll;
     }
 	.scheduletbl th,tr,td{
 		border: 1px solid black;
 		border-collapse: collapse;
 	}
+  	 #totaltbl{
+    	display: flex; 
+        flex-direction: row;
+    }
+	
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
@@ -37,18 +42,52 @@ function getTourCourse(sidx){
 		},
 		dataType : "json",
 		success : function(data){
+			var positions = [];
 			$(data).each(function(){
 				
 				var td_id = "#"+this.tourCourseDate+"_"+this.tourCourseTime;
 				$(td_id).html(this.tourCoursePlace);
 				
+				positions.push({
+					
+					title: this.tourCoursePlace,
+				    latlng: new kakao.maps.LatLng(this.tourCourseLatitude, this.tourCourseLongitude)
+									
+				});
+				
+				for (var i = 0; i < positions.length; i ++) {
+				    
+				    // 마커를 생성합니다
+				    var marker = new kakao.maps.Marker({
+				        position: positions[i].latlng, // 마커를 표시할 위치
+				        title : positions[i].title // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+				       
+				    });
+				    var iwContent = positions[i].title;
+				    var iwPosition = positions[i].latlng;
+			    
+				    var infowindow = new kakao.maps.InfoWindow({
+				        map: map, // 인포윈도우가 표시될 지도
+				        position: iwPosition,
+				        content: iwContent
+				      });
+				       // 마커를 지도에 표시합니다
+				       marker.setMap(map);
+
+				      infowindow.open(map, marker);
+				    
+				      setCenter();
+				}
+				
 			});
+			
 		},
 		error: function(request, status, error){
 			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 		}
 	});
 }
+
 </script>
 
 </head>
@@ -66,6 +105,8 @@ function getTourCourse(sidx){
 		</tr>
 		</table>
 		<br>
+		
+<div id="totaltbl">	
 		<div class="scheduletbl" id = "scheduletbl">		
 		<table id="timetbl">
         <thead>
@@ -98,7 +139,17 @@ function getTourCourse(sidx){
 
         </tbody>
 		</table>	
-		
+   </div>
+<div id="map" style="width:500px;height:400px;"></div>
+   <div>
+   <select name="nDate">
+   	<c:forEach var="tl" items="${tlist}">
+       <option value="${tl.tourCourseNDate}">${tl.tourCourseNDate}</option>
+   </c:forEach>
+   </select>
+   </div>
 </div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=24905b65af4a0e247d268677c3972e9d"></script>
+<script src="../js/scheduleContents-map.js"></script>
 </body>
 </html>
