@@ -45,13 +45,13 @@ public class MainPageController {
 	@RequestMapping(value = "/main/vannerRegisterList.do")
 	public String vannerRegisterlist() {
 		
-		return "WEB-INF/mypage/registerMainImages";
+		return "mypage/registerMainImages";
 	}
 	
 	@RequestMapping(value = "/main/vannerRegister.do")
 	public String vannerRegister() {
 		
-		return "WEB-INF/mypage/registerMainImagesWrite";
+		return "mypage/registerMainImagesWrite";
 	}
 	
 	@RequestMapping(value = "/main/mainVannerRegisterAction.do", method = RequestMethod.POST)
@@ -83,6 +83,6 @@ public class MainPageController {
 		mps.mainPageVannerRegister(mpv);
 
 		
-		return "WEB-INF/mypage/registerMainImages";
+		return "mypage/registerMainImages";
 	}
 }
