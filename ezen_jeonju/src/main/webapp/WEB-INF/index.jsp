@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%> 
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -19,10 +21,11 @@
 
 <body>
 <script src="./js/nav-bar.js"></script>
+
 <header class="navigation" id="navigation">
     <nav class="nav-bar">
         <h1>
-            <a href="index.jsp">
+            <a href="index.do">
                 <img src="./images/logo.png">
             </a>
         </h1>
@@ -68,7 +71,7 @@
         <div class="my-menu-element">
             <div class="login-element">
                 <%if(session.getAttribute("midx")==null){%>
-                <a class="login" href="<%=request.getContextPath()%>/member/memberLogin.do">로그인</a>
+                <a class="login" href="<%=request.getContextPath()%>member/memberLogin.do">로그인</a>
                 <%} else{ %>
                 <a href="<%=request.getContextPath()%>/member/memberLogout.do">로그아웃</a>
                 <%} %>
@@ -122,17 +125,15 @@
 <div id="main-contents" class="main-contents">
     <section class="first-visual">
         <div class="first-visual-list">
-            <div><a href="#"><img class="first-visual-img" src="./images/1920785.jpg"></a></div>
-            <div><a href="#"><img class="first-visual-img" src="./images/1920785.jpg"></a></div>
-            <div><a href="#"><img class="first-visual-img" src="./images/1920785.jpg"></a></div>
-            <div><a href="#"><img class="first-visual-img" src="./images/1920785.jpg"></a></div>
+    		<c:forEach var="mpv" items="${mpvlist}">
+            <div><a href="${mpv.mainPageLink}"><img src="<spring:url value='/img/vanners/${mpv.storedFilePath}'/>" /></a></div>
+            </c:forEach>
         </div>
         <div class="first-text">
             <div class="first-text-list">
-                <div><a href="#"><p class="slide-txt">텍스트는 상자입니다. 아닙니다. 상자가 아닌 글자입니다. </p></a></div>
-                <div><a href="#"><p class="slide-txt">텍스트는 상자입니다. 아닙니다. 상자가 아닌 글자입니다. </p></a></div>
-                <div><a href="#"><p class="slide-txt">텍스트는 상자입니다. 아닙니다. 상자가 아닌 글자입니다. </p></a></div>
-                <div><a href="#"><p class="slide-txt">텍스트는 상자입니다. 아닙니다. 상자가 아닌 글자입니다. </p></a></div>
+            	<c:forEach var="mpv" items="${mpvlist}">
+                <div><a href="${mpv.mainPageLink}"><p class="slide-txt">${mpv.mainPageSubject}</p></a></div>
+                </c:forEach>
             </div>
             <div class="first-control">
                 <div class="page">
@@ -156,7 +157,7 @@
                 </div>
             </div>
             <div class="admin-click">
-                <div><a class="btn-more" href="<%=request.getContextPath()%>/main/mainpage.do"><span>배너등록 +</span></a></div>
+                <div><a class="btn-more" href="<%=request.getContextPath()%>/main/vannerRegisterList.do"><span>배너등록 +</span></a></div>
             </div>
         </div>
     </section>
@@ -177,6 +178,7 @@
             <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="./images/417320-1.jpg"></div><p class="slide-txt">길게되는건지 적당히만 하자</p></a></div>
         </div>
     </section>
+
     <section class="third-visual">
         <div class="inner">
             <div class="title-section">
@@ -280,7 +282,7 @@
     	</div>
    	</div>
 </footer>
-
+	
 </body>
 </html>
-<script src="./js/mainhome.js"></script>
+	<script src="./js/mainhome.js"></script>

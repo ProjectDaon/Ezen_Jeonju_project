@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>foodList</title>
+<title>www</title>
 <link rel="stylesheet" href="../css/navbar.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +22,11 @@ $(document).ready( function() {
 </script>
 <div id="headers"></div>
 
+<br><br><br>
+<br><br><br>
+<br><br><br>
 
+<a href="<%=request.getContextPath()%>/main/vannerRegister.do">등록하러가기</a>
 
 
 
