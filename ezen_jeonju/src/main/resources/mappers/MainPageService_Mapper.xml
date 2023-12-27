@@ -4,7 +4,20 @@
 
 <mapper namespace="com.ezen_jeonju.myapp.persistance.MainPageService_Mapper">
 
+<insert id="mainPageVannerRegister" parameterType="mpv">
 
+INSERT INTO mainpage(mainPageSequence, mainPageSubject, mainPageLink, midx, aidx)
+VALUES(#{mainPageSequence}, #{mainPageSubject}, #{mainPageLink}, #{midx}, #{aidx})
+</insert>
 
+<select id="mainPageVannerView" resultType="mpv">
+SELECT *from mainpage a 
+join attachfile b on a.aidx=b.aidx where b.category="배너" ORDER BY a.mainPageSequence asc;
+</select>
+
+<select id="mainPageSecondView" resultType="mpv">
+SELECT *from mainpage a 
+join attachfile b on a.aidx=b.aidx where b.category="배너" ORDER BY a.mainPageSequence asc;
+</select>
 
 </mapper>
