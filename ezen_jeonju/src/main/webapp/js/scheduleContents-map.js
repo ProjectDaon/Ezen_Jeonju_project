@@ -2,7 +2,7 @@
     var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
     var options = { //지도를 생성할 때 필요한 기본 옵션
     center: new kakao.maps.LatLng(35.8240808, 127.1481404), //지도의 중심좌표.
-    level: 5 //지도의 레벨(확대, 축소 정도)
+    level: 8 //지도의 레벨(확대, 축소 정도)
 	
 	};
 	var map = new kakao.maps.Map(container, options); // 지도를 생성합니다
@@ -36,8 +36,7 @@ function setCenter() {
     var marker = new kakao.maps.Marker({
 	    position: markerPosition
 	});    
-	 //marker.setMap(null);
-     marker.setMap(map);    
+ 
 }
 
 function panTo(placeName, latitude, longitude) {

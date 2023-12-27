@@ -72,7 +72,7 @@
             //날짜 시간 장소
             var hour = j+6;
             
-            $(td).attr("name", addDays($('#startDate').val(), k-1) + "_" + hour);
+            $(td).attr("name", addDays($('#startDate').val(), k-1) + "_" + hour + "_" + k);
             trBody.appendChild(td);
 
         }

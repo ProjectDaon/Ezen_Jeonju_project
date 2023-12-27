@@ -197,7 +197,7 @@
         
     }
  
-//X눌렀을 때 사라지게하기
+	//X눌렀을 때 사라지게하기
     function Xclose(cell) {
         // 부모 노드인 <td>를 찾아서 삭제
     	  cell.parentNode.innerHTML = '';
@@ -317,6 +317,7 @@
         var tbodyCells = document.querySelectorAll('#dragDropTable tbody td');
         var tourCourseTime 
         var tourCourseDate 
+        var tourCourseNDate
         var jsonArray 	= new Array();
     	var scheduleSubject = fm.scheduleSubject.value;
 	    var scheduleStartDate = fm.scheduleStartDate.value;
@@ -335,12 +336,14 @@
 	    	        var tourCourseLatitude = td.querySelector('input:nth-child(2)').value;
 	    	        var tourCourseLongitude = td.querySelector('input:nth-child(3)').value;
 		    		  		
-		    	    var underscoreIndex = td.getAttribute('name').indexOf("_");
-		    	    tourCourseDate = td.getAttribute('name').substring(0, underscoreIndex);
-		    	    tourCourseTime = td.getAttribute('name').substring(underscoreIndex+1); 
-	    	          	    
+		    	    nameArray = td.getAttribute('name').split('_');
+		    	    tourCourseDate = nameArray[0];
+		    	    tourCourseTime = nameArray[1];
+		    	    tourCourseNDate = nameArray[2];
+
 					jsonObj.tourCourseDate = tourCourseDate;
 					jsonObj.tourCourseTime = tourCourseTime;
+					jsonObj.tourCourseNDate = tourCourseNDate;
 					jsonObj.tourCoursePlace = tourCoursePlace;
 					jsonObj.tourCourseLatitude = tourCourseLatitude;
 					jsonObj.tourCourseLongitude = tourCourseLongitude;
@@ -374,6 +377,7 @@
 				scheduleEndDate:scheduleEndDate,
 				tourCourseDate:tourCourseDate,
 				tourCourseTime:tourCourseTime,
+				tourCourseNDate:tourCourseNDate,
 				
 				Array:arrays
 			},

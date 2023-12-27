@@ -22,7 +22,7 @@ select * from scheduleroot where sidx=#{sidx};
 </select>
 
 <select id="tourCourseContents" resultType="tv" parameterType="int">
-select t.tourCourseDate, t.tourCourseTime, t.tourCoursePlace
+select t.tourCourseDate, t.tourCourseTime, t.tourCoursePlace, t.tourCourseLatitude,t.tourCourseLongitude,t.tourCourseNDate
 from scheduleroot s
 join tourcourse t ON s.sidx = t.sidx
 where s.sidx = #{sidx}
@@ -34,8 +34,8 @@ update scheduleroot set scheduleViewCount=scheduleViewCount+1 where sidx = #{sid
 </update>
 
 <insert id="tourCourseInsert" parameterType="tv">
-insert into tourcourse(sidx,tourCourseDate,tourCourseTime,tourCoursePlace,tourCourseLatitude,tourCourseLongitude) 
-values(#{sidx},#{tourCourseDate},#{tourCourseTime},#{tourCoursePlace},#{tourCourseLatitude},#{tourCourseLongitude});
+insert into tourcourse(sidx,tourCourseDate,tourCourseTime,tourCoursePlace,tourCourseLatitude,tourCourseLongitude,tourCourseNDate) 
+values(#{sidx},#{tourCourseDate},#{tourCourseTime},#{tourCoursePlace},#{tourCourseLatitude},#{tourCourseLongitude},#{tourCourseNDate});
 </insert>
 
 </mapper>

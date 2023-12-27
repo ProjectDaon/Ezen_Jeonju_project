@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -71,13 +70,14 @@ public class ScheduleController {
 			String tourCoursePlace = (String)insertData.get("tourCoursePlace");
 			String tourCourseLatitude = (String)insertData.get("tourCourseLatitude");
 			String tourCourseLongitude = (String)insertData.get("tourCourseLongitude");
-
+			String tourCourseNDate = (String)insertData.get("tourCourseNDate");
 			
 			tv.setTourCourseDate(tourCourseDate);
 			tv.setTourCourseTime(tourCourseTime);
 			tv.setTourCoursePlace(tourCoursePlace);
 			tv.setTourCourseLatitude(tourCourseLatitude);
 			tv.setTourCourseLongitude(tourCourseLongitude);
+			tv.setTourCourseNDate(tourCourseNDate);
 			
 			list.add(tv);
 	    }
@@ -100,12 +100,14 @@ public class ScheduleController {
     @RequestMapping(value="/scheduleContents.do")
     public String boardContents(@RequestParam("sidx") int sidx, Model model,HttpServletResponse response) throws IOException{
     	ScheduleRootVo sv = ss.scheduleContents(sidx);
+    	ArrayList<TourCourseVo> tlist = ss.tourCourseContents(sidx);
     	
+    	model.addAttribute("tlist",tlist);
     	model.addAttribute("sv",sv);
     	model.addAttribute("sidx", sidx);
     	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");	
     	
-    	String scheduleStartDate = "";
+      	String scheduleStartDate = "";
     	String scheduleEndDate = "";
     	scheduleStartDate = sv.getScheduleStartDate();
     	scheduleEndDate = sv.getScheduleEndDate();
@@ -123,6 +125,7 @@ public class ScheduleController {
     	}
     	model.addAttribute("dateList",dateList);
     	
+    	
     	return "/schedule/scheduleContents";
     	
     }
@@ -138,6 +141,10 @@ public class ScheduleController {
     		alist.put("tourCourseDate", tlist.get(i).getTourCourseDate());
     		alist.put("tourCourseTime", tlist.get(i).getTourCourseTime());
     		alist.put("tourCoursePlace", tlist.get(i).getTourCoursePlace());
+    		alist.put("tourCourseLongitude",tlist.get(i).getTourCourseLongitude());
+    		alist.put("tourCourseLatitude",tlist.get(i).getTourCourseLatitude());
+    		alist.put("tourCourseNDate",tlist.get(i).getTourCourseNDate());
+    				
     		array.add(alist);
     	}
         JSONObject result = new JSONObject();
