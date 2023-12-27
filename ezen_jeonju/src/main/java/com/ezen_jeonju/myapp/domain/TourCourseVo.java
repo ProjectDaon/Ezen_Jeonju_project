@@ -7,17 +7,11 @@ public class TourCourseVo {
 	private int tcidx;
 	private int sidx;
 	private String tourCourseDate;
-	public String getTourCourseLongitude() {
-		return tourCourseLongitude;
-	}
-	public void setTourCourseLongitude(String tourCourseLongitude) {
-		this.tourCourseLongitude = tourCourseLongitude;
-	}
 	private String tourCourseTime;
 	private String tourCoursePlace;
 	private String tourCourseLatitude;
 	private String tourCourseLongitude;
-
+	private String tourCourseNDate;
 	
 	
 	public int getTcidx() {
@@ -56,7 +50,18 @@ public class TourCourseVo {
 	public void setTourCourseLatitude(String tourCourseLatitude) {
 		this.tourCourseLatitude = tourCourseLatitude;
 	}
-
+	public String getTourCourseLongitude() {
+		return tourCourseLongitude;
+	}
+	public void setTourCourseLongitude(String tourCourseLongitude) {
+		this.tourCourseLongitude = tourCourseLongitude;
+	}
+	public String getTourCourseNDate() {
+		return tourCourseNDate;
+	}
+	public void setTourCourseNDate(String tourCourseNDate) {
+		this.tourCourseNDate = tourCourseNDate;
+	}
 
 
 }

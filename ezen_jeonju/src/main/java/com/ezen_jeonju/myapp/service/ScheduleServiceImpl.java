@@ -35,6 +35,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 			getTv.setTourCoursePlace(tv.get(i).getTourCoursePlace());
 			getTv.setTourCourseLatitude(tv.get(i).getTourCourseLatitude());
 			getTv.setTourCourseLongitude(tv.get(i).getTourCourseLongitude());
+			getTv.setTourCourseNDate(tv.get(i).getTourCourseNDate());
 			getTv.setSidx(sidx);
 			ssm.tourCourseInsert(getTv);
 		}
