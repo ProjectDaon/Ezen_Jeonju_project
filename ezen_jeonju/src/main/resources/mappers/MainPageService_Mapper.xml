@@ -11,13 +11,34 @@ VALUES(#{mainPageSequence}, #{mainPageSubject}, #{mainPageLink}, #{midx}, #{aidx
 </insert>
 
 <select id="mainPageVannerView" resultType="mpv">
-SELECT *from mainpage a 
-join attachfile b on a.aidx=b.aidx where b.category="배너" ORDER BY a.mainPageSequence asc;
+SELECT a.mainPageLink,b.storedFilePath,a.mainPageSubject from mainpage a 
+join attachfile b on a.aidx=b.aidx where b.category="배너" and b.fileYN='N' ORDER BY a.mainPageSequence asc;
 </select>
 
-<select id="mainPageSecondView" resultType="mpv">
-SELECT *from mainpage a 
-join attachfile b on a.aidx=b.aidx where b.category="배너" ORDER BY a.mainPageSequence asc;
+<select id="mainPageSecondView" resultType="cv">
+SELECT b.cidx,a.thumbnailFilePath,b.contentsSubject FROM attachfile a
+join contents b on a.aidx=b.aidx
+WHERE a.category = "컨텐츠" and a.fileYN='N'
+ORDER BY a.fileUploadDay DESC
+LIMIT 7;
 </select>
+
+<select id="mainPageThirdView" resultType="cv">
+SELECT b.cidx,a.thumbnailFilePath,b.contentsSubject FROM attachfile a
+join contents b on a.aidx=b.aidx
+WHERE a.category = "컨텐츠" and a.fileYN='N'
+ORDER BY b.contentsViewCount DESC
+LIMIT 3;
+</select>
+
+
+<select id="mainPageNoticeView" resultType="nv">
+SELECT b.nidx,a.thumbnailFilePath,b.noticeSubject FROM attachfile a
+join notice b on a.aidx=b.aidx
+WHERE a.category = "공지" and a.fileYN='N'
+ORDER BY a.fileUploadDay DESC
+LIMIT 4;
+</select>
+
 
 </mapper>

@@ -6,7 +6,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ezen_jeonju.myapp.domain.ContentsVo;
 import com.ezen_jeonju.myapp.domain.MainPageVo;
+import com.ezen_jeonju.myapp.domain.NoticeVo;
 import com.ezen_jeonju.myapp.persistance.AttachFileService_Mapper;
 import com.ezen_jeonju.myapp.persistance.MainPageService_Mapper;
 
@@ -34,6 +36,27 @@ public class MainPageServiceImpl implements MainPageService{
 		ArrayList<MainPageVo> mpv = mpsm.mainPageVannerView();
 		return mpv;
 	}
+
+
+	@Override
+	public ArrayList<ContentsVo> mainPageSecondView() {
+		ArrayList<ContentsVo> cv = mpsm.mainPageSecondView();
+		return cv;
+	}
+
+	@Override
+	public ArrayList<ContentsVo> mainPageThirdView() {
+		ArrayList<ContentsVo> cvtop3 = mpsm.mainPageThirdView();
+		return cvtop3;
+	}
+
+	@Override
+	public ArrayList<NoticeVo> mainPageNoticeView() {
+		ArrayList<NoticeVo> nv = mpsm.mainPageNoticeView();
+		return nv;
+	}
+
+
 
 
 
