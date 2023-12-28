@@ -1,6 +1,7 @@
 package com.ezen_jeonju.myapp.persistance;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.ezen_jeonju.myapp.domain.ScheduleRootVo;
 import com.ezen_jeonju.myapp.domain.TourCourseVo;
@@ -19,4 +20,9 @@ public interface ScheduleService_Mapper {
 	public int tourCourseInsert(TourCourseVo tv);
 	
 	public ArrayList<TourCourseVo> tourCourseContents(int sidx);
+	
+	public ArrayList<TourCourseVo> tourCourseNDate(int sidx);
+	
+	public ArrayList<TourCourseVo> tourCourseNDateContents(TourCourseVo tv);
+
 }

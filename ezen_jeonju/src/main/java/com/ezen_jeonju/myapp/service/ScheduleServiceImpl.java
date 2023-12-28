@@ -64,6 +64,18 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return tlist;
 	}
 
+	@Override
+	public ArrayList<TourCourseVo> tourCourseNDate(int sidx) {
+		
+		ArrayList<TourCourseVo> tlist = ssm.tourCourseNDate(sidx);
+		
+		return tlist;
+		
+	}
+	@Override
+	public ArrayList<TourCourseVo> tourCourseNDateContents(TourCourseVo tv) {
+		ArrayList<TourCourseVo> tlist = ssm.tourCourseNDateContents(tv);
+		return tlist;
+	}
 	
-
 }

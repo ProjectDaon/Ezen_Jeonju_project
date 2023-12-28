@@ -38,4 +38,20 @@ insert into tourcourse(sidx,tourCourseDate,tourCourseTime,tourCoursePlace,tourCo
 values(#{sidx},#{tourCourseDate},#{tourCourseTime},#{tourCoursePlace},#{tourCourseLatitude},#{tourCourseLongitude},#{tourCourseNDate});
 </insert>
 
+<select id="tourCourseNDate" resultType="tv" parameterType="int">
+select t.tourCourseNDate
+from scheduleroot s
+join tourcourse t ON s.sidx = t.sidx
+where s.sidx = #{sidx}
+GROUP by t.tourCourseNDate
+order by t.tourCourseNDate;
+</select>
+
+<select id="tourCourseNDateContents" resultType="tv" parameterType="tv">
+select t.tourCourseDate, t.tourCourseTime, t.tourCoursePlace, t.tourCourseLatitude,t.tourCourseLongitude,t.tourCourseNDate
+from scheduleroot s
+join tourcourse t ON s.sidx = t.sidx
+where s.sidx = #{sidx} and t.tourCourseNDate = #{tourCourseNDate}
+</select>
+
 </mapper>

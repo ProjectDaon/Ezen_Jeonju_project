@@ -24,9 +24,7 @@
 	// 마커가 지도 위에 표시되도록 설정합니다
 	marker.setMap(map);  
 
-
-
-function setCenter() {            
+	function setCenter() {            
     // 이동할 위도 경도 위치를 생성합니다 
     var moveLatLon = new kakao.maps.LatLng(35.8240808, 127.1481404);
     
@@ -69,7 +67,60 @@ function panTo(placeName, latitude, longitude) {
     // 마커를 지도에 표시합니다
     marker.setMap(map);
 
-   infowindow.open(map, marker);
+   infowindow.open(map, markers);
 
 }
-     
+
+var markers = [];
+var infowindows = [];
+
+function addMarker(position) {
+    
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        position: position
+    });
+
+    // 마커가 지도 위에 표시되도록 설정합니다
+    marker.setMap(map);
+    
+    // 생성된 마커를 배열에 추가합니다
+    markers.push(marker);
+
+	var iwContent = "안녕";
+	var iwPosition = position;
+	
+	var infowindow = new kakao.maps.InfoWindow({
+    position : iwPosition, 
+    content : iwContent 
+	});
+	
+	infowindows.push(infowindow);
+	
+	infowindow.open(map, marker); 
+    
+}
+
+
+//마커 생성혹은 삭제
+function setMarkers(map) {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+    }            
+}
+
+function setInfoWindows(map) {
+    for (var i = 0; i < infowindows.length; i++) {
+        infowindows[i].setMap(map);
+    }            
+}
+
+
+//마커 삭제
+function hideMarkers() {
+    setMarkers(null);    
+}
+
+function hideInfoWindows(){
+	setInfoWindows(null);
+}
