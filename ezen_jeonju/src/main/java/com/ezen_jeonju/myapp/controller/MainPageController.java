@@ -79,13 +79,6 @@ public class MainPageController {
 		af.setThumbnailFilePath(uploadedFileName);
 		af.setStoredFilePath(uploadedFileName.substring(0,12)+uploadedFileName.substring(14));
 		
-		//System.out.println("af값 확인:"+af.getStoredFilePath());
-		//System.out.println("제목?"+mpv.getMainPageSubject());
-		//System.out.println("시퀀스?"+mpv.getMainPageSequence());
-		//System.out.println("링크?"+mpv.getMainPageLink());
-		//System.out.println("aidx?"+af.getAidx());
-		//System.out.println("midx?"+Integer.parseInt(session.getAttribute("midx").toString()));
-		
 		afs.imageFileUpload(af);
 		mpv.setAidx(af.getAidx());
 		System.out.println("컨트롤러에서 aidx 확인:"+af.getAidx());
