@@ -28,11 +28,11 @@
 	        order: 'date',
 	    }).then(response => {
 	        const playlistItems = response.result.items;
-	        playlistItems.reverse();
 	        if (playlistItems) {
+	                      
 	            let str = '';
-	
-	            for (let i = 0; i < Math.min(maxResults, playlistItems.length); i++) {
+				var size = playlistItems.length;
+	            for (let i = 0; i < size; i++) {
 	                const playlistItem = playlistItems[i];
 	                // 각 아이템에서 제목, 썸네일 및 영상 링크 가져오기
 	                const videoTitle = playlistItem.snippet.title;

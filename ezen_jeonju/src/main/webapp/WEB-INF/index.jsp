@@ -224,16 +224,16 @@
                 <span class="title1">전주를 더 보고 싶다면?</span>
             </div>
             <div class="sns-list">
-                <a href="#" class="youtube-icon">
+                <a href="https://www.youtube.com/channel/UCYRRFXJKbiAF7H6rP-BiHog" class="youtube-icon" target="_blank">
                     <i class="xi-youtube-play"></i>
                 </a>
-                <a href="#" class="naver-icon">
+                <a href="https://blog.naver.com/jeonju_city" class="naver-icon" target="_blank">
                     <i class="xi-naver"></i>
                 </a>
-                <a href="#" class="instagram-icon">
+                <a href="https://www.instagram.com/visitjeonju_official/" class="instagram-icon" target="_blank">
                     <i class="xi-instagram"></i>
                 </a>
-                <a href="#" class="facebook-icon">
+                <a href="https://www.facebook.com/jeonju.kr" class="facebook-icon" target="_blank">
                     <i class="xi-facebook"></i>
                 </a>
             </div>

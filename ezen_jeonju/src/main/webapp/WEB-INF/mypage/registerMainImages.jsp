@@ -5,8 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>www</title>
+<title>배너 목록 페이지</title>
 <link rel="stylesheet" href="../css/navbar.css">
+<link rel="stylesheet" href="../css/registerMainImages.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
@@ -22,14 +23,12 @@ $(document).ready( function() {
 </script>
 <div id="headers"></div>
 
-<br><br><br>
-<br><br><br>
-<br><br><br>
-
-<a href="<%=request.getContextPath()%>/main/vannerRegister.do">등록하러가기</a>
-
-
-
+<div class="contents" style="margin-top: 200px; text-align:center;" >
+	<div class="title-wrap">
+		<h3>등록된 배너 목록</h3>
+	</div>
+	<a href="<%=request.getContextPath()%>/main/vannerRegister.do">등록하러가기</a>
+</div>
 
 </body>
 </html>
