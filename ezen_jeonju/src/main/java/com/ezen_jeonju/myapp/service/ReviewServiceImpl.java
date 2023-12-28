@@ -29,7 +29,7 @@ public class ReviewServiceImpl implements ReviewService{
 
 	@Override
 	public ArrayList<ReviewListDTO> reviewList(ReviewCriteria rcri) {
-		int value = (rcri.getPage()-1)*9;
+		int value = (rcri.getPage()-1)*5;
 		rcri.setPage(value);
 		
 		ArrayList<ReviewListDTO> list = rsm.reviewList(rcri);

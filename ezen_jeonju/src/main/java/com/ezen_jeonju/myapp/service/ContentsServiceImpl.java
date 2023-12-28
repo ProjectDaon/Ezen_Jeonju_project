@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ezen_jeonju.myapp.domain.AttachFileVo;
 import com.ezen_jeonju.myapp.domain.ContentsSearchCriteria;
+import com.ezen_jeonju.myapp.domain.ContentsStatsDTO;
 import com.ezen_jeonju.myapp.domain.ContentsVo;
 import com.ezen_jeonju.myapp.persistance.AttachFileService_Mapper;
 import com.ezen_jeonju.myapp.persistance.ContentsService_Mapper;
@@ -82,6 +83,14 @@ public class ContentsServiceImpl implements ContentsService{
 	public int totalCount(ContentsSearchCriteria cscri) {
 		int value = csm.totalCount(cscri);
 		return value;
+	}
+
+	@Override
+	public ContentsStatsDTO contentsStats(int cidx) {
+		ContentsStatsDTO csdto = new ContentsStatsDTO();
+		csdto.setStarAverage(csm.starAverage(cidx));
+		csdto.setReviewCount(csm.reviewCount(cidx));
+		return csdto;
 	}
 
 

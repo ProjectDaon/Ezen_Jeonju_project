@@ -36,4 +36,10 @@ public class ContentsLikeServiceImpl implements ContentsLikeService{
 		return value;
 	}
 
+	@Override
+	public int likeCount(int cidx) {
+		int value = clsm.likeCount(cidx);
+		return value;
+	}
+
 }

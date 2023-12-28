@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ezen_jeonju.myapp.domain.AttachFileVo;
+import com.ezen_jeonju.myapp.domain.ContentsStatsDTO;
 import com.ezen_jeonju.myapp.domain.ContentsSearchCriteria;
 import com.ezen_jeonju.myapp.domain.ContentsVo;
 import com.ezen_jeonju.myapp.domain.PageMaker;
@@ -124,8 +125,10 @@ public class ContentsController {
 		jsonArrayObj = (JSONArray) parser.parse(hashtagList);
 		AttachFileVo af = afs.imageFileLoad(cv.getAidx());
 		
+		ContentsStatsDTO csd = cs.contentsStats(cidx);
 		model.addAttribute("af",af);
 		model.addAttribute("cv", cv);
+		model.addAttribute("csd", csd);
 		model.addAttribute("hashtag", jsonArrayObj);
 		return "/contents/contentsArticle";
 	}

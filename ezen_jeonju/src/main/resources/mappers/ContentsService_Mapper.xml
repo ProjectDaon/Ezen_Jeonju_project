@@ -4,8 +4,8 @@
 
 <mapper namespace="com.ezen_jeonju.myapp.persistance.ContentsService_Mapper">
 
-<insert id="contentsWrite" parameterType="cv">
 
+<insert id="contentsWrite" parameterType="cv">
 INSERT INTO contents(midx, contentsCategory, contentsSubject, contentsArticle, contentsLatitude, contentsLongitude, contentsHashtag, aidx)
 VALUES(#{midx}, #{contentsCategory}, #{contentsSubject}, #{contentsArticle}, #{contentsLatitude}, #{contentsLongitude}, #{contentsHashtag}, #{aidx})
 </insert>
@@ -56,5 +56,13 @@ where cidx=#{cidx}
 <update id="contentsViewCountUpdate" parameterType="int">
 update contents set contentsViewCount = contentsViewCount+1 where cidx=#{cidx}
 </update>
+
+<select id="starAverage" parameterType="int" resultType="String">
+select round(avg(reviewScore),1) as avg from review where reviewYN='N' and cidx=#{cidx}
+</select>
+
+<select id="reviewCount" parameterType="int" resultType="int">
+select count(ridx) from review where reviewYN='N' and cidx=#{cidx}
+</select>
 
 </mapper>

@@ -16,4 +16,6 @@ public interface ContentsService_Mapper {
 	public Integer contentsFileUpload(ContentsVo cv);
 	public AttachFileVo contentsFileload(int cidx);
 	public int totalCount(ContentsSearchCriteria cscri);
+	public String starAverage(int cidx);
+	public int reviewCount(int cidx);
 }

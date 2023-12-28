@@ -34,7 +34,9 @@ $(document).ready(function(){
 	likeCheck();
 	
 	/*리뷰창 로딩*/
-	reviewList();
+	$('#tab2').click(function(){
+		reviewList();
+	});
 	
 	/*리뷰글쓰기창 열기*/
 	$('#revWrite').click(function(){
@@ -57,7 +59,13 @@ $(document).ready(function(){
 		
 	});
 	
-
+	$('#tab3').click(function(){
+		blogReviewLead();
+	});
+	
+	$("#loadMoreBtn").click(function () {
+	    blogReviewLead();
+	});
 });
 function likeCheck(){
 	$.ajax({
@@ -74,6 +82,7 @@ function likeCheck(){
 			}else{
 				$('.ck-on').attr('class','ck');
 			}
+			$('#likeCnt').html(data.likeCount);
 		},
 		error : function(){
 			alert("통신오류 실패");
@@ -200,7 +209,7 @@ function reviewPaging(data){
 		paging = paging + "<a class='pagePreview' href='#' onclick='reviewListPaging("+data.startPage-1+")'>이전</a>";
 	}
 	//var nowpage = data.cscri.page/9+1;
-	for(var i=data.startPage; i<data.endPage-1; i++){
+	for(var i=data.startPage; i<=data.endPage; i++){
 		paging = paging + "<a class='pageNumber' href='#' onclick='reviewListPaging("+i+")'>"+i+"</a>";
 	}
 	if(data.next == true && data.endPage>0){
@@ -230,6 +239,57 @@ function reviewDel(ridx){
 		}		
 	});
 }
+
+	var start = 4; // 시작 인덱스
+	var batchSize = 5; // 한 번에 보여줄 항목의 개수
+function blogReviewLead() {
+	
+    var subject = "전주 ${cv.contentsSubject}";
+    $.ajax({
+        type: "post",
+        url: "${pageContext.request.contextPath}/review/blogReview.do",
+        dataType: "json",
+        data: {
+            "subject": subject
+        },
+        cache: false,
+        success: function (data) {
+            displayBlogItems(data);
+        },
+        error: function () {
+            alert("통신 오류 실패");
+        }
+    });
+}
+
+function displayBlogItems(data) {
+    var txt = "";
+    var end = Math.min(start + batchSize, data.url.length);
+
+    for (var i = start; i < end; i++) {
+        txt += "<a href='" + data.url[i] + "'>"
+            + "<div class='blogCon'>"
+            + "<div class='blogName'>" + data.blogname[i] + "</div>"
+            + "<div class='blogSubject'>" + data.title[i] + "</div>"
+            + "<div class='blogContents'>" + data.contents[i] + "</div>"
+            + "</div>"
+            + "</a>";
+    }
+
+    $(".blogList").append(txt);
+    start = end;
+
+    // 더 불러올 데이터가 있는 경우에만 "더 보기" 버튼을 표시
+    if (start < data.url.length) {
+        $("#loadMoreBtn").show();
+    } else {
+        $("#loadMoreBtn").hide();
+    }
+}
+
+// "더 보기" 버튼 클릭 시 추가 항목 불러오기
+
+
 </script>
 <div id="headers"></div>
 <div class="contents">
@@ -242,12 +302,12 @@ function reviewDel(ridx){
 	</div>
 	<div class="actionUserBar">
 		<ul class="left">
-			<li>평점 &nbsp<img src="../images/starimg.jpg"></li>
+			<li>평점 &nbsp<img src="../images/starimg.jpg">&nbsp ${csd.starAverage} </li>
 			<li>조회 &nbsp<strong>${cv.contentsViewCount}</strong></li>
-			<li>리뷰</li>
+			<li>리뷰 <strong>${csd.reviewCount}</strong></li>
 		</ul>
 		<div class="right">
-			<a href="#actionUserBar" onclick="likeThis(event);" class="ck">좋아요</a>
+			<a href="#actionUserBar" onclick="likeThis(event);" class="ck">좋아요 (<span id="likeCnt"></span>)</a>
 		</div>
 	</div>
 	<div>
@@ -283,7 +343,14 @@ function reviewDel(ridx){
 					<div class="paging" id="paging"></div>
 				</div>
 			</div>
-			<div class="con-blog" style="display:none">블로그리뷰</div>
+			<div class="con-blog" style="display:none">
+				<div class="revHead">
+					<div class="title">블로그리뷰</div>
+				</div>
+				<div class="blogList">
+				</div>
+				<button id="loadMoreBtn">더 보기</button>
+			</div>
 		</div>
 	</div>
 	<div id="writeReview" class="writeReview" style="display:none">

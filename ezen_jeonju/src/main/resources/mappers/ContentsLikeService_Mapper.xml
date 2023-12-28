@@ -13,4 +13,8 @@ select count(clidx) as cnt from contentsLike where midx=#{midx} and cidx=#{cidx}
 <delete id="likeDelete" parameterType="clv">
 delete from contentsLike where midx=#{midx} and cidx=#{cidx}
 </delete>
+
+<select id="likeCount" parameterType="int" resultType="int">
+select count(clidx) as cnt from contentsLike where cidx=#{cidx}
+</select>
 </mapper>

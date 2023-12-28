@@ -48,6 +48,7 @@ public class ContentsLikeController {
 		JSONObject js = new JSONObject();
 		int value = 0;
 		String txt = "";
+		int likecount = 0;
 		if(session.getAttribute("midx")!=null) {
 			int midx = Integer.parseInt(session.getAttribute("midx").toString());
 			clv.setMidx(midx);
@@ -55,6 +56,8 @@ public class ContentsLikeController {
 		}else {
 			value=0;
 		}
+		likecount = cls.likeCount(clv.getCidx());
+		js.put("likeCount", likecount);
 		js.put("value", value);
 		return js;
 	}

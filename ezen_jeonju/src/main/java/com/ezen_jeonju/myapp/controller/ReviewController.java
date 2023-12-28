@@ -1,10 +1,15 @@
 package com.ezen_jeonju.myapp.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,7 +71,6 @@ public class ReviewController {
 		PageMaker pm = new PageMaker();
 		pm.setRcri(rcri);
 		pm.setTotalCount(cnt);
-		
 		ArrayList<ReviewListDTO> list = rs.reviewList(rcri);
 		js.put("list", list);
 		js.put("pm", pm);
@@ -94,7 +98,54 @@ public class ReviewController {
 
 		PageMaker pm = new PageMaker();
 		pm.setTotalCount(cnt);
+		js.put("pm", pm);
 		
+		return js;
+	}
+	
+	@RequestMapping(value="blogReview.do")
+	public JSONObject blogReview(@RequestParam("subject") String subject) throws Exception {
+		JSONObject js = new JSONObject();
+		
+		ArrayList<String> al1 = new ArrayList<>();
+		ArrayList<String> al2 = new ArrayList<>();
+		ArrayList<String> al3 = new ArrayList<>();
+		ArrayList<String> al4 = new ArrayList<>();
+		
+		String address = "https://search.naver.com/search.naver?query="+subject+"&nso=&where=blog&sm=tab_opt";
+		Document rawData = Jsoup.connect(address).get();
+		
+		Elements blogOption = rawData.select("li.bx");
+
+		String realURL = "";
+		String realTitle = "";
+		String blogName = "";
+		String realContents = "";
+		for(Element option : blogOption) {
+			//System.out.println(option);
+			//블로그 링크
+			realURL = option.select(".title_area a").attr("href");
+			//게시글 제목
+			Elements titleDiv = option.select(".title_area");
+			realTitle = titleDiv.select("a").text();
+			//게시글 내용
+			Elements contentsDiv = option.select(".dsc_area");
+			realContents = contentsDiv.select("a").text();
+			if(realContents.length()>=30) realContents = realContents.substring(0, 80);
+			//블로그 이름
+			Elements blognameDiv = option.select(".user_info");
+			blogName = blognameDiv.select("a").text();
+
+			al1.add(realURL);
+			al2.add(realTitle);
+			al3.add(blogName);
+			al4.add(realContents);
+		}
+		
+		js.put("url", al1);
+		js.put("title", al2);
+		js.put("blogname",al3);
+		js.put("contents", al4);
 		
 		return js;
 	}
