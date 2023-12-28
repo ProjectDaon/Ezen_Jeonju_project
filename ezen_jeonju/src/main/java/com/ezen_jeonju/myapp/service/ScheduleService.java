@@ -16,4 +16,8 @@ public interface ScheduleService {
 
 	public ArrayList<TourCourseVo> tourCourseContents(int sidx);
 
+	public ArrayList<TourCourseVo> tourCourseNDate(int sidx);
+
+	public ArrayList<TourCourseVo> tourCourseNDateContents(TourCourseVo tv);
+
 }

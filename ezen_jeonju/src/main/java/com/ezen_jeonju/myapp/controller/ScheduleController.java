@@ -100,7 +100,7 @@ public class ScheduleController {
     @RequestMapping(value="/scheduleContents.do")
     public String boardContents(@RequestParam("sidx") int sidx, Model model,HttpServletResponse response) throws IOException{
     	ScheduleRootVo sv = ss.scheduleContents(sidx);
-    	ArrayList<TourCourseVo> tlist = ss.tourCourseContents(sidx);
+    	ArrayList<TourCourseVo> tlist = ss.tourCourseNDate(sidx);
     	
     	model.addAttribute("tlist",tlist);
     	model.addAttribute("sv",sv);
@@ -152,6 +152,32 @@ public class ScheduleController {
     	return array;
     }
 	
+    @ResponseBody
+    @RequestMapping(value="/getTourCourseNDate.do")
+    public JSONArray getTourCourseNDate(TourCourseVo tv) {
+    	
+    	ArrayList<TourCourseVo> tlist = ss.tourCourseNDateContents(tv);
+    	
+    	JSONArray array = new JSONArray();
+
+    	for(int i=0; i<tlist.size(); i++) {
+    		JSONObject alist = new JSONObject();
+    		alist.put("tourCourseDate", tlist.get(i).getTourCourseDate());
+    		alist.put("tourCourseTime", tlist.get(i).getTourCourseTime());
+    		alist.put("tourCoursePlace", tlist.get(i).getTourCoursePlace());
+    		alist.put("tourCourseLongitude",tlist.get(i).getTourCourseLongitude());
+    		alist.put("tourCourseLatitude",tlist.get(i).getTourCourseLatitude());
+    		alist.put("tourCourseNDate",tlist.get(i).getTourCourseNDate());
+    				
+    		array.add(alist);
+    	}
+        JSONObject result = new JSONObject();
+        result.put("tourCourses", array);
+    	return array;
+    }
+    
+    
+    
     @RequestMapping(value="/map.do")
     public String map() {
     	

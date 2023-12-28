@@ -30,9 +30,22 @@
 <script>
 $(document).ready(function () {
 	var sidx = ${sidx};
+	var tourCourseNDate = document.getElementById("selectDate").value;
 	getTourCourse(sidx);
-    
+	getTourCourseNDate(sidx,tourCourseNDate);
+	
+    $('#selectDate').on('change', function () {
+    	hideMarkers();
+    	hideInfoWindows();
+    	tourCourseNDate = $(this).val();
+        getTourCourseNDate(sidx,tourCourseNDate);
+        
+    });
+
+	
 });
+
+//일정표
 function getTourCourse(sidx){
 	$.ajax({
 		type : "post",
@@ -42,42 +55,11 @@ function getTourCourse(sidx){
 		},
 		dataType : "json",
 		success : function(data){
-			var positions = [];
+		
 			$(data).each(function(){
 				
 				var td_id = "#"+this.tourCourseDate+"_"+this.tourCourseTime;
 				$(td_id).html(this.tourCoursePlace);
-				
-				positions.push({
-					
-					title: this.tourCoursePlace,
-				    latlng: new kakao.maps.LatLng(this.tourCourseLatitude, this.tourCourseLongitude)
-									
-				});
-				
-				for (var i = 0; i < positions.length; i ++) {
-				    
-				    // 마커를 생성합니다
-				    var marker = new kakao.maps.Marker({
-				        position: positions[i].latlng, // 마커를 표시할 위치
-				        title : positions[i].title // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-				       
-				    });
-				    var iwContent = positions[i].title;
-				    var iwPosition = positions[i].latlng;
-			    
-				    var infowindow = new kakao.maps.InfoWindow({
-				        map: map, // 인포윈도우가 표시될 지도
-				        position: iwPosition,
-				        content: iwContent
-				      });
-				       // 마커를 지도에 표시합니다
-				       marker.setMap(map);
-
-				      infowindow.open(map, marker);
-				    
-				      setCenter();
-				}
 				
 			});
 			
@@ -88,6 +70,37 @@ function getTourCourse(sidx){
 	});
 }
 
+function getTourCourseNDate(sidx,tourCourseNDate){
+	$.ajax({
+		type : "post",
+		url : "${pageContext.request.contextPath}/schedule/getTourCourseNDate.do",
+		data : {
+			"sidx" : sidx,
+			"tourCourseNDate" : tourCourseNDate
+		},
+		dataType : "json",
+		success : function(data){
+			var positions = [];
+			$(data).each(function(){
+				positions.push({
+					title: this.tourCoursePlace,
+				    latlng: new kakao.maps.LatLng(this.tourCourseLatitude, this.tourCourseLongitude)
+									
+				});
+				
+				for (var i = 0; i < positions.length; i ++) {
+				   // 마커를 생성합니다
+					addMarker(positions[i].latlng,positions[i].title);
+				}	
+				
+			});
+			
+		},
+		error: function(request, status, error){
+			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	});
+}
 </script>
 
 </head>
@@ -142,7 +155,7 @@ function getTourCourse(sidx){
    </div>
 <div id="map" style="width:500px;height:400px;"></div>
    <div>
-   <select name="nDate">
+   <select name="selectDate" id="selectDate">
    	<c:forEach var="tl" items="${tlist}">
        <option value="${tl.tourCourseNDate}">${tl.tourCourseNDate}</option>
    </c:forEach>
@@ -150,6 +163,6 @@ function getTourCourse(sidx){
    </div>
 </div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=24905b65af4a0e247d268677c3972e9d"></script>
-<script src="../js/scheduleContents-map.js"></script>
+<script type="text/javascript" charset="UTF-8" src="../js/scheduleContents-map.js"></script>
 </body>
 </html>
