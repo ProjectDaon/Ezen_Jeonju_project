@@ -21,7 +21,7 @@
 <script type="text/javascript">
 $(document).ready( function() {
 	$('#headers').load("../nav/nav.jsp");
-	
+	$('#footers').load("../nav/footer.jsp");
 	// filterBtn active
 	var keyword = "${keyword}";
 	var activebtn = "button[name='keyword'][value='"+keyword+"']";
@@ -132,5 +132,6 @@ $(document).ready( function() {
 		</div>
 	</div>
 </div>
+<div id="footers"></div>
 </body>
 </html>

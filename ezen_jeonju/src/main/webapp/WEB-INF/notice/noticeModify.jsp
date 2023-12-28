@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ page import="com.ezen_jeonju.myapp.domain.NoticeVo" %>
+<%@ page import="com.ezen_jeonju.myapp.domain.AttachFileVo" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-NoticeVo nv = (NoticeVo)request.getAttribute("nv");
-%>
+<% NoticeVo nv = (NoticeVo)request.getAttribute("nv");%>
+<% AttachFileVo af = (AttachFileVo)request.getAttribute("af");%>
 
 <!DOCTYPE html>
 <html>
@@ -111,7 +111,7 @@ function goDelete(){
 				<input type="text" name="noticeSubject" value="<%=nv.getNoticeSubject()%>">
 			</div>
 			
-			<textarea id="summernote" name="noticeArticle"><%=nv.getNoticeArticle() %></textarea>
+			<textarea id="summernote" name="noticeArticle"><%=nv.getNoticeArticle()%></textarea>
 			
 			<div class="hashTagArea">
 				<label>해시태그</label>	
@@ -131,7 +131,9 @@ function goDelete(){
 				</script>
 			</div>
 			
-			<input type="file" name="noticeFileName">
+			<label>첨부파일</label>
+			<input type="text" value="<%=af.getOriginalFileName()%>">
+			<input type="file" name="uploadFileName">
 			<input type="button" value="수정" onclick="goModify()">
 			<input type="button" value="삭제" onclick="goDelete()">
 		</form>
