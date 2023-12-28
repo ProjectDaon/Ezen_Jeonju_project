@@ -8,6 +8,9 @@
 <meta charset="UTF-8">
 <title>공지사항 조회</title>
 <link rel="stylesheet" href="../css/navbar.css">
+<link rel="stylesheet" href="../css/noticeContents.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
@@ -17,7 +20,7 @@
 <script type="text/javascript">
 $(document).ready( function() {
 	$('#headers').load("../nav/nav.jsp");
-
+	$('#footers').load("../nav/footer.jsp");
 });
 </script>
 <div id="headers"></div>
@@ -25,24 +28,31 @@ $(document).ready( function() {
 <br><br><br>
 <br><br><br>
 <br><br><br>
-
-nidx: ${nv.nidx} <br>
-카테고리: ${nv.noticeCategory} <br>
-제목: ${nv.noticeSubject} <br>
-작성일: ${nv.noticeWriteday} <br>
-내용: ${nv.noticeArticle} <br>
-<%-- 첨부파일: ${nv.orginalFileName} <br> --%>
-<%-- 파일경로: ${nv.noticeFilePath} <br> --%>
-해시태그:
-<c:forEach var="item" items="${hashtag}">
-${item.value}
-</c:forEach>
-
-<img src="<spring:url value='/img/notice/${af.storedFilePath}'/>" />
-
-<div>
-<a href="${pageContext.request.contextPath}/notice/noticeModify.do?nidx=${nv.nidx}">수정하기</a>
-<a href="${pageContext.request.contextPath}/notice/noticeList.do">목록</a>
+<div class="contentsWrap">
+	<div class="contentsHeader">
+		<input type="hidden" value="${nv.nidx}">
+		<div class="title">
+		<div class="category">${nv.noticeCategory}</div>
+		<div class="subject">${nv.noticeSubject}</div>
+		</div>
+		<div class="hashtag">
+			<c:forEach var="item" items="${hashtag}">${item.value}</c:forEach>
+		</div>
+		<div class="writeday">작성일 : ${nv.noticeWriteday}</div>
+	</div>
+	<div class="article">${nv.noticeArticle}</div>
+	<div class="attachFile">
+		<div class="attach">첨부파일</div> 
+		<div class="fileName"><i class="fa fa-floppy-o" aria-hidden="true"></i>${af.originalFileName}</div>
+	</div>
+	<%-- 파일경로: ${nv.noticeFilePath} <br> --%>
+	<%-- <img src="<spring:url value='/img/notice/${af.storedFilePath}'/>" /> --%>
+	
+	<div class="btn">
+		<a href="${pageContext.request.contextPath}/notice/noticeModify.do?nidx=${nv.nidx}">수정하기</a>
+		<a href="${pageContext.request.contextPath}/notice/noticeList.do">목록</a>
+	</div>
 </div>
+<div id="footers"></div>
 </body>
 </html>
