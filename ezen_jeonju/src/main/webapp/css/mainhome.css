@@ -525,7 +525,6 @@ color: #fff;
 	display: block;
 	width: 100%;
 	text-align: center;
-    margin-top: 5.5em;
 }   
 
 .video-list div{
@@ -560,10 +559,9 @@ color: #fff;
 }
 
 .video-more{
-    display : flex; 
-	position : absolute;
-    right: 42%;
-    top: 38%
+	text-align : center;
+	padding-top: 30px;
+    padding-bottom: 30px;
 }
 
 .video-more .video-btn-more {

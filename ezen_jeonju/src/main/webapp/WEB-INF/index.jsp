@@ -17,6 +17,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/images/favicon-32x32.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
 </head>
 
 <body>
@@ -237,13 +238,9 @@
                 </a>
             </div>
             <div class="video-more">
-                <div><a class="video-btn-more" href="<%=request.getContextPath()%>/contents/youtube.do?page=1"><span>영상 더 보러 가기 +</span></a></div>
+                <div><a class="video-btn-more" href="<%=request.getContextPath()%>/contents/youtube.do?page=1"><span >영상 더 보러 가기 +</span></a></div>
             </div>
             <ul class="video-list">
-                <li><a href="#"><div><img src="https://img.youtube.com/vi/YwC0m0XaD2E/mqdefault.jpg"><p class="slide-txt">인간극장 발표대장 다온</p></div></a></li>
-                <li><a href="#"><div><img src="https://img.youtube.com/vi/YwC0m0XaD2E/mqdefault.jpg"><p class="slide-txt">인간극장 민정</p></div></a></li>
-                <li><a href="#"><div><img src="https://img.youtube.com/vi/YwC0m0XaD2E/mqdefault.jpg"><p class="slide-txt">인간극장 대희</p></div></a></li>
-                <li><a href="#"><div><img src="https://img.youtube.com/vi/YwC0m0XaD2E/mqdefault.jpg"><p class="slide-txt">인간극장 건도</p></div></a></li>
             </ul>           
         </div>
     </section>
@@ -261,7 +258,7 @@
     	</div>
    	</div>
 </footer>
-	
 </body>
 </html>
 	<script src="${pageContext.request.contextPath}/js/mainhome.js"></script>
+	<script src="${pageContext.request.contextPath}/js/mainhomeYout.js"></script>
