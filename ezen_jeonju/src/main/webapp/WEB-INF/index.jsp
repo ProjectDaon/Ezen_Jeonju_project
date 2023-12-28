@@ -7,45 +7,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Insert title here</title>
-    <link rel="stylesheet" href="./css/navbar.css">
-    <link rel="stylesheet" href="./css/mainhome.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/navbar.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mainhome.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" href="http://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/images/favicon-32x32.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 </head>
 
 <body>
-<script src="./js/nav-bar.js"></script>
+<script src="${pageContext.request.contextPath}/js/nav-bar.js"></script>
 
 <header class="navigation" id="navigation">
     <nav class="nav-bar">
         <h1>
-            <a href="index.do">
-                <img src="./images/logo.png">
+            <a href="${pageContext.request.contextPath}/index.do">
+                <img src="${pageContext.request.contextPath}/images/logo.png">
             </a>
         </h1>
         <div class="menu-wrap">
             <ul class="menu-element">
                 <li class="dep">
-                    <a href="<%=request.getContextPath()%>/contents/sightsList.do">전주에가면</a>
+                    <a href="#none">전주에가면</a>
                     <div class="dep-inner" style="display: none;">
                         <div class="inner-sub-title">
                             <p class="large-text">전주에가면</p>
                         </div>
-                        <ul class="depth-2">
-                            <li><a href="<%=request.getContextPath()%>/contents/sightsList.do">명소</a></li>
-                            <li><a href="<%=request.getContextPath()%>/contents/foodList.do">음식</a></li>
-                            <li><a href="#">영상</a></li>
-                        </ul>
+						<ul class="depth-2">
+							<li><a href="<%=request.getContextPath()%>/contents/sight/contentsList.do">명소</a></li>
+							<li><a href="<%=request.getContextPath()%>/contents/food/contentsList.do">음식</a></li>
+							<li><a href="<%=request.getContextPath()%>/contents/youtube.do?page=1">영상</a></li>
+						</ul>
                     </div>
                 </li>
                 <li class="dep">
-                    <a href="<%=request.getContextPath()%>/schedule/scheduleList.do">여행일정</a>
+                    <a href="#none">여행일정</a>
                     <div class="dep-inner" style="display: none;">
                         <div class="inner-sub-title">
                             <p class="large-text">여행일정</p>
@@ -56,13 +56,13 @@
                     </div>
                 </li>
                 <li class="dep">
-                    <a href="<%=request.getContextPath()%>/notice/noticeList.do">공지사항</a>
+                    <a href="#none">공지사항</a>
                     <div class="dep-inner" style="display: none;">
                         <div class="inner-sub-title">
                             <p class="large-text">공지사항</p>
                         </div>
                         <ul class="depth-2">
-                            <li><a href="#">공지</a></li>
+                            <li><a href="<%=request.getContextPath()%>/notice/noticeList.do">공지사항</a></li>
                         </ul>
                     </div>
                 </li>
@@ -97,9 +97,9 @@
                         <p>전주에가면</p>
                     </div>
                     <ul class="submenu-title-1" style="display: none;">
-                        <li><a href="<%=request.getContextPath()%>/contents/sightsList.do">명소</a></li>
-                        <li><a href="<%=request.getContextPath()%>/contents/foodList.do">음식</a></li>
-                        <li><a href="#">영상</a></li>
+                        <li><a href="<%=request.getContextPath()%>/contents/sight/contentsList.do">명소</a></li>
+                        <li><a href="<%=request.getContextPath()%>/contents/food/contentsList.do">음식</a></li>
+                        <li><a href="<%=request.getContextPath()%>/contents/youtube.do?page=1">영상</a></li>
                     </ul>
                 </div>
                 <div class="menu-list-wrap">
@@ -115,7 +115,7 @@
                         <p>공지사항</p>
                     </div>
                     <ul class="submenu-title-3" style="display: none;">
-                        <li><a href="#">공지</a></li>
+                        <li><a href="<%=request.getContextPath()%>/notice/noticeList.do">공지사항</a></li>
                     </ul>
                 </div>
             </div>
@@ -126,13 +126,13 @@
     <section class="first-visual">
         <div class="first-visual-list">
     		<c:forEach var="mpv" items="${mpvlist}">
-            <div><a href="${mpv.mainPageLink}"><img src="<spring:url value='/img/vanners/${mpv.storedFilePath}'/>" /></a></div>
+            	<div><a href="${mpv.mainPageLink}"><img class="first-visual-img" src="<spring:url value='/img/vanners/${mpv.storedFilePath}'/>" /></a></div>
             </c:forEach>
         </div>
         <div class="first-text">
             <div class="first-text-list">
             	<c:forEach var="mpv" items="${mpvlist}">
-                <div><a href="${mpv.mainPageLink}"><p class="slide-txt">${mpv.mainPageSubject}</p></a></div>
+                	<div><a href="${mpv.mainPageLink}"><p class="slide-txt">${mpv.mainPageSubject}</p></a></div>
                 </c:forEach>
             </div>
             <div class="first-control">
@@ -169,13 +169,9 @@
             </h2>
         </div>
         <div class="second-visual-list">
-            <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="./images/417320-1.jpg"></div><p class="slide-txt">이거되냐고</p></a></div>
-            <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="./images/417320-2.jpg"></div><p class="slide-txt">이거되냐고2</p></a></div>
-            <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="./images/417320-1.jpg"></div><p class="slide-txt">이거되냐고3</p></a></div>
-            <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="./images/417320-2.jpg"></div><p class="slide-txt">이거되냐고4</p></a></div>
-            <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="./images/417320-1.jpg"></div><p class="slide-txt">길게되는건지 적당히만 하자</p></a></div>
-            <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="./images/417320-2.jpg"></div><p class="slide-txt">길게되는건지 적당히만 하자</p></a></div>
-            <div><a href="#"><div class="thumbnail"><img class="thumbnail-img" src="./images/417320-1.jpg"></div><p class="slide-txt">길게되는건지 적당히만 하자</p></a></div>
+        	<c:forEach var="cv" items="${cvlist}">
+	            <div><a href="<%=request.getContextPath()%>/contents/contentsArticle.do?cidx=${cv.cidx}"><div class="thumbnail"><img class="thumbnail-img" src="<spring:url value='/img/contents/${cv.thumbnailFilePath}'/>" /></div><p class="slide-txt">${cv.contentsSubject}</p></a></div>
+      		</c:forEach>
         </div>
     </section>
 
@@ -184,39 +180,22 @@
             <div class="title-section">
                 <h2>
                     <span class="title1">전주 인기 여행 TOP3</span>
+                    <span class="title2">조회수 높은 게시글을 알려드립니다.</span>
                 </h2>
             </div>
             <div class="hot3-list">
-                <div class="hot-item">  
-                    <a href="#">
-                        <div class="box-wrap">
-                            <div class="box-img">
-                                <img src="images/417320-1.jpg" alt="">
-                            </div>
-                        </div>
-                        <p class="tit">이색체험 어쩌구 저쩌구</p>
-                    </a>
-                </div>
-                <div class="hot-item">
-                    <a href="#">
-                        <div class="box-wrap">
-                            <div class="box-img">
-                                <img src="images/417320-2.jpg" alt="">
-                            </div>
-                        </div>
-                        <p class="tit">이색체험 어쩌구 저쩌구</p>
-                    </a>
-                </div>
-                <div class="hot-item">
-                    <a href="#">
-                        <div class="box-wrap">
-                            <div class="box-img">
-                                <img src="images/417320-1.jpg" alt="">
-                            </div>
-                        </div>
-                        <p class="tit">이색체험 어쩌구</p>
-                    </a>
-                </div>
+            	<c:forEach var="cv" items="${cvtop3list}">
+	                <div class="hot-item">  
+	                    <a href="<%=request.getContextPath()%>/contents/contentsArticle.do?cidx=${cv.cidx}">
+	                        <div class="box-wrap">
+	                            <div class="box-img">
+	                                <img src="<spring:url value='/img/contents/${cv.thumbnailFilePath}'/>" />
+	                            </div>
+	                        </div>
+	                        <p class="tit">${cv.contentsSubject}</p>
+	                    </a>
+	                </div>
+                </c:forEach>
             </div>
         </div>
     </section>
@@ -225,16 +204,16 @@
             <div class="title-wrap">
                 <div class="sub-title">
                     <span>공연</span>
-                    <span>행사</span>
                     <span>전시</span>
-                    <a href="#"><span>더 보기 +</span></a>
+                    <span>축제</span>
+                    <span>행사</span>
+                    <a href="<%=request.getContextPath()%>/notice/noticeList.do"><span>더 보기 +</span></a>
                 </div>
             </div>
             <div class="exhibition-list">
-                <a href="#"><div><img src="./images/400560.jpg"><p class="slide-txt">징그럽다 htmlzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</p></div></a>
-                <a href="#"><div><img src="./images/400560.jpg"><p class="slide-txt">징그럽다 css</p></div></a>
-                <a href="#"><div><img src="./images/400560.jpg"><p class="slide-txt">태그지옥</p></div></a>
-                <a href="#"><div><img src="./images/400560.jpg"><p class="slide-txt">태그지옥</p></div></a>
+            	<c:forEach var="nv" items="${nvlist}">
+             	   <a href="<%=request.getContextPath()%>/notice/noticeContents.do?nidx=${nv.nidx}"><div><img src="<spring:url value='/img/notice/${nv.thumbnailFilePath}'/>" /><p class="slide-txt">${nv.noticeSubject}</p></div></a>
+                </c:forEach>
             </div>
         </div>
     </section>
@@ -258,7 +237,7 @@
                 </a>
             </div>
             <div class="video-more">
-                <div><a class="btn-more" href="#"><span>영상 등록 +</span></a></div>
+                <div><a class="video-btn-more" href="<%=request.getContextPath()%>/contents/youtube.do?page=1"><span>영상 더 보러 가기 +</span></a></div>
             </div>
             <ul class="video-list">
                 <li><a href="#"><div><img src="https://img.youtube.com/vi/YwC0m0XaD2E/mqdefault.jpg"><p class="slide-txt">인간극장 발표대장 다온</p></div></a></li>
@@ -285,4 +264,4 @@
 	
 </body>
 </html>
-	<script src="./js/mainhome.js"></script>
+	<script src="${pageContext.request.contextPath}/js/mainhome.js"></script>
