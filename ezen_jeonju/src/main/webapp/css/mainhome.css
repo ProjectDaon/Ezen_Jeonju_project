@@ -70,7 +70,7 @@ button {
 .first-text {
     max-width: 1000px;
     margin: 0 auto;
-    margin-top: -70px;
+    margin-top: -40px;
     position: relative;
     z-index: 1;
     background-color: #fff;
@@ -118,13 +118,6 @@ button {
     right: -17%
 }
 
-
-.video-more{
-    display : flex; 
-	position : absolute;
-    right: 5%;
-    top: 40%
-}
 
 .btn-more {
     border: 1px solid #ddd;
@@ -200,12 +193,12 @@ button {
 	
 } 
 
- .thumbnail img {
+ .thumbnail-img {
 	overflow: hidden;
     max-width: 417px;
     max-height: 277px;
     width: 100%;
-    height: 100%;
+    height: 277px;
     min-width: 100%;
     min-height: 100%;
     border-radius: 30px;
@@ -566,6 +559,27 @@ color: #fff;
 	transform: scale(1.05);
 }
 
+.video-more{
+    display : flex; 
+	position : absolute;
+    right: 42%;
+    top: 38%
+}
+
+.video-more .video-btn-more {
+    border-radius: 5px;
+    padding: 8px 20px 8px 20px;
+    font-size: 25px;
+}
+
+
+.video-more .video-btn-more span {
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 25px;
+}
+
+
 
 footer {
 	display: block;
@@ -586,7 +600,7 @@ footer .inner{
 .top-view{
     border: 1px solid #666;
     right: 2%;
-    bottom: 15%;
+    bottom: 12%;
     width: 40px;
     height: 40px;
     color: #ffffff;
@@ -605,14 +619,13 @@ footer .inner{
     .first-text {
         padding: 20px;
         max-width: 900px;
-        margin-top: -50px;
     }
 
     .first-text-list .slide-txt {
         font-size: 22px;
     }
     
-    .second-visual-list .thumbnail img {
+    .second-visual-list .thumbnail-img {
 		max-width: 280px;
 		max-height: 214px;;
 	}

@@ -15,8 +15,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ezen_jeonju.myapp.domain.AttachFileVo;
+import com.ezen_jeonju.myapp.domain.ContentsVo;
 import com.ezen_jeonju.myapp.domain.MainPageVo;
+import com.ezen_jeonju.myapp.domain.NoticeVo;
 import com.ezen_jeonju.myapp.service.AttachFileService;
+import com.ezen_jeonju.myapp.service.ContentsService;
 import com.ezen_jeonju.myapp.service.MainPageService;
 import com.ezen_jeonju.myapp.util.UploadFileUtiles;
 
@@ -36,7 +39,14 @@ public class MainPageController {
 	@RequestMapping(value = "/index.do")
 	public String sectionFirstVisual(Model model) {
 		ArrayList<MainPageVo> mpvlist = mps.mainPageVannerView();
+		ArrayList<ContentsVo> cvlist = mps.mainPageSecondView();
+		ArrayList<ContentsVo> cvtop3list = mps.mainPageThirdView();
+		ArrayList<NoticeVo> nvlist = mps.mainPageNoticeView();
 	    model.addAttribute("mpvlist", mpvlist);
+	    model.addAttribute("cvlist", cvlist);
+	    model.addAttribute("cvtop3list", cvtop3list);
+	    model.addAttribute("nvlist", nvlist);
+	    
 	    return "/index";
 	}
 	

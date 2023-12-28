@@ -1,4 +1,6 @@
 $(document).ready(function(){  
+
+	// 첫번째 슬라이더 플레이, 중지 버튼
     $('#btn-play').hide();
 
     $('#btn-play').click(function(){
@@ -14,7 +16,7 @@ $(document).ready(function(){
     });
 
 
-
+	// 메인배너 리스트 슬라이드
     $('.first-visual-list').slick({
     	infinite: true,
     	fade: true,
@@ -23,6 +25,7 @@ $(document).ready(function(){
     });
 
     
+   	// 메인배너 텍스트 슬라이드
     $('.first-text-list').slick({
         autoplay: true,
         autoplaySpeed: 3000,
@@ -58,21 +61,21 @@ $(document).ready(function(){
     });
 
 
-
+	// 두번째 슬라이드 해당 이미지에 따른 뷰 넓이에 맞게 슬라이드 갯수 구현
      function calculateSlidesToShow() {
 	 	var viewportWidth = $(window).width();
 	 	//console.log("뷰포트" + viewportWidth);
-	
-	
-	 	// breakpoint가 1500 이하인 경우 이미지 넓이를 280으로 변경
-	 	var imageWidth = 417;
+		
+		if(viewportWidth>=1500){
+			var imageWidth = 500;
+		}else{
+			var imageWidth = 330;
+		}
         //console.log("이미지넓이" + imageWidth);
-
 
 	 	var totalwidth = imageWidth;
         //console.log("토탈넓이" + totalwidth);
 
-	
 	 	// 반올림하여 소수점 한자리까지 표시
 	 	var slidesToShow = Math.round(viewportWidth / totalwidth * 10) / 10;
 	 	//console.log("개수" + slidesToShow);
@@ -80,6 +83,8 @@ $(document).ready(function(){
 	 	return slidesToShow;
 	 }
 	
+	
+	// 두번째 슬라이드
 	$('.second-visual-list').slick({
 		pauseOnHover: true,
         autoplay: true,
@@ -93,7 +98,8 @@ $(document).ready(function(){
 	$(window).on('resize', function () {
 		$('.second-visual-list').slick('slickSetOption', 'slidesToShow', calculateSlidesToShow());
 	});
-
+	
+	// 상단으로 이동시켜주는 버튼  Y값에 따른 숨기기
     document.addEventListener('scroll', function () {
         var topLink = document.querySelector('.top-view');
         if (window.scrollY > 200) { 
@@ -101,6 +107,6 @@ $(document).ready(function(){
         } else {
           topLink.style.display = 'none';
         }
-      });
+    });
 });
 
