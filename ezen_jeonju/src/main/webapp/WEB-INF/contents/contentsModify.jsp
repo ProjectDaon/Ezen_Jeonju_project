@@ -62,13 +62,8 @@ function goModify(){
 	}else if (fm.contentsArticle.value ==""){
 		alert("내용을 입력하세요.");
 		fm.contentsArticle.focus();
-		return;}		
-/*  	}else if (fm.pwd.value ==""){
-		alert("비밀번호를 입력하세요");
-		fm.pwd.focus();
-		return;		
-	} */
- 	//처리하기위해 이동하는 주소
+		return;
+	}		
 	fm.action ="<%=request.getContextPath()%>/contents/contentsModifyAction.do";  
 	fm.method = "post";  //이동하는 방식  get 노출시킴 post 감추어서 전달
 	fm.enctype= "multipart/form-data";
@@ -88,6 +83,18 @@ function goDelete(){
 	fm.submit(); //전송시킴
 	return;
 }
+
+function readURL(input) {
+	if (input.files && input.files[0]) {
+	  var reader = new FileReader();
+	  reader.onload = function(e) {
+	    document.getElementById('preview').src = e.target.result;
+	  };
+	  reader.readAsDataURL(input.files[0]);
+	} else {
+	  document.getElementById('preview').src = "";
+	}
+}
 </script>
 <div class="panel-heading">글 수정하기</div>
 	<div class="panel-body">
@@ -100,9 +107,6 @@ function goDelete(){
 					<option value="<%=cv.getContentsCategory()%>">선택</option>
 					<option value="명소">명소</option>
 					<option value="음식">음식</option>
-<%--					<c:forEach var="cv" items="${courselist}">
-					<option value="${cv.cidx}">${cv.c_name}</option>
-					</c:forEach> --%>
 				</select>
 			</div> 
 			<div>
@@ -128,10 +132,18 @@ function goDelete(){
 				</script>
 			</div>
 			<textarea id="summernote" name="contentsArticle"><%=cv.getContentsArticle() %></textarea>
+   		 	<div class="uploadedFile">
+ 				<span>기존 이미지</span>
+   				<img width="200" src="<spring:url value='/img/contents/${af.storedFilePath}'/>"/>
+   		 	</div>
 			<div id="customFileUpload">
-				<label for="uploadFile">썸네일 등록하기</label>
-				<input type="file" name="uploadFileName" id="uploadFile">
-			</div>
+        		<input type="file" name="uploadFileName" id="uploadFile" onchange="readURL(this);" value="">
+       			<label for="uploadFile">변경할 메인사진</label>
+       			<img id="preview" width="200" />
+   		 	</div>
+   		 	<input type="hidden" name="storedFile" value="${af.storedFilePath}">
+   		 	<input type="hidden" name="storedThumbnail" value="${af.thumbnailFilePath}">
+   		 	<input type="hidden" name="aidx" value="${af.aidx}">
 	<script>
 	$(document).ready(function() {
 	  $('#summernote').summernote({

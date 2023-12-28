@@ -20,19 +20,38 @@
     position: relative;
     overflow: hidden;
     display: inline-block;
+    border: 1px solid black;
+    width: 300px;
+    height: 150px;
+    padding: 15px 5px;
 }
-
+#preview{
+	display: inline-block;
+}
 #uploadFile {
     position: absolute;
     top: 0;
-    right: 0;
+    left: 0;
     margin: 0;
     padding: 0;
     font-size: 20px;
     cursor: pointer;
     opacity: 0;
+    width: 100px;
 }
-
+.uploadedFile{
+	display: inline-block;	
+	margin-right: 20px;
+	font-weight: 700;
+    border: 1px solid black;
+    width: 300px;
+    height: 150px;
+    padding: 15px 5px;
+}
+.uploadedFile span{
+	position: relative;
+	top: -5px;
+}
 .tagify--outside .tagify__input:hover{ border-color:var(--tags-hover-border-color); }
 .tagify--outside.tagify--focus .tagify__input{
   transition:0s;

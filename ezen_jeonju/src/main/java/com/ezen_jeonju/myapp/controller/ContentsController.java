@@ -1,6 +1,10 @@
 package com.ezen_jeonju.myapp.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
@@ -159,21 +163,55 @@ public class ContentsController {
         if (result.length() > 0) {
             result.setLength(result.length() - 2);
         }
+        
+        AttachFileVo af = afs.imageFileLoad(cv.getAidx());
         values = result.toString();
-        System.out.println(values);
+        model.addAttribute("af", af);
 		model.addAttribute("cv", cv);
 		model.addAttribute("values", values);
 		return "/contents/contentsModify";
 	}
 	
 	@RequestMapping(value="/contentsModifyAction.do")
-	public String contentsModifyAction(ContentsVo cv) {		
+	public String contentsModifyAction(AttachFileVo af, ContentsVo cv, 
+						@RequestParam("storedFile") String storedFile,
+						@RequestParam("storedThumbnail") String storedThumbnail) throws Exception {	
+		if(af.getUploadFileName() != null && !af.getUploadFileName().isEmpty()) {
+			
+			//기존 파일 삭제하기
+			try {
+	            deleteFile("C:/uploadFile/ezen_Jeonju/contents/"+storedFile);
+	            deleteFile("C:/uploadFile/ezen_Jeonju/contents/"+storedThumbnail);
+	            System.out.println("File deleted successfully.");
+	        } catch (IOException e) {
+	            System.err.println("Error deleting file: " + e.getMessage());
+	        }
+			
+			//새로운 파일 업로드하기
+			MultipartFile file = af.getUploadFileName();
+			af.setOriginalFileName(file.getOriginalFilename());
+			af.setCategory("컨텐츠");
+			String path = uploadPath+File.separator+"contents";
+			String uploadedFileName = "";
+			if(!file.getOriginalFilename().equals("")) {
+				//업로드 시작
+				uploadedFileName = UploadFileUtiles.uploadFile(path, file.getOriginalFilename(), file.getBytes());
+			}
+			af.setThumbnailFilePath(uploadedFileName);
+			af.setStoredFilePath(uploadedFileName.substring(0,12)+uploadedFileName.substring(14));
+			
+			//새로운 파일 db에 적용하기
+			afs.imageFileModify(af);
+		}
 		
 		cs.contentsModify(cv);
-				
 		return "redirect:/contents/contentsArticle.do?cidx="+cv.getCidx();
 	}
 	
+	private static void deleteFile(String filePath) throws IOException {
+        Path path = Paths.get(filePath);
+        Files.deleteIfExists(path);
+    }
 
 	@RequestMapping(value="/contentsDeleteAction.do")
 	public String contentsDeleteAction(@RequestParam("cidx") int cidx, @RequestParam("category") String category) {	

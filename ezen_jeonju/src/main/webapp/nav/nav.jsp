@@ -15,14 +15,14 @@
 <header class="navigation" id="navigation">
 	<nav class="nav-bar" style="height: 82px;">
 		<h1>
-			<a href="/index.jsp">
+			<a href="/">
 				<img src="${pageContext.request.contextPath}/images/logo.png">
 			</a>
 		</h1>
 		<div class="menu-wrap">
 			<ul class="menu-element">
 				<li class="dep">
-					<a href="<%=request.getContextPath()%>/contents/sightsList.do">전주에가면</a>
+					<a href="<%=request.getContextPath()%>/contents/sight/contentsList.do">전주에가면</a>
 					<div class="dep-inner" style="display: none;">
 						<div class="inner-sub-title">
 							<p class="large-text">전주에가면</p>

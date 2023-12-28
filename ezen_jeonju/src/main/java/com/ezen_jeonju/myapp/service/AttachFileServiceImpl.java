@@ -33,6 +33,13 @@ public class AttachFileServiceImpl implements AttachFileService{
 		
 		return af;
 	}
+
+
+	@Override
+	public int imageFileModify(AttachFileVo af) {
+		int value = asm.imageFileModify(af);
+		return value;
+	}
 	
 	
 

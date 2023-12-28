@@ -16,4 +16,12 @@ VALUES(#{originalFileName}, #{storedFilePath},#{thumbnailFilePath},#{category})
 SELECT * from attachfile where aidx = #{aidx}
 </select>
 
+<update id="imageFileModify" parameterType="af">
+UPDATE attachfile 
+	SET fileUploadDay=now(), 
+		storedFilePath=#{storedFilePath},
+		thumbnailFilePath=#{thumbnailFilePath},
+		originalFileName=#{originalFileName}
+	WHERE aidx=#{aidx}
+</update>
 </mapper>
