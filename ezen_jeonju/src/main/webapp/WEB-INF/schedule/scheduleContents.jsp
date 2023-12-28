@@ -83,14 +83,14 @@ function getTourCourseNDate(sidx,tourCourseNDate){
 			var positions = [];
 			$(data).each(function(){
 				positions.push({
-					
+					title: this.tourCoursePlace,
 				    latlng: new kakao.maps.LatLng(this.tourCourseLatitude, this.tourCourseLongitude)
 									
 				});
 				
 				for (var i = 0; i < positions.length; i ++) {
 				   // 마커를 생성합니다
-					addMarker(positions[i].latlng);
+					addMarker(positions[i].latlng,positions[i].title);
 				}	
 				
 			});
