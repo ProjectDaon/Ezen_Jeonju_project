@@ -20,8 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ezen_jeonju.myapp.domain.AttachFileVo;
-import com.ezen_jeonju.myapp.domain.ContentsStatsDTO;
+import com.ezen_jeonju.myapp.domain.ContentsListDTO;
 import com.ezen_jeonju.myapp.domain.ContentsSearchCriteria;
+import com.ezen_jeonju.myapp.domain.ContentsStatsDTO;
 import com.ezen_jeonju.myapp.domain.ContentsVo;
 import com.ezen_jeonju.myapp.domain.PageMaker;
 import com.ezen_jeonju.myapp.service.AttachFileService;
@@ -101,7 +102,7 @@ public class ContentsController {
 	    pm.setCscri(cscri);
 	    pm.setTotalCount(totalCount);
 	    
-	    ArrayList<ContentsVo> cvlist = cs.contentsList(cscri);
+	    ArrayList<ContentsListDTO> cvlist = cs.contentsList(cscri);
 	    model.addAttribute("cvlist", cvlist);
 	    model.addAttribute("pm", pm);
 

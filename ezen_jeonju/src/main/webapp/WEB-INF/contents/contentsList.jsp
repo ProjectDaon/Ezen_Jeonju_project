@@ -54,7 +54,7 @@ $(document).ready( function() {
 	<div class="contents-list-sub">
 		<span><ion-icon name="eye-outline"></ion-icon>&nbsp${cv.contentsViewCount}</span>
 		<span><ion-icon name="newspaper-outline"></ion-icon>&nbsp${cv.contentsReviewCount}</span>
-		<span><ion-icon name="heart-circle-outline"></ion-icon>&nbsp</span>
+		<span><ion-icon name="heart-circle-outline"></ion-icon>&nbsp${cv.likecount}</span>
 	</div>
 	</li>
 </c:forEach>

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ezen_jeonju.myapp.domain.AttachFileVo;
+import com.ezen_jeonju.myapp.domain.ContentsListDTO;
 import com.ezen_jeonju.myapp.domain.ContentsSearchCriteria;
 import com.ezen_jeonju.myapp.domain.ContentsStatsDTO;
 import com.ezen_jeonju.myapp.domain.ContentsVo;
@@ -37,11 +38,11 @@ public class ContentsServiceImpl implements ContentsService{
 	}
 	
 	@Override
-	public ArrayList<ContentsVo> contentsList(ContentsSearchCriteria cscri) {
+	public ArrayList<ContentsListDTO> contentsList(ContentsSearchCriteria cscri) {
 		int value = (cscri.getPage()-1)*9;
 		cscri.setPage(value);
 		
-		ArrayList<ContentsVo> cv = csm.contentsList(cscri);
+		ArrayList<ContentsListDTO> cv = csm.contentsList(cscri);
 		
 		return cv;
 	}
