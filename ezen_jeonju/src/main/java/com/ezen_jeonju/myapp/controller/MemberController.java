@@ -44,7 +44,7 @@ public class MemberController {
 	public String memberLogin() {
 
 		
-		return "member/memberLogin";
+		return "/member/memberLogin";
 	}
 	
 	
@@ -365,7 +365,7 @@ public class MemberController {
 			if(request.getSession().getAttribute("saveUrl")!= null) {
 				path=(String)request.getSession().getAttribute("saveUrl").toString().substring(request.getContextPath().length()+1);
 			}else {
-				path="index.jsp";
+				path="index.do";
 			}
 		}else {
 			rttr.addFlashAttribute("msg", "아이디와 비밀번호를 확인해주세요.");
