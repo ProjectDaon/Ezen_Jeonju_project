@@ -1,0 +1,139 @@
+.WritingWrap {
+	width: 1080px;
+	margin: 0 auto;
+}
+
+.WritingHeader {
+    position: relative;
+    margin-top: 20px;
+    border-bottom: 1px solid coral;
+}
+
+.WritingHeader .title {
+    margin-bottom: 16px;
+    font-size: 22px;
+    color: coral;
+    font-weight: bold;
+}
+
+.WritingHeader .btn {
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+    background: #FFDEAD;
+	border-color: #FFDEAD;
+	color: coral;
+	font-weight: bold;
+}
+
+.WritingHeader .btn:hover {
+	border: 1px solid coral;
+	color: coral;
+}
+
+.WritingContent {
+    position: relative;
+    padding-top: 22px;
+    padding-bottom: 50px;
+}
+
+.WritingContent .editer_wrap {
+    margin-bottom: 15px;
+    padding: 20px 28px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    background-color: #fff;
+}
+
+.formCategory select {
+    margin-left: 5px;
+    padding: 0 25px 0 10px;
+    width: 250px;
+    height: 30px;
+    border: 0;
+    border-bottom: 1px solid #ebecef;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.formCategory select option[value=""][disabled] {
+	display: none;
+}
+
+.formSubject {
+    margin-top: 16px;
+}
+
+.formSubject label {
+	margin-left: 25px;
+}
+
+.formSubject input{
+    margin-left: 5px;
+    width: 90%;
+    height: 40px;
+    padding: 13px 16px 11px;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    /* border-radius: 10px; */
+    background-color: #f5f6f8;
+    font-size: 14px;
+    line-height: 22px;
+}
+
+/* input box 입력 후 배경색 없애기 */
+input:-webkit-autofill { -webkit-box-shadow: 0 0 0 30px #f5f6f8 inset ; -webkit-text-fill-color: #000; }
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active { transition: background-color 5000s ease-in-out 0s; }
+
+/* 해시태그 */
+.hashTagArea {
+    margin-top: 16px;
+}
+
+.tagify{    
+    margin-left: 5px;
+    width: 90%;
+    border: 0;
+    border-bottom: 1px solid #ebecef;
+}
+
+.tags-look .tagify__dropdown__item{
+  display: inline-block;
+  border-radius: 3px;
+  padding: .3em .5em;
+  border: 1px solid #CCC;
+  background: #F3F3F3;
+  margin: .2em;
+  font-size: .85em;
+  color: black;
+  transition: 0s;
+}
+
+.tags-look .tagify__dropdown__item--active{
+  color: black;
+}
+
+.tags-look .tagify__dropdown__item:hover{
+  background: #FFDEAD;
+  border-color: coral;
+}
+
+/* 파일첨부 */
+.attachFile {
+    margin-top: 16px;
+    display: inline-block;
+}
+
+.attachFile lavel {
+	float: left;
+}
+
+.attachFile input {
+	float: right;
+	position: relative;
+	margin-left: 10px;
+	width: 300px;
+}
+
+
