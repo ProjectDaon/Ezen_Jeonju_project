@@ -30,6 +30,27 @@
 	border: 1px solid coral;
 	color: coral;
 }
+/* Modify css */
+.WritingHeader .btnArea {
+    position: absolute;
+    bottom: 12px;
+    right: 0;
+}
+
+.WritingHeader .twobtn {
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    border-radius: 4px;
+    background: #FFDEAD;
+	border-color: #FFDEAD;
+	color: coral;
+	font-weight: bold;
+}
+/* ----- */
+.WritingHeader .twobtn:hover {
+	border: 1px solid coral;
+	color: coral;
+}
 
 .WritingContent {
     position: relative;
@@ -44,6 +65,12 @@
     border-radius: 12px;
     border: 1px solid #eee;
     background-color: #fff;
+}
+
+.WritingContent .editer_wrap label {
+    width: 8%;
+    color: dimgray;
+    text-align: right;
 }
 
 .formCategory select {
@@ -61,12 +88,24 @@
 	display: none;
 }
 
+/* Modify css */
+.formCategory input {
+    margin-left: 5px;
+    width: 8%;
+    height: 40px;
+    padding: 13px 16px 11px;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    /* border-radius: 10px; */
+    background-color: #f5f6f8;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: center;
+}
+/* ----- */
+
 .formSubject {
     margin-top: 16px;
-}
-
-.formSubject label {
-	margin-left: 25px;
 }
 
 .formSubject input{
@@ -122,18 +161,30 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 /* 파일첨부 */
 .attachFile {
     margin-top: 16px;
-    display: inline-block;
-}
-
-.attachFile lavel {
-	float: left;
+    display: flex;
 }
 
 .attachFile input {
-	float: right;
-	position: relative;
 	margin-left: 10px;
 	width: 300px;
 }
 
+/* Modify css */
+.attachedFile {
+    margin-top: 16px;
+}
+
+.attachedFile input {
+    margin-left: 5px;
+    width: 90%;
+    height: 40px;
+    padding: 13px 16px 11px;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    /* border-radius: 10px; */
+    background-color: #f5f6f8;
+    font-size: 14px;
+    line-height: 22px;
+}
+/* ----- */
 

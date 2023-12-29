@@ -3,6 +3,7 @@
 <%@ page import="com.ezen_jeonju.myapp.domain.NoticeVo" %>
 <%@ page import="com.ezen_jeonju.myapp.domain.AttachFileVo" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%> 
 <% NoticeVo nv = (NoticeVo)request.getAttribute("nv");%>
 <% AttachFileVo af = (AttachFileVo)request.getAttribute("af");%>
 
@@ -12,6 +13,7 @@
 <meta charset="utf-8">
 <title>공지사항 수정</title>
 <link rel="stylesheet" href="../css/navbar.css">
+<link rel="stylesheet" href="../css/noticeWrite.css">
 <!-- include libraries(jQuery, bootstrap) -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -91,11 +93,19 @@ function goDelete(){
 	return;
 }
 </script>
-<div class="panel-heading">공지사항 수정하기</div>
-	<div class="panel-body">
+<div class="WritingWrap">
+	<div class="WritingHeader">
+		<h2 class="title">공지사항 수정하기</h2>
+		<div class="btnArea">
+			<input class="twobtn" type="button" value="수정" onclick="goModify()">
+			<input class="twobtn" type="button" value="삭제" onclick="goDelete()">
+		</div>
+	</div>
+	<div class="WritingContent">
 		<form name="frm">
 		<input type="hidden" name="nidx" value="<%=nv.getNidx()%>">
-			<div class="form-group">
+		<div class="editer_wrap">
+			<div class="formCategory">
 				<label>카테고리</label>
 				<input type="text" id="noticeCategorySelected" name="noticeCategorySelected" value="<%=nv.getNoticeCategory()%>" placeholder="카테고리를 선택해주세요.">
 				<select id="noticeCategory" name="noticeCategory">
@@ -106,17 +116,15 @@ function goDelete(){
 					<option value="행사">행사</option>
 				</select>
 			</div> 
-			<div>
+			<div class="formSubject">
 				<label>제목</label>
 				<input type="text" name="noticeSubject" value="<%=nv.getNoticeSubject()%>">
 			</div>
-			
-			<textarea id="summernote" name="noticeArticle"><%=nv.getNoticeArticle()%></textarea>
-			
 			<div class="hashTagArea">
 				<label>해시태그</label>	
 				<input name="noticeHashtag" value="${values}">
-				<script>
+			</div>
+			<script>
 				var input = document.querySelector('input[name=noticeHashtag]');
 				let tagify = new Tagify(input, {
 					whitelist: ["#공연", "#전시", "#축제", "#행사"], // 화이트리스트 배열
@@ -128,14 +136,20 @@ function goDelete(){
 						closeOnSelect: false    // 드롭다운 메뉴에서 태그 선택하면 자동으로 꺼지는지 안꺼지는지
 						}
 					})
-				</script>
+			</script>
+			<div class="attachedFile">
+				<label>첨부파일</label>
+				<input type="text" value="<%=af.getOriginalFileName()%>">
 			</div>
-			
-			<label>첨부파일</label>
-			<input type="text" value="<%=af.getOriginalFileName()%>">
-			<input type="file" name="uploadFileName">
-			<input type="button" value="수정" onclick="goModify()">
-			<input type="button" value="삭제" onclick="goDelete()">
+			<div class="attachFile">
+				<label>파일수정</label>
+				<input type="file" name="uploadFileName" id="uploadFile" value="">
+			</div>
+			<input type="hidden" name="storedFile" value="${af.storedFilePath}">
+			<input type="hidden" name="storedThumbnail" value="${af.thumbnailFilePath}">
+			<input type="hidden" name="aidx" value="${af.aidx}">
+		</div>
+		<textarea id="summernote" name="noticeArticle"><%=nv.getNoticeArticle()%></textarea>
 		</form>
 	<script>
 	$(document).ready(function() {
@@ -145,5 +159,6 @@ function goDelete(){
 	});
 	</script>
 	</div>
+</div>
 </body>
 </html>

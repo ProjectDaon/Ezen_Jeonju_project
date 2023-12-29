@@ -22,12 +22,11 @@ VALUES(#{midx}, #{noticeSubject}, #{noticeCategory}, #{noticeArticle}, #{noticeH
 </sql>
 
 <select id="noticeList" parameterType="scri" resultType="nv">
-SELECT nidx, noticeSubject, noticeCategory, noticeWriteday, af.thumbnailFilePath as thumbnailFilePath 
+SELECT nidx, noticeSubject, noticeCategory, noticeWriteday, aidx
 FROM notice n
-join attachfile af on n.aidx = af.aidx
 WHERE noticeYN='N'
 <include refid="search"/>
-order by nidx desc limit 0, #{perPageNum}
+order by nidx desc limit #{page}, #{perPageNum}
 </select>
 
 

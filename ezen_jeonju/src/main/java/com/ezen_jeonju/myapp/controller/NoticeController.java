@@ -1,6 +1,10 @@
 package com.ezen_jeonju.myapp.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
@@ -53,7 +57,7 @@ public class NoticeController {
 	public String noticeWriteAction(AttachFileVo af, NoticeVo nv, HttpSession session, MultipartHttpServletRequest request) throws Exception{
 		MultipartFile file = af.getUploadFileName();
 		af.setOriginalFileName(file.getOriginalFilename());
-		af.setCategory("공지");
+		af.setCategory("notice");
 		String path = uploadPath+File.separator+"notice";
 		String uploadedFileName="";
 		if(!file.getOriginalFilename().equals("")) {
@@ -88,8 +92,9 @@ public class NoticeController {
 		model.addAttribute("pm", pm);
 		
 		// 검색어 입력 유지
-		String keyword = (String)scri.getKeyword(); if(keyword != null) {
-		session.setAttribute("keyword", keyword); 
+		String keyword = (String)scri.getKeyword();
+		if(keyword != null) {
+			model.addAttribute("keyword", keyword); 
 		}
 		
 		// 검색타입 선택 유지
@@ -119,8 +124,10 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value="/noticeModify.do")
-	public String noticeModify(@RequestParam("nidx") int nidx, Model model) throws Exception {		
+	public String noticeModify(@RequestParam("nidx") int nidx, Model model) throws Exception {
 		NoticeVo nv = ns.noticeContents(nidx);
+		AttachFileVo af = afs.imageFileLoad(nv.getAidx());
+
 		String hashtagList = nv.getNoticeHashtag();
 		JSONParser parser = new JSONParser();
 		JSONArray jsonArrayObj;
@@ -141,6 +148,7 @@ public class NoticeController {
 			result.setLength(result.length() - 2);
 		}
 		values = result.toString();
+		model.addAttribute("af", af);
 		model.addAttribute("nv", nv);
 		/* model.addAttribute("hashtag", jsonArrayObj); */
 		model.addAttribute("values", values);
@@ -148,11 +156,47 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value="/noticeModifyAction.do")
-	public String noticeModifyAction(NoticeVo nv) {		
+	public String noticeModifyAction(AttachFileVo af, NoticeVo nv,
+			@RequestParam("nidx") int nidx,
+			@RequestParam("storedFile") String storedFile,
+			@RequestParam("storedThumbnail") String storedThumbnail) throws Exception {
+		
+		if(af.getUploadFileName() != null && !af.getUploadFileName().isEmpty()) {
+			
+			//기존 파일 삭제하기
+			try {// 아래에 deleteFile Method 생성
+				deleteFile("C:/uploadFile/ezen_Jeonju/contents/"+storedFile);
+				deleteFile("C:/uploadFile/ezen_Jeonju/contents/"+storedThumbnail);
+				System.out.println("File deleted successfully.");
+			} catch (IOException e) {
+				System.err.println("Error deleting file: " + e.getMessage());
+			}
+			
+			//새로운 파일 업로드하기
+			MultipartFile file = af.getUploadFileName();
+			af.setOriginalFileName(file.getOriginalFilename());
+			af.setCategory("notice");
+			String path = uploadPath+File.separator+"notice";
+			String uploadedFileName="";
+			if(!file.getOriginalFilename().equals("")) {
+				//업로드 시작
+				uploadedFileName = UploadFileUtiles.uploadFile(path, file.getOriginalFilename(), file.getBytes());
+			}
+			af.setThumbnailFilePath(uploadedFileName);
+			af.setStoredFilePath(uploadedFileName.substring(0,12)+uploadedFileName.substring(14));
+			
+			afs.imageFileModify(af);
+		}
 		ns.noticeModify(nv);
+		System.out.println("nids:" + nidx);
 		return "redirect:/notice/noticeContents.do?nidx="+nv.getNidx();
 	}
 	
+	private void deleteFile(String filePath) throws IOException {
+		Path path = Paths.get(filePath);
+		Files.deleteIfExists(path);
+	}
+
 	@RequestMapping(value="/noticeDeleteAction.do")
 	public String noticeDeleteAction(@RequestParam("nidx") int nidx, @RequestParam("category") String category) {	
 		ns.noticeDelete(nidx);
