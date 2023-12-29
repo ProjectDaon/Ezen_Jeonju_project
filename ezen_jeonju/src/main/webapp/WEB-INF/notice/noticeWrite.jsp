@@ -57,28 +57,28 @@ function goWrite(){
 		<h2 class="title">공지사항 작성하기</h2>
 		<input class="btn" type="button" value="등록" onclick="goWrite()">
 	</div>
-		<div class="WritingContent">
-			<form name="frm">
-			<div class="editer_wrap">
-				<div class="formCategory">
-					<label>카테고리</label>
-					<select name="noticeCategory" required>
-						<option value="" disabled selected>카테고리를 선택해 주세요.</option>
-						<option value="공연">공연</option>
-						<option value="전시">전시</option>
-						<option value="축제">축제</option>
-						<option value="행사">행사</option>
-					</select>
-				</div> 
-				<div class="formSubject">
-					<label>제목</label>
-					<input type="text" name="noticeSubject" placeholder="제목을 입력해 주세요.">
-				</div>
-				<div class="hashTagArea">
-					<label>해시태그</label>
-					<input name='noticeHashtag'>
-				</div>
-				<script>
+	<div class="WritingContent">
+		<form name="frm">
+		<div class="editer_wrap">
+			<div class="formCategory">
+				<label>카테고리</label>
+				<select name="noticeCategory" required>
+					<option value="" disabled selected>카테고리를 선택해 주세요.</option>
+					<option value="공연">공연</option>
+					<option value="전시">전시</option>
+					<option value="축제">축제</option>
+					<option value="행사">행사</option>
+				</select>
+			</div> 
+			<div class="formSubject">
+				<label>제목</label>
+				<input type="text" name="noticeSubject" placeholder="제목을 입력해 주세요.">
+			</div>
+			<div class="hashTagArea">
+				<label>해시태그</label>
+				<input name='noticeHashtag'>
+			</div>
+			<script>
 				var input = document.querySelector('input[name="noticeHashtag"]'),
 				
 				// init Tagify script on the above inputs
@@ -92,22 +92,22 @@ function goWrite(){
 					closeOnSelect: false    // 드롭다운 메뉴에서 태그 선택하면 자동으로 꺼지는지 안꺼지는지
 					}
 				})
-				</script>
-				<div class="attachFile">
-					<label>파일첨부</label>
-					<input type="file" name="uploadFileName">
-				</div>
-			</div>	
-			<textarea id="summernote" name="noticeArticle"></textarea>
-			</form>
-		<script>
-		$(document).ready(function() {
-		  $('#summernote').summernote({
-		    lang: 'ko-KR' // default: 'en-US'
-		  });
-		});
-		</script>
-		</div>
+			</script>
+			<div class="attachFile">
+				<label>파일첨부</label>
+				<input type="file" name="uploadFileName">
+			</div>
+		</div>	
+		<textarea id="summernote" name="noticeArticle"></textarea>
+		</form>
+	<script>
+	$(document).ready(function() {
+	  $('#summernote').summernote({
+	    lang: 'ko-KR' // default: 'en-US'
+	  });
+	});
+	</script>
+	</div>
 </div>
 </body>
 </html>

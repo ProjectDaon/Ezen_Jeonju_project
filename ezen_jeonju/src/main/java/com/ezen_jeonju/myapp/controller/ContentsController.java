@@ -107,7 +107,7 @@ public class ContentsController {
 	    pm.setTotalCount(totalCount);
 	    
 	    ArrayList<ContentsListDTO> cvlist = cs.contentsList(cscri);
-	    model.addAttribute("cvlist", cvlist);
+	    model.addAttribute("cv", cvlist);
 	    model.addAttribute("pm", pm);
 
 	    // 검색어 입력 유지
@@ -128,10 +128,8 @@ public class ContentsController {
 		JSONParser parser = new JSONParser();
 		JSONArray jsonArrayObj;
 		jsonArrayObj = (JSONArray) parser.parse(hashtagList);
-		AttachFileVo af = afs.imageFileLoad(cv.getAidx());
 		
 		ContentsStatsDTO csd = cs.contentsStats(cidx);
-		model.addAttribute("af",af);
 		model.addAttribute("cv", cv);
 		model.addAttribute("csd", csd);
 		model.addAttribute("hashtag", jsonArrayObj);

@@ -23,4 +23,6 @@ UPDATE review SET reviewYN='Y' WHERE ridx=#{ridx}
 <select id="reviewTotalCnt" parameterType="int" resultType="int">
 select count(ridx) as cnt from review where reviewYN='N' and cidx=#{cidx}
 </select>
+
+
 </mapper>

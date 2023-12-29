@@ -5,9 +5,7 @@ public class ReviewCriteria {
 	private int perPageNum;		//한 페이지당 보여줄 게시글 수
 	private int cidx;
 	private String check;
-//	public int getPageStart() {
-//		return (this.page-1)*perPageNum;
-//	}
+	private int midx;
 	
 	public ReviewCriteria() {
 		this.page = 1;
@@ -46,5 +44,13 @@ public class ReviewCriteria {
 
 	public void setCheck(String check) {
 		this.check = check;
+	}
+
+	public int getMidx() {
+		return midx;
+	}
+
+	public void setMidx(int midx) {
+		this.midx = midx;
 	}
 }

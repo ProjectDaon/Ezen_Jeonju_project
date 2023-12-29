@@ -50,7 +50,7 @@ $(document).ready( function() {
 	
 	<div class="btn">
 		<a href="${pageContext.request.contextPath}/notice/noticeModify.do?nidx=${nv.nidx}">수정하기</a>
-		<a href="${pageContext.request.contextPath}/notice/noticeList.do">목록</a>
+		<a href="javascript:window.history.back();">목록</a>
 	</div>
 </div>
 <div id="footers"></div>

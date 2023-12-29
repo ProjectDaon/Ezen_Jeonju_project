@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,10 +45,10 @@ $(document).ready( function() {
 	</div>
 <div class="contents-list">
 	<ul>
-<c:forEach var="cv" items="${cvlist}">
+<c:forEach var="cv" items="${cv}">
 	<li>
 	<a href="${pageContext.request.contextPath}/contents/contentsArticle.do?cidx=${cv.cidx}">
-	<p><img src="<spring:url value='/img/contents${cv.thumbnailFilePath}'/>" /></p>
+	<p><img src="${pageContext.request.contextPath}/thumbnailLoading.do?aidx=${cv.aidx}" /></p>
 	<p>${cv.contentsSubject}</p></a>
 	<div class="contents-list-sub">
 		<span><ion-icon name="eye-outline"></ion-icon>&nbsp${cv.contentsViewCount}</span>

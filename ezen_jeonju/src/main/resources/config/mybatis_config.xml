@@ -5,6 +5,7 @@
 <typeAliases>
  <typeAlias alias="mpv" type="com.ezen_jeonju.myapp.domain.MainPageVo"/>
  <typeAlias alias="mv" type="com.ezen_jeonju.myapp.domain.MemberVo"/>
+ <typeAlias alias="mpd" type="com.ezen_jeonju.myapp.domain.MypageDTO"/>
  <typeAlias alias="nv" type="com.ezen_jeonju.myapp.domain.NoticeVo"/>
  <typeAlias alias="cv" type="com.ezen_jeonju.myapp.domain.ContentsVo"/>
  <typeAlias alias="cld" type="com.ezen_jeonju.myapp.domain.ContentsListDTO"/>
@@ -19,6 +20,7 @@
  <typeAlias alias="af" type="com.ezen_jeonju.myapp.domain.AttachFileVo"/>
  <typeAlias alias="rv" type="com.ezen_jeonju.myapp.domain.ReviewVo"/>
  <typeAlias alias="rld" type="com.ezen_jeonju.myapp.domain.ReviewListDTO"/>
+ 
  
 </typeAliases>
 </configuration>

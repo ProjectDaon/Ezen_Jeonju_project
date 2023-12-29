@@ -91,18 +91,6 @@ public class ReviewController {
 		return js;
 	}
 	
-	@RequestMapping(value="reviewPaging.do")
-	public JSONObject reviewPaging(@RequestParam("cidx") int cidx) {
-		JSONObject js = new JSONObject();
-		int cnt = rs.reviewTotalCnt(cidx);
-
-		PageMaker pm = new PageMaker();
-		pm.setTotalCount(cnt);
-		js.put("pm", pm);
-		
-		return js;
-	}
-	
 	@RequestMapping(value="blogReview.do")
 	public JSONObject blogReview(@RequestParam("subject") String subject) throws Exception {
 		JSONObject js = new JSONObject();

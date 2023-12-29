@@ -82,6 +82,7 @@ public class PageMaker {
 	    	perPageNum = rcri.getPerPageNum();
 	    	currentPage = rcri.getPage();
 	    }
+	    
 	    // 1. 기본적으로 1에서 10까지 나타나게 설정
 	    endPage = (int) (Math.ceil(currentPage / (double) displayPageNum) * displayPageNum);
 

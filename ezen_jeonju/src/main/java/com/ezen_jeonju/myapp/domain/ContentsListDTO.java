@@ -5,8 +5,8 @@ public class ContentsListDTO {
 	private String contentsSubject;
 	private int contentsViewCount;
 	private int contentsReviewCount;
-	private String thumbnailFilePath;
 	private int likecount;
+	private int aidx;
 	
 	public int getCidx() {
 		return cidx;
@@ -40,20 +40,19 @@ public class ContentsListDTO {
 		this.contentsReviewCount = contentsReviewCount;
 	}
 
-	public String getThumbnailFilePath() {
-		return thumbnailFilePath;
-	}
-
-	public void setThumbnailFilePath(String thumbnailFilePath) {
-		this.thumbnailFilePath = thumbnailFilePath;
-	}
-
-
 	public int getLikecount() {
 		return likecount;
 	}
 
 	public void setLikecount(int likecount) {
 		this.likecount = likecount;
+	}
+
+	public int getAidx() {
+		return aidx;
+	}
+
+	public void setAidx(int aidx) {
+		this.aidx = aidx;
 	}
 }
