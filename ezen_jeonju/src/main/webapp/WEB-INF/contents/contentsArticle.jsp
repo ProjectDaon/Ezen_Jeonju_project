@@ -204,15 +204,20 @@ function reviewListPrint(data){
 }
 function reviewPaging(data){
 	var paging = "";
+	var nowpage=data.rcri.page/5+1;
 	if(data.prev == true){
-		paging = paging + "<a class='pagePreview' href='#' onclick='reviewListPaging("+data.startPage-1+")'>이전</a>";
+		paging = paging + "<a class='pagePreview' href='javascript:reviewListPaging("+data.startPage-1+")'>이전</a>";
 	}
 	//var nowpage = data.cscri.page/9+1;
 	for(var i=data.startPage; i<=data.endPage; i++){
-		paging = paging + "<a class='pageNumber' href='#' onclick='reviewListPaging("+i+")'>"+i+"</a>";
+		if(i==nowpage){
+			paging = paging + "<a class='pageNumber active' href='javascript:reviewListPaging("+i+")'>"+i+"</a>";	
+		}else{
+			paging = paging + "<a class='pageNumber' href='javascript:reviewListPaging("+i+")'>"+i+"</a>";
+		}
 	}
 	if(data.next == true && data.endPage>0){
-		paging = paging + "<a class='pageNext' href='#' onclick='reviewListPaging("+(data.endPage+1)+")'>다음</a>";
+		paging = paging + "<a class='pageNext' href='javascript:reviewListPaging("+(data.endPage+1)+")'>다음</a>";
 	}
 	$('#paging').html(paging);
 }

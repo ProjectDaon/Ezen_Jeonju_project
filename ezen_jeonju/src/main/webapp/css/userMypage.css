@@ -1,5 +1,8 @@
 @charset "UTF-8";
-
+a{
+	text-decoration: none;
+	color: block;
+}
 .mypage{
 	margin-top: 150px;
 	width: 100%;
@@ -68,4 +71,90 @@
 .tabStyle li.on{
 	background: #EB9A56;
     color: #fff;
+}
+
+.tab-con{
+    position: absolute;
+    top: 260px;
+    left: 192px;
+    width: 80%;
+    height: 450px;
+}
+
+.revHead{
+    position: relative;
+}
+.revHead .title{
+	font-size: 25px;
+    font-weight: 600;
+    color: #000;
+    letter-spacing: -1px;
+    padding: 0 0 9px;
+    position: relative;
+    display: inline-block;
+}
+.revHead .revCnt{
+	display: inline-block;
+	margin-left: 20px;
+}
+.rating__star {
+   font-size: 1.2em;
+   cursor: pointer;
+   color: #dabd18b2;
+   transition: filter linear .3s;
+}
+.revCon table{
+	border-collapse: collapse;
+	margin-left: 20px;
+	width: 100%;
+}
+.revCon table td{
+	height: 180px;
+	vertical-align: middle;
+	border-bottom: 1px solid #c9c9c9;
+	padding: 10px;
+}
+.revCon table .rev-conD{
+	text-align: center;
+}
+.rev-conT{
+    margin-top: 10px;
+    font-size: 17px;
+    color: #3b53a1;
+    font-weight: bold;
+}
+.rev-date{
+	color: #898989;
+	margin: 10px 0;
+}
+
+.paging {
+    text-align: center;
+    margin: 30px 0 0;
+    font-size: 0;
+    clear: both;
+}
+
+
+.paging a {
+    display: inline-block;
+    text-align: center;
+    min-width: 44px;
+    line-height: 44px;
+    font-size: 16px;
+    vertical-align: middle;
+    border: 1px solid #c9c9c9;
+    margin: 0 1px;
+}
+
+.paging a:hover {
+    background: #333;
+    color: #fff;
+    border: 1px solid #333;
+}
+
+.pageNumber.active {
+    background: #333;
+    color: #fff;
+    border: 1px solid #333;
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,9 +30,9 @@
                             <p class="large-text">전주에가면</p>
                         </div>
 						<ul class="depth-2">
-							<li><a href="<%=request.getContextPath()%>/contents/sight/contentsList.do">명소</a></li>
-							<li><a href="<%=request.getContextPath()%>/contents/food/contentsList.do">음식</a></li>
-							<li><a href="<%=request.getContextPath()%>/contents/youtube.do?page=1">영상</a></li>
+							<li><a href="${pageContext.request.contextPath}/contents/sight/contentsList.do">명소</a></li>
+							<li><a href="${pageContext.request.contextPath}/contents/food/contentsList.do">음식</a></li>
+							<li><a href="${pageContext.request.contextPath}/contents/youtube.do?page=1">영상</a></li>
 						</ul>
                     </div>
                 </li>
@@ -42,7 +43,7 @@
                             <p class="large-text">여행일정</p>
                         </div>
                         <ul class="depth-2">
-                            <li><a href="<%=request.getContextPath()%>/schedule/scheduleList.do">여행공유</a></li>
+                            <li><a href="${pageContext.request.contextPath}/schedule/scheduleList.do">여행공유</a></li>
                         </ul>
                     </div>
                 </li>
@@ -53,7 +54,7 @@
                             <p class="large-text">공지사항</p>
                         </div>
                         <ul class="depth-2">
-                            <li><a href="<%=request.getContextPath()%>/notice/noticeList.do">공지사항</a></li>
+                            <li><a href="${pageContext.request.contextPath}/notice/noticeList.do">공지사항</a></li>
                         </ul>
                     </div>
                 </li>
@@ -62,11 +63,11 @@
         <div class="my-menu-element">
             <div class="login-element">
                 <%if(session.getAttribute("midx")==null){%>
-                <a class="login" href="<%=request.getContextPath()%>member/memberLogin.do">로그인</a>
+                <a class="login" href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a>
                 <%} else{ %>
-                <a href="<%=request.getContextPath()%>/member/memberLogout.do">로그아웃</a>
+                <a href="${pageContext.request.contextPath}/member/memberLogout.do">로그아웃</a>
                 <%} %>
-                <a href="<%=request.getContextPath()%>/mypage/userMypage.do">마이페이지</a>
+                <a href="${pageContext.request.contextPath}/mypage/userMypage.do">마이페이지</a>
             </div>
         </div>
         <div class="menu-hamburger" onclick="toggleMenu()">
@@ -76,11 +77,11 @@
         <div class="menu-hamburger-area" id="menu-hamburger-area" style="display: none;">
             <div class="login-box">
                 <%if(session.getAttribute("midx")==null){%>
-                <a href="<%=request.getContextPath()%>/member/memberLogin.do">로그인</a>
+                <a href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a>
                 <%} else{ %>
-                <a href="<%=request.getContextPath()%>/member/memberLogout.do">로그아웃</a>
+                <a href="${pageContext.request.contextPath}/member/memberLogout.do">로그아웃</a>
                 <%} %>
-                <a href="<%=request.getContextPath()%>/mypage/userMypage.do">마이페이지</a>
+                <a href="${pageContext.request.contextPath}/mypage/userMypage.do">마이페이지</a>
             </div>
             <div class="menu-hamburger-list">
                 <div class="menu-list-wrap">
@@ -88,9 +89,9 @@
                         <p>전주에가면</p>
                     </div>
                     <ul class="submenu-title-1" style="display: none;">
-                        <li><a href="<%=request.getContextPath()%>/contents/sight/contentsList.do">명소</a></li>
-                        <li><a href="<%=request.getContextPath()%>/contents/food/contentsList.do">음식</a></li>
-                        <li><a href="<%=request.getContextPath()%>/contents/youtube.do?page=1">영상</a></li>
+                        <li><a href="${pageContext.request.contextPath}/contents/sight/contentsList.do">명소</a></li>
+                        <li><a href="${pageContext.request.contextPath}/contents/food/contentsList.do">음식</a></li>
+                        <li><a href="${pageContext.request.contextPath}/contents/youtube.do?page=1">영상</a></li>
                     </ul>
                 </div>
                 <div class="menu-list-wrap">
@@ -98,7 +99,7 @@
                         <p>여행일정</p>
                     </div>
                     <ul class="submenu-title-2" style="display: none;">
-                        <li><a href="<%=request.getContextPath()%>/schedule/scheduleList.do">여행공유</a></li>
+                        <li><a href="${pageContext.request.contextPath}/schedule/scheduleList.do">여행공유</a></li>
                     </ul>
                 </div>  
                 <div class="menu-list-wrap">
@@ -106,7 +107,7 @@
                         <p>공지사항</p>
                     </div>
                     <ul class="submenu-title-3" style="display: none;">
-                        <li><a href="<%=request.getContextPath()%>/notice/noticeList.do">공지사항</a></li>
+                        <li><a href="${pageContext.request.contextPath}/notice/noticeList.do">공지사항</a></li>
                     </ul>
                 </div>
             </div>

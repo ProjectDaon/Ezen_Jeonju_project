@@ -8,4 +8,19 @@
 select memberPhone from member where midx=#{midx}
 </select>
 
+<select id="reviewList" parameterType="rcri" resultType="mpd">
+SELECT ridx, reviewArticle, reviewScore, reviewWriteday, c.contentsSubject, c.aidx, c.cidx
+from review r
+join contents c on r.cidx = c.cidx
+where r.midx=#{midx} and reviewYN='N'
+order by ridx desc limit #{page},#{perPageNum}
+</select>
+
+<update id="reviewDelete" parameterType="int">
+UPDATE review SET reviewYN='Y' WHERE ridx=#{ridx}
+</update>
+
+<select id="reviewTotalCnt" parameterType="int" resultType="int">
+select count(ridx) as cnt from review where reviewYN='N' and midx=#{midx}
+</select>
 </mapper>
