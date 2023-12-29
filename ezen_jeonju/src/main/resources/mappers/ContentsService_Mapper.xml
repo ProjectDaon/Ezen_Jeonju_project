@@ -17,13 +17,12 @@ VALUES(#{midx}, #{contentsCategory}, #{contentsSubject}, #{contentsArticle}, #{c
 </sql>
 
 <select id="contentsList" parameterType="cscri" resultType="cld">
-SELECT c.cidx, c.contentsSubject, c.contentsViewCount, c.contentsReviewCount, af.thumbnailFilePath as thumbnailFilePath, count(cl.clidx) as likecount
+SELECT c.cidx, c.contentsSubject, c.contentsViewCount, c.contentsReviewCount,c.aidx, count(cl.clidx) as likecount
 FROM contents c
-join attachfile af on c.aidx = af.aidx
 left join contentslike cl on c.cidx=cl.cidx
 WHERE contentsCategory = #{category} AND contentsYN = 'N' 
 <include refid="search"/>
-group by c.cidx, c.contentsSubject, c.contentsViewCount, c.contentsReviewCount, af.thumbnailFilePath
+group by c.cidx, c.contentsSubject, c.contentsViewCount, c.contentsReviewCount, c.aidx
 order by cidx desc limit #{page}, #{perPageNum}
 </select>
 

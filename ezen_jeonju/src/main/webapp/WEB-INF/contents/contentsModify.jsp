@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@ page import="com.ezen_jeonju.myapp.domain.ContentsVo" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%> 
-<%
-ContentsVo cv = (ContentsVo)request.getAttribute("cv");
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,7 +59,7 @@ function goModify(){
 		fm.contentsArticle.focus();
 		return;
 	}		
-	fm.action ="<%=request.getContextPath()%>/contents/contentsModifyAction.do";  
+	fm.action ="${pageContext.request.contextPath}/contents/contentsModifyAction.do";  
 	fm.method = "post";  //이동하는 방식  get 노출시킴 post 감추어서 전달
 	fm.enctype= "multipart/form-data";
 	fm.submit(); //전송시킴
@@ -78,7 +73,7 @@ function goDelete(){
 	var category = fm.contentsCategorySelected.value;
 	var cidx = fm.cidx.value;
  	//처리하기위해 이동하는 주소
-	fm.action ="<%=request.getContextPath()%>/contents/contentsDeleteAction.do?cidx="+cidx+"&category="+category;  
+	fm.action ="${pageContext.request.contextPath}/contents/contentsDeleteAction.do?cidx="+cidx+"&category="+category;  
 	fm.method = "post";  //이동하는 방식  get 노출시킴 post 감추어서 전달
 	fm.submit(); //전송시킴
 	return;
@@ -99,19 +94,19 @@ function readURL(input) {
 <div class="panel-heading">글 수정하기</div>
 	<div class="panel-body">
 		<form name="frm">
-		<input type="hidden" name="cidx" value="<%=cv.getCidx()%>">
+		<input type="hidden" name="cidx" value="${cv.cidx}">
 			<div class="form-group">
 				<label>카테고리</label>
-				<input type="text" id="contentsCategorySelected" name="contentsCategorySelected" value="<%=cv.getContentsCategory()%>">
+				<input type="text" id="contentsCategorySelected" name="contentsCategorySelected" value="${cv.contentsCategory}">
 				<select id="contentsCategory" name="contentsCategory">
-					<option value="<%=cv.getContentsCategory()%>">선택</option>
+					<option value="${cv.contentsCategory}">선택</option>
 					<option value="명소">명소</option>
 					<option value="음식">음식</option>
 				</select>
 			</div> 
 			<div>
 				<label>제목</label>
-				<input type="text" name="contentsSubject" value="<%=cv.getContentsSubject()%>"><br>
+				<input type="text" name="contentsSubject" value="${cv.contentsSubject}"><br>
 				<script src="https://unpkg.com/@yaireo/tagify"></script>
 				<!-- 폴리필 (구버젼 브라우저 지원) -->
 				<script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
@@ -131,10 +126,10 @@ function readURL(input) {
 				    })
 				</script>
 			</div>
-			<textarea id="summernote" name="contentsArticle"><%=cv.getContentsArticle() %></textarea>
+			<textarea id="summernote" name="contentsArticle">${cv.contentsArticle}</textarea>
    		 	<div class="uploadedFile">
  				<span>기존 이미지</span>
-   				<img width="200" src="<spring:url value='/img/contents/${af.storedFilePath}'/>"/>
+   				<img width="200" src="${pageContext.request.contextPath}/thumbnailLoading.do?aidx=${cv.aidx}"/>
    		 	</div>
 			<div id="customFileUpload">
         		<input type="file" name="uploadFileName" id="uploadFile" onchange="readURL(this);" value="">
