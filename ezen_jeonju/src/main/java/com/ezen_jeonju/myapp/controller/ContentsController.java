@@ -60,7 +60,7 @@ public class ContentsController {
 		
 		MultipartFile file = af.getUploadFileName();
 		af.setOriginalFileName(file.getOriginalFilename());
-		af.setCategory("컨텐츠");
+		af.setCategory("contents");
 		String path = uploadPath+File.separator+"contents";
 		String uploadedFileName = "";
 		if(!file.getOriginalFilename().equals("")) {

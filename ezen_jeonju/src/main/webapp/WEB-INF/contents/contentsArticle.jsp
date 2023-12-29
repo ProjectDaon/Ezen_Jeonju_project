@@ -289,7 +289,6 @@ function displayBlogItems(data) {
 
 // "더 보기" 버튼 클릭 시 추가 항목 불러오기
 
-
 </script>
 <div id="headers"></div>
 <div class="contents">
@@ -298,7 +297,7 @@ function displayBlogItems(data) {
 <a class="modifylink" href="${pageContext.request.contextPath}/contents/contentsModify.do?cidx=${cv.cidx}">수정하기</a>
 	</div>
 	<div class="mainImg">
-		<img src="<spring:url value='/img/contents/${af.storedFilePath}'/>" />
+		<img src="${pageContext.request.contextPath}/imageLoading.do?aidx=${cv.aidx}" />
 	</div>
 	<div class="actionUserBar">
 		<ul class="left">
