@@ -57,6 +57,13 @@ public class MainPageServiceImpl implements MainPageService{
 	}
 
 
+	@Override
+	public ArrayList<MainPageVo> registeredVanners() {
+		ArrayList<MainPageVo> mpvlist = mpsm.registeredVanners();
+		return mpvlist;
+	}
+
+
 
 
 

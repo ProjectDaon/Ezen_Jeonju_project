@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -53,14 +54,18 @@ public class MainPageController {
 	
 	
 	@RequestMapping(value = "/main/vannerRegisterList.do")
-	public String vannerRegisterlist() {
+	public String vannerRegisterlist(Model model) {
+		ArrayList<MainPageVo> mpvlist = mps.registeredVanners();
+		model.addAttribute("mpvlist", mpvlist);
 		
 		return "mypage/registerMainImages";
 	}
 	
 	@RequestMapping(value = "/main/vannerRegister.do")
-	public String vannerRegister() {
-		
+	public String vannerRegister(@RequestParam("mainPageSequence") int mainPageSequence, Model model) {
+		MainPageVo mpv = new MainPageVo();
+		mpv.setMainPageSequence(mainPageSequence);
+		model.addAttribute("mpv",mpv);
 		return "mypage/registerMainImagesWrite";
 	}
 	
@@ -68,7 +73,7 @@ public class MainPageController {
 	public String VannerRegisterAction(AttachFileVo af, MainPageVo mpv, HttpSession session, MultipartHttpServletRequest request) throws Exception {
 		MultipartFile file = af.getUploadFileName();
 		af.setOriginalFileName(file.getOriginalFilename());
-		af.setCategory("배너");
+		af.setCategory("vanners");
 		String path = uploadPath+File.separator+"vanners";
 		String uploadedFileName = "";
 		if(!file.getOriginalFilename().equals("")) {
@@ -86,6 +91,6 @@ public class MainPageController {
 		mps.mainPageVannerRegister(mpv);
 
 		
-		return "mypage/registerMainImages";
+		return "redirect:/main/vannerRegisterList.do";
 	}
 }

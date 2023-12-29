@@ -95,6 +95,7 @@ $(document).ready(function(){
 
 	});
 	
+	// 왼도우 창 크기 변경 될 때 계산된 값들을 입력
 	$(window).on('resize', function () {
 		$('.second-visual-list').slick('slickSetOption', 'slidesToShow', calculateSlidesToShow());
 	});

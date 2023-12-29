@@ -18,5 +18,7 @@ public interface MainPageService_Mapper {
 	
 	public ArrayList<NoticeVo> mainPageNoticeView();
 
+	public ArrayList<MainPageVo> registeredVanners();
+
 
 }

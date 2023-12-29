@@ -18,5 +18,7 @@ public interface MainPageService {
 	
 	public ArrayList<NoticeVo> mainPageNoticeView();
 
+	public ArrayList<MainPageVo> registeredVanners();
+
 
 }
