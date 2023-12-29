@@ -22,8 +22,10 @@
 $(document).ready( function() {
 	$('#headers').load("../nav/nav.jsp");
 	$('#footers').load("../nav/footer.jsp");
-	// filterBtn active
+	//filterBtn 초기화
 	var keyword = "${keyword}";
+	$('#keyword').val(keyword);
+	// filterBtn active
 	var activebtn = "button[name='keyword'][value='"+keyword+"']";
 	$(activebtn).addClass("active");
 	
@@ -66,9 +68,7 @@ $(document).ready( function() {
 					<option value="noticeArticle" <%if(session.getAttribute("searchType") != null && session.getAttribute("searchType").equals("noticeArticle")) {%> selected <%}%>>내용</option>
 				</select>
 				<div class="searchGroup">
-				<input type="text" name="keyword" <%if(session.getAttribute("keyword") != null) {%>
-				value="<%= session.getAttribute("keyword") %>"
-				<%}%>>
+				<input type="text" name="keyword" id="keyword" value="">
 				<!-- <button type="button" id="searchBtn">검색</button> -->
 				<button type="submit" class="sbt" name="sbt"><ion-icon name="search" class="searchBtnIcon"></ion-icon></button>
 				</div>
@@ -83,7 +83,7 @@ $(document).ready( function() {
 			<c:forEach var="nv" items="${nvlist}">
 				<li>
 					<a href="${pageContext.request.contextPath}/notice/noticeContents.do?nidx=${nv.nidx}">
-					<p class="imgwrap"><img style="width:300px; height:400px;" src="<spring:url value='/img/notice${nv.thumbnailFilePath}'/>"></p>
+					<p class="imgwrap"><img style="width:300px; height:400px;" src="${pageContext.request.contextPath}/thumbnailLoading.do?aidx=${nv.aidx}" /></p>
 					<c:choose>
 						<c:when test="${nv.noticeCategory eq '공연'}">
 							<span style="background-color: #FEB326;">${nv.noticeCategory}</span>
@@ -105,8 +105,10 @@ $(document).ready( function() {
 			</c:forEach>
 			</ul>
 		</div>
+	</div>
+	<div class="innerwrap">	
 		<div class="write">
-			<a href="<%=request.getContextPath()%>/notice/noticeWrite.do" style="color:white; font-weight:bold;">글쓰기</a>
+			<a href="<%=request.getContextPath()%>/notice/noticeWrite.do">글쓰기</a>
 		</div>
 		<div class="paging">
 			<c:if test="${pm.prev == true}">
