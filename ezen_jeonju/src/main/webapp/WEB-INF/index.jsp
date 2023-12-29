@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%> 
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -21,18 +20,111 @@
 </head>
 
 <body>
-<script>
-$(document).ready( function() {
-	$('#headers').load("./nav/nav.jsp");
-	$('#footer').load("./nav/footer.jsp");
-});
-</script>
-<div id="headers"></div>
+<script src="${pageContext.request.contextPath}/js/nav-bar.js"></script>
+<header class="navigation" id="navigation">
+    <nav class="nav-bar">
+        <h1>
+            <a href="/">
+                <img src="${pageContext.request.contextPath}/images/logo.png">
+            </a>
+        </h1>
+        <div class="menu-wrap">
+            <ul class="menu-element">
+                <li class="dep">
+                    <a href="#none">전주에가면</a>
+                    <div class="dep-inner" style="display: none;">
+                        <div class="inner-sub-title">
+                            <p class="large-text">전주에가면</p>
+                        </div>
+						<ul class="depth-2">
+							<li><a href="<%=request.getContextPath()%>/contents/sight/contentsList.do">명소</a></li>
+							<li><a href="<%=request.getContextPath()%>/contents/food/contentsList.do">음식</a></li>
+							<li><a href="<%=request.getContextPath()%>/contents/youtube.do?page=1">영상</a></li>
+						</ul>
+                    </div>
+                </li>
+                <li class="dep">
+                    <a href="#none">여행일정</a>
+                    <div class="dep-inner" style="display: none;">
+                        <div class="inner-sub-title">
+                            <p class="large-text">여행일정</p>
+                        </div>
+                        <ul class="depth-2">
+                            <li><a href="<%=request.getContextPath()%>/schedule/scheduleList.do">여행공유</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="dep">
+                    <a href="#none">공지사항</a>
+                    <div class="dep-inner" style="display: none;">
+                        <div class="inner-sub-title">
+                            <p class="large-text">공지사항</p>
+                        </div>
+                        <ul class="depth-2">
+                            <li><a href="<%=request.getContextPath()%>/notice/noticeList.do">공지사항</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="my-menu-element">
+            <div class="login-element">
+                <%if(session.getAttribute("midx")==null){%>
+                <a class="login" href="<%=request.getContextPath()%>member/memberLogin.do">로그인</a>
+                <%} else{ %>
+                <a href="<%=request.getContextPath()%>/member/memberLogout.do">로그아웃</a>
+                <%} %>
+                <a href="<%=request.getContextPath()%>/mypage/userMypage.do">마이페이지</a>
+            </div>
+        </div>
+        <div class="menu-hamburger" onclick="toggleMenu()">
+            <i class="xi-bars"></i>
+        </div>
+    </nav>
+        <div class="menu-hamburger-area" id="menu-hamburger-area" style="display: none;">
+            <div class="login-box">
+                <%if(session.getAttribute("midx")==null){%>
+                <a href="<%=request.getContextPath()%>/member/memberLogin.do">로그인</a>
+                <%} else{ %>
+                <a href="<%=request.getContextPath()%>/member/memberLogout.do">로그아웃</a>
+                <%} %>
+                <a href="<%=request.getContextPath()%>/mypage/userMypage.do">마이페이지</a>
+            </div>
+            <div class="menu-hamburger-list">
+                <div class="menu-list-wrap">
+                    <div class="menu-title" onclick="toggleSubMenu('submenu-title-1')">
+                        <p>전주에가면</p>
+                    </div>
+                    <ul class="submenu-title-1" style="display: none;">
+                        <li><a href="<%=request.getContextPath()%>/contents/sight/contentsList.do">명소</a></li>
+                        <li><a href="<%=request.getContextPath()%>/contents/food/contentsList.do">음식</a></li>
+                        <li><a href="<%=request.getContextPath()%>/contents/youtube.do?page=1">영상</a></li>
+                    </ul>
+                </div>
+                <div class="menu-list-wrap">
+                    <div class="menu-title" onclick="toggleSubMenu('submenu-title-2')">
+                        <p>여행일정</p>
+                    </div>
+                    <ul class="submenu-title-2" style="display: none;">
+                        <li><a href="<%=request.getContextPath()%>/schedule/scheduleList.do">여행공유</a></li>
+                    </ul>
+                </div>  
+                <div class="menu-list-wrap">
+                    <div class="menu-title" onclick="toggleSubMenu('submenu-title-3')">
+                        <p>공지사항</p>
+                    </div>
+                    <ul class="submenu-title-3" style="display: none;">
+                        <li><a href="<%=request.getContextPath()%>/notice/noticeList.do">공지사항</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+</header>
 <div id="main-contents" class="main-contents">
     <section class="first-visual">
         <div class="first-visual-list">
     		<c:forEach var="mpv" items="${mpvlist}">
-            	<div><a href="${mpv.mainPageLink}"><img class="first-visual-img" src="<spring:url value='/img/vanners/${mpv.storedFilePath}'/>" /></a></div>
+            	<div><a href="${mpv.mainPageLink}"><img class="first-visual-img" src="${pageContext.request.contextPath}/imageLoading.do?aidx=${mpv.aidx}" /></a></div>
             </c:forEach>
         </div>
         <div class="first-text">
@@ -76,7 +168,7 @@ $(document).ready( function() {
         </div>
         <div class="second-visual-list">
         	<c:forEach var="cv" items="${cvlist}">
-	            <div><a href="<%=request.getContextPath()%>/contents/contentsArticle.do?cidx=${cv.cidx}"><div class="thumbnail"><img class="thumbnail-img" src="<spring:url value='/img/contents/${cv.thumbnailFilePath}'/>" /></div><p class="slide-txt">${cv.contentsSubject}</p></a></div>
+	            <div><a href="<%=request.getContextPath()%>/contents/contentsArticle.do?cidx=${cv.cidx}"><div class="thumbnail"><img class="thumbnail-img" src="${pageContext.request.contextPath}/thumbnailLoading.do?aidx=${cv.aidx}" /></div><p class="slide-txt">${cv.contentsSubject}</p></a></div>
       		</c:forEach>
         </div>
     </section>
@@ -95,7 +187,7 @@ $(document).ready( function() {
 	                    <a href="<%=request.getContextPath()%>/contents/contentsArticle.do?cidx=${cv.cidx}">
 	                        <div class="box-wrap">
 	                            <div class="box-img">
-	                                <img src="<spring:url value='/img/contents/${cv.thumbnailFilePath}'/>" />
+	                                <img src="${pageContext.request.contextPath}/thumbnailLoading.do?aidx=${cv.aidx}" />
 	                            </div>
 	                        </div>
 	                        <p class="tit">${cv.contentsSubject}</p>
@@ -118,7 +210,7 @@ $(document).ready( function() {
             </div>
             <div class="exhibition-list">
             	<c:forEach var="nv" items="${nvlist}">
-             	   <a href="<%=request.getContextPath()%>/notice/noticeContents.do?nidx=${nv.nidx}"><div><img src="<spring:url value='/img/notice/${nv.thumbnailFilePath}'/>" /><p class="slide-txt">${nv.noticeSubject}</p></div></a>
+             	   <a href="<%=request.getContextPath()%>/notice/noticeContents.do?nidx=${nv.nidx}"><div><img src="${pageContext.request.contextPath}/thumbnailLoading.do?aidx=${nv.aidx}" /><p class="slide-txt">${nv.noticeSubject}</p></div></a>
                 </c:forEach>
             </div>
         </div>
@@ -150,7 +242,19 @@ $(document).ready( function() {
         </div>
     </section>
 </div>
-<div id="footer"></div>
+<footer>
+    <a href="#main-contents" class="top-view"></a>
+    <div class="inner">
+	    <div class="footer-text">
+	    	<p>
+	    		(99999) 전라북도 전주시 이젠 개발자가 되고 싶어 대표전화 : 000)999-0000
+	    	</p>
+		   	<p>
+			   	Copyright Ezen-Developer Team All rights  reserved
+		   	</p>
+    	</div>
+   	</div>
+</footer>
 </body>
 </html>
 <script src="${pageContext.request.contextPath}/js/mainhome.js"></script>
