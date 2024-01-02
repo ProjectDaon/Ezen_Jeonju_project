@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezen_jeonju.myapp.domain.MemberVo;
-import com.ezen_jeonju.myapp.domain.MypageDTO;
+import com.ezen_jeonju.myapp.domain.MypageLikeCriteria;
+import com.ezen_jeonju.myapp.domain.MypageReviewDTO;
 import com.ezen_jeonju.myapp.domain.PageMaker;
 import com.ezen_jeonju.myapp.domain.ReviewCriteria;
 import com.ezen_jeonju.myapp.service.MypageService;
@@ -70,7 +71,7 @@ public class MypageController {
 		PageMaker pm = new PageMaker();
 		pm.setRcri(rcri);
 		pm.setTotalCount(totalCnt);
-		ArrayList<MypageDTO> list = ms.reviewList(rcri);
+		ArrayList<MypageReviewDTO> list = ms.reviewList(rcri);
 		
 		js.put("pm", pm);
 		js.put("reviewlist", list);
@@ -87,6 +88,38 @@ public class MypageController {
 			txt = "댓글을 삭제하였습니다.";
 		}else {
 			txt="삭제오류";
+		}
+		js.put("txt", txt);
+		return js;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/likeList.do")
+	public JSONObject likeList(MypageLikeCriteria mlcri) {
+		JSONObject js = new JSONObject();
+		int totalCnt = ms.likeTotalCnt(mlcri.getMidx());
+		
+		PageMaker pm = new PageMaker();
+		pm.setMlcri(mlcri);
+		pm.setTotalCount(totalCnt);
+		
+		ArrayList<MypageLikeCriteria> list = ms.likeList(mlcri);
+		
+		js.put("pm",pm);
+		js.put("likelist", list);
+		return js;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/likeDelete.do")
+	public JSONObject likeDelete(@RequestParam("clidx") int clidx) {
+		JSONObject js = new JSONObject();
+		String txt = "";
+		int value = ms.likeDelete(clidx);
+		if(value != 0) {
+			txt="좋아요를 취소하였습니다.";
+		}else {
+			txt="취소오류";
 		}
 		js.put("txt", txt);
 		return js;

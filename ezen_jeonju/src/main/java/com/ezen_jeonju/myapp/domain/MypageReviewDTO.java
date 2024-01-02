@@ -1,6 +1,6 @@
 package com.ezen_jeonju.myapp.domain;
 
-public class MypageDTO {
+public class MypageReviewDTO {
 	private int ridx;
 	private int aidx;
 	private int cidx;

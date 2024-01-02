@@ -5,7 +5,8 @@
 <typeAliases>
  <typeAlias alias="mpv" type="com.ezen_jeonju.myapp.domain.MainPageVo"/>
  <typeAlias alias="mv" type="com.ezen_jeonju.myapp.domain.MemberVo"/>
- <typeAlias alias="mpd" type="com.ezen_jeonju.myapp.domain.MypageDTO"/>
+ <typeAlias alias="mpd" type="com.ezen_jeonju.myapp.domain.MypageReviewDTO"/>
+ <typeAlias alias="mlcri" type="com.ezen_jeonju.myapp.domain.MypageLikeCriteria"/>
  <typeAlias alias="nv" type="com.ezen_jeonju.myapp.domain.NoticeVo"/>
  <typeAlias alias="cv" type="com.ezen_jeonju.myapp.domain.ContentsVo"/>
  <typeAlias alias="cld" type="com.ezen_jeonju.myapp.domain.ContentsListDTO"/>
