@@ -1,4 +1,4 @@
-﻿function addDays(dateString, days) {
+﻿﻿function addDays(dateString, days) {
 	    var currentDate = new Date(dateString);
 	    currentDate.setDate(currentDate.getDate() + days);
 	
@@ -135,6 +135,8 @@
         this.classList.remove('over');
     }
 
+
+	var markers = []
     // 드롭이 일어났을 때 발생하는 이벤트 핸들러
 	function handleDrop(e) {
 	    // 이벤트 전파 방지
@@ -149,33 +151,80 @@
 	        // 드롭 대상의 내용을 드래그 소스로 이동
 	        this.innerHTML = e.dataTransfer.getData('text/html');
 	
-			$(".highlight").removeClass("highlight");
-			var columnIndex = $(this).index();
+	        // 기존 맵에 있는 marker 모두 지우기
+	        for (var i = 0; i < markers.length; i++) {
+	            markers[i].setMap(null);
+	        }
+	        // markers 초기화
+	        markers = [];
+	
+	        $(".highlight").removeClass("highlight");
+	        var columnIndex = $(this).index();
 	
 	        // 모든 행에 대해 현재 열에 해당하는 td에 highlight 클래스 추가
 	        $('#dragDropTable tr:not(:eq(1))').find('td:eq(' + columnIndex + ')').addClass('highlight');
-			
-			$("tr").each(function(index) {
-	            var $highlightedCell = $(this).find('.highlight');
-	            if ($highlightedCell.length > 0) {
-	                
-	                var cellText = $highlightedCell.text();
-	                
-			        var inputs = $(this).find('input');
-			        var tourCoursePlace = inputs.eq(0).val();
-			        var tourCourseLatitude = inputs.eq(1).val();
-			        var tourCourseLongitude = inputs.eq(2).val();
-	                if (cellText !== "") {
-	                    console.log("장소 : " + tourCoursePlace + "위도 : " + tourCourseLatitude);
-	             	   }
-	             	   
-	             	   
-	          	  }
-        	});
-	    }
 	
-	    return false;
+	        // 새로운 marker 생성
+	        $("tr").each(function(index) {
+	            var $highlightedCell = $(this).find('.highlight');
+	           
+	                var cellText = $highlightedCell.text();
+	
+	                var inputs = $highlightedCell.find('input');
+	                var placeName = inputs.eq(0).val();
+	                var tourCourseLatitude = inputs.eq(1).val();
+	                var tourCourseLongitude = inputs.eq(2).val();
+	
+	                if (cellText !== "") {
+	                   
+	
+	                    var markerPosition = new kakao.maps.LatLng(tourCourseLatitude, tourCourseLongitude);
+	                    var marker = new kakao.maps.Marker({
+	                        position: markerPosition,
+	                        title: placeName
+	                    });
+	
+	                    marker.setMap(map);
+	                    markers.push(marker);
+	                }
+	            
+	        });
+    }
+
+    return false;
+}
+
+	function markerList(){
+	
+		 
+		 	console.log("마커");
+		
+	
 	}
+	
+	//X눌렀을 때 사라지게하기
+	function Xclose(cell, placeName) {
+	    // 부모 노드인 <td>를 찾아서 삭제
+	    cell.parentNode.innerHTML = '';
+	    var xx;
+	
+	    for (var i = 0; i < markers.length; i++) {
+	        if (placeName === markers[i].getTitle()) {
+	            xx = i;
+	
+	            markers[i].setMap(null);
+	            infowindows[i].setMap(null);
+	
+	            // markers 배열에서 해당하는 i번째 값을 제거
+	            markers.splice(i, 1);
+	            // infowindows 배열에서 해당하는 i번째 값을 제거
+	
+	            break;
+	        }
+	    }
+	    addRankToTable('dragDropTable');
+	}
+
 
     // 드래그 종료 시 발생하는 이벤트 핸들러
     function handleDragEnd() {

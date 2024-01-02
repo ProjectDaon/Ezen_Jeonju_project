@@ -101,6 +101,7 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 
+	
 	//랭크 추가 함수
 	function addRankToTable(tableId) {
 	var table = document.getElementById(tableId);
@@ -235,17 +236,10 @@ document.addEventListener("dragend", function (event) {
     }
 
 
-	let addToTableCallCount = 0;
     // 음식점 이름을 클릭하면 테이블 셀에 정보를 추가
     function addToTable(placeName, placeLatitude, placeLongitude) {
 
     	    let tableCell = document.getElementById("addSchedule");
-    	    if (tableCell.innerHTML !== '장소를 누르시고 원하는 시간대에 드래그하세요' && tableCell.innerHTML !== '') {
-    	        alert('이미 추가된 장소가 있습니다.');
-    	        return;
-    	    }
-
-    		addToTableCallCount++;
     	    let placeArray = placeName.split(',');
     	    // 이름 추가
     	    tableCell.innerHTML = placeArray[0];
@@ -257,32 +251,10 @@ document.addEventListener("dragend", function (event) {
     	    tableCell.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' onclick='Xclose(this, \"" + placeArray[0] + "\");'>X</a>";
 
     	    // 이후 작업 수행 (panTo 함수 호출 등)
-    	    panTo(placeArray[0], placeArray[1], placeArray[2]);
+    	 //   panTo(placeArray[0], placeArray[1], placeArray[2]);
     }
     
-	//X눌렀을 때 사라지게하기
-	function Xclose(cell, placeName) {
-	    // 부모 노드인 <td>를 찾아서 삭제
-	    cell.parentNode.innerHTML = '';
-	    var xx;
-	
-	    for (var i = 0; i < markers.length; i++) {
-	        if (placeName === markers[i].getTitle()) {
-	            xx = i;
-	
-	            markers[i].setMap(null);
-	            infowindows[i].setMap(null);
-	
-	            // markers 배열에서 해당하는 i번째 값을 제거
-	            markers.splice(i, 1);
-	            // infowindows 배열에서 해당하는 i번째 값을 제거
-	            infowindows.splice(i, 1);
-	
-	            break;
-	        }
-	    }
-	    addRankToTable('dragDropTable');
-	}
+
 
 
 </script>
@@ -470,6 +442,9 @@ $(document).ready(function(){
 	   
 });
 
+$(document).ready(function(){
+	markerList();
+});
 </script>
 </body>
 </html>
