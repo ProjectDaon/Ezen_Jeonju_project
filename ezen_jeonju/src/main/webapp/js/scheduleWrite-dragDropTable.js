@@ -136,22 +136,46 @@
     }
 
     // 드롭이 일어났을 때 발생하는 이벤트 핸들러
-    function handleDrop(e) {
-        // 이벤트 전파 방지
-        if (e.stopPropagation) {
-            e.stopPropagation();
-        }
-
-        // 드래그 소스와 드롭 대상이 다를 경우만 처리
-        if (dragSrcElement !== this) {
-            // 드래그 소스의 내용을 드롭 대상으로 이동
-            dragSrcElement.innerHTML = this.innerHTML;
-            // 드롭 대상의 내용을 드래그 소스로 이동
-            this.innerHTML = e.dataTransfer.getData('text/html');
-        }
-
-        return false;
-    }
+	function handleDrop(e) {
+	    // 이벤트 전파 방지
+	    if (e.stopPropagation) {
+	        e.stopPropagation();
+	    }
+	
+	    // 드래그 소스와 드롭 대상이 다를 경우만 처리
+	    if (dragSrcElement !== this) {
+	        // 드래그 소스의 내용을 드롭 대상으로 이동
+	        dragSrcElement.innerHTML = this.innerHTML;
+	        // 드롭 대상의 내용을 드래그 소스로 이동
+	        this.innerHTML = e.dataTransfer.getData('text/html');
+	
+			$(".highlight").removeClass("highlight");
+			var columnIndex = $(this).index();
+	
+	        // 모든 행에 대해 현재 열에 해당하는 td에 highlight 클래스 추가
+	        $('#dragDropTable tr:not(:eq(1))').find('td:eq(' + columnIndex + ')').addClass('highlight');
+			
+			$("tr").each(function(index) {
+	            var $highlightedCell = $(this).find('.highlight');
+	            if ($highlightedCell.length > 0) {
+	                
+	                var cellText = $highlightedCell.text();
+	                
+			        var inputs = $(this).find('input');
+			        var tourCoursePlace = inputs.eq(0).val();
+			        var tourCourseLatitude = inputs.eq(1).val();
+			        var tourCourseLongitude = inputs.eq(2).val();
+	                if (cellText !== "") {
+	                    console.log("장소 : " + tourCoursePlace + "위도 : " + tourCourseLatitude);
+	             	   }
+	             	   
+	             	   
+	          	  }
+        	});
+	    }
+	
+	    return false;
+	}
 
     // 드래그 종료 시 발생하는 이벤트 핸들러
     function handleDragEnd() {

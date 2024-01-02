@@ -131,28 +131,8 @@
 document.addEventListener("dragend", function (event) {
     addRankToTable('dragDropTable');
 });
-       
+   
 
-document.addEventListener("dragend", function (event) {
-    $(".highlight").removeClass("highlight");
-	
-    var columnIndex = $(event.target).index();
-	
-    $("tr").each(function (index) {
-
-        var $cells = $(this).find("td");
-
-        //드래그한 열에 대해 하이라이트되게
-        var tdId = $cells.eq(columnIndex).attr("id");
-        if (tdId && tdId !== "addSchedule" && columnIndex < $cells.length) {
-            $cells.eq(columnIndex).addClass("highlight");
-            var cellText = $cells.eq(columnIndex).text().trim();
-            if (cellText) {
-                console.log("Cell focused: " + cellText);
-            }
-        }
-    });
-});
 	<!--전주 음식점 api 불러오는 함수-->
     let currentPageFood = 1;
     let currentPagePlace = 1;
@@ -285,17 +265,23 @@ document.addEventListener("dragend", function (event) {
 	    // 부모 노드인 <td>를 찾아서 삭제
 	    cell.parentNode.innerHTML = '';
 	    var xx;
-        console.log(placeName);
-       
+	
 	    for (var i = 0; i < markers.length; i++) {
 	        if (placeName === markers[i].getTitle()) {
 	            xx = i;
-	            console.log("title은 " + markers[i].getTitle());
+	
 	            markers[i].setMap(null);
 	            infowindows[i].setMap(null);
+	
+	            // markers 배열에서 해당하는 i번째 값을 제거
+	            markers.splice(i, 1);
+	            // infowindows 배열에서 해당하는 i번째 값을 제거
+	            infowindows.splice(i, 1);
+	
 	            break;
 	        }
 	    }
+	    addRankToTable('dragDropTable');
 	}
 
 

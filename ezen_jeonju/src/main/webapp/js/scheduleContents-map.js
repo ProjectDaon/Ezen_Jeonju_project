@@ -2,7 +2,7 @@
     var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
     var options = { //지도를 생성할 때 필요한 기본 옵션
     center: new kakao.maps.LatLng(35.8240808, 127.1481404), //지도의 중심좌표.
-    level: 8//지도의 레벨(확대, 축소 정도)
+    level: 9//지도의 레벨(확대, 축소 정도)
 	
 	};
 	var map = new kakao.maps.Map(container, options); // 지도를 생성합니다
@@ -125,3 +125,62 @@ function hideMarkers() {
 function hideInfoWindows(){
 	setInfoWindows(null);
 }
+
+
+//선그리기
+
+var polyline = null; 
+var distanceOverlay = null;
+function drawLine(positions) {
+    var clickPosition = [];
+
+    for (var i = 0; i < positions.length; i++) {
+        clickPosition.push(positions[i].latlng);
+    }
+
+    // Check if polyline already exists and remove it
+    if (polyline) {
+        polyline.setMap(null);
+    }
+
+    // Create a new polyline with the updated path
+    polyline = new kakao.maps.Polyline({
+        map: map,
+        path: clickPosition,
+        strokeWeight: 3,
+        strokeColor: '#db4040',
+        strokeOpacity: 1,
+        strokeStyle: 'solid'
+    });
+
+    polyline.setMap(map);
+	
+	var distance = Math.round(polyline.getLength()); // 선의 총 거리를 계산합니다
+    var content = '<div class="dotOverlay distanceInfo">total : <span class="number">' + distance + '</span>m</div>'; 
+	for(var i = 0 ; i<clickPosition.length; i++){
+	showDistance(content, clickPosition[i]);
+	}
+}
+
+function showDistance(content, position) {
+    
+    if (distanceOverlay) { // 커스텀오버레이가 생성된 상태이면
+        
+        // 커스텀 오버레이의 위치와 표시할 내용을 설정합니다
+        distanceOverlay.setPosition(position);
+        distanceOverlay.setContent(content);
+        
+    } else { // 커스텀 오버레이가 생성되지 않은 상태이면
+        
+        // 커스텀 오버레이를 생성하고 지도에 표시합니다
+        distanceOverlay = new kakao.maps.CustomOverlay({
+            map: map, // 커스텀오버레이를 표시할 지도입니다
+            content: content,  // 커스텀오버레이에 표시할 내용입니다
+            position: position, // 커스텀오버레이를 표시할 위치입니다.
+            xAnchor: 0,
+            yAnchor: 0,
+            zIndex: 3  
+        });      
+    }
+}
+
