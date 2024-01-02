@@ -17,6 +17,7 @@
 $(document).ready( function() {
 	//가져올때 navbar.css도 같이 가져올 것
 	$('#headers').load("../nav/nav.jsp");
+	$('#footers').load("../nav/footer.jsp");
 
 	$('#tab li').click(function(e){
 		var el = $(e.target).closest('li');
@@ -42,10 +43,14 @@ $(document).ready( function() {
 		reviewList();
 	});
 	
+	$('#tab3').click(function(){
+		likeList();
+	});
 });
 
 var midx = ${sessionScope.midx};
 
+/* --------------------------------리뷰-------------------------------*/
 function reviewList(){
 	$.ajax({
 		type : "post",
@@ -69,9 +74,10 @@ function reviewListPrint(data){
 	var str = "<table class='rev-contb'>";
 	$(data).each(function(){
 		str = str + "<tr><td class='rev-conDTD' width='20%'>"
+			+"<a href='${pageContext.request.contextPath}/contents/contentsArticle.do?cidx="+this.cidx+"'>"
 			+"<div class='rev-conD'>"
 			+"<img width='200px' src='${pageContext.request.contextPath}/thumbnailLoading.do?aidx="+this.aidx+"'>"
-			+"<div class='rev-conT'>"+this.contentsSubject+"</div></div></td>"
+			+"<div class='rev-conT'>"+this.contentsSubject+"</div></div></a></td>"
 			+"<td class='rev-contentsTD'><div class='rev-contents'><div class='rev-score'>";
 		for(var i=0; i<this.reviewScore; i++){
 			str = str + "<i class='rating__star fas fa-star'></i>";
@@ -119,7 +125,11 @@ function reviewPaging(data){
 	}
 	$('#paging').html(paging);
 }
+
 function revDel(ridx){
+	if(!confirm('리뷰를 삭제하시겠습니까?')){
+        return false;
+    }
 	$.ajax({
 		type : "post",
 		url : "${pageContext.request.contextPath}/mypage/reviewDelete.do",
@@ -131,6 +141,97 @@ function revDel(ridx){
 		success : function(data){
 			alert(data.txt);
 			reviewList();
+		},
+		error : function(){
+			alert("통신오류 실패");
+		}		
+	});
+}
+
+/* --------------------------------좋아요-------------------------------*/
+function likeList(){
+	$.ajax({
+		type : "post",
+		url : "${pageContext.request.contextPath}/mypage/likeList.do",
+		dataType : "json",
+		data : {
+				"midx" : midx
+		},
+		cache : false,
+		success : function(data){
+			likeListPrint(data.likelist);
+			$('#likeCnt').html(data.pm.totalCount);
+			likePaging(data.pm);
+		},
+		error : function(){
+			alert("통신오류 실패");
+		}		
+	});
+}
+function likeListPaging(page){
+	$.ajax({
+		type : "post",
+		url : "${pageContext.request.contextPath}/mypage/likeList.do?page="+page,
+		dataType : "json",
+		data : {
+				"midx" : midx
+		},
+		cache : false,
+		success : function(data){
+			likeListPrint(data.likelist);
+			likePaging(data.pm);
+		},
+		error : function(){
+			alert("통신오류 실패");
+		}		
+	});
+}
+function likeListPrint(data){
+	var liketxt = "";
+	$(data).each(function(){
+		liketxt = liketxt + "<div class='likeCon'><div class='likeImg'>"
+				+"<img width='350px' height='210px' src='${pageContext.request.contextPath}/thumbnailLoading.do?aidx="+this.aidx+"'>"
+				+"</div><div class='likeImgName'>"+this.contentsSubject+"</div>"
+				+"<div class='likeCancel'><button onclick='likeDel("+this.clidx+")'>좋아요취소</button></div></div>";
+	});
+	
+	$('#likeList').html(liketxt);
+}
+
+function likePaging(data){
+	var likepaging = "";
+	var nowpage=data.mlcri.page/9+1;
+	if(data.prev == true){
+		likepaging = likepaging + "<a class='pagePreview' href='javascript:likeListPaging("+(data.startPage-1)+")'>이전</a>";
+	}
+	for(var i=data.startPage; i<=data.endPage; i++){
+		if(i==nowpage){
+			likepaging = likepaging + "<a class='pageNumber active' href='javascript:likeListPaging("+i+")'>"+i+"</a>";	
+		}else{
+			likepaging = likepaging + "<a class='pageNumber' href='javascript:likeListPaging("+i+")'>"+i+"</a>";
+		}
+	}
+	if(data.next == true && data.endPage>0){
+		likepaging = likepaging + "<a class='pageNext' href='javascript:likeListPaging("+(data.endPage+1)+")'>다음</a>";
+	}
+	$('#likePage').html(likepaging);
+}
+
+function likeDel(clidx){
+	if(!confirm('좋아요를 취소하시겠습니까?')){
+        return false;
+    }
+	$.ajax({
+		type : "post",
+		url : "${pageContext.request.contextPath}/mypage/likeDelete.do",
+		dataType : "json",
+		data : {
+				"clidx" : clidx
+		},
+		cache : false,
+		success : function(data){
+			alert(data.txt);
+			likeList();
 		},
 		error : function(){
 			alert("통신오류 실패");
@@ -175,10 +276,14 @@ function revDel(ridx){
 		<div class="con-like" style="display:none;">
 			<div class="revHead">
 				<div class="title">좋아요 목록</div>
-				<div class="revCnt">총 <strong>23</strong>개</div>
+				<div class="revCnt">총 <strong><div id="likeCnt" style="display:inline-block;"></div></strong>개</div>
 			</div>
+			<div class="likeList" id="likeList"></div>
+			<div class="paging" id="likePage"></div>
 		</div>
 	</div>
 </div>
+
+<div id="footers"></div>
 </body>
 </html>

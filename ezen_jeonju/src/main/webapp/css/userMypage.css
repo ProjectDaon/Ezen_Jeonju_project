@@ -6,14 +6,14 @@ a{
 .mypage{
 	margin-top: 150px;
 	width: 100%;
-	display: flex;
-	justify-content: center;
 }
 .mypage-head{
 	padding-left: 200px;
 	padding-bottom: 25px;
 	border-bottom: 2px solid gray;
 	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
 }
 .head-title{
 	font-size: 40px;
@@ -26,19 +26,15 @@ a{
 	font-size: 20px;
 }
 .mypage-contents{
-	position: absolute;
-	top: 100px;
-	left: 10%;
+	width: 80%;
+	margin: 20px auto 10px auto;
 	font-size: 30px;
 }
 .mypage-tabmenu{
-	position: absolute;
-	top: 200px;
-	left: 10%;
+	margin: 80px auto 0px auto;
 	display: block;
     width: 80%;
     padding-bottom: 0;
-    margin: 0;
 }
 .tabStyle{
 	padding: 0;
@@ -74,11 +70,8 @@ a{
 }
 
 .tab-con{
-    position: absolute;
-    top: 260px;
-    left: 192px;
+	margin: 30px auto 20px auto;
     width: 80%;
-    height: 450px;
 }
 
 .revHead{
@@ -134,8 +127,6 @@ a{
     font-size: 0;
     clear: both;
 }
-
-
 .paging a {
     display: inline-block;
     text-align: center;
@@ -157,4 +148,21 @@ a{
     background: #333;
     color: #fff;
     border: 1px solid #333;
+}
+
+.likeCon{
+	display: inline-block;
+	width: 27%;
+	margin: 10px 15px 0px 0px;
+	text-align: center;
+	padding: 10px 0;
+}
+.likeImg img{
+	border-radius: 5px;
+}
+.likeImgName{
+	margin: 10px 0;
+}
+.likeList{
+	margin-left: 70px;
 }

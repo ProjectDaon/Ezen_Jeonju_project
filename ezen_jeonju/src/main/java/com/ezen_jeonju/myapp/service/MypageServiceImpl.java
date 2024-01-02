@@ -6,7 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ezen_jeonju.myapp.domain.MypageDTO;
+import com.ezen_jeonju.myapp.domain.MypageLikeCriteria;
+import com.ezen_jeonju.myapp.domain.MypageReviewDTO;
 import com.ezen_jeonju.myapp.domain.ReviewCriteria;
 import com.ezen_jeonju.myapp.persistance.MypageService_Mapper;
 
@@ -28,11 +29,11 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public ArrayList<MypageDTO> reviewList(ReviewCriteria rcri) {
+	public ArrayList<MypageReviewDTO> reviewList(ReviewCriteria rcri) {
 		int value = (rcri.getPage()-1)*5;
 		rcri.setPage(value);
 		
-		ArrayList<MypageDTO> list = new ArrayList<>();
+		ArrayList<MypageReviewDTO> list = new ArrayList<>();
 		list = msm.reviewList(rcri);
 		return list;
 	}
@@ -46,6 +47,28 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public int reviewTotalCnt(int midx) {
 		int value = msm.reviewTotalCnt(midx);
+		return value;
+	}
+
+	@Override
+	public ArrayList<MypageLikeCriteria> likeList(MypageLikeCriteria mlcri) {
+		int value = (mlcri.getPage()-1)*9;
+		mlcri.setPage(value);
+		
+		ArrayList<MypageLikeCriteria> list = new ArrayList<>();
+		list = msm.likeList(mlcri);
+		return list;
+	}
+
+	@Override
+	public int likeTotalCnt(int midx) {
+		int value = msm.likeTotalCnt(midx);
+		return value;
+	}
+
+	@Override
+	public int likeDelete(int clidx) {
+		int value = msm.likeDelete(clidx);
 		return value;
 	}
 

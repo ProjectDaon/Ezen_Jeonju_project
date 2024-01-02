@@ -23,4 +23,21 @@ UPDATE review SET reviewYN='Y' WHERE ridx=#{ridx}
 <select id="reviewTotalCnt" parameterType="int" resultType="int">
 select count(ridx) as cnt from review where reviewYN='N' and midx=#{midx}
 </select>
+
+<select id="likeList" parameterType="mlcri" resultType="mlcri">
+SELECT cl.clidx, c.aidx, c.contentsSubject
+FROM contentslike cl 
+JOIN contents c ON cl.cidx=c.cidx
+WHERE cl.midx=#{midx}
+order by clidx desc limit #{page},#{perPageNum}
+</select>
+
+<select id="likeTotalCnt" parameterType="int" resultType="int">
+select count(clidx) from contentslike where midx=#{midx}
+</select>
+
+<delete id="likeDelete" parameterType="int">
+delete from contentsLike where clidx=#{clidx}
+</delete>
+
 </mapper>
