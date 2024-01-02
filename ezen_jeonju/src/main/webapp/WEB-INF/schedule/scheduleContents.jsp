@@ -33,13 +33,13 @@ $(document).ready(function () {
 	var tourCourseNDate = document.getElementById("selectDate").value;
 	getTourCourse(sidx);
 	getTourCourseNDate(sidx,tourCourseNDate);
-	
+	setCenter();
     $('#selectDate').on('change', function () {
     	hideMarkers();
     	hideInfoWindows();
     	tourCourseNDate = $(this).val();
         getTourCourseNDate(sidx,tourCourseNDate);
-        
+        setCenter();
     });
 
 	
@@ -91,6 +91,7 @@ function getTourCourseNDate(sidx,tourCourseNDate){
 				for (var i = 0; i < positions.length; i ++) {
 				   // 마커를 생성합니다
 					addMarker(positions[i].latlng,positions[i].title);
+					
 				}	
 				
 			});
@@ -157,7 +158,7 @@ function getTourCourseNDate(sidx,tourCourseNDate){
    <div>
    <select name="selectDate" id="selectDate">
    	<c:forEach var="tl" items="${tlist}">
-       <option value="${tl.tourCourseNDate}">${tl.tourCourseNDate}</option>
+       <option value="${tl.tourCourseNDate}">${tl.tourCourseNDate} 일차 </option>
    </c:forEach>
    </select>
    </div>
