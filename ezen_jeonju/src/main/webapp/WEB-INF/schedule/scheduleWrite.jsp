@@ -91,12 +91,69 @@
 		color : black;
 		font-weight:bold;
 	}
-
+	
+    .highlight {
+      
+       background-color: #f2f2f2;
+    }
 </style>
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-    <!--전주 음식점 api 불러오는 함수-->
+
+	//랭크 추가 함수
+	function addRankToTable(tableId) {
+	var table = document.getElementById(tableId);
+	var rows = table.getElementsByTagName('tr');
+	
+	for (var j = 0; j < rows[0].cells.length; j++) {
+	    var rank = 1;
+	    
+	    for (var i = 2; i < rows.length; i++) {
+	        var cell = rows[i].cells[j];
+	        
+	        // td에 값이 있을 경우에만 랭크 추가
+	        if (cell.innerHTML.trim() !== "") {
+	            
+                var existingRank = cell.querySelector('#sequence');
+                if (existingRank) {
+                    existingRank.parentNode.removeChild(existingRank);
+                }
+	        	
+	        	cell.innerHTML = "<Strong id='sequence'>순서 " + "<span id='rank'>" + rank + "</span>" + ": </Strong>" + cell.innerHTML;
+	            rank++;
+	       		}
+	   		 }
+		}
+	}
+
+	//드래그시 랭크부여
+document.addEventListener("dragend", function (event) {
+    addRankToTable('dragDropTable');
+});
+       
+
+document.addEventListener("dragend", function (event) {
+    $(".highlight").removeClass("highlight");
+	
+    var columnIndex = $(event.target).index();
+	
+    $("tr").each(function (index) {
+
+        var $cells = $(this).find("td");
+
+        //드래그한 열에 대해 하이라이트되게
+        var tdId = $cells.eq(columnIndex).attr("id");
+        if (tdId && tdId !== "addSchedule" && columnIndex < $cells.length) {
+            $cells.eq(columnIndex).addClass("highlight");
+            var cellText = $cells.eq(columnIndex).text().trim();
+            if (cellText) {
+                console.log("Cell focused: " + cellText);
+            }
+        }
+    });
+});
+	<!--전주 음식점 api 불러오는 함수-->
     let currentPageFood = 1;
     let currentPagePlace = 1;
     const itemsPerPage = 10;
@@ -196,33 +253,51 @@
         }
         
     }
- 
-	//X눌렀을 때 사라지게하기
-    function Xclose(cell) {
-        // 부모 노드인 <td>를 찾아서 삭제
-    	  cell.parentNode.innerHTML = '';
 
-    } 
 
+	let addToTableCallCount = 0;
     // 음식점 이름을 클릭하면 테이블 셀에 정보를 추가
     function addToTable(placeName, placeLatitude, placeLongitude) {
-        let tableCell = document.getElementById("addSchedule");
-        let placeArray = placeName.split(',');
 
-        // 이름 추가
-        tableCell.innerHTML = placeArray[0];
+    	    let tableCell = document.getElementById("addSchedule");
+    	    if (tableCell.innerHTML !== '장소를 누르시고 원하는 시간대에 드래그하세요' && tableCell.innerHTML !== '') {
+    	        alert('이미 추가된 장소가 있습니다.');
+    	        return;
+    	    }
 
-        // X 버튼 및 추가 정보를 담은 input 태그 추가
-        tableCell.innerHTML += "<input type='hidden' value='" + placeArray[0] + "'>";
-        tableCell.innerHTML += "<input type='hidden' value='" + placeArray[1] + "'>";
-        tableCell.innerHTML += "<input type='hidden' value='" + placeArray[2] + "'>";
-		tableCell.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' onclick='Xclose(this);'>X</a>"; 
+    		addToTableCallCount++;
+    	    let placeArray = placeName.split(',');
+    	    // 이름 추가
+    	    tableCell.innerHTML = placeArray[0];
+    	    
+    	    // X 버튼 및 추가 정보를 담은 input 태그 추가
+    	    tableCell.innerHTML += "<input type='hidden' value='" + placeArray[0] + "'>";
+    	    tableCell.innerHTML += "<input type='hidden' value='" + placeArray[1] + "'>";
+    	    tableCell.innerHTML += "<input type='hidden' value='" + placeArray[2] + "'>";
+    	    tableCell.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' onclick='Xclose(this, \"" + placeArray[0] + "\");'>X</a>";
 
-        // 이후 작업 수행 (panTo 함수 호출 등)
-        panTo(placeArray[0], placeArray[1], placeArray[2]);
+    	    // 이후 작업 수행 (panTo 함수 호출 등)
+    	    panTo(placeArray[0], placeArray[1], placeArray[2]);
     }
+    
+	//X눌렀을 때 사라지게하기
+	function Xclose(cell, placeName) {
+	    // 부모 노드인 <td>를 찾아서 삭제
+	    cell.parentNode.innerHTML = '';
+	    var xx;
+        console.log(placeName);
+       
+	    for (var i = 0; i < markers.length; i++) {
+	        if (placeName === markers[i].getTitle()) {
+	            xx = i;
+	            console.log("title은 " + markers[i].getTitle());
+	            markers[i].setMap(null);
+	            infowindows[i].setMap(null);
+	            break;
+	        }
+	    }
+	}
 
-  
 
 </script>
 
@@ -309,9 +384,10 @@
 <script src="../js/scheduleWrite-map.js"></script>
 <script type="text/javascript" src ="../js/scheduleWrite-dragDropTable.js"></script>
 
-<script>
+<script>    
+
+
     <!-- 글 작성 함수 -->
-    
     function goWrite() {
         var fm = document.frm;
         var tbodyCells = document.querySelectorAll('#dragDropTable tbody td');
@@ -332,9 +408,10 @@
 
 	    	     	var jsonObj = new Object();
 
-	    	     	var tourCoursePlace = td.querySelector('input:nth-child(1)').value;
-	    	        var tourCourseLatitude = td.querySelector('input:nth-child(2)').value;
-	    	        var tourCourseLongitude = td.querySelector('input:nth-child(3)').value;
+	    	     	var inputs = td.getElementsByTagName('input');
+	    	     	var tourCoursePlace = inputs[0].value;
+	    	     	var tourCourseLatitude = inputs[1].value;
+	    	     	var tourCourseLongitude = inputs[2].value;
 		    		  		
 		    	    nameArray = td.getAttribute('name').split('_');
 		    	    tourCourseDate = nameArray[0];
@@ -406,7 +483,7 @@ $(document).ready(function(){
 	   
 	   
 });
-   
+
 </script>
 </body>
 </html>

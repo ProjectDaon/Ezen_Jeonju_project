@@ -97,6 +97,11 @@
 
     // 드래그 시작 이벤트 핸들러
     function handleDragStart(e) {
+	    if (this.innerText === "장소를 누르시고 원하는 시간대에 드래그하세요" || this.innerText ==="") {
+	        e.preventDefault();
+	        return;
+	    }
+    
         // 드래그 시작한 요소의 참조 저장
         dragSrcElement = this;
         // 드래그 효과 설정
@@ -156,6 +161,7 @@
         items.forEach(function (item) {
             item.classList.remove('over');
         });
+        
     }
 
     // 테이블의 모든 행을 선택하여 드래그 이벤트 리스너 등록
@@ -204,4 +210,3 @@
         createTable('table-container', dayDifference+1);
         }
     }
-    
