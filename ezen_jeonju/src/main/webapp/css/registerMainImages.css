@@ -1,0 +1,92 @@
+h3 {
+    font-size: 42px;
+    font-weight: 500;
+    margin: 0;
+    padding-bottom: 50px
+}
+
+.contents {
+    margin-top: 5%; 
+    padding: 5%;
+    text-align: center;
+    display: flex;
+}
+
+.inner-wrap {
+    position: relative;
+    margin: 0 auto;
+    width: 1500px;
+    height: auto;
+}
+
+.title-wrap{
+    margin-bottom: 30px;
+}
+
+.registeredVanners{
+    text-align: center;
+}
+
+.registeredVannersTable {
+    border-collapse :collapse;
+    margin: 0 auto;
+    padding-top: 1000px;
+}
+
+.registeredVannersTable th, td {
+    border: 1px solid coral;
+    padding: 10px;
+}
+
+.registeredVannersSubject{
+	width: 500px;
+}
+
+.registeredVannersDay{
+	width: 200px
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+.contentsBtn:hover{
+	color: coral;
+}
+
+
+.registeredVannersSubject .registerBtn{
+	border: 1px solid transparent;
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: bold;
+    color: coral;
+    background-color: #FFDEAD;
+    border-color: #FFDEAD;
+    border-radius: 4px;
+    text-decoration-line: none;
+}
+
+.registerBtn:hover{
+	border: 1px solid coral;
+	color: coral;
+}
+
+.registeredVannersDelete {
+	border: 1px solid transparent;
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: bold;
+    color: coral;
+    background-color: #FFDEAD;
+    border-color: #FFDEAD;
+    border-radius: 4px;
+    text-decoration-line: none;
+}
+
+.registeredVannersDelete:hover {
+	border: 1px solid coral;
+	color: coral;
+}
