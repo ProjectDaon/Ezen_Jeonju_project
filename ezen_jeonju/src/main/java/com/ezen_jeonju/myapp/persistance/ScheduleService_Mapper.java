@@ -3,6 +3,7 @@ package com.ezen_jeonju.myapp.persistance;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.ezen_jeonju.myapp.domain.ScheduleCriteria;
 import com.ezen_jeonju.myapp.domain.ScheduleRootVo;
 import com.ezen_jeonju.myapp.domain.TourCourseVo;
 
@@ -11,7 +12,7 @@ public interface ScheduleService_Mapper {
 
 	public int scheduleWrite(ScheduleRootVo sv);
 
-	public ArrayList<ScheduleRootVo> scheduleList();
+	public ArrayList<ScheduleRootVo> scheduleList(ScheduleCriteria sscri);
 	
 	public ScheduleRootVo scheduleContents(int sidx);
 
@@ -24,5 +25,7 @@ public interface ScheduleService_Mapper {
 	public ArrayList<TourCourseVo> tourCourseNDate(int sidx);
 	
 	public ArrayList<TourCourseVo> tourCourseNDateContents(TourCourseVo tv);
+	
+	public int scheduleTotalCount();
 
 }
