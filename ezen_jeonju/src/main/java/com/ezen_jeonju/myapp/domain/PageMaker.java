@@ -18,7 +18,8 @@ public class PageMaker {
 	private Criteria cri;
 	private ContentsSearchCriteria cscri;
 	private ReviewCriteria rcri;
-	
+	private ScheduleCriteria sscri;
+
 	public Criteria getCri() {
 		return cri;
 	}
@@ -81,7 +82,11 @@ public class PageMaker {
 	    }else if(rcri != null){
 	    	perPageNum = rcri.getPerPageNum();
 	    	currentPage = rcri.getPage();
+	    }else if(sscri != null){
+	    	perPageNum = sscri.getPerPageNum();
+	    	currentPage = sscri.getPage();
 	    }
+	    
 	    // 1. 기본적으로 1에서 10까지 나타나게 설정
 	    endPage = (int) (Math.ceil(currentPage / (double) displayPageNum) * displayPageNum);
 
@@ -132,6 +137,14 @@ public class PageMaker {
 
 	public void setRcri(ReviewCriteria rcri) {
 		this.rcri = rcri;
+	}
+	
+	public ScheduleCriteria getSscri() {
+		return sscri;
+	}
+
+	public void setSscri(ScheduleCriteria sscri) {
+		this.sscri = sscri;
 	}
 
 }

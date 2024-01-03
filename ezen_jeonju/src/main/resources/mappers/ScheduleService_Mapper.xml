@@ -13,8 +13,10 @@ insert into scheduleroot(scheduleSubject,scheduleStartDate,scheduleEndDate,sched
 values(#{scheduleSubject},#{scheduleStartDate},#{scheduleEndDate},#{scheduleShareYN},#{midx});
 </insert>
 
-<select id="scheduleList" resultType="sv">
-select * from scheduleroot where scheduleDelYN='N' and scheduleShareYN='Y';
+<select id="scheduleList" parameterType="sscri" resultType="sv">
+select * from scheduleroot 
+where scheduleDelYN='N' and scheduleShareYN='Y' 
+order by sidx desc limit #{page}, #{perPageNum};
 </select>
 
 <select id="scheduleContents" resultType="sv" parameterType="int">
@@ -32,6 +34,8 @@ order by t.tourCourseDate asc, t.tourCourseTime asc;
 <update id="scheduleViewCount" parameterType="int">
 update scheduleroot set scheduleViewCount=scheduleViewCount+1 where sidx = #{sidx};
 </update>
+
+
 
 <insert id="tourCourseInsert" parameterType="tv">
 insert into tourcourse(sidx,tourCourseDate,tourCourseTime,tourCoursePlace,tourCourseLatitude,tourCourseLongitude,tourCourseNDate) 
@@ -52,6 +56,10 @@ select t.tourCourseDate, t.tourCourseTime, t.tourCoursePlace, t.tourCourseLatitu
 from scheduleroot s
 join tourcourse t ON s.sidx = t.sidx
 where s.sidx = #{sidx} and t.tourCourseNDate = #{tourCourseNDate}
+</select>
+
+<select id = "scheduleTotalCount" resultType="int">
+select count(*) as cnt from scheduleroot where scheduleDelYN='N' and scheduleShareYN='Y';
 </select>
 
 </mapper>

@@ -121,19 +121,18 @@
                     existingRank.parentNode.removeChild(existingRank);
                 }
 	        	
-	        	cell.innerHTML = "<Strong id='sequence'>순서 " + "<span id='rank'>" + rank + "</span>" + ": </Strong>" + cell.innerHTML;
+	        	cell.innerHTML = "<Strong id='sequence'>" + "<span id='rank'>" + rank + "</span>" + " : </Strong>" + cell.innerHTML;
 	            rank++;
 	       		}
 	   		 }
 		}
 	}
 
-	//드래그시 랭크부여
+//드래그시 랭크부여
 document.addEventListener("dragend", function (event) {
     addRankToTable('dragDropTable');
 });
-   
-
+	
 	<!--전주 음식점 api 불러오는 함수-->
     let currentPageFood = 1;
     let currentPagePlace = 1;
@@ -254,6 +253,28 @@ document.addEventListener("dragend", function (event) {
     	 //   panTo(placeArray[0], placeArray[1], placeArray[2]);
     }
     
+	//X눌렀을 때 사라지게하기
+	function Xclose(cell, placeName) {
+	    // 부모 노드인 <td>를 찾아서 삭제
+	    cell.parentNode.innerHTML = '';
+	    var xx;
+	
+	    for (var i = 0; i < markers.length; i++) {
+	        if (placeName === markers[i].getTitle()) {
+	            xx = i;
+	
+	            markers[i].setMap(null);
+	            //infowindows[i].setMap(null);
+	
+	            // markers 배열에서 해당하는 i번째 값을 제거
+	            markers.splice(i, 1);
+	            // infowindows 배열에서 해당하는 i번째 값을 제거
+	
+	            break;
+	        }
+	    }
+	    addRankToTable('dragDropTable');
+	}
 
 
 
@@ -392,6 +413,7 @@ document.addEventListener("dragend", function (event) {
     	let arrays = JSON.stringify(jsonArray);
     	
         if (fm.scheduleSubject.value == "") {
+        	markerList();
             alert('제목을 입력해주세요');
             fm.scheduleSubject.focus();
             return;
@@ -442,9 +464,9 @@ $(document).ready(function(){
 	   
 });
 
-$(document).ready(function(){
-	markerList();
-});
+
+
+
 </script>
 </body>
 </html>
