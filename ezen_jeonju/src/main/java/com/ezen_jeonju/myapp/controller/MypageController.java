@@ -52,7 +52,6 @@ public class MypageController {
 		memberPhone = ms.getMemberPhone(midx);
 		
 		mv.setMemberName(memberName);
-		mv.setMemberPhone(memberPhone);
 		
 		model.addAttribute("mv",mv);
 			

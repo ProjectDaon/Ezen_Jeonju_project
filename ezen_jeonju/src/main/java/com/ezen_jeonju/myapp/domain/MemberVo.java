@@ -1,12 +1,22 @@
 package com.ezen_jeonju.myapp.domain;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
+
 public class MemberVo {
 	private int midx;
+	
+	@Pattern(regexp = "^[a-zA-Z0-9]{4,12}$")
 	private String memberId;
+	
+	@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$")
 	private String memberPwd;
+	
 	private String memberName;
-	private String memberPhone;
+	
+	@Email
 	private String memberEmail;
+	
 	private String memberGrade;
 	private String memberSigninDate;
 	
@@ -33,12 +43,6 @@ public class MemberVo {
 	}
 	public void setMemberName(String memberName) {
 		this.memberName = memberName;
-	}
-	public String getMemberPhone() {
-		return memberPhone;
-	}
-	public void setMemberPhone(String memberPhone) {
-		this.memberPhone = memberPhone;
 	}
 	public String getMemberGrade() {
 		return memberGrade;

@@ -9,8 +9,8 @@ SELECT COUNT(*) AS cnt FROM member WHERE MEMBERID=#{memberId}
 </select>
 
 <insert id="memberInsert" parameterType="mv">
-INSERT INTO member(MEMBERID,MEMBERPWD,MEMBERNAME,MEMBERPHONE)
-VALUES(#{memberId},#{memberPwd},#{memberName},#{memberPhone})
+INSERT INTO member(MEMBERID,MEMBERPWD,MEMBERNAME,MEMBEREMAIL)
+VALUES(#{memberId},#{memberPwd},#{memberName},#{memberEmail})
 </insert>
 
 <select id="memberLogin" parameterType="String" resultType="mv">
@@ -40,12 +40,27 @@ SELECT COUNT(*) AS cnt FROM member WHERE MEMBERID=#{memberId}
 </select>
 
 <insert id="NaverMemberInsert" parameterType="nd">
-INSERT INTO member(MEMBERID, MEMBERPWD, MEMBERNAME, MEMBEREMAIL, MEMBERPHONE)
-VALUES(#{memberId}, #{memberPwd}, #{memberName}, #{memberEmail}, #{memberPhone})
+INSERT INTO member(MEMBERID, MEMBERPWD, MEMBERNAME, MEMBEREMAIL)
+VALUES(#{memberId}, #{memberPwd}, #{memberName}, #{memberEmail})
 </insert>
 
 <select id="NaverMemberLogin" parameterType="String" resultType="mv">
 SELECT midx, memberId, MemberName, MemberGrade, MemberEmail, MemberPhone from member
+WHERE memberId=#{memberId}
+</select>
+
+<!-- *****************************구글*********************************** -->
+<select id="memberIdCheckGoogle" parameterType="String" resultType="int">
+SELECT COUNT(*) AS cnt FROM member WHERE MEMBERID=#{memberId}
+</select>
+
+<insert id="GoogleMemberInsert" parameterType="gr">
+INSERT INTO member(MEMBERID, MEMBERPWD, MEMBERNAME, MEMBEREMAIL)
+VALUES(#{sub}, #{kid}, #{name}, #{email})
+</insert>
+
+<select id="GoogleMemberLogin" parameterType="String" resultType="mv">
+SELECT midx, memberId, MemberName, MemberGrade, MemberEmail from member
 WHERE memberId=#{memberId}
 </select>
 </mapper>

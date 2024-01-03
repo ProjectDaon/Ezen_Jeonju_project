@@ -244,7 +244,6 @@ function likeDel(clidx){
 <div class="mypage">
 	<div class="mypage-head">
 		<div class="head-title">마이페이지</div>
-		<a href="${pageContext.request.contextPath}/mypage/personalInfo.do">개인정보</a>
 	</div>
 	<div class="mypage-contents">
 		<strong>${sessionScope.memberName}</strong>님의 전주여행

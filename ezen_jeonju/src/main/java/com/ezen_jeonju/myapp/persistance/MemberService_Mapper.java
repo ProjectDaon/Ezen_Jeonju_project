@@ -1,5 +1,6 @@
 package com.ezen_jeonju.myapp.persistance;
 
+import com.ezen_jeonju.myapp.domain.GoogleInfResponse;
 import com.ezen_jeonju.myapp.domain.KakaoDTO;
 import com.ezen_jeonju.myapp.domain.MemberVo;
 import com.ezen_jeonju.myapp.domain.NaverDTO;
@@ -16,4 +17,8 @@ public interface MemberService_Mapper {
 	public int memberIdCheckNaver(String memberId);
 	public int NaverMemberInsert(NaverDTO nd);
 	public MemberVo NaverMemberLogin(String memberId);
+	
+	public int memberIdCheckGoogle(String memberId);
+	public int GoogleMemberInsert(GoogleInfResponse gr);
+	public MemberVo GoogleMemberLogin(String memberId);
 }

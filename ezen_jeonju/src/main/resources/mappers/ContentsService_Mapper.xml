@@ -38,11 +38,6 @@ FROM contents
 WHERE cidx = #{cidx}
 </select>
 
-<select id="contentsFileload" parameterType="int" resultType="af">
-SELECT storedFileName, filePath From attachFile
-WHERE cidx=#{cidx}
-</select>
-
 <update id="contentsModify" parameterType="cv">
 update contents set contentsCategory = #{contentsCategory}, contentsSubject = #{contentsSubject}, contentsArticle = #{contentsArticle}, contentsHashtag = #{contentsHashtag},
 	contentsLatitude = #{contentsLatitude}, contentsLongitude = #{contentsLongitude}
