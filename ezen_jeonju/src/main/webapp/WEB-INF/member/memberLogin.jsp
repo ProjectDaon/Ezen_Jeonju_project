@@ -38,7 +38,7 @@ function check(){
 
 </script>
 <div id="headers"></div>
-<br><br><br><br><br>
+
 <form name="frm" action="" method="" value="">
 	<div class="loginBox" id="loginBox">
 		<div>
@@ -65,30 +65,37 @@ function check(){
 			</tr>
 			<tr>
 				<td style="text-align: center">
-					<div>
+					<div style="margin-top:20px;">
 						<button type="button" class="loginbtn" onclick="check();"><span>로그인</span></button>
 					</div>
 				</td>
 			</tr>
 		</table>
+		<div class="signup">
+			<a href="<%=request.getContextPath()%>/member/memberJoin.do">회원가입</a><br>
 		</div>
+		</div>
+
+		<div class="seperator">
+			<h4>Social login</h4>
+			<div class="socialLogin">
+				<div class="socialList">
+				<a id="kakao-login-btn" href="<%=request.getContextPath()%>/member/KakaoMemberLogin.do">
+					<img src="../images/kakao_login_medium_narrow.png" width="220" height="50" alt="카카오 로그인 버튼" />
+				</a><br>
+				<a id="naver-login-btn" href="<%=request.getContextPath()%>/member/naverMemberLogin.do">
+					<img src="../images/naver_login.png" width="220" height="50" alt="네이버 로그인 버튼"/>
+				</a><br>
+				<a id="google-login-btn" href="<%=request.getContextPath()%>/member/googleMemberLogin.do">
+					<img src="../images/google-login.png" width="220" height="50" alt="구글 로그인 버튼"/>
+				</a>
+				</div>
+			</div>
+		</div>
+		
 	</div>
 </form>
-<div class="seperator">-간편로그인-</div>
-<div class="socialLogin">
-<br>
-<div>
-<a id="kakao-login-btn" href="<%=request.getContextPath()%>/member/KakaoMemberLogin.do">
-	<img src="../images/kakao_login.png" width="50" height="50" alt="카카오 로그인 버튼" />
-</a>
-<a id="naver-login-btn" href="<%=request.getContextPath()%>/member/naverMemberLogin.do">
-	<img src="../images/naver_login.png" width="50" height="50" alt="네이버 로그인 버튼"/>
-</a>
-</div>
-</div>
 
-	<div class="signup">
-		<a href="<%=request.getContextPath()%>/member/memberJoin.do">회원가입</a><br>
-	</div>
+	
 </body>
 </html>

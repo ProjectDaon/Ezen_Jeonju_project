@@ -7,23 +7,35 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ezen_jeonju.myapp.domain.GoogleInfResponse;
+import com.ezen_jeonju.myapp.domain.GoogleRequest;
+import com.ezen_jeonju.myapp.domain.GoogleResponse;
 import com.ezen_jeonju.myapp.domain.KakaoDTO;
 import com.ezen_jeonju.myapp.domain.MemberVo;
 import com.ezen_jeonju.myapp.domain.NaverDTO;
 import com.ezen_jeonju.myapp.service.MemberService;
+import com.ezen_jeonju.myapp.util.NaverMailSend;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -323,14 +335,12 @@ public class MemberController {
 
             String id = response.getAsJsonObject().get("id").getAsString();
             String nickname = response.getAsJsonObject().get("nickname").getAsString();
-            String mobile = response.getAsJsonObject().get("mobile").getAsString();
             String email = response.getAsJsonObject().get("email").getAsString();
             
             System.out.println("resultcode: "+resultcode);
             userInfo.setMemberId(id);
             userInfo.setMemberName(nickname);
             userInfo.setMemberPwd(access_Token);
-            userInfo.setMemberPhone(mobile);
             userInfo.setMemberEmail(email);
 
         } catch (IOException e) {
@@ -340,7 +350,66 @@ public class MemberController {
 		
 		return userInfo;
 	}
+	
+	/*--------------------------------------구글로그인-------------------------------------*/
+	@RequestMapping(value="/googleMemberLogin.do")
+	public String googleMemberLogin() {
+		StringBuffer url = new StringBuffer();
+		url.append("https://accounts.google.com/o/oauth2/v2/auth?");
+		url.append("client_id=859504643059-8kf72j9o22utqp8e7ovqohcpsjigmhfa.apps.googleusercontent.com");
+		url.append("&redirect_uri=http://localhost:8080/member/googleLoginAction.do&response_type=code&scope=email profile openid");
+		return "redirect:"+url;
+	}
+	
+	@RequestMapping(value="googleLoginAction.do", method = RequestMethod.GET)
+	public String googleLoginAction(@RequestParam("code") String code, HttpSession session) {
+		RestTemplate restTemplate = new RestTemplate();
+		GoogleRequest googleOAuthRequestParam = new GoogleRequest
+				.Builder()
+				.clientId("859504643059-8kf72j9o22utqp8e7ovqohcpsjigmhfa.apps.googleusercontent.com")
+				.clientSecret("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")
+				.code(code)
+				.redirectUri("http://localhost:8080/member/googleLoginAction.do")
+				.grantType("authorization_code").build();
+		
+		ResponseEntity<GoogleResponse> resultEntity = restTemplate.postForEntity("https://oauth2.googleapis.com/token", googleOAuthRequestParam, GoogleResponse.class);
+		String jwtToken=resultEntity.getBody().getId_token();
+        Map<String, String> map=new HashMap<>();
+        map.put("id_token",jwtToken);
+        ResponseEntity<GoogleInfResponse> resultEntity2 = restTemplate.postForEntity("https://oauth2.googleapis.com/tokeninfo", map, GoogleInfResponse.class);
+        String sub = resultEntity2.getBody().getSub(); //사용자ID
+        String name = resultEntity2.getBody().getName(); //사용자이름
+        String email=resultEntity2.getBody().getEmail(); //사용자 이메일 
+        String kid = resultEntity2.getBody().getKid(); //키ID
+        GoogleInfResponse googleDto = new GoogleInfResponse();
+        googleDto.setSub(sub);
+        googleDto.setName(name);
+        googleDto.setEmail(email);
+        googleDto.setKid(kid);
+        
+        int idCheck = ms.memberIdCheckGoogle(sub);
+        if(idCheck==0) {
+        	ms.GoogleMemberInsert(googleDto);
+        }
+        MemberVo mv = ms.GoogleMemberLogin(sub);
+        session.setAttribute("midx", mv.getMidx());
+        session.setAttribute("memberName", mv.getMemberName());
+        session.setAttribute("memberGrade", mv.getMemberGrade());
+        session.setAttribute("memberEmail", mv.getMemberEmail());
+        
+        System.out.println("sub:"+resultEntity2.getBody().getSub());
+        System.out.println("name:"+resultEntity2.getBody().getName());
+        System.out.println("kid:"+resultEntity2.getBody().getKid());
+        System.out.println(email);
+        
+        
+		return "redirect:/index.do";
+	}
+	
 	/*--------------------------------------------------------------------------------------------*/
+
+	
+	
 	@RequestMapping(value = "/memberLoginAction.do")
 	public String memberLoginAction(
 			@RequestParam("memberId") String memberId, 
@@ -381,18 +450,58 @@ public class MemberController {
 		return "member/memberJoin";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/mailAuth.do")
+	public JSONObject mailAuth(@RequestParam("memberEmail") String memberEmail, HttpSession session) {
+		JSONObject js = new JSONObject();
+		
+		NaverMailSend nm = new NaverMailSend();
+		try {
+			nm.sendEmail(memberEmail, session);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return js;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/mailAuthCheck.do")
+	public JSONObject mailAuthCheck(@RequestParam("authNumber") String authNumber, HttpSession session) {
+		JSONObject js = new JSONObject();
+		String savedPass = (String) session.getAttribute("authenCode");
+		String txt = "";
+		if(authNumber.equals(savedPass)) {
+			txt = "pass";
+			session.setAttribute("mailPass", "pass");
+		}else {
+			txt = "인증실패";
+		}
+		
+		js.put("txt", txt);
+		return js;
+	}
+	
 	@RequestMapping(value = "/memberJoinAction.do")
-	public String memberJoinAction(MemberVo mv) { // input 객체들의 값을 바인딩한다.
-
+	public String memberJoinAction(@Valid MemberVo mv, HttpSession session, Model model, BindingResult bindingResult) { // input 객체들의 값을 바인딩한다.
+		if (bindingResult.hasErrors()) {
+			
+            return "member/memberJoin"; // 오류 페이지로 리다이렉트 또는 포워드
+        }
+		String authSession = (String) session.getAttribute("mailPass");
 		
-		String memberPwd2 = bcryptPasswordEncoder.encode(mv.getMemberPwd());
-		mv.setMemberPwd(memberPwd2); 
+		if(authSession!=null && authSession.equals("pass")) {
+			String memberPwd2 = bcryptPasswordEncoder.encode(mv.getMemberPwd());
+			mv.setMemberPwd(memberPwd2); 
+			int value = ms.memberInsert(mv);
+			return "redirect:/"; // 포워드방식이 아닌 sendRedirect 방식
+		}else {
+			model.addAttribute("error", "메일인증이 처리되지 않았습니다.");
+			session.setMaxInactiveInterval(180);
+			return "member/memberJoin";
+		}
 		
 
-		// 처리하는 입력 로직
-		int value = ms.memberInsert(mv);
 
-		return "redirect:/"; // 포워드방식이 아닌 sendRedirect 방식
 	}
 	
 	@ResponseBody

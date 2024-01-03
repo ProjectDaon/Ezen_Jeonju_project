@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ezen_jeonju.myapp.domain.GoogleInfResponse;
 import com.ezen_jeonju.myapp.domain.KakaoDTO;
 import com.ezen_jeonju.myapp.domain.MemberVo;
 import com.ezen_jeonju.myapp.domain.NaverDTO;
@@ -80,6 +81,28 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public MemberVo NaverMemberLogin(String memberId) {
 		MemberVo mv = msm.NaverMemberLogin(memberId);
+		return mv;
+	}
+	
+/*--------------------------------------------------------*/
+
+/*---------------------구글-------------------------------*/
+
+	@Override
+	public int memberIdCheckGoogle(String memberId) {
+		int value = msm.memberIdCheckGoogle(memberId);
+		return value;
+	}
+
+	@Override
+	public int GoogleMemberInsert(GoogleInfResponse gr) {
+		int value = msm.GoogleMemberInsert(gr);
+		return value;
+	}
+
+	@Override
+	public MemberVo GoogleMemberLogin(String memberId) {
+		MemberVo mv = msm.GoogleMemberLogin(memberId);
 		return mv;
 	}
 

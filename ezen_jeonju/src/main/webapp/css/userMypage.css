@@ -152,8 +152,8 @@ a{
 
 .likeCon{
 	display: inline-block;
-	width: 27%;
-	margin: 10px 15px 0px 0px;
+	width: 28%;
+	margin: 15px 15px 0px 0px;
 	text-align: center;
 	padding: 10px 0;
 }
@@ -162,7 +162,30 @@ a{
 }
 .likeImgName{
 	margin: 10px 0;
+	font-weight: bold;
 }
 .likeList{
 	margin-left: 70px;
+}
+.rev-del button {
+    cursor: pointer;
+    font-weight: bold;
+    padding: 5px 15px;
+    font-size: 15px;
+    border-radius: 10px;
+    margin-left: 27px;
+    background: #FFA07A;
+    border: 1px solid #FFA07A;
+    color: white;
+}
+
+.likeCancel button{
+	cursor: pointer;
+    font-weight: bold;
+    padding: 5px 15px;
+    font-size: 15px;
+    border-radius: 10px;
+    background: #FFA07A;
+    border: 1px solid #FFA07A;
+    color: white;
 }

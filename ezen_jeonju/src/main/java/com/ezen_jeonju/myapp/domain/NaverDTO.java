@@ -5,7 +5,6 @@ public class NaverDTO {
 	private String memberPwd;  //access_Token
 	private String memberName;  //nickname
 	private String memberEmail;  //email
-	private String memberPhone;  //mobile
 	
 	
 	public String getMemberId() {
@@ -25,12 +24,6 @@ public class NaverDTO {
 	}
 	public void setMemberEmail(String memberEmail) {
 		this.memberEmail = memberEmail;
-	}
-	public String getMemberPhone() {
-		return memberPhone;
-	}
-	public void setMemberPhone(String memberPhone) {
-		this.memberPhone = memberPhone;
 	}
 	public String getMemberPwd() {
 		return memberPwd;

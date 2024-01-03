@@ -33,7 +33,11 @@ h4{
 }
 .loginBox{
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
+	margin-top: 150px;
+	width: 35%;
+	margin-left: auto;
+	margin-right: auto;
 }
 .loginbtn{
 	background: white;
@@ -66,6 +70,12 @@ h4{
 	justify-content: center;
 }
 .seperator{
-	display: flex;
-	justify-content: center;
+	display: inline-block;
+	text-align: center;
 }
+.socialList{
+	margin-top: 12px;
+}
+.socialList img{
+	margin-top:10px;
+} 
