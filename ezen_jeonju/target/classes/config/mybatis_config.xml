@@ -24,7 +24,7 @@
  <typeAlias alias="af" type="com.ezen_jeonju.myapp.domain.AttachFileVo"/>
  <typeAlias alias="rv" type="com.ezen_jeonju.myapp.domain.ReviewVo"/>
  <typeAlias alias="rld" type="com.ezen_jeonju.myapp.domain.ReviewListDTO"/>
- 
+ <typeAlias alias="sscri" type="com.ezen_jeonju.myapp.domain.ScheduleCriteria"/>
  
 </typeAliases>
 </configuration>

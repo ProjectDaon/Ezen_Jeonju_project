@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ezen_jeonju.myapp.domain.Criteria;
+import com.ezen_jeonju.myapp.domain.PageMaker;
+import com.ezen_jeonju.myapp.domain.ScheduleCriteria;
 import com.ezen_jeonju.myapp.domain.ScheduleRootVo;
 import com.ezen_jeonju.myapp.domain.TourCourseVo;
 import com.ezen_jeonju.myapp.service.ScheduleService;
@@ -30,6 +33,8 @@ public class ScheduleController {
 	@Autowired
 	ScheduleService ss;
 	
+	@Autowired(required=false)
+	private PageMaker pm;
 	
 	@RequestMapping(value = "/scheduleWrite.do")
 	public String scheduleWrite() {
@@ -89,12 +94,16 @@ public class ScheduleController {
 
 	
 	@RequestMapping(value = "/scheduleList.do")
-	public String scheduleList(Model model) {
+	public String scheduleList(Criteria cri, ScheduleCriteria sscri, Model model) {
 		
-		ArrayList<ScheduleRootVo> list = ss.scheduleList();
+		ArrayList<ScheduleRootVo> list = ss.scheduleList(sscri);
+		int totalCount = ss.scheduleTotalCount();
+		pm.setCri(cri);
+		pm.setSscri(sscri);
+		pm.setTotalCount(totalCount);
 		
 		model.addAttribute("list",list);
-		
+		model.addAttribute("pm", pm);
 		return "schedule/scheduleList";
 	}
     @RequestMapping(value="/scheduleContents.do")
