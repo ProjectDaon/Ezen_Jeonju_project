@@ -20,5 +20,15 @@ public interface MainPageService_Mapper {
 
 	public ArrayList<MainPageVo> registeredVanners();
 
+	public MainPageVo vannerContent(int mpidx);
+
+	public int vannerModify(MainPageVo mpv);
+
+	public int vannerCount(MainPageVo mpv);
+	
+	public int vannerDelete(MainPageVo mpv);
+
+	public int vannerArray(int mpidx);
+
 
 }

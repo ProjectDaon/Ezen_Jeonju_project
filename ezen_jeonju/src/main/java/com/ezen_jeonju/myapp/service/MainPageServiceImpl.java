@@ -64,6 +64,35 @@ public class MainPageServiceImpl implements MainPageService{
 	}
 
 
+	@Override
+	public MainPageVo vannerContent(int mpidx) {
+		MainPageVo mpv =mpsm.vannerContent(mpidx);
+		
+		return mpv;
+	}
+
+
+	@Override
+	public int vannerModify(MainPageVo mpv) {
+		int value =mpsm.vannerModify(mpv);
+		
+		return value;
+	}
+
+	@Override
+	public int vannerCount(MainPageVo mpv) {
+		int value =mpsm.vannerCount(mpv);
+		
+		return value;
+	}
+
+	@Override
+	public int vannerDelete(MainPageVo mpv) {
+		mpsm.vannerDelete(mpv);
+		int mainPageSequence = mpv.getMainPageSequence();
+		int value = mpsm.vannerArray(mainPageSequence);
+		return value;
+	}
 
 
 

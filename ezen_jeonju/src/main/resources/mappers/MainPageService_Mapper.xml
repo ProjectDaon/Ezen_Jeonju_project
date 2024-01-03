@@ -11,14 +11,14 @@ VALUES(#{mainPageSequence}, #{mainPageSubject}, #{mainPageLink}, #{midx}, #{aidx
 </insert>
 
 <select id="mainPageVannerView" resultType="mpv">
-SELECT a.mainPageLink,a.aidx,a.mainPageSubject from mainpage a 
-join attachfile b on a.aidx=b.aidx where b.category="vanners" and b.fileYN='N' ORDER BY a.mainPageSequence asc;
+SELECT a.mainPageLink,a.aidx,a.mainPageSubject,b.storedFilePath from mainpage a 
+join attachfile b on a.aidx=b.aidx where b.category="vanners" and a.mainpageYN='N' ORDER BY a.mainPageSequence asc;
 </select>
 
 <select id="mainPageSecondView" resultType="cv">
 SELECT b.cidx,a.aidx,b.contentsSubject FROM attachfile a
 join contents b on a.aidx=b.aidx
-WHERE a.category = "contents" and a.fileYN='N'
+WHERE a.category = "contents" and b.contentsYN='N'
 ORDER BY a.fileUploadDay DESC
 LIMIT 7;
 </select>
@@ -26,7 +26,7 @@ LIMIT 7;
 <select id="mainPageThirdView" resultType="cv">
 SELECT b.cidx,a.aidx,b.contentsSubject FROM attachfile a
 join contents b on a.aidx=b.aidx
-WHERE a.category = "contents" and a.fileYN='N'
+WHERE a.category = "contents" and b.contentsYN='N'
 ORDER BY b.contentsViewCount DESC
 LIMIT 3;
 </select>
@@ -35,15 +35,42 @@ LIMIT 3;
 <select id="mainPageNoticeView" resultType="nv">
 SELECT b.nidx,a.aidx,b.noticeSubject FROM attachfile a
 join notice b on a.aidx=b.aidx
-WHERE a.category = "notice" and a.fileYN='N'
+WHERE a.category = "notice" and b.noticeYN='N'
 ORDER BY a.fileUploadDay DESC
 LIMIT 4;
 </select>
 
 <select id="registeredVanners" resultType="mpv">
 SELECT a.mainPageSequence,a.mpidx,a.mainPageSubject,b.fileUploadDay from mainpage a 
-join attachfile b on a.aidx=b.aidx where b.category="vanners" and b.fileYN='N' ORDER BY a.mainPageSequence asc;
+join attachfile b on a.aidx=b.aidx where b.category="vanners" and a.mainpageYN='N' ORDER BY a.mainPageSequence asc;
 </select>
+
+<select id="vannerContent" resultType="mpv">
+SELECT * from mainpage where mpidx=#{mpidx};
+</select>
+
+<update id="vannerModify" parameterType="mpv">
+update mainpage set mainPageSubject = #{mainPageSubject}, mainPageLink = #{mainPageLink}
+where mpidx=#{mpidx}
+</update>
+
+<select id="vannerCount" resultType="int">
+SELECT count(*) as cnt from mainpage
+where mainpageYN='N'
+</select>
+
+<insert id="vannerDelete" parameterType="int">
+<selectKey resultType="int" keyProperty="mainPageSequence"  order="AFTER">
+select mainPageSequence from mainpage where mpidx=#{mpidx}
+</selectKey>
+update mainpage set mainPageYN = 'Y'
+where mpidx=#{mpidx}
+</insert>
+
+<update id="vannerArray" parameterType="int">
+UPDATE mainpage SET mainPageSequence = mainPageSequence - 1
+WHERE mainPageSequence > #{mainPageSequence} 
+</update>
 
 
 

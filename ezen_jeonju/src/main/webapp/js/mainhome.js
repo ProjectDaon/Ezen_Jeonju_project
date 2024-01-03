@@ -29,8 +29,8 @@ $(document).ready(function(){
     $('.first-text-list').slick({
         autoplay: true,
         autoplaySpeed: 3000,
-        slideToShow: 1,
-        slideToScroll: 1,
+        slidesToShow: 1,
+        slidesToScroll: 1,
         vertical : true,
         verticalSwiping : true,
         asNavFor: '.first-visual-list',
