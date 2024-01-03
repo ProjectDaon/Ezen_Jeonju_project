@@ -8,6 +8,22 @@ public class MainPageVo extends AttachFileVo{
 	private String mainPageSubject;
 	private String mainPageLink;
 	private String mainWriteday;
+	private String mainPageYN;
+	
+	
+	
+	public int getAidx() {
+		return aidx;
+	}
+	public void setAidx(int aidx) {
+		this.aidx = aidx;
+	}
+	public String getMainPageYN() {
+		return mainPageYN;
+	}
+	public void setMainPageYN(String mainPageYN) {
+		this.mainPageYN = mainPageYN;
+	}
 	
 	public int getMpidx() {
 		return mpidx;
