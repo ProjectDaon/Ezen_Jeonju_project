@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ezen_jeonju.myapp.domain.ScheduleCriteria;
 import com.ezen_jeonju.myapp.domain.ScheduleRootVo;
 import com.ezen_jeonju.myapp.domain.TourCourseVo;
 import com.ezen_jeonju.myapp.persistance.ScheduleService_Mapper;
@@ -44,8 +45,8 @@ public class ScheduleServiceImpl implements ScheduleService{
 				
 	}
 	@Override
-	public ArrayList<ScheduleRootVo> scheduleList() {
-		ArrayList<ScheduleRootVo> list = ssm.scheduleList();
+	public ArrayList<ScheduleRootVo> scheduleList(ScheduleCriteria sscri) {
+		ArrayList<ScheduleRootVo> list = ssm.scheduleList(sscri);
 
 		return list;
 	}
@@ -76,6 +77,14 @@ public class ScheduleServiceImpl implements ScheduleService{
 	public ArrayList<TourCourseVo> tourCourseNDateContents(TourCourseVo tv) {
 		ArrayList<TourCourseVo> tlist = ssm.tourCourseNDateContents(tv);
 		return tlist;
+	}
+
+
+	@Override
+	public int scheduleTotalCount() {
+		int value = ssm.scheduleTotalCount();
+		
+		return value;
 	}
 	
 }
