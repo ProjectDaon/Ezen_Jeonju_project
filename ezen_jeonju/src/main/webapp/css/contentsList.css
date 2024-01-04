@@ -97,7 +97,6 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 
 .sbt {
     position: absolute;
-    top: 1px;
     /* width: 64px; */
     height: 38px;
     font-size: .75rem;
