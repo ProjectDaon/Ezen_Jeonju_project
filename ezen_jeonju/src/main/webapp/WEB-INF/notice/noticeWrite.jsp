@@ -27,15 +27,12 @@
 <script type="text/javascript">
 $(document).ready( function() {
 	$('#headers').load("../nav/nav.jsp");
+	
+	$('#summernote').summernote({
+		  lang: 'ko-KR' // default: 'en-US'
+	});
 });
-</script>
-<div id="headers"></div>
 
-<br><br><br>
-<br><br><br>
-<br><br><br>
-
-<script>
 function goWrite(){
 	var fm = document.frm;
 	
@@ -52,6 +49,12 @@ function goWrite(){
     return;
 }
 </script>
+<div id="headers"></div>
+
+<br><br><br>
+<br><br><br>
+<br><br><br>
+
 <div class="WritingWrap">
 	<div class="WritingHeader">
 		<h2 class="title">공지사항 작성하기</h2>
@@ -100,13 +103,6 @@ function goWrite(){
 		</div>	
 		<textarea id="summernote" name="noticeArticle"></textarea>
 		</form>
-	<script>
-	$(document).ready(function() {
-	  $('#summernote').summernote({
-	    lang: 'ko-KR' // default: 'en-US'
-	  });
-	});
-	</script>
 	</div>
 </div>
 </body>

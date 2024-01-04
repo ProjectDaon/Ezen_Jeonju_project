@@ -23,8 +23,6 @@ var cidx = ${cv.cidx};
 
 $(document).ready(function(){
 
-
-
 	//가져올때 navbar.css도 같이 가져올 것
 	$('#headers').load("../nav/nav.jsp");
 	$('#footers').load("../nav/footer.jsp");
@@ -33,7 +31,7 @@ $(document).ready(function(){
 	likeCheck();
 	
 	/*리뷰창 로딩*/
-	$('#tab2').click(function(){
+	$('#tab3').click(function(){
 		reviewList();
 	});
 	
@@ -57,8 +55,11 @@ $(document).ready(function(){
 		});
 		
 	});
+	$('#tab2').click(function(){
+		relayout();
+	});
 	
-	$('#tab3').click(function(){
+	$('#tab4').click(function(){
 		blogReviewLead();
 	});
 	
@@ -66,6 +67,7 @@ $(document).ready(function(){
 	    blogReviewLead();
 	});
 });
+
 function likeCheck(){
 	$.ajax({
 		type : "post",
@@ -247,7 +249,6 @@ function reviewDel(ridx){
 	var start = 4; // 시작 인덱스
 	var batchSize = 5; // 한 번에 보여줄 항목의 개수
 function blogReviewLead() {
-	
     var subject = "전주 ${cv.contentsSubject}";
     $.ajax({
         type: "post",
@@ -305,8 +306,8 @@ function displayBlogItems(data) {
 	</div>
 	<div class="actionUserBar">
 		<ul class="left">
-			<li>평점 &nbsp<img src="../images/starimg.jpg">&nbsp ${csd.starAverage} </li>
-			<li>조회 &nbsp<strong>${cv.contentsViewCount}</strong></li>
+			<li>평점 &nbsp;<img src="../images/starimg.jpg">&nbsp;<strong>${csd.starAverage}</strong></li>
+			<li>조회 &nbsp;<strong>${cv.contentsViewCount}</strong></li>
 			<li>리뷰 <strong>${csd.reviewCount}</strong></li>
 		</ul>
 		<div class="right">
@@ -325,16 +326,37 @@ function displayBlogItems(data) {
 		<div class="tab-wrap">
 			<ul id="tablist" class="tab innerwrap">
 				<li class="on" id="tab1"><button>상세정보</button></li>
-				<li id="tab2"><button>리뷰</button></li>
-				<li id="tab3"><button>블로그리뷰</button></li>
+				<li id="tab2"><button>지도/길찾기</button></li>
+				<li id="tab3"><button>리뷰</button></li>
+				<li id="tab4"><button>블로그리뷰</button></li>
 			</ul>
 		</div>
 		<div class="tab-con innerwrap" id="tab_con">
 			<div class="con-det">
 				${cv.contentsArticle}
-				<div id="map" style="width:500px;height:400px;"></div>
+			</div>
+			<div class="con-map" style="display:none">
+				<div id="map" style="width:100%; height:500px;"></div>
 				<input type="hidden" id="latitude" value="${cv.contentsLatitude}">
 				<input type="hidden" id="longitude" value="${cv.contentsLongitude}">
+				<div class="loadSearch">
+					<div class="inner">
+						<strong class="title">길찾기</strong>
+						<div class="loadPutBox">
+							<div class="start">
+								<span>출발지</span>
+								<input type="text" id="findPath_start" class="loadInput">
+							</div>
+							<div class="end">
+								<span>도착지</span>
+								<input type="text" id="findPath_end" class="loadInput" value="${cv.contentsSubject}">
+							</div>
+						</div>
+						<div class="loadBtn">
+							<a href="https://map.kakao.com/link/to/${cv.contentsSubject},${cv.contentsLatitude},${cv.contentsLongitude}" target="_blank">길찾기</a>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="con-review" style="display:none">
 				<div class="revHead">
@@ -352,7 +374,7 @@ function displayBlogItems(data) {
 				</div>
 				<div class="blogList">
 				</div>
-				<button id="loadMoreBtn">더 보기</button>
+				<button id="loadMoreBtn" style="color:coral; float: right;">+더보기</button>
 			</div>
 		</div>
 	</div>
@@ -370,11 +392,11 @@ function displayBlogItems(data) {
 				</colgroup>
 				<tbody>
 					<tr>
-						<th>리뷰장소</td>
+						<th>리뷰장소</th>
 						<td>${cv.contentsSubject}</td>
 					</tr>
 					<tr>
-						<th>평가</td>
+						<th>평가</th>
 						<td>
 							<div id="rev_star_grade" class="rev-starGrade">
 								<i class="rating__star far fa-star"></i>
@@ -404,21 +426,21 @@ function displayBlogItems(data) {
 		</div>
 		</div>
 	</div>
-
-
+</div>
+<div id="footers"></div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dbee45d6252968c16f0f651bb901ef42&libraries=services"></script>
 <script>
-	
+
 	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	var latitude = document.getElementById('latitude').value;
     var longitude = document.getElementById('longitude').value;
 	var options = { //지도를 생성할 때 필요한 기본 옵션
 		center: new kakao.maps.LatLng(latitude, longitude), //지도의 중심좌표.
-		level: 2 //지도의 레벨(확대, 축소 정도)
+		level: 4 //지도의 레벨(확대, 축소 정도)
 		};
 	var map = new kakao.maps.Map(container, options);
-
+	
 	// 마커가 표시될 위치입니다 
 	var markerPosition  = new kakao.maps.LatLng(latitude, longitude); 
 
@@ -429,9 +451,25 @@ function displayBlogItems(data) {
 	
 	// 마커가 지도 위에 표시되도록 설정합니다
 	marker.setMap(map);
-</script>
+	
+	// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+	var mapTypeControl = new kakao.maps.MapTypeControl();
+	
+	// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+	// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+	map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 
-</div>
-<div id="footers"></div>
+	// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+	var zoomControl = new kakao.maps.ZoomControl();
+	map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+	
+ 	function relayout() {    
+	    // 지도를 표시하는 div 크기를 변경한 이후 지도가 정상적으로 표출되지 않을 수도 있습니다
+	    // 크기를 변경한 이후에는 반드시  map.relayout 함수를 호출해야 합니다 
+	    // window의 resize 이벤트에 의한 크기변경은 map.relayout 함수가 자동으로 호출됩니다
+	    map.relayout();
+	    map.setCenter(new kakao.maps.LatLng(latitude, longitude));
+	} 
+</script>
 </body>
 </html>

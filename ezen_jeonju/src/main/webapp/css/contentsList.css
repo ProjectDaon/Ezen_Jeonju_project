@@ -1,6 +1,10 @@
 @charset "UTF-8";
+a {
+    text-decoration: none;
+    color: #555;
+}
 
-.contents{
+/* .contents{
 	margin-top: 200px;
 	text-align: center;
 	width: 100%;
@@ -17,60 +21,169 @@
 	margin-left: auto;
 	margin-right: auto;
 	padding-right: 50px;
+} */
+
+.inner {
+    position: relative;
+    margin: 0 auto;
+    width: 1300px;
+    /* height: 100%; */
 }
-.contents-list{
+
+.innerwrap {
+    max-width: 1300px;
+    width: 100%;
+    margin: 5% auto;
+    padding : 0 5%;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+h3 {
+    font-weight: 500;
+    text-align: center;
+    font-size: 42px;
+    color: #222;
+    /* margin: unset; */
+    line-height: normal;
+}
+
+.searchArray {
+    position: relative;
+    height: 40px;
+    /* margin: 0px 0 1.5rem; */
+    overflow: hidden;
+}
+
+.totalCount {
+    padding: 15px 0;
+    float: left;
+}
+
+.search {
+    width: 28%;
+    float: right;
+    padding: 0px 0 0 0;
+    width: auto;
+    position: absolute;
+    right: 1px;
+}
+
+.searchGroup {
+    display: inline-block;
+    width: 14.5rem;
+    position: relative;
+    margin: auto;
+    vertical-align: middle;
+    border: 0;
+}
+
+.searchGroup input {
+    /* float: left; */
+    width: 70%;
+    height: 38px;
+    padding: 0 0 0 20px;
+    /* line-height: 1.5rem; */
+    /* color: #efefef; */
+    z-index: auto;
+    /* box-sizing: border-box; */
+    border: 0;
+    border-bottom: 1px solid #d5e3e8;
+}
+
+/* input box 입력 후 배경색 없애기 */
+input:-webkit-autofill { -webkit-box-shadow: 0 0 0 30px #fff inset ; -webkit-text-fill-color: #000; }
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active { transition: background-color 5000s ease-in-out 0s; }
+
+.sbt {
+    position: absolute;
+    top: 1px;
+    /* width: 64px; */
+    height: 38px;
+    font-size: .75rem;
+    border: none;
+    border-bottom: 1px solid #d5e3e8;
+    background-color: white;
+}
+
+.searchBtnIcon {
+    font-size:20px;
+    cursor: pointer;
+}
+
+/* .contents-list{
 	margin-top: 20px;
 	width: 70%;
 	margin-left: auto;
 	margin-right: auto;
-}
+} */
 .contents-list ul {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-wrap: wrap;
+/*   display: flex;
+  flex-wrap: wrap; */
 }
 
 .contents-list li {
-  box-sizing: border-box;
-  width: 30%; /* Three columns per row */
-  padding: 10px;
-  margin: 10px;
+    box-sizing: border-box;
+    /* padding: 10px; */
+    /* margin: 10px; */
+    float: left;
+    width: calc(100%/3);
+    height: 390px;
 }
 .contents-list li img{
-	 width: 400px; 
+	 width: 380px; 
 	 height: 270px;
 }
 .contents-list li ion-icon{
 	font-size: 20px;
 	color: #6C6C6C;
 }
-.contents-list li a{
-	text-decoration: none;
-	color: black;
-	font-weight: bold;
-	font-size: 20px;
+
+.contents-list li p {
+    font-size: 17px;
+    font-weight: 500;
+    color: #000;
+    line-height: 1.5em;
+    text-align: center;
 }
+
 .contents-list-sub{
-	width: 55%;
-	display: flex;
-	justify-content: space-between;
-	margin-left: auto;
-	margin-right: auto;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
 .contents-list-sub span{
 	display: flex;
-	justify-content: center;
-	align-items: center;
 }
+
+.write {
+	margin-top: 10px;
+	display: flex;
+    justify-content: end;
+}
+
+.write a {
+    cursor: pointer;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    border-radius: 4px;
+    background: #FFDEAD;
+	border-color: #FFDEAD;
+	color: coral;
+	font-weight: bold;
+}
+
 .paging {
     text-align: center;
-    margin: 30px 0 0;
+    margin: 30px 0 50px 0;
     font-size: 0;
     clear: both;
 }
-
 
 .paging a {
     display: inline-block;
@@ -81,43 +194,16 @@
     vertical-align: middle;
     border: 1px solid #c9c9c9;
     margin: 0 1px;
-    text-decoration: none;
 }
 
-.pageNumber.active{
-	background: #333;
+.paging a:hover {
+    background: #333;
     color: #fff;
     border: 1px solid #333;
 }
-.searchinput{
-    border: none;
-    border-bottom: 1px solid #c9c9c9;
-    outline: none;
-    font-size: 20px;
-    width: 150px;
-}
-.sbt{
-	background: none;
-	border: none;
-	font-size: 20px;
-	cursor: pointer;
-}
-.writebtn{
-	position: relative;
-	text-align: right;
-	width: 70%;
-	margin-left: auto;
-	margin-right: auto;
-	bottom: 20px;
-	right: 80px;
-}
-.writebtn a{
-	text-decoration: none;
-	border: 1px solid black;
-	border-radius: 5px;
-	font-size: 15px;
-	font-weight: bold;
-	padding: 5px;
-	background: #c9c9c9;
-	color: black;
+
+.pageNumber.active {
+    background: #333;
+    color: #fff;
+    border: 1px solid #333;
 }
