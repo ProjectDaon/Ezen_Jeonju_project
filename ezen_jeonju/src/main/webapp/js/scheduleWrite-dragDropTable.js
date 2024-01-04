@@ -177,7 +177,7 @@
 	        if (cellText !== "") {
 	            // 마커 이미지 생성
 	            var markerImage = new kakao.maps.MarkerImage(
-	                'https://via.placeholder.com/25x25/FF0000/FFFFFF?text=' + (markers.length + 1),
+	                'https://placehold.jp/23/3d4070/ffffff/25x25.png?text=' + (markers.length + 1),
 	                new kakao.maps.Size(25, 25),
 	                { offset: new kakao.maps.Point(13, 25) }
 	            );
@@ -239,7 +239,7 @@
         if (cellText !== "") {
             // 마커 이미지 생성
             var markerImage = new kakao.maps.MarkerImage(
-                'https://via.placeholder.com/25x25/FF0000/FFFFFF?text=' + (markers.length + 1),
+                'https://placehold.jp/23/3d4070/ffffff/25x25.png?text=' + (markers.length + 1),
                 new kakao.maps.Size(25, 25),
                 { offset: new kakao.maps.Point(13, 25) }
             );
@@ -293,8 +293,6 @@
             alert("기간은 최대 일주일까지 가능합니다");
             return;
         }
-
-        schedulePeriod.innerHTML = startDatePeriod + " ~ " + endDatePeriod;
 
         // 추가: 동적으로 테이블 생성
         if(endDatePeriod == startDatePeriod){

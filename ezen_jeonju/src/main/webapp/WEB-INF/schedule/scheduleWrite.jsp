@@ -5,6 +5,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+	img {
+		width : 70px;
+		height : 70px;
+	}
+
 	table {
 		border-collapse: collapse;
 		
@@ -76,14 +81,16 @@
 	
 	}
 	
-	#foodBtn, #placeBtn{
+	#foodBtn, #placeBtn, #tourBtn, #restBtn{
 		
 	display : none;
 		
 	} 
 	
 	#foodBtn.active,
-	#placeBtn.active {
+	#placeBtn.active,
+	#tourBtn.active,
+	#restBtn.active {
   
     display: inline-block;
   	}
@@ -127,53 +134,157 @@
 	   		 }
 		}
 	}
-
-//드래그시 랭크부여
-document.addEventListener("dragend", function (event) {
-    addRankToTable('dragDropTable');
-});
 	
+	//드래그시 랭크부여
+	document.addEventListener("dragend", function (event) {
+	    addRankToTable('dragDropTable');
+	});
+		
 	<!--전주 음식점 api 불러오는 함수-->
     let currentPageFood = 1;
     let currentPagePlace = 1;
+    let currentPageTour = 1;
+    let currentPageRest = 1;
     const itemsPerPage = 10;
-    let perPage = 55;
+    let perPage = 850;
+    let filteredDataCnt = 0;
     function getFood() {
         let obj = document.getElementById("jj");
         let existingPs = obj.querySelectorAll('p');
         existingPs.forEach((p) => {
             p.remove();
         });
-		//api 가져올 갯수
+		
         
-        let startIdx = (currentPageFood - 1) * itemsPerPage;
-        let endIdx = startIdx + itemsPerPage;
+	    let startIdx = (currentPageFood - 1) * itemsPerPage;
+        let endIdx = startIdx + itemsPerPage; 
 
-        fetch("https://api.odcloud.kr/api/15076735/v1/uddi:98edad48-0892-4621-8741-cdff64f99c79?page=" + currentPageFood + "&perPage="+perPage+"&serviceKey=%2BUFeyGq0yCyRGAnfn2BZHmpxwulEWArLYaKEKRMZZSGW85K8Gxlkum5LSZjUcypheIifRSpj1kFDOTS3yFa5wQ%3D%3D")
+        fetch("https://api.odcloud.kr/api/15076735/v1/uddi:98edad48-0892-4621-8741-cdff64f99c79?page=" + currentPageFood + "&perPage=" + perPage + "&serviceKey=%2BUFeyGq0yCyRGAnfn2BZHmpxwulEWArLYaKEKRMZZSGW85K8Gxlkum5LSZjUcypheIifRSpj1kFDOTS3yFa5wQ%3D%3D")
+        .then((response) => response.json())
+        .then((data) => {
+            let List = "<ul>";
+
+            let filteredData = data.data.filter((place) => place['네이버 인기도'] > 4.0);
+            
+            // 필터된 데이터의 갯수를 가져오기
+            filteredDataCnt = filteredData.length;
+
+            filteredData.slice(startIdx, endIdx).forEach((place) => {
+                let newP = document.createElement("p");
+                let placeName = place['식당명'];
+                let placelatitude = place['식당위도'];
+                let placelongitude = place['식당경도'];
+                let placeScore = place['네이버 인기도'];
+
+                newP.innerHTML = "<a href='#' onclick='addToTable(\"" + placeName + "," + placelatitude + "," + placelongitude + "\")'>" + placeName + "</a>";
+                newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
+                newP.innerHTML += "네이버 별점 : " + placeScore
+                newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
+                newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도 자세히보기</a>';
+
+                obj.appendChild(newP);
+            });
+        })
+        .then(() => { // fetch가 완료된 후에 실행되도록 이동
+            $('#pageIndex').text(currentPageFood + " / " + 2);
+            $('#placeBtn').removeClass('active');
+            $('#foodBtn').addClass('active');
+            $('#tourBtn').removeClass('active');
+            $('#restBtn').removeClass('active');
+        })
+    }
+    function getRest() {
+        let obj = document.getElementById("jj");
+        let existingPs = obj.querySelectorAll('p');
+        existingPs.forEach((p) => {
+            p.remove();
+        });
+		
+        
+	    let startIdx = (currentPageRest - 1) * itemsPerPage;
+        let endIdx = startIdx + itemsPerPage; 
+
+        fetch("http://apis.data.go.kr/B551011/KorService1/areaBasedList1?numOfRows=122&pageNo=1&MobileOS=ETC&MobileApp=AppTest&ServiceKey=%2BUFeyGq0yCyRGAnfn2BZHmpxwulEWArLYaKEKRMZZSGW85K8Gxlkum5LSZjUcypheIifRSpj1kFDOTS3yFa5wQ%3D%3D&listYN=Y&arrange=A&contentTypeId=39&areaCode=37&sigunguCode=12&cat1=&cat2=&cat3=&_type=json")
+        .then((response) => response.json())
+        .then((data) => {
+            // items -> item 배열을 가져와서 forEach
+            data.response.body.items.item.slice(startIdx, endIdx).forEach((place) => {
+                let newP = document.createElement("p");
+                let newImage = document.createElement("img");
+                let placeName = place['title'];
+                let placelatitude = place['mapy'];
+                let placelongitude = place['mapx'];
+                let placeImage = place['firstimage'];
+                newP.innerHTML = "<a href='#' onclick='addToTable(\"" + placeName + "," + placelatitude + "," + placelongitude + "\")'>" + placeName + "</a>";
+                newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
+                newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도 자세히보기</a>';
+				
+                if (placeImage) {
+                    newImage.src = placeImage;
+                } else {
+                	 // 사진없을 때
+                    newImage.src = 'https://via.placeholder.com/100x100/CCCCCC/FFFFFF?text=No+Image';
+                }
+
+              
+                newP.appendChild(newImage);                   
+                obj.appendChild(newP);
+            });
+        })
+        .then(() => {
+            $('#pageIndexRest').text(currentPageRest + " / " + 13);
+            $('#placeBtn').removeClass('active');
+            $('#foodBtn').removeClass('active');
+            $('#tourBtn').removeClass('active');
+            $('#restBtn').addClass('active');
+        });
+    }
+    
+    function getTour() {
+        let obj = document.getElementById("jj");
+        let existingPs = obj.querySelectorAll('p');
+        existingPs.forEach((p) => {
+            p.remove();
+        });
+
+	    let startIdx = (currentPageTour - 1) * itemsPerPage;
+        let endIdx = startIdx + itemsPerPage; 	
+        
+        fetch("https://apis.data.go.kr/B551011/KorService1/areaBasedList1?numOfRows=82&pageNo=1&MobileOS=ETC&MobileApp=AppTest&ServiceKey=%2BUFeyGq0yCyRGAnfn2BZHmpxwulEWArLYaKEKRMZZSGW85K8Gxlkum5LSZjUcypheIifRSpj1kFDOTS3yFa5wQ%3D%3D&listYN=Y&arrange=A&contentTypeId=12&areaCode=37&sigunguCode=12&cat1=&cat2=&cat3=&_type=json")
             .then((response) => response.json())
             .then((data) => {
-            	
-            	let List = "<ul>";
-            	
-                data.data.slice(startIdx, endIdx).forEach((place) => {
+                // items -> item 배열을 가져와서 forEach
+                data.response.body.items.item.slice(startIdx, endIdx).forEach((place) => {
                     let newP = document.createElement("p");
-                    let placeName = place['식당명'];
-                    let placelatitude = place['식당위도'];
-                    let placelongitude = place['식당경도'];
-                    newP.innerHTML = "<a href='#' onclick='addToTable(\"" + placeName +","+placelatitude +","+ placelongitude +"\")'>" + placeName + "</a>";
+                    let newImage = document.createElement("img");
+                    let placeName = place['title'];
+                    let placelatitude = place['mapy'];
+                    let placelongitude = place['mapx'];
+                    let placeImage = place['firstimage'];
+                    newP.innerHTML = "<a href='#' onclick='addToTable(\"" + placeName + "," + placelatitude + "," + placelongitude + "\")'>" + placeName + "</a>";
                     newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
                     newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도 자세히보기</a>';
+					
+                    if (placeImage) {
+                        newImage.src = placeImage;
+                    } else {
+                        // 사진없을 때
+                        newImage.src = 'https://via.placeholder.com/100x100/CCCCCC/FFFFFF?text=No+Image';
+                    }
 
-                    // newP.innerHTML += `<button onclick="panTo(${restaurant['식당위도']},${restaurant['식당경도']})">좌표이동</button>`;
+                    newP.appendChild(newImage);                   
                     obj.appendChild(newP);
                 });
+            })
+            .then(() => {
+                $('#pageIndexTour').text(currentPageTour + " / " + 9);
+                $('#placeBtn').removeClass('active');
+                $('#foodBtn').removeClass('active');
+                $('#tourBtn').addClass('active');
+                $('#restBtn').removeClass('active');
             });
-
-        $('#pageIndex').text(currentPageFood +" / " + (Math.floor(perPage/itemsPerPage) +1) );
-        $('#placeBtn').removeClass('active');
-        $('#foodBtn').addClass('active');
     }
-
+    
     function getPlace() {
         let obj = document.getElementById("jj");
         let existingPs = obj.querySelectorAll('p');
@@ -198,16 +309,20 @@ document.addEventListener("dragend", function (event) {
 
                     obj.appendChild(newP);
                 });
-            });
-
-        $('#pageIndexPlace').text(currentPagePlace+" / 1");
-        $('#foodBtn').removeClass('active');
-        $('#placeBtn').addClass('active');
+            })
+	        	.then(() => { // fetch가 완료된 후에 실행되도록 이동
+	        	
+        		$('#pageIndexPlace').text(currentPagePlace+" / 1");
+	        	$('#placeBtn').addClass('active');
+	            $('#foodBtn').removeClass('active');
+	            $('#tourBtn').removeClass('active');
+	            $('#restBtn').removeClass('active');
+        	})
        
     }
 
     function nextPage() {
-        if (currentPageFood > perPage/10) {
+        if (currentPageFood > 1) {
             alert('마지막 페이지입니다.');
         } else {
             currentPageFood++;
@@ -223,7 +338,25 @@ document.addEventListener("dragend", function (event) {
         }
        
     }
+    
+    function nextPageTour() {
+        if (currentPageTour > 8) {
+            alert('마지막 페이지입니다.');
+        } else {
+            currentPageTour++;
+            getTour();
+        }
+        
+    }
 
+    function prevPageTour() {
+        if (currentPageTour > 1) {
+            currentPageTour--;
+            getTour();
+        }
+       
+    }
+    
     function nextPagePlace() {
         if (currentPagePlace > 0) {
             alert('마지막 페이지입니다.');
@@ -233,7 +366,23 @@ document.addEventListener("dragend", function (event) {
         }
         
     }
-
+    function prevPageRest() {
+        if (currentPageRest > 1) {
+            currentPageRest--;
+            getRest();
+        }
+       
+    }
+    
+    function nextPageRest() {
+        if (currentPageRest > 12) {
+            alert('마지막 페이지입니다.');
+        } else {
+            currentPageRest++;
+            getRest();
+        }
+        
+    }
 
     // 음식점 이름을 클릭하면 테이블 셀에 정보를 추가
     function addToTable(placeName, placeLatitude, placeLongitude) {
@@ -282,9 +431,16 @@ document.addEventListener("dragend", function (event) {
 
 </head>
 <body>
+<button id="rest" onclick="getRest()">음식점</button>
+<button id="tour" onclick="getTour()">관광지</button>
+<button id="food" onclick="getFood()">맛집 추천</button>
+<button id="place" onclick="getPlace()">명소 추천</button>
 
-<button id="food" onclick="getFood()">음식점</button>
-<button id= "place" onclick="getPlace()">명소</button>
+<div id="restBtn">
+<button onclick="prevPageRest()">Previous</button>
+<b id=pageIndexRest></b>
+<button onclick="nextPageRest()">Next</button>
+</div>
 
 <div id="foodBtn">
 <button onclick="prevPage()">Previous</button>
@@ -293,9 +449,15 @@ document.addEventListener("dragend", function (event) {
 </div>
 
 <div id="placeBtn">
-<button onclick="prevPagePlace()">Previous</button>
+<button>Previous</button>
 <b id=pageIndexPlace></b>
 <button onclick="nextPagePlace()">Next</button>
+</div>
+
+<div id="tourBtn">
+<button onclick="prevPageTour()">Previous</button>
+<b id=pageIndexTour></b>
+<button onclick="nextPageTour()">Next</button>
 </div>
 
 
@@ -310,14 +472,6 @@ document.addEventListener("dragend", function (event) {
         <option value="N">아니요</option>
     </select>
     <input id="write" type="button" value="글쓰기" onclick="goWrite()"> <br>
-
-
-<table>
-    <tr id="schedulePeriod" value="">
-    	
-        <!-- 기간 표시 엘리먼트 -->
-    </tr>
-</table>
 
 <div id="totaltbl">
 
@@ -359,12 +513,12 @@ document.addEventListener("dragend", function (event) {
 </div>
 
 </div>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=24905b65af4a0e247d268677c3972e9d"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=24905b65af4a0e247d268677c3972e9d&libraries=services"></script>
 <script src="../js/scheduleWrite-map.js"></script>
+<script src="../js/scheduleWrite-searchmap.js"></script>
 <script type="text/javascript" src ="../js/scheduleWrite-dragDropTable.js"></script>
 
 <script>    
-
 
     <!-- 글 작성 함수 -->
     function goWrite() {
@@ -413,7 +567,6 @@ document.addEventListener("dragend", function (event) {
     	let arrays = JSON.stringify(jsonArray);
     	
         if (fm.scheduleSubject.value == "") {
-        	markerList();
             alert('제목을 입력해주세요');
             fm.scheduleSubject.focus();
             return;
@@ -457,12 +610,11 @@ document.addEventListener("dragend", function (event) {
 		location.href=loc;
 	   	return;
 }
-$(document).ready(function(){
+ $(document).ready(function(){
+	  getTour();
+	 //getFood();
 	   
-	 getFood();
-	   
-	   
-});
+}); 
 
 
 
