@@ -190,7 +190,7 @@ function reviewListPrint(data){
 		if(loginMidx==this.midx){
 			delbtn = "<button class='delBtn' onclick='reviewDel("+this.ridx+")'>삭제</button>";
 		}else{
-			delbtn= "";
+			delbtn= "<button id='reportBtn' class='reportBtn' onclick='reviewReport("+this.ridx+")'><i class='fa fa-bell' aria-hidden='true'></i></button>";
 		}
 		str = str+"<tr><td class='rev-writer'><div class='writer-wrap'><div class='rev-name'>"+this.memberName
 			+"</div><div class='rev-date'>"+this.reviewWriteday
