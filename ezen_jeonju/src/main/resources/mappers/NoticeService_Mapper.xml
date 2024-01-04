@@ -11,7 +11,7 @@ VALUES(#{midx}, #{noticeSubject}, #{noticeCategory}, #{noticeArticle}, #{noticeH
 
 <sql id = "search">
 <if test="searchType != null and searchType.equals('noticeCategory')">
-	and noticeCategory like concat('%',#{keyword},'%')
+	and noticeCategory like concat('%',#{keywordFilter},'%')
 </if>
 <if test="searchType != null and searchType.equals('noticeSubject')">
 	and noticeSubject like concat('%',#{keyword},'%')

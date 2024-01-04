@@ -1,24 +1,56 @@
 @charset "UTF-8";
-.container{
-	display: block;
-	margin-top: 150px;
-	text-align: center;
+
+.inner {
+    position: relative;
+    margin: 0 auto;
+    width: 1300px;
+    /* height: 100%; */
 }
+
+.innerwrap {
+    max-width: 1300px;
+    width: 100%;
+    margin: 5% auto;
+    padding: 0 5%;
+    overflow: hidden;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+h3 {
+    font-weight: 500;
+    text-align: center;
+    font-size: 42px;
+    color: #222;
+    /* margin: unset; */
+    line-height: normal;
+}
+
+
+.innerList {
+    max-width: 1300px;
+    width: 100%;
+    margin: 5% auto;
+    /* padding: 0 5%; */
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
 .total_cnt{
 	display: flex;
-	width: 80%;
+	/* width: 80%; */
 	margin-left: auto;
 	margin-right: auto;
 	text-align: left;
 	padding-left: 10px;
 	font-weight: bold;
-	font-size: 20px;
+	/* font-size: 20px; */
 }
 .total_cnt span{
 	color: red;
 }
 .video-table {
-    width: 80%;
+    /* width: 80%; */
     border-collapse: collapse;
     margin-left: auto;
     margin-right: auto;
@@ -50,32 +82,36 @@
     max-width: 100%;
     height: auto;
 }
+/* 페이징 css */
 
 .pagination {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    justify-content: center;
+    text-align: center;
+    margin: 30px 0 50px 0;
+    font-size: 0;
+    clear: both;
 }
 
-.pagination li {
-    margin: 0 5px;
-    cursor: pointer;
-    border: 1px solid #E59D42;
-    border-radius: 10px;
-    padding: 10px;
+.pagination a {
+	text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    min-width: 44px;
+    line-height: 44px;
+    font-size: 16px;
+    vertical-align: middle;
+    border: 1px solid #c9c9c9;
+    margin: 0 1px;
 }
-.pagination li.active{
-	background: #E59D42;
+
+.pagination .active {
+    background: #333;
+    color: #fff;
+    border: 1px solid #333;
 }
-.pagination a{
-    text-decoration: none;
-    color: #E59D42;
+
+.pagination a:hover {
+    background: #333;
+    color: #fff;
+    border: 1px solid #333;
 }
-.pagination li.active a{
-	color: white;
-}
-.container h1{
-	font-size: 40px;
-	margin-bottom: 30px;
-}
+

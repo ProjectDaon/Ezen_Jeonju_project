@@ -13,16 +13,27 @@
         $(document).ready(function () {
             // 가져올 때 navbar.css도 같이 가져올 것
             $('#headers').load("../nav/nav.jsp");
+            $('#footers').load("../nav/footer.jsp");
         });
     </script>
-    <div id="headers"></div>
+<div id="headers"></div>
 
-    <div class="container">
-        <h1>전주 영상</h1>
-        <div class="total_cnt" id="total_cnt">전체&nbsp</div>
+<br><br><br>
+
+<div class="innerwrap">
+	<h3>전주 영상</h3>
+</div>
+<div class="inner">
+	<div class="innerList">
+        <div class="total_cnt" id="total_cnt">전체&nbsp;</div>
         <table class="video-table" id="results"></table>
-        <ul class="pagination" id="pagination"></ul>
+        <div class="innerwrap">
+        	<a class="pagination" id="pagination"></a>
+        </div>
     </div>
+</div>    
+<div id="footers"></div>
+    
     <script src="https://apis.google.com/js/api.js"></script>
 
     <script>
@@ -120,9 +131,9 @@
 			var pageLink = "";
             for (let i = 1; i <= totalpage; i++) {
             	if(page==i){
-	                pageLink = '<li class="active"><a href="<%=request.getContextPath()%>/contents/youtube.do?page=' + i + '">' + i + '</a></li>';
+	                pageLink = '<a class="active" href="<%=request.getContextPath()%>/contents/youtube.do?page=' + i + '">' + i + '</a>';
             	}else{
-	                pageLink = '<li><a href="<%=request.getContextPath()%>/contents/youtube.do?page=' + i + '">' + i + '</a></li>';
+	                pageLink = '<a href="<%=request.getContextPath()%>/contents/youtube.do?page=' + i + '">' + i + '</a>';
             	}
                 paginationElement.append(pageLink);
             }

@@ -23,10 +23,10 @@ $(document).ready( function() {
 	$('#headers').load("../nav/nav.jsp");
 	$('#footers').load("../nav/footer.jsp");
 	//filterBtn 초기화
-	var keyword = "${keyword}";
-	$('#keyword').val(keyword);
+	var keywordFilter = "${keywordFilter}";
+	$('#keywordFilter').val(keywordFilter);
 	// filterBtn active
-	var activebtn = "button[name='keyword'][value='"+keyword+"']";
+	var activebtn = "button[name='keywordFilter'][value='"+keywordFilter+"']";
 	$(activebtn).addClass("active");
 	
 });
@@ -41,14 +41,14 @@ $(document).ready( function() {
 <form name="frm" method="get">
 <div class="filter">
 <input type = hidden name="searchType" value="noticeCategory">
-<button class="filterBtn" type="submit" name="keyword" value=""># 전체</button>
-<button class="filterBtn" type="submit" name="keyword" value="공연"># 공연</button>
-<button class="filterBtn" type="submit" name="keyword" value="전시"># 전시</button>
-<button class="filterBtn" type="submit" name="keyword" value="축제"># 축제</button>
-<button class="filterBtn" type="submit" name="keyword" value="행사"># 행사</button>
+<button class="filterBtn" type="submit" name="keywordFilter" value=""># 전체</button>
+<button class="filterBtn" type="submit" name="keywordFilter" value="공연"># 공연</button>
+<button class="filterBtn" type="submit" name="keywordFilter" value="전시"># 전시</button>
+<button class="filterBtn" type="submit" name="keywordFilter" value="축제"># 축제</button>
+<button class="filterBtn" type="submit" name="keywordFilter" value="행사"># 행사</button>
 </div>
-<c:set var="keyword" value="${pm.scri.keyword}" />
-<c:set var="parm" value="&searchType=${pm.scri.searchType}&keyword=${pm.scri.keyword}" />
+<c:set var="keywordFilter" value="${pm.scri.keywordFilter}" />
+<c:set var="parm1" value="&searchType=${pm.scri.searchType}&keywordFilter=${pm.scri.keywordFilter}" />
 </form>
 </div>
 
@@ -63,18 +63,18 @@ $(document).ready( function() {
 			</div>
 			<div class="search">
 				<select name="searchType">
-					<option value="noticeCategory">카테고리</option>
+					<!-- <option value="noticeCategory">카테고리</option> -->
 					<option value="noticeSubject" <%if(session.getAttribute("searchType") != null && session.getAttribute("searchType").equals("noticeSubject")) {%> selected <%}%>>제목</option>
 					<option value="noticeArticle" <%if(session.getAttribute("searchType") != null && session.getAttribute("searchType").equals("noticeArticle")) {%> selected <%}%>>내용</option>
 				</select>
 				<div class="searchGroup">
-				<input type="text" name="keyword" id="keyword" value="">
+				<input type="text" name="keyword" id="keyword" <%if(session.getAttribute("keyword") != null) { %> value="<%= session.getAttribute("keyword") %>" <%}%>>
 				<!-- <button type="button" id="searchBtn">검색</button> -->
 				<button type="submit" class="sbt" name="sbt"><ion-icon name="search" class="searchBtnIcon"></ion-icon></button>
 				</div>
 			</div>
 			<c:set var="keyword" value="${pm.scri.keyword}" />
-			<c:set var="parm" value="&searchType=${pm.scri.searchType}&keyword=${pm.scri.keyword}" />
+			<c:set var="parm2" value="&searchType=${pm.scri.searchType}&keyword=${pm.scri.keyword}" />
 			</form>
 		</div>
 	
@@ -99,7 +99,7 @@ $(document).ready( function() {
 						</c:otherwise>
 					</c:choose>
 					<p class="subject">${nv.noticeSubject}</p>
-					<p class="writeday">${nv.noticeWriteday}</p>
+					<p class="writeday" style="color:gray;">작성일 : ${nv.noticeWriteday}</p>
 					</a>
 				</li>
 			</c:forEach>
@@ -117,14 +117,28 @@ $(document).ready( function() {
 				</a>
 			</c:if>
 			<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
+			<c:choose>
+			<c:when test="${pm.scri.searchType eq 'noticeCategory'}">
 				<c:choose>
 				<c:when test="${i eq pm.cri.page}">
-					<a class="pageNumber active" href="${pageContext.request.contextPath}/notice/noticeList.do?page=${i}${parm}">${i}</a>
+					<a class="pageNumber active" href="${pageContext.request.contextPath}/notice/noticeList.do?page=${i}${parm1}">${i}</a>
 				</c:when>
 				<c:otherwise>
-					<a class="pageNumber" href="${pageContext.request.contextPath}/notice/noticeList.do?page=${i}${parm}">${i}</a>
+					<a class="pageNumber" href="${pageContext.request.contextPath}/notice/noticeList.do?page=${i}${parm1}">${i}</a>
 				</c:otherwise>
 				</c:choose>
+			</c:when>
+			<c:otherwise>
+				<c:choose>
+				<c:when test="${i eq pm.cri.page}">
+					<a class="pageNumber active" href="${pageContext.request.contextPath}/notice/noticeList.do?page=${i}${parm2}">${i}</a>
+				</c:when>
+				<c:otherwise>
+					<a class="pageNumber" href="${pageContext.request.contextPath}/notice/noticeList.do?page=${i}${parm2}">${i}</a>
+				</c:otherwise>
+				</c:choose>
+			</c:otherwise>
+			</c:choose>
 			</c:forEach>
 			<c:if test="${pm.next == true && pm.endPage>0}">
 				<a class="pageNext" href = "${pageContext.request.contextPath}/notice/noticeList.do?page=${pm.endPage+1}">

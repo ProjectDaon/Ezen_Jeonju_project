@@ -1,23 +1,139 @@
 @charset "UTF-8";
-
-.contents{
-	margin-top: 200px;
+.WritingWrap {
+	width: 1080px;
+	margin: 0 auto;
 }
-.panel-heading h3{
-	text-align: center;
-	display: block;
-	font-size: 45px;
-	margin-bottom: 30px;
+
+.WritingHeader {
+    position: relative;
+    margin-top: 20px;
+    border-bottom: 1px solid coral;
+}
+
+.WritingHeader .title {
+    margin-bottom: 16px;
+    font-size: 22px;
+    color: coral;
+    font-weight: bold;
+}
+
+.WritingHeader .btn {
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+    background: #FFDEAD;
+	border-color: #FFDEAD;
+	color: coral;
 	font-weight: bold;
 }
-.panel-body{
-	width: 80%;
-	margin-left: auto;
-	margin-right: auto;
+
+.WritingHeader .btn:hover {
+	border: 1px solid coral;
+	color: coral;
 }
+/* Modify css */
+.WritingHeader .btnArea {
+    position: absolute;
+    bottom: 12px;
+    right: 0;
+}
+
+.WritingHeader .twobtn {
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    border-radius: 4px;
+    background: #FFDEAD;
+	border-color: #FFDEAD;
+	color: coral;
+	font-weight: bold;
+}
+/* ----- */
+.WritingHeader .twobtn:hover {
+	border: 1px solid coral;
+	color: coral;
+}
+
+.WritingContent {
+    position: relative;
+    padding-top: 22px;
+    padding-bottom: 50px;
+}
+
+.WritingContent .editer_wrap {
+    margin-bottom: 15px;
+    padding: 20px 28px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    background-color: #fff;
+}
+
+.WritingContent .editer_wrap label {
+    width: 12%;
+    color: dimgray;
+    text-align: right;
+}
+
+.formCategory select {
+    margin-left: 5px;
+    padding: 0 25px 0 10px;
+    width: 250px;
+    height: 30px;
+    border: 0;
+    border-bottom: 1px solid #ebecef;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.formCategory select option[value=""][disabled] {
+	display: none;
+}
+
+/* Modify css */
+.formCategory input {
+    margin-left: 5px;
+    width: 8%;
+    height: 40px;
+    padding: 13px 16px 11px;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    /* border-radius: 10px; */
+    background-color: #f5f6f8;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: center;
+}
+/* ----- */
+
+.formSubject {
+    margin-top: 16px;
+}
+
+.formSubject input{
+    margin-left: 5px;
+    width: 85%;
+    height: 40px;
+    padding: 13px 16px 11px;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    /* border-radius: 10px; */
+    background-color: #f5f6f8;
+    font-size: 14px;
+    line-height: 22px;
+}
+
+/* input box 입력 후 배경색 없애기 */
+input:-webkit-autofill { -webkit-box-shadow: 0 0 0 30px #f5f6f8 inset ; -webkit-text-fill-color: #000; }
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active { transition: background-color 5000s ease-in-out 0s; }
+
+/* 해시태그 */
+.hashTagArea {
+    margin-top: 16px;
+}
+
 .tagify{    
-  width: 100%;
-  max-width: 700px;
+    margin-left: 5px;
+    width: 85%;
 }
 
 .tagify--outside{
@@ -32,11 +148,37 @@
   transition: .1s;
 }
 
-#customFileUpload {
-    position: relative;
-    display: inline-block;
+.tagify--outside .tagify__input:hover{ border-color:var(--tags-hover-border-color); }
+.tagify--outside.tagify--focus .tagify__input{
+  transition:0s;
+  border-color: var(--tags-focus-border-color);
 }
 
+/* Modify css */
+.file_wrap {
+	margin-top: 16px;
+    display: flex;
+}
+
+.uploadedFile {
+	width: 50%;
+	display: flex;
+}
+
+.uploadedFile img {
+	margin-left: 10px;
+}
+
+/* 메인사진 등록하기 */
+#customFileUpload {
+    margin-top: 16px;
+    display: flex;
+}
+
+#customFileUpload img {
+	margin-left: 10px;
+/*     border: 1px solid #ebecef; */
+}
 #uploadFile {
     position: absolute;
     top: 0;
@@ -48,16 +190,22 @@
     opacity: 0;
 }
 
-.tagify--outside .tagify__input:hover{ border-color:var(--tags-hover-border-color); }
-.tagify--outside.tagify--focus .tagify__input{
-  transition:0s;
-  border-color: var(--tags-focus-border-color);
+/* 지도 등록하기 */
+.map_wrap {
+    margin-top: 16px;
+    display: flex;
 }
 
-.map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+#map {
+	width: 85%;
+    position: relative;
+    margin-left: 10px;
+}
+
+.map_wrap, .map_wrap * {padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;}
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
-.map_wrap {position:relative;width:60%;height:500px;}
-#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+.map_wrap {position:relative; height:400px;}
+#menu_wrap {position:absolute;top:0;left:130px;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
 .bg_white {background:#fff;}
 #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
 #menu_wrap .option{text-align: center;}
@@ -67,7 +215,7 @@
 #placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
 #placesList .item span {display: block;margin-top:4px;}
 #placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
-#placesList .item .info{padding:10px 0 10px 55px;}
+#placesList .item .info{padding: 5px 0 5px 50px;}
 #placesList .info .gray {color:#8a8a8a;}
 #placesList .info .jibun {padding-left:26px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
 #placesList .info .tel {color:#009900;}
@@ -93,6 +241,6 @@
 
 
 .title {font-weight:bold;display:block;}
-.hAddr {position:absolute;right:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
+.hAddr {position:absolute;right:30px;top:10px;border-radius: 2px;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
 #centerAddr {display:block;margin-top:2px;font-weight: normal;}
 .bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
