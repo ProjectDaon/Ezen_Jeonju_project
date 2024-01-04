@@ -91,10 +91,16 @@ public class NoticeController {
 		model.addAttribute("nvlist",nvlist);
 		model.addAttribute("pm", pm);
 		
+		// 검색어필터 입력 유지
+		String keywordFilter = (String)scri.getKeywordFilter();
+		if(keywordFilter != null) {
+			model.addAttribute("keywordFilter", keywordFilter);
+		}
+		
 		// 검색어 입력 유지
 		String keyword = (String)scri.getKeyword();
 		if(keyword != null) {
-			model.addAttribute("keyword", keyword); 
+			session.setAttribute("keyword", keyword); 
 		}
 		
 		// 검색타입 선택 유지

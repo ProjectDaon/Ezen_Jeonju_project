@@ -16,11 +16,14 @@
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script src="../summernote/summernote-ko-KR.js"></script>
+<!-- 해시태그 source -->
+<script src="https://unpkg.com/@yaireo/tagify"></script>
+<!-- 폴리필 (구버젼 브라우저 지원) -->
+<script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div id="headers"></div>
 <script type="text/javascript">
-
 $(document).ready( function() {
 	//가져올때 navbar.css도 같이 가져올 것
 	$('#headers').load("../nav/nav.jsp");
@@ -57,76 +60,83 @@ function readURL(input) {
 	  document.getElementById('preview').src = "";
 	}
 }
-
 </script>
-<script src="https://unpkg.com/@yaireo/tagify"></script>
-<!-- 폴리필 (구버젼 브라우저 지원) -->
-<script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
-<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+<div id="headers"></div>
 
-<div class="contents">
-<div class="panel-heading">
-	<h3>글 작성하기</h3>
-</div>
-	<div class="panel-body">
+<br><br><br>
+<br><br><br>
+<br><br><br>
+
+<div class="WritingWrap">
+	<div class="WritingHeader">
+		<h2 class="title">컨텐츠 작성하기</h2>
+		<input class="btn" type="button" value="등록" onclick="goWrite()">
+	</div>
+	<div class="WritingContent">
 		<form name="frm">
-			<div class="form-group">
+		<div class="editer_wrap">
+			<div class="formCategory">
 				<label>카테고리</label>
-				<select name="contentsCategory">
+				<select name="contentsCategory" required>
+					<option value="" disabled selected>카테고리를 선택해 주세요.</option>
 					<option value="명소">명소</option>
 					<option value="음식">음식</option>
 				</select>
-				<label>제목</label>
-				<input type="text" name="contentsSubject"><br>
-				태그<input name='contentsHashtag'>
-				
-				<script>
-				    const input = document.querySelector('input[name=contentsHashtag]');
-				    let tagify = new Tagify(input); // initialize Tagify
-				    
-				    // 태그가 추가되면 이벤트 발생
-				    tagify.on('add', function() {
-				      console.log(tagify.value); // 입력된 태그 정보 객체
-				    })
-				</script>
 			</div>
-			<textarea id="summernote" name="contentsArticle"></textarea>
+			<div class="formSubject">
+				<label>제목</label>
+				<input type="text" name="contentsSubject"  placeholder="제목을 입력해 주세요.">
+			</div>
+			<div class="hashTagArea">
+				<label>해시태그</label>
+				<input name='contentsHashtag'>
+			</div>
+			<script>
+			    const input = document.querySelector('input[name=contentsHashtag]');
+			    let tagify = new Tagify(input); // initialize Tagify
+			    
+			    // 태그가 추가되면 이벤트 발생
+			    tagify.on('add', function() {
+			      console.log(tagify.value); // 입력된 태그 정보 객체
+			    })
+			</script>
 			<div id="customFileUpload">
         		<input type="file" name="uploadFileName" id="uploadFile" onchange="readURL(this);">
-       			<label for="uploadFile">메인사진 등록하기</label>
-       			<img id="preview" width="200"/>
-   		 	</div>
-	<br>
-	
-	<input type="hidden" id="contentsLatitude"name="contentsLatitude" value="">
-	<input type="hidden" id="contentsLongitude" name="contentsLongitude" value="">
-	</form>
-	<div class="map_wrap">
-    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-
-    <div id="menu_wrap" class="bg_white">
-        <div class="option">
-            <div>
-                <form onsubmit="searchPlaces(); return false;">
-                    키워드 : <input type="text" value="" id="keyword" size="15"> 
-                    <button type="submit">검색하기</button> 
-                </form>
-            </div>
-        </div>
-        <hr>
-        <ul id="placesList"></ul>
-        <div id="pagination"></div>
-    </div>
-    <div class="hAddr">
-        <span class="title">지도중심기준 행정동 주소정보</span>
-        <span id="centerAddr"></span>
-    </div>
-</div>
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dbee45d6252968c16f0f651bb901ef42&libraries=services"></script>
-	<script src="../js/contentsWrite-map.js"></script>
-
-</div>
-<input type="button" value="등록" onclick="goWrite()">
+       			<label for="uploadFile" style="cursor: pointer;">메인사진 등록하기</label>
+       			<img id="preview" width="350" height="205"/>
+			</div>
+				<input type="hidden" id="contentsLatitude"name="contentsLatitude" value="">
+				<input type="hidden" id="contentsLongitude" name="contentsLongitude" value="">
+		</div>
+		<textarea id="summernote" name="contentsArticle"></textarea>
+		</form>
+		<div class="editer_wrap">
+			<div class="map_wrap">
+				<label>지도 등록하기</label>
+				<div id="map">
+				</div>
+					<div id="menu_wrap" class="bg_white">
+						<div class="option">
+							<div>
+								<form name="map_frm" onsubmit="searchPlaces(); return false;">
+								키워드 : <input type="text" value="" id="keyword" size="15"> 
+								<button type="submit">검색하기</button> 
+								</form>
+							</div>
+						</div>
+						<hr>
+						<ul id="placesList"></ul>
+						<div id="pagination"></div>
+				</div>
+				<div class="hAddr">
+					<span class="title">지도중심기준 행정동 주소정보</span>
+					<span id="centerAddr"></span>
+				</div>
+			</div>
+			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dbee45d6252968c16f0f651bb901ef42&libraries=services"></script>
+			<script src="../js/contentsWrite-map.js"></script>
+		</div>
+	</div>
 </div>
 </body>
 </html>

@@ -43,9 +43,9 @@ h3 {
     margin: 5px;
     font-size: calc(12px + 0.2vw);
     font-weight : bold;
-    color: #FFA07A;
+    color: coral;
     background-color: white;
-    border: 2px solid #FFA07A;
+    border: 2px solid coral;
     border-radius: 30px;
     /* border : none;
     border-bottom : 2px solid #FFA07A; */
@@ -53,8 +53,8 @@ h3 {
 }
 
 .filterBtn.active{
-	background: #FFA07A;
-	border-color: #FFA07A;
+	background: coral;
+	border-color: coral;
 	color: white;
     }
 
@@ -161,6 +161,8 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 
 .write {
 	margin-top: 10px;
+	display: flex;
+    justify-content: end;
 }
 
 .write a {
