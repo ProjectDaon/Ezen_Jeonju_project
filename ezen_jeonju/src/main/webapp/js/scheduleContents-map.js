@@ -67,7 +67,7 @@ var markers = [];
 function addMarker(position,placeName,index) {
     // 마커 이미지 생성
     var markerImage = new kakao.maps.MarkerImage(
-	    'https://via.placeholder.com/25x25/FF0000/FFFFFF?text=' + (index),
+	    'https://placehold.jp/23/3d4070/ffffff/25x25.png?text=' + (index),
 	    new kakao.maps.Size(25, 25),
 	    { offset: new kakao.maps.Point(13, 25) }
 	);

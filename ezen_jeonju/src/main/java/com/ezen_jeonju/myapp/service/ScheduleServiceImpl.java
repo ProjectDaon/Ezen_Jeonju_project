@@ -46,6 +46,9 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 	@Override
 	public ArrayList<ScheduleRootVo> scheduleList(ScheduleCriteria sscri) {
+		
+		int value = (sscri.getPage()-1)*10;
+		sscri.setPage(value);
 		ArrayList<ScheduleRootVo> list = ssm.scheduleList(sscri);
 
 		return list;

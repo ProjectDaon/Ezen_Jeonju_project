@@ -94,13 +94,15 @@ public class ScheduleController {
 
 	
 	@RequestMapping(value = "/scheduleList.do")
-	public String scheduleList(Criteria cri, ScheduleCriteria sscri, Model model) {
+	public String scheduleList(ScheduleCriteria sscri, Model model) {
 		
-		ArrayList<ScheduleRootVo> list = ss.scheduleList(sscri);
 		int totalCount = ss.scheduleTotalCount();
-		pm.setCri(cri);
+		
 		pm.setSscri(sscri);
 		pm.setTotalCount(totalCount);
+		ArrayList<ScheduleRootVo> list = ss.scheduleList(sscri);
+		
+		System.out.println(sscri.getPage());
 		
 		model.addAttribute("list",list);
 		model.addAttribute("pm", pm);
