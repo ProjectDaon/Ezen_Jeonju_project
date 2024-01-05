@@ -33,9 +33,6 @@ public class ScheduleController {
 	@Autowired
 	ScheduleService ss;
 	
-	@Autowired(required=false)
-	private PageMaker pm;
-	
 	@RequestMapping(value = "/scheduleWrite.do")
 	public String scheduleWrite() {
 
@@ -97,15 +94,15 @@ public class ScheduleController {
 	public String scheduleList(ScheduleCriteria sscri, Model model) {
 		
 		int totalCount = ss.scheduleTotalCount();
-		
+		PageMaker pm = new PageMaker();
 		pm.setSscri(sscri);
 		pm.setTotalCount(totalCount);
 		ArrayList<ScheduleRootVo> list = ss.scheduleList(sscri);
 		
-		System.out.println(sscri.getPage());
-		
 		model.addAttribute("list",list);
 		model.addAttribute("pm", pm);
+		System.out.println(pm.getSscri().getPage());
+		System.out.println(pm.getStartPage());
 		return "schedule/scheduleList";
 	}
     @RequestMapping(value="/scheduleContents.do")
