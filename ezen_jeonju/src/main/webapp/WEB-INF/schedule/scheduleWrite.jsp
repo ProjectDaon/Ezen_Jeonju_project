@@ -5,6 +5,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+.dotOverlay {position:relative;bottom:10px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;font-size:12px;padding:5px;background:#fff;}
+.dotOverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}    
+.number {font-weight:bold;color:#ee6152;}
+.dotOverlay:after {content:'';position:absolute;margin-left:-6px;left:50%;bottom:-8px;width:11px;height:8px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white_small.png')}
+.distanceInfo {position:relative;top:5px;left:5px;list-style:none;margin:0;}
+.distanceInfo .label {display:inline-block;width:50px;}
+.distanceInfo:after {content:none;}
 	img {
 		width : 70px;
 		height : 70px;
@@ -102,6 +109,19 @@
     .highlight {
       
        background-color: #f2f2f2;
+    }
+    .fixed{
+     position: sticky;
+     top : 0; 
+    }
+    .fixed_1{
+     position: sticky;
+     top : 83.09px; 
+    }
+    #addSchedule{
+   
+   	color : orange;
+   	font-weight : bold;
     }
 </style>
 
@@ -478,9 +498,9 @@
 <div id="jj"></div>
 	<div id = "scheduletbl">
 	<table id="timetbl">
-	        <thead><th>시간</th></thead>
+	        <thead><th class="fixed">시간</th></thead>
 	        <tbody>
-	            <tr><td></td></tr>
+	            <tr class="fixed_1"><td></td></tr>
 	            <tr><td>08:00</td></tr>
 	            <tr><td>09:00</td></tr>
 	            <tr><td>10:00</td></tr>
@@ -502,8 +522,26 @@
 	<div id="table-container">
 		<table>
 			<thead>
-				<th style="height:50px; width:1200px">기간을 등록해주세요 ! </th>
+				<th class="fixed" style="height:50px; width:1200px">기간을 등록해주세요 ! </th>
 			<thead>
+			<tbody>
+	            <tr><td class="fixed_1"></td></tr>
+	            <tr><td></td></tr>
+	            <tr><td></td></tr>
+	            <tr><td></td></tr>
+	            <tr><td></td></tr>
+	            <tr><td></td></tr>
+	            <tr><td></td></tr>
+	            <tr><td></td></tr>
+	            <tr><td></td></tr>
+	            <tr><td></td></tr>
+	            <tr><td></td></tr>
+	            <tr><td></td></tr>
+	            <tr><td></td></tr>
+	            <tr><td></td></tr>
+	            <tr><td></td></tr>
+	            <tr><td></td></tr>
+			</tbody>
 		</table>
 	</div>
 	</div>
@@ -515,7 +553,6 @@
 </div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=24905b65af4a0e247d268677c3972e9d&libraries=services"></script>
 <script src="../js/scheduleWrite-map.js"></script>
-<script src="../js/scheduleWrite-searchmap.js"></script>
 <script type="text/javascript" src ="../js/scheduleWrite-dragDropTable.js"></script>
 
 <script>    
@@ -611,7 +648,7 @@
 	   	return;
 }
  $(document).ready(function(){
-	  getTour();
+	  getRest();
 	 //getFood();
 	   
 }); 
