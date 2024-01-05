@@ -66,8 +66,14 @@
                 <a class="login" href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a>
                 <%} else{ %>
                 <a href="${pageContext.request.contextPath}/member/memberLogout.do">로그아웃</a>
-                <%} %>
+                <%} 
+                
+                String memberGradeValue = (String) session.getAttribute("memberGrade");		
+    			if ("관리자".equals(memberGradeValue)) {%>
+                <a href="${pageContext.request.contextPath}/mypage/userMypage.do">관리페이지</a>
+                <%} else{ %>
                 <a href="${pageContext.request.contextPath}/mypage/userMypage.do">마이페이지</a>
+                <%} %>
             </div>
         </div>
         <div class="menu-hamburger" onclick="toggleMenu()">

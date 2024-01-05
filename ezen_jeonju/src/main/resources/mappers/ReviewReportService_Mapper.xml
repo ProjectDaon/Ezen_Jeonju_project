@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ezen_jeonju.myapp.persistance.ReviewReportService_Mapper">
+
+<select id="reportList" resultType="rrd">
+SELECT rr.rridx, rr.reviewReportReason, rr.reviewReportDate, 
+	   rr.ridx, rr.cidx, m.memberName as 'reporter',
+	   m2.memberName as 'reported',
+	   c.contentsSubject, r.reviewArticle
+FROM reviewreport rr
+join review r on rr.ridx=r.ridx
+join member m on rr.midx=m.midx
+join member m2 on rr.midx2=m2.midx
+join contents c on rr.cidx=c.cidx
+where rr.reviewReportYN='N'
+</select>
+</mapper>

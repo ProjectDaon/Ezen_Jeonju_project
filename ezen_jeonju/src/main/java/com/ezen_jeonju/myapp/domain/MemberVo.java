@@ -19,6 +19,7 @@ public class MemberVo {
 	
 	private String memberGrade;
 	private String memberSigninDate;
+	private String signInRoot;
 	
 	public int getMidx() {
 		return midx;
@@ -61,5 +62,11 @@ public class MemberVo {
 	}
 	public void setMemberEmail(String memberEmail) {
 		this.memberEmail = memberEmail;
+	}
+	public String getSignInRoot() {
+		return signInRoot;
+	}
+	public void setSignInRoot(String signInRoot) {
+		this.signInRoot = signInRoot;
 	}
 }

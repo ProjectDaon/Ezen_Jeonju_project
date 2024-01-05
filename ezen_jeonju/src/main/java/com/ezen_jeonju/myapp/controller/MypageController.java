@@ -37,7 +37,7 @@ public class MypageController {
 			if(memberGrade.equals("일반회원")) {
 				return "mypage/userMypage";
 			}else {
-				return "mypage/registerMainImages";
+				return "redirect:/reviewReport/reportList.do";
 			}
 		}catch (Exception e) {
 			return "member/memberLogin";
