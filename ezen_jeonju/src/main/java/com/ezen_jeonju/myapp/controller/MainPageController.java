@@ -81,7 +81,7 @@ public class MainPageController {
 	@RequestMapping(value="/main/mainVannerModifyAction.do")
 	public String vannerModify(AttachFileVo af, MainPageVo mpv, 
 						@RequestParam("storedFile") String storedFile,
-						@RequestParam("storedThumbnail") String storedThumbnail) throws Exception {	
+						@RequestParam("storedThumbnail") String storedThumbnail, HttpSession session) throws Exception {	
 		if(af.getUploadFileName() != null && !af.getUploadFileName().isEmpty()) {
 			
 			//기존 파일 삭제하기
@@ -109,6 +109,7 @@ public class MainPageController {
 			//새로운 파일 db에 적용하기
 			afs.imageFileModify(af);
 		}
+		mpv.setMidx(Integer.parseInt(session.getAttribute("midx").toString()));
 		mps.vannerModify(mpv);
 		return "redirect:/main/mainVannerContents.do?mpidx="+mpv.getMpidx();
 	}

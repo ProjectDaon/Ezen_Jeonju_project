@@ -50,7 +50,7 @@ SELECT * from mainpage where mpidx=#{mpidx};
 </select>
 
 <update id="vannerModify" parameterType="mpv">
-update mainpage set mainPageSubject = #{mainPageSubject}, mainPageLink = #{mainPageLink}
+update mainpage set mainPageSubject = #{mainPageSubject}, mainPageLink = #{mainPageLink}, midx = #{midx}
 where mpidx=#{mpidx}
 </update>
 

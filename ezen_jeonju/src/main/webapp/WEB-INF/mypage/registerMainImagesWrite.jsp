@@ -18,9 +18,11 @@
 <body>
 <script type="text/javascript">
 $(document).ready( function() {
+	window.history.replaceState({}, document.title, 'http://localhost:8080');
 	//가져올때 navbar.css도 같이 가져올 것
 	$('#headers').load("../nav/nav.jsp");
 	$('#footers').load("../nav/footer.jsp");
+	
 });
 
 $(document).ready( function() {
@@ -76,7 +78,7 @@ function goWrite(){
             </div>       
             <div class="btn">
             	<a href="#" onclick="goWrite();">등록하기</a>
-            	<a href="javascript:window.history.back();">목록</a>
+            	<a href="<%=request.getContextPath()%>/main/vannerRegisterList.do">목록</a>
             </div>
         </div>
     </div>
