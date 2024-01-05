@@ -1,0 +1,103 @@
+@charset "UTF-8";
+
+
+h3 {
+    font-weight: 500;
+    text-align: center;
+    font-size: 42px;
+    color: #222;
+    line-height: normal;
+}
+body {
+  padding:1.5em;
+  background: #f5f5f5
+}
+
+table {
+  border: 1px #FFDEAD solid;
+  font-size: .9em;
+  box-shadow: 0 2px 5px rgba(0,0,0,.25);
+  width: 80%;
+  border-collapse: collapse;
+  border-radius: 5px;
+  overflow: hidden;
+  text-align : center;
+}
+
+th {
+  text-align: center;
+}
+  
+thead {
+  font-weight: bold;
+  color: #fff;
+  background:coral;
+}
+  
+ td, th {
+  padding: 1em .5em;
+  vertical-align: middle;
+}
+  
+ td {
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  background: #fff;
+}
+
+.write a {
+    cursor: pointer;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    border-radius: 4px;
+    background: #FFDEAD;
+    border-color: #FFDEAD;
+    color: coral;
+    font-weight: bold;
+}
+a {
+    text-decoration: none;
+    color: #555;
+}  
+.paging {
+    text-align: center;
+    margin: 30px 0 0;
+    font-size: 0;
+    clear: both;
+}
+
+
+.paging a {
+    display: inline-block;
+    text-align: center;
+    min-width: 44px;
+    line-height: 44px;
+    font-size: 16px;
+    vertical-align: middle;
+    border: 1px solid #c9c9c9;
+    margin: 0 1px;
+}
+
+.paging a:hover {
+    background: #333;
+    color: #fff;
+    border: 1px solid #333;
+}
+
+.pageNumberActive {
+    background: #333;
+    color: #fff;
+    border: 1px solid #333;
+}
+.innerwrap{
+    max-width: 1300px;
+    width: 100%;
+    margin: 5% auto;
+    padding: 0 5%;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+.write{
+	margin-top : 3%;
+	float: right;
+	
+}
