@@ -154,9 +154,16 @@
                     </button>    
                 </div>
             </div>
+            <%
+			String memberGradeValue = (String) session.getAttribute("memberGrade");		
+			if ("관리자".equals(memberGradeValue)) {
+			%>
             <div class="admin-click">
                 <div><a class="btn-more" href="<%=request.getContextPath()%>/main/vannerRegisterList.do"><span>배너등록 +</span></a></div>
             </div>
+            <%
+			}
+			%>
         </div>
     </section>
     <section class="second-visual">

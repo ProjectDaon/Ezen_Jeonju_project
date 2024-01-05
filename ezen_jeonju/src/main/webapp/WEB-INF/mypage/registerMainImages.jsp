@@ -18,9 +18,11 @@
 <body>
 <script type="text/javascript">
 $(document).ready( function() {
+	window.history.replaceState({}, document.title, 'http://localhost:8080');
 	//가져올때 navbar.css도 같이 가져올 것
 	$('#headers').load("../nav/nav.jsp");
 	$('#footers').load("../nav/footer.jsp");
+	
 });
 
 function vannersDelete(mpidx){
