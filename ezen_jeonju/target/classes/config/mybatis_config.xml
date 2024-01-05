@@ -19,11 +19,15 @@
  <typeAlias alias="gr" type="com.ezen_jeonju.myapp.domain.GoogleInfResponse"/>
  
  <typeAlias alias="scri" type="com.ezen_jeonju.myapp.domain.SearchCriteria"/>
- <typeAlias alias="rcri" type="com.ezen_jeonju.myapp.domain.ReviewCriteria"/>
  <typeAlias alias="cscri" type="com.ezen_jeonju.myapp.domain.ContentsSearchCriteria"/>
  <typeAlias alias="af" type="com.ezen_jeonju.myapp.domain.AttachFileVo"/>
+ 
+ <typeAlias alias="rcri" type="com.ezen_jeonju.myapp.domain.ReviewCriteria"/>
  <typeAlias alias="rv" type="com.ezen_jeonju.myapp.domain.ReviewVo"/>
  <typeAlias alias="rld" type="com.ezen_jeonju.myapp.domain.ReviewListDTO"/>
+ <typeAlias alias="rrd" type="com.ezen_jeonju.myapp.domain.ReviewReportDTO"/>
+ <typeAlias alias="rrv" type="com.ezen_jeonju.myapp.domain.ReviewReportVo"/>
+ 
  <typeAlias alias="sscri" type="com.ezen_jeonju.myapp.domain.ScheduleCriteria"/>
  
 </typeAliases>

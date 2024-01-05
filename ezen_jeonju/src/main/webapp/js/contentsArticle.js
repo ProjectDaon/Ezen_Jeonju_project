@@ -33,9 +33,9 @@ $(document).ready( function() {
 	});
 	
 	/*리뷰창닫기*/
-	$('#rev-cc').click(function(){
-		$('#writeReview').css('display','none');
-	});
+
+	
+
 	
 	/*리뷰쓰기-별점*/
 	const ratingStars = [...document.getElementsByClassName("rating__star")];
@@ -67,4 +67,9 @@ $(document).ready( function() {
 		$('#reviewScore').val(n);
 	});
 });
-
+	function closeReport(){
+		$('#rev-report').css('display','none');
+	};
+	function closeWrite(){
+		$('#writeReview').css('display','none');
+	}

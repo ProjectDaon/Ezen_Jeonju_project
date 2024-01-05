@@ -132,6 +132,12 @@ function reviewWrite(){
 		},
 		cache : false,
 		success : function(data){
+			
+			if(data.bad != null){
+				alert(data.bad+"는 비속어입니다");
+				return;
+			}
+			
 			if(data.txt === "pass"){
 				alert("글쓰기 완료");
 				$('#writeReview').css('display','none');
@@ -292,8 +298,74 @@ function displayBlogItems(data) {
     }
 }
 
-// "더 보기" 버튼 클릭 시 추가 항목 불러오기
+function reviewReport(ridx){
+	
+	$.ajax({
+        type: "post",
+        url: "${pageContext.request.contextPath}/review/reviewReport.do",
+        dataType: "json",
+        data: {
+            "ridx": ridx
+        },
+        cache: false,
+        success: function (data) {
+        	if(data.txt === 'noLogin'){
+        		alert("로그인 이후 이용바랍니다");
+        	}else{
+				$('#rev-report').css("display","block");
+        		reportArticle(data.review);
+        	}
+        },
+        error: function () {
+            alert("통신 오류 실패");
+        }
+    });
+}
 
+function reportArticle(data){
+	var txt = "<input type='hidden' name='cidx' value='"+data.cidx+"'>"
+			+"<input type='hidden' name='ridx' value='"+data.ridx+"'>"
+			+"<table><tr><th>신고자</th>"
+			+"<td>"+data.myName+"<input type='hidden' name='midx2' value='"+data.midx2+"'></td></tr>"
+			+"<tr><th>피신고자</th>"
+			+"<td>"+data.memberName+"<input type='hidden' name='midx' value='"+data.midx+"'></td></tr>"
+			+"<tr><th>신고내용</th>"
+			+"<td>"+data.reviewArticle+"</td></tr>"
+			+"<tr><th>신고사유</th><td><select name='reviewReportReason'><option>비방 및 욕설</option><option>글과 상관없는 내용</option>"
+			+"<option>광고글</option><option>기타</option></select></td></tr></table>";
+	$('#reportTable').html(txt);
+}
+
+function reportWrite(){
+	var fm = document.reportFrm;
+	var ridx = fm.ridx.value;
+	var cidx = fm.cidx.value;
+	var midx = fm.midx.value;
+	var midx2 = fm.midx2.value;
+	var reviewReportReason = fm.reviewReportReason.value;
+	
+	$.ajax({
+        type: "post",
+        url: "${pageContext.request.contextPath}/review/reviewReportAction.do",
+        dataType: "json",
+        data: {
+            "ridx": ridx,
+            "cidx": cidx,
+            "midx": midx,
+            "midx2": midx2,
+            "reviewReportReason": reviewReportReason
+        },
+        cache: false,
+        success: function (data) {
+        	alert("신고 완료되었습니다.");
+        	$('#rev-report').css('display','none');
+        },
+        error: function () {
+            alert("통신 오류 실패");
+        }
+    });
+	
+}
 </script>
 <div id="headers"></div>
 <div class="contents">
@@ -421,9 +493,28 @@ function displayBlogItems(data) {
 		</div>
 		</form>
 		<div class="writebtn">
-			<a href="#" class="rev-basic" onclick="reviewWrite();">등록</a>
-			<a href="#" class="rev-cc" id="rev-cc">취소</a>
+			<a class="rev-basic" href="javascript:reviewWrite();">등록</a>
+			<a href="javascript:closeWrite();" class="rev-cc" id="rev-cc">취소</a>
 		</div>
+		</div>
+	</div>
+	
+	<div class="rev-report" id="rev-report" style="display:none;">
+		<div class="reportReview">
+			<div class="report-top">
+				<h5 class="modal-title" style="color: #fff;font-size: 1.3rem;">댓글 신고하기</h5>
+			</div>
+			<div class="report-contents">
+				<form name="reportFrm">
+				<div id="reportTable">
+				
+				</div>
+				</form>
+				<div class="writebtn">
+					<a class="rev-basic" href="javascript:reportWrite();">등록</a>
+					<a href="javascript:closeReport();" class="rev-cc" id="rep-cc">취소</a>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.ezen_jeonju.myapp.domain.ReviewCriteria;
 import com.ezen_jeonju.myapp.domain.ReviewListDTO;
+import com.ezen_jeonju.myapp.domain.ReviewReportDTO;
+import com.ezen_jeonju.myapp.domain.ReviewReportVo;
 import com.ezen_jeonju.myapp.domain.ReviewVo;
 import com.ezen_jeonju.myapp.persistance.ReviewService_Mapper;
 
@@ -46,6 +48,19 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public int reviewTotalCnt(int cidx) {
 		int value = rsm.reviewTotalCnt(cidx);
+		return value;
+	}
+
+	@Override
+	public ReviewReportDTO reviewReport(int ridx) {
+		ReviewReportDTO rrdto = new ReviewReportDTO();
+		rrdto = rsm.reviewReport(ridx);
+		return rrdto;
+	}
+
+	@Override
+	public int reviewReportAction(ReviewReportVo rrv) {
+		int value = rsm.reviewReportAction(rrv);
 		return value;
 	}
 	

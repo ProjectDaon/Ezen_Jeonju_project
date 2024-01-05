@@ -24,5 +24,16 @@ UPDATE review SET reviewYN='Y' WHERE ridx=#{ridx}
 select count(ridx) as cnt from review where reviewYN='N' and cidx=#{cidx}
 </select>
 
+<select id="reviewReport" parameterType="int" resultType="rrd">
+select r.midx, m.memberName, r.reviewArticle, r.ridx, r.cidx
+from review r
+join member m on r.midx = m.midx
+where r.ridx=#{ridx}
+</select>
+
+<insert id="reviewReportAction" parameterType="rrv">
+INSERT INTO reviewReport(ridx, cidx, midx, midx2, reviewReportReason)
+VALUES(#{ridx},#{cidx},#{midx},#{midx2},#{reviewReportReason})
+</insert>
 
 </mapper>

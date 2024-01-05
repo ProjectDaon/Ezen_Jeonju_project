@@ -31,11 +31,16 @@ public class MypageController {
 
 		String memberGrade = "";
 		memberGrade = (String) session.getAttribute("memberGrade");
-
-		if(memberGrade.equals("일반회원")) {
-			return "mypage/userMypage";
-		}else {
-			return "mypage/registerMainImages";
+		
+		//로그인정보 없으면 로그인화면으로 이동
+		try {
+			if(memberGrade.equals("일반회원")) {
+				return "mypage/userMypage";
+			}else {
+				return "mypage/registerMainImages";
+			}
+		}catch (Exception e) {
+			return "member/memberLogin";
 		}
 	}
 	
