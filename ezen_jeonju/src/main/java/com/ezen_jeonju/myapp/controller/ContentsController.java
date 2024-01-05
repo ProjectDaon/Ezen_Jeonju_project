@@ -130,6 +130,9 @@ public class ContentsController {
 		jsonArrayObj = (JSONArray) parser.parse(hashtagList);
 		
 		ContentsStatsDTO csd = cs.contentsStats(cidx);
+		if(csd.getStarAverage()==null || csd.getStarAverage()=="") {
+			csd.setStarAverage("평점없음");
+		}
 		model.addAttribute("cv", cv);
 		model.addAttribute("csd", csd);
 		model.addAttribute("hashtag", jsonArrayObj);
