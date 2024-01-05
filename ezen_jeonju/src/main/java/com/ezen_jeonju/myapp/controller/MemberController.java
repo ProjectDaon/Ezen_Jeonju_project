@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +35,7 @@ import com.ezen_jeonju.myapp.domain.GoogleResponse;
 import com.ezen_jeonju.myapp.domain.KakaoDTO;
 import com.ezen_jeonju.myapp.domain.MemberVo;
 import com.ezen_jeonju.myapp.domain.NaverDTO;
+import com.ezen_jeonju.myapp.domain.NoticeVo;
 import com.ezen_jeonju.myapp.service.MemberService;
 import com.ezen_jeonju.myapp.util.NaverMailSend;
 import com.google.gson.JsonElement;
@@ -58,7 +60,6 @@ public class MemberController {
 		
 		return "/member/memberLogin";
 	}
-	
 	
 	/*-------------------------------------카카오로그인---------------------------------*/
 	@RequestMapping(value = "/KakaoMemberLogin.do")
@@ -519,6 +520,19 @@ public class MemberController {
 		session.removeAttribute("memberName");
 		session.invalidate();
 		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "/findInfo.do")
+	public String findInfo() {
+		return "member/findInfo";
+	}
+	
+	@RequestMapping(value = "/findId.do")
+	public String findId(@RequestParam("memberEmail") String memberEmail, Model model) {
+		ArrayList<MemberVo> mv = ms.findId(memberEmail);
+		model.addAttribute("idList", mv);
+
+		return "member/resultInfo";
 	}
 }
 
