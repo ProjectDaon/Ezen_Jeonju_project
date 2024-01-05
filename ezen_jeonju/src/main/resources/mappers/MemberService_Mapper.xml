@@ -18,6 +18,18 @@ SELECT midx, memberId, MemberName, MemberPwd, MemberGrade From member
 WHERE memberId=#{memberId}
 </select>
 
+<select id="findId" resultType="mv" >
+select * from member where memberEmail=#{memberEmail}
+</select>
+
+<select id="findPwd" resultType="mv" >
+select memberPwd from member where memberId=#{memberId} and memberEmail=#{memberEmail}
+</select>
+
+<update id="updatePwd">
+update member set memberPwd=#{memberPwd} where memberId=#{memberId}
+</update>
+
 <!-- ************************카카오*************************************** -->
 <select id="memberIdCheckKakao" parameterType="String" resultType="int">
 SELECT COUNT(*) AS cnt FROM member WHERE MEMBERID=#{memberId}

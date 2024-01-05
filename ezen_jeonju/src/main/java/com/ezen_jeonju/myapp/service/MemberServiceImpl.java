@@ -1,5 +1,7 @@
 package com.ezen_jeonju.myapp.service;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +40,12 @@ public class MemberServiceImpl implements MemberService{
 	public MemberVo memberLogin(String memberId) {
 		MemberVo mv = null;
 		mv = msm.memberLogin(memberId);
+		return mv;
+	}
+	
+	@Override
+	public ArrayList<MemberVo> findId(String memberEmail) {
+		ArrayList<MemberVo> mv = msm.findId(memberEmail);
 		return mv;
 	}
 /*----------------------카카오----------------------------*/

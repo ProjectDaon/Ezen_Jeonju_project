@@ -1,5 +1,7 @@
 package com.ezen_jeonju.myapp.service;
 
+import java.util.ArrayList;
+
 import com.ezen_jeonju.myapp.domain.GoogleInfResponse;
 import com.ezen_jeonju.myapp.domain.KakaoDTO;
 import com.ezen_jeonju.myapp.domain.MemberVo;
@@ -9,6 +11,7 @@ public interface MemberService {
 	public int memberIdCheck(String memberId);
 	public int memberInsert(MemberVo mv);
 	public MemberVo memberLogin(String memberId);
+	public ArrayList<MemberVo> findId(String memberEmail);
 	
 	public int memberIdCheckKakao(String memberId);
 	public int KakaoMemberInsert(KakaoDTO kd);
