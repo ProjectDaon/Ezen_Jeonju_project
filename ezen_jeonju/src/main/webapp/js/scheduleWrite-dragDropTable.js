@@ -14,6 +14,7 @@
 	}
 		<!--일정 테이블 생성함수-->
 	var markers = []	
+	var positions = []
     function createTable(parentElementId, columnCount) {
     // 테이블이 있으면 삭제하고 생성
     var existingTable = document.getElementById(parentElementId).querySelector('table');
@@ -41,6 +42,7 @@
         th.style.width = '300px';
         th.style.maxHeight = '50px';
         th.style.whiteSpace = 'nowrap';
+        th.classList.add("fixed");
 
         startDate.setDate(startDate.getDate()+1);
         trHeader.appendChild(th);
@@ -87,6 +89,7 @@
     firstCell.colSpan = columnCount;
     firstCell.textContent = "장소를 누르시고 원하는 시간대에 드래그하세요";
     firstCell.id = 'addSchedule';
+    firstRow.classList.add("fixed_1");
     table.appendChild(tbody);
 
     // 부모 요소에 테이블 추가
@@ -137,6 +140,7 @@
 
 	
     // 드롭이 일어났을 때 발생하는 이벤트 핸들러
+    
 	function handleDrop(e) {
 	    // 이벤트 전파 방지
 	    if (e.stopPropagation) {
@@ -156,13 +160,13 @@
 	    }
 	    // markers 초기화
 	    markers = [];
-	
+		positions =[];
 	    $(".highlight").removeClass("highlight");
 	    var columnIndex = $(this).index();
 	
 	    // 모든 행에 대해 현재 열에 해당하는 td에 highlight 클래스 추가
 	    $('#dragDropTable tr:not(:eq(1))').find('td:eq(' + columnIndex + ')').addClass('highlight');
-	
+
 	    // 새로운 marker 생성
 	    $("tr").each(function (index) {
 	        var $highlightedCell = $(this).find('.highlight');
@@ -190,7 +194,10 @@
 	            });
 	
 	            marker.setMap(map);
+	            positions.push(markerPosition);
+	            panTo(tourCourseLatitude, tourCourseLongitude);
 	            markers.push(marker);
+	            drawLine(positions);
 	        }
 	    });
     }
@@ -218,7 +225,7 @@
     }
     // markers 초기화
     markers = [];
-
+	positions = [];
     $(".highlight").removeClass("highlight");
     var columnIndex = $(this).index();
 
@@ -252,7 +259,16 @@
             });
 
             marker.setMap(map);
+            panTo(tourCourseLatitude, tourCourseLongitude);
             markers.push(marker);
+            positions.push(markerPosition);
+            drawLine(positions);
+        }
+        else{
+       		content = '<div class="dotOverlay distanceInfo">total : <span class="number">0</span>m</div>';
+        	panTo(35.8240808, 127.1481404);
+            positions.push(new kakao.maps.LatLng(35.8240808, 127.1481404));
+            drawLine(positions);
         }
     });
 }
@@ -302,3 +318,71 @@
         createTable('table-container', dayDifference+1);
         }
     }
+	function panTo(latitude, longitude) {
+	    // 이동할 위도 경도 위치를 생성합니다 
+	    var moveLatLon = new kakao.maps.LatLng(latitude, longitude);
+	
+	    // 지도 중심을 부드럽게 이동시킵니다
+	    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+	    map.panTo(moveLatLon);
+	   
+	}
+	var polyline = null;
+	var distanceOverlay = null;
+
+	function drawLine(positions) {
+		
+	    if (polyline) {
+        	polyline.setMap(null);
+    	}
+		
+	    // Polyline을 그리기 위한 좌표 배열 생성
+	    var polylinePath = [];
+	    for (var i = 0; i < positions.length; i++) {
+	        polylinePath.push(positions[i]);
+	    }
+	
+	    // 새로운 Polyline 생성
+	    polyline = new kakao.maps.Polyline({
+	        map: map,
+	        path: polylinePath,
+	        strokeWeight: 3,
+	        strokeColor: '#db4040',
+	        strokeOpacity: 1,
+	        strokeStyle: 'solid'
+	    });
+	
+	    // Polyline에 대한 거리 정보 계산 및 표시
+	    showDistanceInfo(polyline);
+	
+	    // 결과로 얻은 content를 어딘가에 사용할 수 있음
+	}
+	
+	function showDistanceInfo(polyline) {
+	    // 선의 총 거리를 계산
+	    var distance = Math.round(polyline.getLength());
+	
+	    // content 생성
+	    var content = '<div class="dotOverlay distanceInfo">total : <span class="number">' + distance + '</span>m</div>';
+	
+	    // CustomOverlay 표시
+	    showDistance(content, polyline.getPath()[0]); // 여기서 getPath()[0]은 Polyline의 첫 번째 좌표를 사용합니다.
+	}
+	
+	function showDistance(content, position) {
+	    // 기존 CustomOverlay가 있으면 지우기
+	    if (distanceOverlay) {
+	        distanceOverlay.setMap(null);
+	    }
+	
+	    // CustomOverlay 생성 및 지도에 표시
+	    distanceOverlay = new kakao.maps.CustomOverlay({
+	        map: map,
+	        content: content,
+	        position: position,
+	        xAnchor: 0,
+	        yAnchor: 0,
+	        zIndex: 3
+	    });
+	}
+

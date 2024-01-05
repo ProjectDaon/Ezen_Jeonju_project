@@ -37,6 +37,7 @@
     }
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=24905b65af4a0e247d268677c3972e9d"></script>
 <script>
 $(document).ready(function () {
 	
@@ -46,19 +47,18 @@ $(document).ready(function () {
 	
 	//일차에 맞춰 지도나오는 함수
 	getTourCourseNDate(sidx,tourCourseNDate);
-	setCenter();
     $('#selectDate').on('change', function () {
     	hideMarkers();
     	tourCourseNDate = $(this).val();
         getTourCourseNDate(sidx,tourCourseNDate);
-        setCenter();
     });
     
     $('#nDate').val("1 일차");
+    $('#timetbl tr').find('td:eq(1)').addClass('highlight');
     $('#timetbl td').on('click', function () {
         var rowIndex = $(this).parent().index();
         var columnIndex = $(this).index();
-
+       
         $(".highlight").removeClass("highlight");
         // 첫 번째 행 또는 첫 번째 열인 경우 이벤트 발생하지 않도록 처리
         if (rowIndex === 0 || columnIndex === 0) {
@@ -102,40 +102,53 @@ function getTourCourse(sidx){
 	});
 }
 
-function getTourCourseNDate(sidx,tourCourseNDate){
-	$.ajax({
-		type : "post",
-		url : "${pageContext.request.contextPath}/schedule/getTourCourseNDate.do",
-		data : {
-			"sidx" : sidx,
-			"tourCourseNDate" : tourCourseNDate
-		},
-		dataType : "json",
-		success : function(data){
-			
-			var positions = [];
-			$(data).each(function(){
-				positions.push({
-					title: this.tourCoursePlace,
-				    latlng: new kakao.maps.LatLng(this.tourCourseLatitude, this.tourCourseLongitude)
-									
-				});
-				
-				for (var i = 0; i < positions.length; i ++) {
-				   // 마커를 생성합니다
-					addMarker(positions[i].latlng,positions[i].title,(i+1));
-					
-				}	
+var bounds = new kakao.maps.LatLngBounds();
 
-			});
-			drawLine(positions);
-
-		},
-		error: function(request, status, error){
-			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-		}
-	});
+function setBounds() {
+    map.setBounds(bounds);
 }
+
+function getTourCourseNDate(sidx, tourCourseNDate) {
+    $.ajax({
+        type: "post",
+        url: "${pageContext.request.contextPath}/schedule/getTourCourseNDate.do",
+        data: {
+            "sidx": sidx,
+            "tourCourseNDate": tourCourseNDate
+        },
+        dataType: "json",
+        success: function (data) {
+            var positions = [];
+
+            $(data).each(function () {
+                positions.push({
+                    title: this.tourCoursePlace,
+                    latlng: new kakao.maps.LatLng(this.tourCourseLatitude, this.tourCourseLongitude)
+                });
+            });
+
+            if(positions.length != 0){
+                for (var i = 0; i < positions.length; i++) {
+                    addMarker(positions[i].latlng, positions[i].title, (i + 1));
+                    bounds.extend(positions[i].latlng);
+                }
+
+                setBounds();
+                drawLine(positions);
+            }
+            else{
+            	polyline.setMap(null);
+                distanceOverlay.setMap(null);
+                distanceOverlay = null;
+            }
+
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    });
+}
+
 </script>
 
 </head>
@@ -196,7 +209,6 @@ function getTourCourseNDate(sidx,tourCourseNDate){
    </select>
    </div>
 </div>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=24905b65af4a0e247d268677c3972e9d"></script>
 <script type="text/javascript" charset="UTF-8" src="../js/scheduleContents-map.js"></script>
 </body>
 </html>

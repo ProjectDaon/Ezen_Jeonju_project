@@ -1,7 +1,7 @@
 var markers = [];
 var container = document.getElementById('searchmap'); //지도를 담을 영역의 DOM 레퍼런스
 var options = { //지도를 생성할 때 필요한 기본 옵션
-    center: new kakao.maps.LatLng(35.82406050330023, 127.14816812319762), //지도의 중심좌표.
+    center: new kakao.maps.LatLng(35.8240808, 127.1481404), //지도의 중심좌표.
     level: 4 //지도의 레벨(확대, 축소 정도)
 }
 
