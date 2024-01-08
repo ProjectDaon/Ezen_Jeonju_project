@@ -101,8 +101,6 @@ public class ScheduleController {
 		
 		model.addAttribute("list",list);
 		model.addAttribute("pm", pm);
-		System.out.println(pm.getSscri().getPage());
-		System.out.println(pm.getStartPage());
 		return "schedule/scheduleList";
 	}
     @RequestMapping(value="/scheduleContents.do")

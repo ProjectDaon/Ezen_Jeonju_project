@@ -1,0 +1,168 @@
+@charset "UTF-8";
+.dotOverlay {position:relative;bottom:10px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;font-size:12px;padding:5px;background:#fff;}
+.dotOverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}    
+.number {font-weight:bold;color:#ee6152;}
+.dotOverlay:after {content:'';position:absolute;margin-left:-6px;left:50%;bottom:-8px;width:11px;height:8px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white_small.png')}
+.distanceInfo {position:relative;top:5px;left:5px;list-style:none;margin:0;}
+.distanceInfo .label {display:inline-block;width:50px;}
+.distanceInfo:after {content:none;}
+	h3 {
+	    font-weight: 500;
+	    text-align: center;
+	    font-size: 42px;
+	    color: #222;
+	    line-height: normal;
+	}
+	#timetbl td{
+		cursor : pointer;
+	}
+	#timetbl td:first-child{
+		cursor : default;
+	}
+	
+    #scheduletbl{
+        display: flex; 
+        flex-direction: row;
+        width: 900px;
+        height: 600px;
+        overflow: scroll;
+   		margin-right:3%;	
+   		
+    }
+    #timetbl{
+      font-size: .9em;
+	  box-shadow: 0 2px 5px rgba(0,0,0,.25);
+	  width: 100%;
+	  border-collapse: collapse;
+	  border-radius: 5px;
+	  overflow: hidden;
+	  text-align : center;
+	  
+    }
+    #timetbl td{
+    	height:100%;
+    }
+
+    #timetbl tr td:last-child {
+    	border-right: 2px #FFFFFF solid;
+	}
+	#timetbl tr td:first-child{
+		border-left: 2px #FFFFFF solid;
+	}
+	.scheduletbl td{
+		border: 1px solid #FFDEAD;
+		border-collapse: collapse;
+		
+	}
+	.scheduletbl th{
+		border: 2px solid #FFFFFF;
+		border-collapse: collapse;	
+	}
+  	 #totaltbl{
+    	display: flex; 
+        flex-direction: row;
+    }
+    .highlight {
+      	background-color: #f2f2f2;
+      	font-weight:570;
+    }
+
+	th {
+	 	text-align: center;
+	}
+	  
+	thead {
+		font-weight: bold;
+		color: #fff;
+		background:coral;
+	}
+	  
+	 td, th {
+	    padding: 1em .5em;
+	    vertical-align: middle;
+	}
+	  
+	 td {
+	    border-bottom: 1px solid rgba(0,0,0,.1);
+	    background: #fff;
+	}
+	#totaltbl{
+	    max-width: 1600px;
+   	 	width: 100%;
+ 	    margin: 5% auto;
+	}
+	.innerwrap{
+	    max-width: 1500px;
+	    width: 100%;
+	    margin: 5% auto;
+	    padding: 0 5%;
+	    overflow: hidden;
+	    word-wrap: break-word;
+	}
+	#nDate{
+		border: 3px solid #FFDEAD;
+		text-align:center;
+		width: 100%;
+		padding : 10px;
+		margin-bottom: 2px;
+		font-size: 18px;
+	}
+	.btn a {
+	    border: 1px solid transparent;
+	    display: inline-block;
+	    margin-right: 10px;
+	    padding: 6px 12px;
+	    font-size: 13px;
+	    font-weight: bold;
+	    color: coral;
+	    background-color: #FFDEAD;
+	    border-color: #FFDEAD;
+	    border-radius: 4px;
+	    text-decoration-line: none;
+    	
+	}
+	
+	#nDate, #selectDate{
+		color : coral;
+		font-weight : bold;
+	}
+	#selectDate{
+		border: 2px solid #FFDEAD; 
+	}
+
+	#headtbl{
+		margin: auto;		
+		border-bottom : 2px solid coral;
+		width : 100%;
+	}
+	#Dates{
+	    display: flex;
+   		justify-content: space-between;
+		margin: 3% auto;
+	}
+	#rankdiv{
+		background : #FFDEAD;
+		color:white;
+		width: 30px;
+		height : 30px;
+		border-right : 2px solid coral;
+		margin-right : 10px;
+	}
+	#sequencediv{
+		display : flex;
+		vertical-align: middle;
+		text-alingn : center;
+		border : 2px solid coral;
+	}
+	#place{
+		vertical-align: middle;
+		text-alingn : center;
+		padding-top : 7px;
+	}
+	#rank{
+		padding-top : 6px;
+	}
+
+	#map{
+		border: 3px solid #FFDEAD;
+	}
