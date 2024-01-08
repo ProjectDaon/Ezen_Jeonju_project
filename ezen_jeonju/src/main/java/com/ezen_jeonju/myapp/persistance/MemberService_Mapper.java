@@ -11,7 +11,10 @@ public interface MemberService_Mapper {
 	public int memberIdCheck(String memberId);
 	public int memberInsert(MemberVo mv);
 	public MemberVo memberLogin(String memberId);
+	
 	public ArrayList<MemberVo> findId(String memberEmail);
+	public int checkInfo(MemberVo mv);
+	public int changePwd(MemberVo mv);
 	
 	public int memberIdCheckKakao(String memberId);
 	public int KakaoMemberInsert(KakaoDTO kd);

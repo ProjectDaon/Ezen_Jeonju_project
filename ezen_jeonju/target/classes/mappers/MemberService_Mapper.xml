@@ -9,8 +9,8 @@ SELECT COUNT(*) AS cnt FROM member WHERE MEMBERID=#{memberId}
 </select>
 
 <insert id="memberInsert" parameterType="mv">
-INSERT INTO member(MEMBERID,MEMBERPWD,MEMBERNAME,MEMBEREMAIL)
-VALUES(#{memberId},#{memberPwd},#{memberName},#{memberEmail})
+INSERT INTO member(MEMBERID,MEMBERPWD,MEMBERNAME,MEMBEREMAIL,signinRoot)
+VALUES(#{memberId},#{memberPwd},#{memberName},#{memberEmail},"signup")
 </insert>
 
 <select id="memberLogin" parameterType="String" resultType="mv">
@@ -19,15 +19,17 @@ WHERE memberId=#{memberId}
 </select>
 
 <select id="findId" resultType="mv" >
-select * from member where memberEmail=#{memberEmail}
+select * from member where memberEmail=#{memberEmail} and signinRoot="signup"
 </select>
 
-<select id="findPwd" resultType="mv" >
-select memberPwd from member where memberId=#{memberId} and memberEmail=#{memberEmail}
+<select id="checkInfo" resultType="int" parameterType="mv">
+select count(midx)
+from member
+where memberid = #{memberId} and memberEmail = #{memberEmail}
 </select>
 
-<update id="updatePwd">
-update member set memberPwd=#{memberPwd} where memberId=#{memberId}
+<update id="changePwd" parameterType="mv">
+update member set memberPwd=#{memberPwd} where memberId=#{memberId} and memberEmail=#{memberEmail}
 </update>
 
 <!-- ************************카카오*************************************** -->
@@ -36,8 +38,8 @@ SELECT COUNT(*) AS cnt FROM member WHERE MEMBERID=#{memberId}
 </select>
 
 <insert id="KakaoMemberInsert" parameterType="kd">
-INSERT INTO member(MEMBERID, MEMBERPWD, MEMBERNAME, MEMBEREMAIL)
-VALUES(#{memberId}, #{memberPwd}, #{memberName}, #{memberEmail})
+INSERT INTO member(MEMBERID, MEMBERPWD, MEMBERNAME, MEMBEREMAIL, signinRoot)
+VALUES(#{memberId}, #{memberPwd}, #{memberName}, #{memberEmail}, "kakao")
 </insert>
 
 <select id="KakaoMemberLogin" parameterType="String" resultType="mv">
@@ -52,8 +54,8 @@ SELECT COUNT(*) AS cnt FROM member WHERE MEMBERID=#{memberId}
 </select>
 
 <insert id="NaverMemberInsert" parameterType="nd">
-INSERT INTO member(MEMBERID, MEMBERPWD, MEMBERNAME, MEMBEREMAIL)
-VALUES(#{memberId}, #{memberPwd}, #{memberName}, #{memberEmail})
+INSERT INTO member(MEMBERID, MEMBERPWD, MEMBERNAME, MEMBEREMAIL, signinRoot)
+VALUES(#{memberId}, #{memberPwd}, #{memberName}, #{memberEmail}, "naver")
 </insert>
 
 <select id="NaverMemberLogin" parameterType="String" resultType="mv">
@@ -67,8 +69,8 @@ SELECT COUNT(*) AS cnt FROM member WHERE MEMBERID=#{memberId}
 </select>
 
 <insert id="GoogleMemberInsert" parameterType="gr">
-INSERT INTO member(MEMBERID, MEMBERPWD, MEMBERNAME, MEMBEREMAIL)
-VALUES(#{sub}, #{kid}, #{name}, #{email})
+INSERT INTO member(MEMBERID, MEMBERPWD, MEMBERNAME, MEMBEREMAIL, signinRoot)
+VALUES(#{sub}, #{kid}, #{name}, #{email}, "google")
 </insert>
 
 <select id="GoogleMemberLogin" parameterType="String" resultType="mv">

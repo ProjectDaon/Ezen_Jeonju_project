@@ -1,7 +1,8 @@
 @charset "UTF-8";
 
 .contents {
-	margin-bottom: 7.5%;
+	margin-bottom: 300px;
+	margin-top: 200px;
 }
 
 section{
@@ -69,19 +70,20 @@ h4{
 	text-align: center;
 	margin-top: 30px;
 }
-
-.find_wrap li {
-    position: relative;
-    display: inline-block;
-}
-
-.socialLogin{
-	display: flex;
-	justify-content: center;
+.wrap{
+	margin-top: 10px;
+	text-align: center;
 }
 .seperator{
 	display: inline-block;
 	text-align: center;
+}
+
+.socialLogin{
+    width: 90%;
+    margin: 5% auto;
+    overflow: hidden;
+    word-wrap: break-word;
 }
 .socialList{
 	margin-top: 12px;
@@ -89,3 +91,59 @@ h4{
 .socialList img{
 	margin-top:10px;
 } 
+
+.login_sns{
+	padding: 0;
+}
+.login_sns li{
+	margin: 7px 0;
+}
+.login_sns li a{
+	display: block;
+    width: 280px;
+    margin: 0 auto;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: 500;
+    border-radius: 7px;
+    position: relative;
+    text-decoration: none;
+}
+
+.login_sns li a:before {
+    background-image: url(../images/sns-icon.png);
+    left: 40px;
+    top: -2px;
+    width: 50px;
+    height: 50px;
+    content: '';
+    display: inline-block;
+    position: absolute;
+}
+
+.login_sns li a.kakao{
+	background-color: #ffdf01;
+    color: #47292b;
+    padding-left: 100px;
+}
+.login_sns li a.kakao:before {
+    background-position: -81px 0
+}
+
+.login_sns li a.naver{
+	background-color: #059830;
+    color: #fff;
+    padding-left: 100px;
+}
+.login_sns li a.naver:before {
+	background-position: -146px 0;
+}
+
+.login_sns li a.google{
+	background-color: #de4837;
+    color: #fff;
+    padding-left: 100px;
+}
+.login_sns li a.google:before {
+	background-position: -220px 0;
+}

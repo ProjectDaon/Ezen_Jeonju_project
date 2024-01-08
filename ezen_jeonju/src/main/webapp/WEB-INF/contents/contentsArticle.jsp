@@ -35,26 +35,6 @@ $(document).ready(function(){
 		reviewList();
 	});
 	
-	/*리뷰글쓰기창 열기*/
-	$('#revWrite').click(function(){
-		$.ajax({
-			type : "post",
-			url : "${pageContext.request.contextPath}/review/loginCheck.do",
-			dataType : "json",
-			cache : false,
-			success : function(data){
-				if(data.txt === "pass"){
-					$('#writeReview').css('display','block');
-				}else{
-					alert(data.txt);
-				}
-			},
-			error : function(){
-				alert("통신오류 실패");
-			}		
-		});
-		
-	});
 	$('#tab2').click(function(){
 		relayout();
 	});
@@ -67,6 +47,26 @@ $(document).ready(function(){
 	    blogReviewLead();
 	});
 });
+/*리뷰글쓰기창 열기*/
+function revWriteOpen(){
+	$.ajax({
+		type : "post",
+		url : "${pageContext.request.contextPath}/review/loginCheck.do",
+		dataType : "json",
+		cache : false,
+		success : function(data){
+			if(data.txt === "pass"){
+				$('#writeReview').css('display','block');
+			}else{
+				alert(data.txt);
+			}
+		},
+		error : function(){
+			alert("통신오류 실패");
+		}		
+	});
+	
+}
 
 function likeCheck(){
 	$.ajax({
@@ -230,6 +230,10 @@ function reviewPaging(data){
 	$('#paging').html(paging);
 }
 function reviewDel(ridx){
+	if(!confirm("댓글을 삭제하시겠습니까?")){
+		return false;
+	}
+	
 	$.ajax({
 		type : "post",
 		url : "${pageContext.request.contextPath}/review/reviewDel.do",
@@ -331,19 +335,40 @@ function reportArticle(data){
 			+"<td>"+data.memberName+"<input type='hidden' name='midx' value='"+data.midx+"'></td></tr>"
 			+"<tr><th>신고내용</th>"
 			+"<td>"+data.reviewArticle+"</td></tr>"
-			+"<tr><th>신고사유</th><td><select name='reviewReportReason'><option>비방 및 욕설</option><option>글과 상관없는 내용</option>"
-			+"<option>광고글</option><option>기타</option></select></td></tr></table>";
+			+"<tr><th>신고사유</th><td><select id='reviewReportReason' name='reviewReportReason' onchange='selectOther();'>"
+			+"<option value='비방 및 욕설'>비방 및 욕설</option><option value='글과 상관없는 내용'>글과 상관없는 내용</option>"
+			+"<option value='광고글'>광고글</option><option value='other'>기타</option></select>"
+			+"<div id='otherCheck' style='display:none'><input type='text' name='otherReason'></div></td></tr></table>";
 	$('#reportTable').html(txt);
 }
-
+function selectOther(){
+	var value = document.getElementById("reviewReportReason").value;
+	if(value == "other"){
+		$('#otherCheck').css("display","inline");
+	}else{
+		$('#otherCheck').css("display","none");
+	}
+}
 function reportWrite(){
+	if(!confirm("해당 리뷰를 신고하시겠습니까?")){
+		return false;
+	}
 	var fm = document.reportFrm;
 	var ridx = fm.ridx.value;
 	var cidx = fm.cidx.value;
 	var midx = fm.midx.value;
 	var midx2 = fm.midx2.value;
 	var reviewReportReason = fm.reviewReportReason.value;
+	var otherReason = fm.otherReason.value;
 	
+	if(reviewReportReason == "other" && otherReason != ""){
+		reviewReportReason = otherReason;
+	}
+	
+	if(reviewReportReason == "other" && otherReason == ""){
+		alert("기타 사유를 작성해주세요");
+		return;
+	}
 	$.ajax({
         type: "post",
         url: "${pageContext.request.contextPath}/review/reviewReportAction.do",
@@ -433,7 +458,7 @@ function reportWrite(){
 			<div class="con-review" style="display:none">
 				<div class="revHead">
 					<div class="title">여행후기</div>
-					<a href="#" class="write" id="revWrite"><span>리뷰작성하기</span></a>
+					<a href="javascript:revWriteOpen();" class="write" id="revWrite"><span>리뷰작성하기</span></a>
 				</div>
 				<div class="revList" id="revList">
 					<div id="reviewTable"></div>

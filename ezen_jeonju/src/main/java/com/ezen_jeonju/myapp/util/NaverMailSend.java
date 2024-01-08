@@ -21,6 +21,7 @@ public final class NaverMailSend {
 	
 	public String sendEmail(String to, HttpSession forsession) throws Exception {
 
+		forsession.setMaxInactiveInterval(180); //세션 시간 (초)
 		String authenCode = null;
 		
 		/* Property 객체에 SMTP 서버 정보 설정 */
@@ -65,7 +66,6 @@ public final class NaverMailSend {
 
 	        // 세션에 authenCode 저장
 	        forsession.setAttribute("authenCode", authenCode);
-	        forsession.setMaxInactiveInterval(180); //세션 시간 (초)
 	        
 
 	        Message message1 = new MimeMessage(session);

@@ -114,6 +114,18 @@ public class MemberServiceImpl implements MemberService{
 		return mv;
 	}
 
+	@Override
+	public int checkInfo(MemberVo mv) {
+		int value = msm.checkInfo(mv);
+		return value;
+	}
+
+	@Override
+	public int changePwd(MemberVo mv) {
+		int value = msm.changePwd(mv);
+		return value;
+	}
+
 	
 	
 }

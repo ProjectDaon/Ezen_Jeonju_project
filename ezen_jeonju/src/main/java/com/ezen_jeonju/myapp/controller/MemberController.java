@@ -497,7 +497,6 @@ public class MemberController {
 			return "redirect:/"; // 포워드방식이 아닌 sendRedirect 방식
 		}else {
 			model.addAttribute("error", "메일인증이 처리되지 않았습니다.");
-			session.setMaxInactiveInterval(180);
 			return "member/memberJoin";
 		}
 		
@@ -533,6 +532,82 @@ public class MemberController {
 		model.addAttribute("idList", mv);
 
 		return "member/resultInfo";
+	}
+	
+	@RequestMapping(value="/checkInfo.do")
+	public String checkInfo(MemberVo mv, HttpSession session, Model model) {
+		int value = ms.checkInfo(mv);
+		if(value != 0) {
+			session.setAttribute("memberId", mv.getMemberId());
+			session.setAttribute("memberEmail", mv.getMemberEmail());
+			session.setMaxInactiveInterval(180);
+			return "redirect:/member/searchPwd.do";
+		}else {
+			model.addAttribute("alertMessage", "일치하는 정보가 없습니다.");
+			return "/member/findInfo";
+		}
+	}
+	
+	@RequestMapping(value = "/searchPwd.do")
+	public String searchPwd(HttpSession session) {
+		String memberEmail = session.getAttribute("memberEmail").toString();
+		
+		NaverMailSend nm = new NaverMailSend();
+		try {
+			nm.sendEmail(memberEmail, session);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "member/searchPwd";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/mailAuthCheckPwd.do")
+	public JSONObject mailAuthCheckPwd(@RequestParam("authNumber") String authNumber, HttpSession session) {
+		JSONObject js = new JSONObject();
+		String savedPass = (String) session.getAttribute("authenCode");
+		String txt = "";
+		String url = "";
+		if(authNumber.equals(savedPass)) {
+			txt = "pass";
+			session.setAttribute("mailPass", "pass");
+			url = "/member/changePwd.do";
+			js.put("url", url);
+		}else {
+			txt = "인증실패";
+		}
+		
+		js.put("txt", txt);
+		return js;
+	}
+	
+	@RequestMapping(value="/changePwd.do")
+	public String changePwd() {
+		
+		
+		return "/member/changePwd";
+	}
+	
+	@RequestMapping(value="/changePwdAction.do")
+	public String changePwdAction(@Valid MemberVo mv, HttpSession session) {
+		
+		String authSession = (String) session.getAttribute("mailPass");
+		
+		if(authSession!=null && authSession.equals("pass")) {
+			String memberId = session.getAttribute("memberId").toString();
+			String memberEmail = session.getAttribute("memberEmail").toString();
+			mv.setMemberId(memberId);
+			mv.setMemberEmail(memberEmail);
+			
+			String memberPwd = mv.getMemberPwd();
+			mv.setMemberPwd(bcryptPasswordEncoder.encode(memberPwd));
+			
+			int value = ms.changePwd(mv);
+			return "redirect:/";
+		}else {
+			return "redirect:/member/findInfo.do";
+		}
+		
 	}
 }
 

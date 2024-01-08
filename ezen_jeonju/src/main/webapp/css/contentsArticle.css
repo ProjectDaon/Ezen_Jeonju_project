@@ -230,12 +230,6 @@ button{
     vertical-align: middle;
 }
 
-/* .loadSearch .end span {
-    display: inline-block;
-    padding: 0 10px 0 0;
-    vertical-align: middle;
-} */
-
 .loadSearch .loadPutBox input[type="text"] {
     width: 73%;
     display: inline-block;
@@ -378,7 +372,7 @@ textarea{
     font-size: 15px;
     color: #fff;
     font-weight: 600;
-    background-color: #0077cb;
+    background-color: coral;
     transition: .3s;
 }
 .rev-cc {
@@ -511,12 +505,12 @@ textarea{
 	top: 30%;
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 50%;
     pointer-events: auto;
     background-color: #fff;
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
+    border-radius: 35px;
     outline: 0;
     margin: 0 auto;
     z-index: 50;
@@ -528,4 +522,25 @@ textarea{
     align-items: flex-start;
     justify-content: center;
     border-radius: 35px 35px 0 0;
+}
+.report-contents table{
+	margin: 20px auto;
+	width: 90%;
+}
+.report-contents table th{
+	width: 70px;
+	text-align: right;
+}
+.report-contents table td{
+	padding-left: 20px;
+}
+.writebtn{
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.report-contents table th, td{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #e4e4e4;
 }

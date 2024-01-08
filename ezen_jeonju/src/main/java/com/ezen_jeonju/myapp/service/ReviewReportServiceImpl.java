@@ -23,6 +23,18 @@ public class ReviewReportServiceImpl implements ReviewReportService{
 		list = rrsm.reportList();
 		return list;
 	}
+
+	@Override
+	public int reportCancel(int rridx) {
+		int value = rrsm.reportCancel(rridx);
+		return value;
+	}
+
+	@Override
+	public int reviewDelete(int ridx) {
+		int value = rrsm.reviewDelete(ridx);
+		return value;
+	}
 	
 	
 }

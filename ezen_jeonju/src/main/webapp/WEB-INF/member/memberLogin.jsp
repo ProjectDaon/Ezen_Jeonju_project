@@ -72,27 +72,26 @@ function check(){
 				</tr>
 			</table>
 			<div class="wrap">
-				<ul class="find_wrap">
-					<li><a href="<%=request.getContextPath()%>/member/findInfo.do">아이디 / 비밀번호 찾기</a></li>
-					<li><a href="<%=request.getContextPath()%>/member/memberJoin.do">회원가입</a></li>
-				</ul>
+				<a href="<%=request.getContextPath()%>/member/findInfo.do">아이디 / 비밀번호 찾기</a>
+				<br><br>
+				<a href="<%=request.getContextPath()%>/member/memberJoin.do">회원가입</a>
 			</div>
 			</div>
 	
 			<div class="seperator">
 				<h4>Social login</h4>
 				<div class="socialLogin">
-					<div class="socialList">
-					<a id="kakao-login-btn" href="<%=request.getContextPath()%>/member/KakaoMemberLogin.do">
-						<img src="../images/kakao_login_medium_narrow.png" width="220" height="50" alt="카카오 로그인 버튼" />
-					</a><br>
-					<a id="naver-login-btn" href="<%=request.getContextPath()%>/member/naverMemberLogin.do">
-						<img src="../images/naver_login.png" width="220" height="50" alt="네이버 로그인 버튼"/>
-					</a><br>
-					<a id="google-login-btn" href="<%=request.getContextPath()%>/member/googleMemberLogin.do">
-						<img src="../images/google-login.png" width="220" height="50" alt="구글 로그인 버튼"/>
-					</a>
-					</div>
+					<ul class="login_sns">
+						<li>
+							<a href="<%=request.getContextPath()%>/member/KakaoMemberLogin.do" class="kakao">Kakao 로그인</a>
+						</li>
+						<li>
+							<a href="<%=request.getContextPath()%>/member/naverMemberLogin.do" class="naver">Naver 로그인</a>
+						</li>
+						<li>
+							<a href="<%=request.getContextPath()%>/member/googleMemberLogin.do" class="google">Google 로그인</a>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>

@@ -11,7 +11,10 @@ public interface MemberService {
 	public int memberIdCheck(String memberId);
 	public int memberInsert(MemberVo mv);
 	public MemberVo memberLogin(String memberId);
+	
 	public ArrayList<MemberVo> findId(String memberEmail);
+	public int checkInfo(MemberVo mv);
+	public int changePwd(MemberVo mv);
 	
 	public int memberIdCheckKakao(String memberId);
 	public int KakaoMemberInsert(KakaoDTO kd);
@@ -24,4 +27,5 @@ public interface MemberService {
 	public int memberIdCheckGoogle(String memberId);
 	public int GoogleMemberInsert(GoogleInfResponse gr);
 	public MemberVo GoogleMemberLogin(String memberId);
+	
 }

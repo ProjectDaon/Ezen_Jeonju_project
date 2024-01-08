@@ -14,6 +14,14 @@ join review r on rr.ridx=r.ridx
 join member m on rr.midx=m.midx
 join member m2 on rr.midx2=m2.midx
 join contents c on rr.cidx=c.cidx
-where rr.reviewReportYN='N'
+where rr.reviewReportYN='N' and r.reviewYN='N'
 </select>
+
+<delete id="reportCancel" parameterType="int">
+DELETE FROM reviewreport where rridx = #{rridx}
+</delete>
+
+<update id="reviewDelete" parameterType="int">
+UPDATE review SET reviewYN='Y' WHERE ridx=#{ridx}
+</update>
 </mapper>
