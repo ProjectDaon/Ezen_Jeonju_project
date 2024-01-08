@@ -522,7 +522,7 @@
 	<div id="table-container">
 		<table>
 			<thead>
-				<th class="fixed" style="height:50px; width:1200px">기간을 등록해주세요 ! </th>
+				<th class="fixed" style="height:50px; width:1200px">기간을 먼저 등록해주세요 ! </th>
 			<thead>
 			<tbody>
 	            <tr><td class="fixed_1"></td></tr>
