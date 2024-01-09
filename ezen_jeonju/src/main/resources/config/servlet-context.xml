@@ -46,6 +46,7 @@
 	<mapping path="/main/mainVannerDeleteAction.do" />
 	<mapping path="/main/mainVannerModifyAction.do" />
 	
+	<mapping path="/contents/contentsWrite.do" />
 	<mapping path="/contents/contentsModify.do" />
 	<mapping path="/contents/contentsDeleteAction.do" />
 	

@@ -40,4 +40,17 @@ select count(clidx) from contentslike where midx=#{midx}
 delete from contentsLike where clidx=#{clidx}
 </delete>
 
+
+<select id="scheduleList" parameterType="int" resultType="sv">
+select sidx, scheduleSubject, scheduleStartDate, scheduleEndDate, scheduleViewCount
+from scheduleroot
+where midx=#{midx}
+order by 1 desc
+</select>
+
+<select id="scheculeTotalCnt" parameterType="int" resultType="int">
+select count(sidx)
+from scheduleroot
+where midx=#{midx}
+</select>
 </mapper>

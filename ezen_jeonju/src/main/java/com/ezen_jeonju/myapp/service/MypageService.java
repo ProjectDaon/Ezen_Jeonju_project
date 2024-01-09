@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.ezen_jeonju.myapp.domain.MypageLikeCriteria;
 import com.ezen_jeonju.myapp.domain.MypageReviewDTO;
 import com.ezen_jeonju.myapp.domain.ReviewCriteria;
+import com.ezen_jeonju.myapp.domain.ScheduleRootVo;
 
 public interface MypageService {
 	public String getMemberPhone(int midx);
@@ -21,4 +22,8 @@ public interface MypageService {
 	public int likeTotalCnt(int midx);
 	//mypage 좋아요 삭제
 	public int likeDelete(int clidx);
+	//mypage 여행일정 리스트
+	public ArrayList<ScheduleRootVo> scheduleList(int midx); 
+	//mypage 여행일정 총 갯수
+	public int scheculeTotalCnt(int midx);
 }

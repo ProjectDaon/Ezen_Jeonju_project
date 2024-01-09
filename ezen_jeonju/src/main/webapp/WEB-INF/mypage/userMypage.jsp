@@ -39,6 +39,9 @@ $(document).ready( function() {
 		}
 		
 	});
+	
+	scheList();
+	
 	$('#tab2').click(function(){
 		reviewList();
 	});
@@ -123,7 +126,7 @@ function reviewPaging(data){
 	if(data.next == true && data.endPage>0){
 		paging = paging + "<a class='pageNext' href='javascript:reviewListPaging("+(data.endPage+1)+")'>다음</a>";
 	}
-	$('#paging').html(paging);
+	$('#revpaging').html(paging);
 }
 
 function revDel(ridx){
@@ -238,6 +241,38 @@ function likeDel(clidx){
 		}		
 	});
 }
+/*------------------------------스케줄-----------------------------*/
+function scheList(){
+	$.ajax({
+		type : "post",
+		url : "${pageContext.request.contextPath}/mypage/scheduleList.do",
+		dataType : "json",
+		data : {
+				"midx" : midx
+		},
+		cache : false,
+		success : function(data){
+			scheListTable(data.scheList);
+			$('#scheCnt').html(data.total);
+		},
+		error : function(){
+			alert("통신오류 실패");
+		}		
+	});
+}
+
+function scheListTable(data){
+	var txt = "<table class='scheTable'><thead><tr><th>제목</th><th>기간</th><th>조회수</th></tr>"
+			+"</thead><tbody>";
+	$(data).each(function(){
+		txt = txt + "<tr><td><a href='${pageContext.request.contextPath}/schedule/scheduleContents.do?sidx="+this.sidx+"'>"
+			+ this.scheduleSubject+"</a></td>"
+			+ "<td>"+this.scheduleStartDate+" ~ "+this.scheduleEndDate+"</td>"
+			+ "<td>"+this.scheduleViewCount+"</td></tr>";
+	});
+	txt = txt + "</tbody></table>";
+	$('.scheCon').html(txt);
+}
 </script>
 <div id="headers"></div>
 
@@ -259,7 +294,13 @@ function likeDel(clidx){
 		<div class="con-sche" style="display:block;">
 			<div class="revHead">
 				<div class="title">일정 목록</div>
-				<div class="revCnt">총 <strong>2</strong>개</div>
+				<div class="revCnt">총 <strong><div id="scheCnt" style="display:inline-block;"></div></strong>개</div>
+			</div>
+			<div class="scheList">
+				<div class="scheCon">
+					
+				</div>
+				<div class="paging" id="paging"></div>
 			</div>
 		</div>
 		<div class="con-rev" style="display:none;">
@@ -269,7 +310,7 @@ function likeDel(clidx){
 			</div>
 			<div class="revList">
 				<div class="revCon"></div>
-				<div class="paging" id="paging"></div>
+				<div class="paging" id="revpaging"></div>
 			</div>
 		</div>
 		<div class="con-like" style="display:none;">

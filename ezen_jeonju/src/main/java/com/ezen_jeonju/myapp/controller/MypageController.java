@@ -17,6 +17,7 @@ import com.ezen_jeonju.myapp.domain.MypageLikeCriteria;
 import com.ezen_jeonju.myapp.domain.MypageReviewDTO;
 import com.ezen_jeonju.myapp.domain.PageMaker;
 import com.ezen_jeonju.myapp.domain.ReviewCriteria;
+import com.ezen_jeonju.myapp.domain.ScheduleRootVo;
 import com.ezen_jeonju.myapp.service.MypageService;
 
 @Controller
@@ -129,4 +130,14 @@ public class MypageController {
 		return js;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/scheduleList.do")
+	public JSONObject scheduleList(@RequestParam("midx") int midx) {
+		JSONObject js = new JSONObject();
+		ArrayList<ScheduleRootVo> list = ms.scheduleList(midx);
+		int total = ms.scheculeTotalCnt(midx);
+		js.put("total", total);
+		js.put("scheList", list);
+		return js;
+	}
 }

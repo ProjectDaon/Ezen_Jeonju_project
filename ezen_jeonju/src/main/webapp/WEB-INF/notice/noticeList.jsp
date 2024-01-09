@@ -108,7 +108,10 @@ $(document).ready( function() {
 	</div>
 	<div class="innerwrap">	
 		<div class="write">
+			<% String memberGradeValue = (String) session.getAttribute("memberGrade");	
+			if("관리자".equals(memberGradeValue)) {%>
 			<a href="<%=request.getContextPath()%>/notice/noticeWrite.do">글쓰기</a>
+			<%} %>
 		</div>
 		<div class="paging">
 			<c:if test="${pm.prev == true}">

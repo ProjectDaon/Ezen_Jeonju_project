@@ -77,9 +77,12 @@ $(document).ready( function() {
 		</div>
 	</div>
 	<div class="innerwrap">	
+	<% String memberGradeValue = (String) session.getAttribute("memberGrade");	
+		if("관리자".equals(memberGradeValue)) {%>
 		<div class="write">
 			<a href="<%=request.getContextPath()%>/contents/contentsWrite.do">글쓰기</a>
 		</div>
+	<%} %>
 		<div class="paging">
 			<c:if test="${pm.prev == true}">
 				<a class="pagePreview" href = "${pageContext.request.contextPath}/contents/${categoryEng}/contentsList.do?page=${pm.startPage-1}">

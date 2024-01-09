@@ -43,6 +43,12 @@ function vannersDelete(mpidx){
 <form name="frm">
 	<div class="contents">
 		<div class="inner-wrap">
+			<div class="category">
+				<ul>
+					<li><a href="${pageContext.request.contextPath}/mypage/userMypage.do">신고목록</a></li>
+					<li><strong><a href="${pageContext.request.contextPath}/main/vannerRegisterList.do">메인배너 관리</a></strong></li>
+				</ul>
+			</div>
 			<div class="title-wrap">
 				<h3>등록된 배너 목록</h3>
 			</div>

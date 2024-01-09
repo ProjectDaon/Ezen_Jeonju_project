@@ -7,6 +7,7 @@ h3 {
 
 .contents {
     margin-top: 5%; 
+    margin-bottom: 5%; 
     padding: 5%;
     text-align: center;
     display: flex;
@@ -89,4 +90,23 @@ a {
 .registeredVannersDelete:hover {
 	border: 1px solid coral;
 	color: coral;
+}
+.category{
+	width: 50%;
+    text-align: center;
+    margin: 0 auto 40px auto;
+    border: 1px solid #e4e4e4;
+}
+.category ul{
+	width: 50%;
+	display: flex;
+	justify-content: space-between;
+	margin: 20px auto;
+}
+.category li{
+	margin-left: 20px;
+}
+.category a{
+	text-decoration: none;
+	color: black;
 }

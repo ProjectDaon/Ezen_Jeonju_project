@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ezen_jeonju.myapp.domain.MypageLikeCriteria;
 import com.ezen_jeonju.myapp.domain.MypageReviewDTO;
 import com.ezen_jeonju.myapp.domain.ReviewCriteria;
+import com.ezen_jeonju.myapp.domain.ScheduleRootVo;
 import com.ezen_jeonju.myapp.persistance.MypageService_Mapper;
 
 @Service
@@ -69,6 +70,19 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public int likeDelete(int clidx) {
 		int value = msm.likeDelete(clidx);
+		return value;
+	}
+
+	@Override
+	public ArrayList<ScheduleRootVo> scheduleList(int midx) {
+		ArrayList<ScheduleRootVo> list = new ArrayList<>();
+		list = msm.scheduleList(midx);
+		return list;
+	}
+
+	@Override
+	public int scheculeTotalCnt(int midx) {
+		int value = msm.scheculeTotalCnt(midx);
 		return value;
 	}
 

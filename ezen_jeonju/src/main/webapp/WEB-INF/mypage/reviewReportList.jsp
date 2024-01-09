@@ -13,6 +13,7 @@
 <body>
 <script type="text/javascript">
 $(document).ready( function() {
+	window.history.replaceState({}, document.title, 'http://localhost:8080');
 	//가져올때 navbar.css도 같이 가져올 것
 	$('#headers').load("${pageContext.request.contextPath}/nav/nav.jsp");
 	$('#footers').load("${pageContext.request.contextPath}/nav/footer.jsp");
@@ -45,8 +46,8 @@ function reportListPrint(data){
 			+ "<td>"+this.reviewReportReason+"</td>"
 			+ "<td style='text-align:left; width:835px;'>"+this.reviewArticle+"</td>"
 			+ "<td>"+this.reviewReportDate+"</td>"
-			+ "<td><button onclick='reportCancel("+this.rridx+")'>반려</button>"
-			+ "<button onclick='reviewDelete("+this.ridx+")'>삭제</button></td></tr>";
+			+ "<td><button class='cancelBtn' onclick='reportCancel("+this.rridx+")'>반려</button>"
+			+ "<button class='deleteBtn' onclick='reviewDelete("+this.ridx+")'>삭제</button></td></tr>";
 	});
 	txt = txt + "</tbody></table>";
 	$('#reportList').html(txt);
@@ -103,7 +104,7 @@ function reviewDelete(ridx){
 	<div class="category">
 		<ul>
 			<li><strong><a href="${pageContext.request.contextPath}/mypage/userMypage.do">신고목록</a></strong></li>
-			<li>메인배너 설정</li>
+			<li><a href="${pageContext.request.contextPath}/main/vannerRegisterList.do">메인배너 관리</a></li>
 		</ul>
 	</div>
 	<div class="top-title">

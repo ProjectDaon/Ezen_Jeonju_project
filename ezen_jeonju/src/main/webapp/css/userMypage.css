@@ -74,6 +74,8 @@ a{
     width: 80%;
 }
 
+
+
 .revHead{
     position: relative;
 }
@@ -188,4 +190,27 @@ a{
     background: #FFA07A;
     border: 1px solid #FFA07A;
     color: white;
+}
+
+.scheCon table{
+	margin: 20px auto 20px 80px;
+	text-align: center;
+	width: 30%;
+	border-collapse: collapse;
+}
+
+.scheCon table thead th{
+	background: #FFA07A;
+	color: white;
+	font-size: 20px;
+	font-weight: 500;
+	padding: 7px;
+	border-bottom: 2px solid #e4e4e4;
+}
+
+.scheCon table tbody td{
+	padding: 7px;
+	font-size: 17px;
+	font-weight: 400;
+	border-bottom: 1px solid #e4e4e4;
 }

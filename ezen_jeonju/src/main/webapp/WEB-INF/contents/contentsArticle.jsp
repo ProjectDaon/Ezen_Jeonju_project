@@ -396,7 +396,10 @@ function reportWrite(){
 <div class="contents">
 	<div class="title">
 		<h4>${cv.contentsSubject}</h4>
-<a class="modifylink" href="${pageContext.request.contextPath}/contents/contentsModify.do?cidx=${cv.cidx}">수정하기</a>
+		<% String memberGradeValue = (String) session.getAttribute("memberGrade");	
+		if("관리자".equals(memberGradeValue)) {%>
+		<a class="modifylink" href="${pageContext.request.contextPath}/contents/contentsModify.do?cidx=${cv.cidx}">수정하기</a>
+		<%} %>
 	</div>
 	<div class="mainImg">
 		<img src="${pageContext.request.contextPath}/imageLoading.do?aidx=${cv.aidx}" />
