@@ -20,36 +20,39 @@ $(document).ready( function() {
 });
 </script>
 <div id="headers"></div>
-<div class="contents">
-	<form name="frm" action="${contextPath}/member/findId.do" method="" value="">
-		<div class="inner">
-			<div class="find_id">
-				<div class="find_inner">
-					<div class="title_wrap">
-						<h4>회원님의 아이디를 확인해주세요.</h4>
-					</div>
-					<div class="resultId">
-					<ul>
-						<!-- 이메일이 일치하지 않을 때 -->
-						<c:choose>
-							<c:when test="${idList == '[]'}">
-								<li>일치하는 정보가 존재하지 않습니다.</li>
-							</c:when>
-							<c:otherwise>
-							<c:forEach items="${idList}" var="idList">
-								<li>${idList.memberId}</li><br/>
-							</c:forEach>
-							</c:otherwise>
-						</c:choose>
-					</ul>
-					<button type="button" onclick="location.href='/member/memberLogin.do'">
+<div class="contents" style="margin-bottom: 10%;">
+	<div class="contents_inner">
+		<div class="find_id">
+			<div class="find_inner">
+				<div class="title_wrap">
+					<h4>회원님의 아이디를 확인해주세요.</h4>
+				</div>
+				<div class="resultId">
+					<!-- 이메일이 일치하지 않을 때 -->
+					<c:choose>
+						<c:when test="${idList == '[]'}">
+							<ul style="padding:0;">
+							<li style="font-size:20px; margin: 10% auto;">일치하는 정보가 존재하지 않습니다.</li>
+							</ul>
+							<button type="button" class="loginBtn" onclick="location.href='/member/memberJoin.do'">
+								<span class="next">회원가입하기</span>
+							</button>
+						</c:when>
+						<c:otherwise>
+						<c:forEach items="${idList}" var="idList">
+							<ul style="padding:0;">
+							<li>${idList.memberId}</li><br/>
+							</ul>
+						</c:forEach>
+						</c:otherwise>
+					</c:choose>
+					<button type="button" class="loginBtn" onclick="location.href='/member/memberLogin.do'">
 						<span class="next">로그인하기</span>
 					</button>
-					</div>
 				</div>
 			</div>
 		</div>
-	</form>
+	</div>
 </div>
 <div id="footers"></div>
 </body>
