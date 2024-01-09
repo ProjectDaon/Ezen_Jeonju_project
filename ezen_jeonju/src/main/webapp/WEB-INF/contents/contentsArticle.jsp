@@ -315,6 +315,8 @@ function reviewReport(ridx){
         success: function (data) {
         	if(data.txt === 'noLogin'){
         		alert("로그인 이후 이용바랍니다");
+        	}else if(data.txt ==='already'){
+        		alert("이미 신고한 댓글입니다.");	
         	}else{
 				$('#rev-report').css("display","block");
         		reportArticle(data.review);

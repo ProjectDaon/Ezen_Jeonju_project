@@ -36,4 +36,9 @@ INSERT INTO reviewReport(ridx, cidx, midx, midx2, reviewReportReason)
 VALUES(#{ridx},#{cidx},#{midx},#{midx2},#{reviewReportReason})
 </insert>
 
+<select id="reviewReportCheck" parameterType="rrv" resultType="int">
+select count(rridx)
+from reviewreport
+where ridx=#{ridx} and midx2=#{midx2}
+</select>
 </mapper>

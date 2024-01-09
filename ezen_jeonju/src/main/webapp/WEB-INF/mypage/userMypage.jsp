@@ -262,7 +262,7 @@ function scheList(){
 }
 
 function scheListTable(data){
-	var txt = "<table class='scheTable'><thead><tr><th>제목</th><th>기간</th><th>조회수</th></tr>"
+	var txt = "<table class='scheTable'><thead><tr><th style='width:60%'>제목</th><th>기간</th><th>조회수</th></tr>"
 			+"</thead><tbody>";
 	$(data).each(function(){
 		txt = txt + "<tr><td><a href='${pageContext.request.contextPath}/schedule/scheduleContents.do?sidx="+this.sidx+"'>"

@@ -15,4 +15,5 @@ public interface ReviewService_Mapper {
 	public int reviewTotalCnt(int cidx);
 	public ReviewReportDTO reviewReport(int ridx);
 	public int reviewReportAction(ReviewReportVo rrv);
+	public int reviewReportCheck(ReviewReportVo rrv);
 }

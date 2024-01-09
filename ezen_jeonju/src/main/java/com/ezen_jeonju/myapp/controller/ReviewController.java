@@ -118,6 +118,17 @@ public class ReviewController {
 			js.put("txt", txt);
 			return js;
 		}
+		//중복체크하기
+		ReviewReportVo rrv = new ReviewReportVo();
+		rrv.setMidx2(Integer.parseInt(session.getAttribute("midx").toString()));
+		rrv.setRidx(ridx);
+		int value = rs.reviewReportCheck(rrv);
+		
+		if(value != 0) {
+			txt="already";
+			js.put("txt", txt);
+			return js;
+		}
 		
 		ReviewReportDTO rrdto = rs.reviewReport(ridx);
 		rrdto.setMidx2(Integer.parseInt(session.getAttribute("midx").toString()));
@@ -131,11 +142,6 @@ public class ReviewController {
 	public JSONObject reviewReportAction(ReviewReportVo rrv) {
 		JSONObject js = new JSONObject();
 		
-		System.out.println("ridx:"+rrv.getRidx());
-		System.out.println("cidx:"+rrv.getCidx());
-		System.out.println("midx:"+rrv.getMidx());
-		System.out.println("midx2:"+rrv.getMidx2());
-		System.out.println("reviewReportReason:" + rrv.getReviewReportReason());
 		
 		rs.reviewReportAction(rrv);
 		

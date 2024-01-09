@@ -63,6 +63,12 @@ public class ReviewServiceImpl implements ReviewService{
 		int value = rsm.reviewReportAction(rrv);
 		return value;
 	}
+
+	@Override
+	public int reviewReportCheck(ReviewReportVo rrv) {
+		int value = rsm.reviewReportCheck(rrv);
+		return value;
+	}
 	
 	
 	
