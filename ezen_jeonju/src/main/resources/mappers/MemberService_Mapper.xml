@@ -25,7 +25,7 @@ select * from member where memberEmail=#{memberEmail} and signinRoot="signup"
 <select id="checkInfo" resultType="int" parameterType="mv">
 select count(midx)
 from member
-where memberid = #{memberId} and memberEmail = #{memberEmail}
+where memberid = #{memberId} and memberEmail = #{memberEmail} and signinRoot="signup"
 </select>
 
 <update id="changePwd" parameterType="mv">

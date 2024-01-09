@@ -241,7 +241,7 @@ function mailAuthCheck(){
 							<button type="button" class="mailAuthCheckBtn" onclick="mailAuthCheck();">확인</button>
 							<div id="sessionTimer" class="sessionTimer"></div>
 							<div id="passCheckOK" class="passCheckOK" style="display:none;"></div>
-							<input type="hidden" id="sessionTimeOut" name="sessionTimeOut" value="<%=session.getMaxInactiveInterval()%>">
+							<input type="hidden" id="sessionTimeOut" name="sessionTimeOut" value="180">
 						</div>
 					</td>
 				</tr>
