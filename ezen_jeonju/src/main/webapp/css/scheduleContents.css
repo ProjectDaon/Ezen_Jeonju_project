@@ -27,7 +27,6 @@
         height: 600px;
         overflow: scroll;
    		margin-right:3%;	
-   		
     }
     #timetbl{
       font-size: .9em;
@@ -37,9 +36,16 @@
 	  border-radius: 5px;
 	  overflow: hidden;
 	  text-align : center;
-	  
     }
+    #timetbl th{
+    	width: 300px; /* 각 셀의 너비를 200px로 설정 */
+  		white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */ 
+    	height:100%;
+    }
+    
     #timetbl td{
+    	width: 300px; /* 각 셀의 너비를 200px로 설정 */
+  		white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */ 
     	height:100%;
     }
 
@@ -153,11 +159,13 @@
 		vertical-align: middle;
 		text-alingn : center;
 		border : 2px solid coral;
+		margin: 0 10px 0px 10px; 
 	}
 	#place{
 		vertical-align: middle;
 		text-alingn : center;
 		padding-top : 7px;
+		padding-right:7px;
 	}
 	#rank{
 		padding-top : 6px;
