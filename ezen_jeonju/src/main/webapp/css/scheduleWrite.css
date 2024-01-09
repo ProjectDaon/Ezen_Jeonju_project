@@ -1,0 +1,190 @@
+@charset "UTF-8";
+.dotOverlay {position:relative;bottom:10px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;font-size:12px;padding:5px;background:#fff;}
+.dotOverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}    
+.number {font-weight:bold;color:#ee6152;}
+.dotOverlay:after {content:'';position:absolute;margin-left:-6px;left:50%;bottom:-8px;width:11px;height:8px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white_small.png')}
+.distanceInfo {position:relative;top:5px;left:5px;list-style:none;margin:0;}
+.distanceInfo .label {display:inline-block;width:50px;}
+.distanceInfo:after {content:none;}
+	.innerwrap{
+	    max-width: 1500px;
+	    width: 100%;
+	    margin: 5% auto;
+	    word-wrap: break-word;
+	    padding-top: 5%;
+	}
+	h3 {
+	    font-weight: 500;
+	    text-align: center;
+	    font-size: 42px;
+	    color: #222;
+	    line-height: normal;
+	}
+	img {
+		width : 70px;
+		height : 70px;
+	}
+
+	table {
+		border-collapse: collapse;
+		
+	}
+
+	th, td {
+		border: 1px solid #ddd;
+	}
+	 #timetbl td,#timetbl th{
+	 	padding: 16px;
+	 }
+
+
+	th {
+		background-color: #f2f2f2;
+	}
+
+	#jj{
+		width:150px;
+	}
+	
+    #schedulePeriod{
+        text-align: center;
+    }
+
+    #timetbl{
+       width:20%; 
+    }
+    #totaltbl{
+    	display: flex; 
+        flex-direction: row;
+    }
+
+    #scheduletbl{
+        display: flex; 
+        flex-direction: row;
+        width: 60%;
+        height: 70%;
+        overflow: scroll;
+        margin-left: 15%;
+    }
+
+    #timetbl td {
+        text-align: center; 
+    }
+
+    #timetbl th {
+        text-align: center;
+    }
+    #table-container tbody th {
+    width: 300px; /* 각 셀의 너비를 200px로 설정 */
+    white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */ 
+    }
+
+    #table-container tbody td {
+    width: 300px; /* 각 셀의 너비를 200px로 설정 */
+    white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
+	}
+	table{
+		height:100%;
+	}
+	
+	p {
+	 
+	 white-space: nowrap;
+	
+	}
+	
+	#foodBtn, #placeBtn, #tourBtn, #restBtn{
+		
+	display : none;
+		
+	} 
+	
+	#foodBtn.active,
+	#placeBtn.active,
+	#tourBtn.active,
+	#restBtn.active {
+  
+    display: inline-block;
+  	}
+	.customoverlay a{
+		color : black;
+		font-weight:bold;
+	}
+	
+    .highlight {
+      
+       background-color: #f2f2f2;
+    }
+    .fixed{
+     position: sticky;
+     top : 0; 
+    }
+    .fixed_1{
+     position: sticky;
+     white-space:nowrap;
+     height:57px;
+    }
+    #addSchedule{
+	   	color : orange;
+	   	position : sticky;
+    }
+    button {
+	    background: #FFDEAD;
+	    border-color: #FFDEAD;
+	    color: coral;
+	    font-weight: bold;
+    }
+    #inputs{
+	    width: 80%;
+    	text-align: center;
+	    overflow: hidden;
+	    margin: 0 auto;
+	    padding:2%;
+	    align-items: center;
+    }
+    input{
+    	margin:1% 2% 1% 2%;
+    	border:1px solid #e1e1e1;
+    }
+    hr{
+    	width:80%;
+    	border:1px solid #FFDEAD;
+    }
+    #selectYN{
+    	border:1px solid #e1e1e1;
+    	margin-left:1%;
+    }
+    input:focus,#selectYN:focus{
+    	border:2px solid coral; 
+    	outline: none;
+    }
+    #periodBtn a{
+	  	padding: 3px 6px;
+	    background: #FFDEAD;
+	    border-color: #FFDEAD;
+	    color: coral;
+	    text-decoration: none;
+	    border-radius: 3px;
+	    font-size:14px;
+	}
+    #period{
+    	display:flex;
+   	    justify-content: center;
+   	    align-items: center;
+    }
+    #write{
+    	cursor: pointer;
+	    background: #FFDEAD;
+	    border-color: #FFDEAD;
+	    color: coral;
+	    font-weight: bold;
+   	  	padding: 6px 12px;
+	    border-radius: 4px;
+	    font-size : 18px;
+    }
+    #write:hover{
+    	border-color:coral;
+    }
+    #table-container td{
+    	height:57px;
+    }
