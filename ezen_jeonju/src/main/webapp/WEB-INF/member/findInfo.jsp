@@ -23,6 +23,46 @@ $(document).ready( function() {
 	$('#footers').load("../nav/footer.jsp");
 });
 
+$(document).ready( function() {
+	$('.input_mail1').on('input', function() {
+		if($('.input_mail1').val() == '') {
+			$('.resetBtn1').css({'display':'none'});
+		}else {
+			$('.resetBtn1').css({'display':'inline-block'});
+		}
+	});
+})
+$(document).ready( function() {
+	$('.input_id').on('input', function() {
+		if($('.input_id').val() == '') {
+			$('.resetBtn2').css({'display':'none'});
+		}else {
+			$('.resetBtn2').css({'display':'inline-block'});
+		}
+	});
+})
+$(document).ready( function() {
+	$('.input_mail2').on('input', function() {
+		if($('.input_mail2').val() == '') {
+			$('.resetBtn3').css({'display':'none'});
+		}else {
+			$('.resetBtn3').css({'display':'inline-block'});
+		}
+	});
+})
+
+function disappear1() {
+	$('.resetBtn1').css({'display':'none'});
+}
+function disappear2() {
+	document.getElementById("memberId").value = '';
+	$('.resetBtn2').css({'display':'none'});
+}
+function disappear3() {
+	document.getElementById("memberEmail2").value = '';
+	$('.resetBtn3').css({'display':'none'});
+}
+
 function check_Id(){
 	var fm = document.frm;
 	
@@ -50,7 +90,7 @@ function check_id_mail(){
 </script>
 <div id="headers"></div>
 <div class="contents">
-		<div class="inner">
+		<div class="contents_inner">
 			<div class="find_id">
 				<form name="frm" action="${contextPath}/member/findId.do" method="" value="">
 					<div class="find_inner">
@@ -62,8 +102,8 @@ function check_id_mail(){
 							<span class="mail_icon">
 								<i class="fa fa-envelope" aria-hidden="true"></i>
 							</span>
-							<input type="email" name="memberEmail" id="memberEmail" class="input_mail" placeholder="이메일 주소">
-							<button type="button" class="resetBtn" style="display:none;"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+							<input type="email" name="memberEmail" id="memberEmail" class="input_mail1" placeholder="이메일 주소">
+							<button type="reset" class="resetBtn1" style="display:none;" onclick="disappear1();">X</button>
 						</div>
 						<button type="button" id="check_id" class="checkBtn" onclick="check_Id();">
 							<span class="next">다음</span>
@@ -82,17 +122,17 @@ function check_id_mail(){
 						<span class="id_icon">
 							<i class="fa fa-user" aria-hidden="true"></i>
 						</span>
-						<input type="text" class="input_id" placeholder="아이디" name="memberId">
-						<button type="button" class="resetBtn" style="display:none;"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+						<input type="text" class="input_id" placeholder="아이디" name="memberId" id="memberId">
+						<button type="button" class="resetBtn2" style="display:none;" onclick="disappear2();">X</button>
 					</div>
 					<div class="mailInputBox" id="mailInputBox">
 						<span class="mail_icon">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
 						</span>
-						<input type="email" class="input_mail" placeholder="이메일 주소" name="memberEmail">
+						<input type="email" class="input_mail2" placeholder="이메일 주소" name="memberEmail" id="memberEmail2">
+						<button type="button" class="resetBtn3" style="display:none;" onclick="disappear3();">X</button>
 					</div>
 					</form>
-
 					<button type="button" class="checkBtn" onclick="check_id_mail();">
 						<span class="next">다음</span>
 					</button>

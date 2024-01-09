@@ -93,7 +93,7 @@ public class MemberController {
         session.setAttribute("memberName", mv.getMemberName());
         session.setAttribute("memberGrade", mv.getMemberGrade());
         session.setAttribute("memberEmail", mv.getMemberEmail());
-        
+        session.setMaxInactiveInterval(1800);
        
 		return "redirect:/";
 	}
@@ -241,7 +241,7 @@ public class MemberController {
         session.setAttribute("memberName", mv.getMemberName());
         session.setAttribute("memberGrade", mv.getMemberGrade());
         session.setAttribute("memberEmail", mv.getMemberEmail());
-        
+        session.setMaxInactiveInterval(1800);
 		return "redirect:/";
 	}
 	
@@ -397,6 +397,7 @@ public class MemberController {
         session.setAttribute("memberName", mv.getMemberName());
         session.setAttribute("memberGrade", mv.getMemberGrade());
         session.setAttribute("memberEmail", mv.getMemberEmail());
+        session.setMaxInactiveInterval(1800);
         
         System.out.println("sub:"+resultEntity2.getBody().getSub());
         System.out.println("name:"+resultEntity2.getBody().getName());
@@ -427,7 +428,7 @@ public class MemberController {
 			session.setAttribute("midx",mv.getMidx());
 			session.setAttribute("memberName", mv.getMemberName());
 			session.setAttribute("memberGrade", mv.getMemberGrade());
-			
+			session.setMaxInactiveInterval(180);
 			//1회용 모델클래스 redirectAttribute
 //			rttr.addAttribute("midx", mv.getMidx());
 //			rttr.addAttribute("memberName", mv.getMemberName());
@@ -540,7 +541,7 @@ public class MemberController {
 		if(value != 0) {
 			session.setAttribute("memberId", mv.getMemberId());
 			session.setAttribute("memberEmail", mv.getMemberEmail());
-			session.setMaxInactiveInterval(180);
+			session.setMaxInactiveInterval(1800);
 			return "redirect:/member/searchPwd.do";
 		}else {
 			model.addAttribute("alertMessage", "일치하는 정보가 없습니다.");
@@ -603,6 +604,7 @@ public class MemberController {
 			mv.setMemberPwd(bcryptPasswordEncoder.encode(memberPwd));
 			
 			int value = ms.changePwd(mv);
+			session.invalidate();
 			return "redirect:/";
 		}else {
 			return "redirect:/member/findInfo.do";

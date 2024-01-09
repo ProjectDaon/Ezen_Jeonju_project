@@ -52,7 +52,7 @@
 	<mapping path="/notice/noticeModify.do" />
 	<mapping path="/notice/noticeDeleteAction.do" />
 	
-	
+	<mapping path="/reviewReport/reportList.do" />
 	
 	<beans:ref bean="authInterceptor" />
 	</interceptor>	
