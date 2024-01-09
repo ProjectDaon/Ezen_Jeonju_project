@@ -1,134 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<link rel="stylesheet" href="../css/navbar.css">
+<link rel="stylesheet" href="../css/scheduleWrite.css">
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
-.dotOverlay {position:relative;bottom:10px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;font-size:12px;padding:5px;background:#fff;}
-.dotOverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}    
-.number {font-weight:bold;color:#ee6152;}
-.dotOverlay:after {content:'';position:absolute;margin-left:-6px;left:50%;bottom:-8px;width:11px;height:8px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white_small.png')}
-.distanceInfo {position:relative;top:5px;left:5px;list-style:none;margin:0;}
-.distanceInfo .label {display:inline-block;width:50px;}
-.distanceInfo:after {content:none;}
-	img {
-		width : 70px;
-		height : 70px;
-	}
-
-	table {
-		border-collapse: collapse;
-		
-	}
-
-	th, td {
-		border: 1px solid #ddd;
-		padding: 16px;
-		text-align: left;
-
-	}
-
-	th {
-		background-color: #f2f2f2;
-	}
-
-	#jj{
-		width:150px;
-	}
-	
-    #schedulePeriod{
-        text-align: center;
-    }
-
-    #timetbl{
-       width:50px; 
-    }
-    #totaltbl{
-    	display: flex; 
-        flex-direction: row;
-    }
-
-    #scheduletbl{
-        display: flex; 
-        flex-direction: row;
-        width: 800px;
-        height: 600px;
-        overflow: scroll;
-        margin-left: 300px;
-    }
-
-    #timetbl td {
-        text-align: center; 
-        height: 50px;
-    }
-
-    #timetbl th {
-        text-align: center;
-        height: 50px;
-    }
-    #table-container tbody th {
-    height: 50px; /* 각 셀의 높이를 50px로 설정 */
-    width: 300px; /* 각 셀의 너비를 200px로 설정 */
-    max-height: 50px; /* 최대 너비를 200px로 설정 */
-    white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */ 
-    }
-
-    #table-container tbody td {
-    
-    height: 50px; /* 각 셀의 높이를 50px로 설정 */
-    width: 300px; /* 각 셀의 너비를 200px로 설정 */
-    max-height: 50px; /* 최대 너비를 200px로 설정 */
-    white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
-	}
-
-	p {
-	 
-	 white-space: nowrap;
-	
-	}
-	
-	#foodBtn, #placeBtn, #tourBtn, #restBtn{
-		
-	display : none;
-		
-	} 
-	
-	#foodBtn.active,
-	#placeBtn.active,
-	#tourBtn.active,
-	#restBtn.active {
-  
-    display: inline-block;
-  	}
-	.customoverlay a{
-		color : black;
-		font-weight:bold;
-	}
-	
-    .highlight {
-      
-       background-color: #f2f2f2;
-    }
-    .fixed{
-     position: sticky;
-     top : 0; 
-    }
-    .fixed_1{
-     position: sticky;
-     top : 83.09px; 
-    }
-    #addSchedule{
-   
-   	color : orange;
-   	font-weight : bold;
-    }
-</style>
-
+<title>일정 만들기</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 
+	$(document).ready( function() {
+		$('#headers').load("../nav/nav.jsp");
+		$('#footers').load("../nav/footer.jsp");
 	
+	});
+
+
 	//랭크 추가 함수
 	function addRankToTable(tableId) {
 	var table = document.getElementById(tableId);
@@ -406,7 +293,10 @@
 
     // 음식점 이름을 클릭하면 테이블 셀에 정보를 추가
     function addToTable(placeName, placeLatitude, placeLongitude) {
-
+    	 	event.preventDefault();
+    	
+    		$("#scheduletbl").scrollTop(0);
+    		$("#scheduletbl").scrollLeft(0);
     	    let tableCell = document.getElementById("addSchedule");
     	    let placeArray = placeName.split(',');
     	    // 이름 추가
@@ -416,7 +306,7 @@
     	    tableCell.innerHTML += "<input type='hidden' value='" + placeArray[0] + "'>";
     	    tableCell.innerHTML += "<input type='hidden' value='" + placeArray[1] + "'>";
     	    tableCell.innerHTML += "<input type='hidden' value='" + placeArray[2] + "'>";
-    	    tableCell.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' onclick='Xclose(this, \"" + placeArray[0] + "\");'>X</a>";
+    	    tableCell.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' style='text-decoration:none'; onclick='Xclose(this, \"" + placeArray[0] + "\");'>X</a>";
 
     	    // 이후 작업 수행 (panTo 함수 호출 등)
     	 //   panTo(placeArray[0], placeArray[1], placeArray[2]);
@@ -445,111 +335,116 @@
 	    addRankToTable('dragDropTable');
 	}
 
-
-
 </script>
 
 </head>
 <body>
-<button id="rest" onclick="getRest()">음식점</button>
-<button id="tour" onclick="getTour()">관광지</button>
-<button id="food" onclick="getFood()">맛집 추천</button>
-<button id="place" onclick="getPlace()">명소 추천</button>
-
-<div id="restBtn">
-<button onclick="prevPageRest()">Previous</button>
-<b id=pageIndexRest></b>
-<button onclick="nextPageRest()">Next</button>
-</div>
-
-<div id="foodBtn">
-<button onclick="prevPage()">Previous</button>
-<b id=pageIndex></b>
-<button onclick="nextPage()">Next</button>
-</div>
-
-<div id="placeBtn">
-<button>Previous</button>
-<b id=pageIndexPlace></b>
-<button onclick="nextPagePlace()">Next</button>
-</div>
-
-<div id="tourBtn">
-<button onclick="prevPageTour()">Previous</button>
-<b id=pageIndexTour></b>
-<button onclick="nextPageTour()">Next</button>
-</div>
+<div id="headers"></div>
+<div class="innerwrap">
+<h3>일정 만들기</h3>
 
 
 <form name="frm">
-    제목 <input type="text" name="scheduleSubject"> <br>
-    기간 <input id="startDate" type="date" name="scheduleStartDate"> ~ <input id="endDate" type="date" name="scheduleEndDate">
-    <a href="javascript:createPeriod()">기간등록</a>
-    <br>
+<div id="inputs">
+<hr>
+    제목 <input id="title" style="width:40%" type="text" name="scheduleSubject">
     공개여부
-    <select name="scheduleShareYN">
+    <select id="selectYN" name="scheduleShareYN">
         <option value="Y">예</option>
         <option value="N">아니요</option>
     </select>
-    <input id="write" type="button" value="글쓰기" onclick="goWrite()"> <br>
-
-<div id="totaltbl">
-
-<div id="jj"></div>
-	<div id = "scheduletbl">
-	<table id="timetbl">
-	        <thead><th class="fixed">시간</th></thead>
-	        <tbody>
-	            <tr class="fixed_1"><td></td></tr>
-	            <tr><td>08:00</td></tr>
-	            <tr><td>09:00</td></tr>
-	            <tr><td>10:00</td></tr>
-	            <tr><td>11:00</td></tr>
-	            <tr><td>12:00</td></tr>
-	            <tr><td>13:00</td></tr>
-	            <tr><td>14:00</td></tr>
-	            <tr><td>15:00</td></tr>
-	            <tr><td>16:00</td></tr>
-	            <tr><td>17:00</td></tr>
-	            <tr><td>18:00</td></tr>
-	            <tr><td>19:00</td></tr>
-	            <tr><td>20:00</td></tr>
-	            <tr><td>21:00</td></tr>
-	            <tr><td>22:00</td></tr>
-	        </tbody>
-	</table>
-
-	<div id="table-container">
-		<table>
-			<thead>
-				<th class="fixed" style="height:50px; width:1200px">기간을 먼저 등록해주세요 ! </th>
-			<thead>
-			<tbody>
-	            <tr><td class="fixed_1"></td></tr>
-	            <tr><td></td></tr>
-	            <tr><td></td></tr>
-	            <tr><td></td></tr>
-	            <tr><td></td></tr>
-	            <tr><td></td></tr>
-	            <tr><td></td></tr>
-	            <tr><td></td></tr>
-	            <tr><td></td></tr>
-	            <tr><td></td></tr>
-	            <tr><td></td></tr>
-	            <tr><td></td></tr>
-	            <tr><td></td></tr>
-	            <tr><td></td></tr>
-	            <tr><td></td></tr>
-	            <tr><td></td></tr>
-			</tbody>
-		</table>
-	</div>
-	</div>
-</form>
-<div id="map" style="width:500px;height:400px;"></div>
-
+   <br>
+<hr>
+<div id="period">
+      기간 <input id="startDate" type="date" name="scheduleStartDate"> ~ <input id="endDate" type="date" name="scheduleEndDate">
+    <div id="periodBtn"><a href="javascript:createPeriod()">기간등록</a></div>  
 </div>
-
+    <input id="write" type="button" value="저장" onclick="goWrite()"> <br>
+<hr>    
+</div>
+<div id="buttons">
+	<button id="rest" onclick="getRest()">음식점</button>
+	<button id="tour" onclick="getTour()">관광지</button>
+	<button id="food" onclick="getFood()">맛집 추천</button>
+	<button id="place" onclick="getPlace()">명소 추천</button>
+	
+	<div id="restBtn">
+	<button onclick="prevPageRest()">Previous</button>
+	<b id=pageIndexRest></b>
+	<button onclick="nextPageRest()">Next</button>
+	</div>
+	
+	<div id="foodBtn">
+	<button onclick="prevPage()">Previous</button>
+	<b id=pageIndex></b>
+	<button onclick="nextPage()">Next</button>
+	</div>
+	
+	<div id="placeBtn">
+	<button>Previous</button>
+	<b id=pageIndexPlace></b>
+	<button onclick="nextPagePlace()">Next</button>
+	</div>
+	
+	<div id="tourBtn">
+	<button onclick="prevPageTour()">Previous</button>
+	<b id=pageIndexTour></b>
+	<button onclick="nextPageTour()">Next</button>
+	</div>
+</div>
+	<div id="totaltbl">
+		<div id="jj"></div>
+			<div id = "scheduletbl">
+			<table id="timetbl">
+			        <thead><th class="fixed">시간</th></thead>
+			        <tbody>
+			            <tr class="fixed_1"><td>08 ~ 22:00</td></tr>
+			            <tr><td>08:00</td></tr>
+			            <tr><td>09:00</td></tr>
+			            <tr><td>10:00</td></tr>
+			            <tr><td>11:00</td></tr>
+			            <tr><td>12:00</td></tr>
+			            <tr><td>13:00</td></tr>
+			            <tr><td>14:00</td></tr>
+			            <tr><td>15:00</td></tr>
+			            <tr><td>16:00</td></tr>
+			            <tr><td>17:00</td></tr>
+			            <tr><td>18:00</td></tr>
+			            <tr><td>19:00</td></tr>
+			            <tr><td>20:00</td></tr>
+			            <tr><td>21:00</td></tr>
+			            <tr><td>22:00</td></tr>
+			        </tbody>
+			</table>
+		
+			<div id="table-container">
+				<table>
+					<thead>
+						<th class="fixed" style="height:57px; width:1200px">기간을 먼저 등록해주세요 ! </th>
+					<thead>
+					<tbody>
+			            <tr><td class="fixed_1"></td></tr>
+			            <tr><td></td></tr>
+			            <tr><td></td></tr>
+			            <tr><td></td></tr>
+			            <tr><td></td></tr>
+			            <tr><td></td></tr>
+			            <tr><td></td></tr>
+			            <tr><td></td></tr>
+			            <tr><td></td></tr>
+			            <tr><td></td></tr>
+			            <tr><td></td></tr>
+			            <tr><td></td></tr>
+			            <tr><td></td></tr>
+			            <tr><td></td></tr>
+			            <tr><td></td></tr>
+			            <tr><td></td></tr>
+					</tbody>
+				</table>
+			</div>
+			</div>
+		</form>
+		<div id="map" style="width:500px;height:400px;"></div>
 </div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=24905b65af4a0e247d268677c3972e9d&libraries=services"></script>
 <script src="../js/scheduleWrite-map.js"></script>
@@ -653,9 +548,8 @@
 	   
 }); 
 
-
-
-
 </script>
+<div id="footers"></div>
+
 </body>
 </html>

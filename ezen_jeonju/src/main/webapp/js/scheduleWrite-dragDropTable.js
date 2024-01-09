@@ -35,12 +35,13 @@
     var trHeader = document.createElement('tr');
     for (var i = 1; i <= columnCount; i++) {
         var th = document.createElement('th');
-        th.textContent = 'Day ' + i + ': '  +(startDate.getMonth()+1)+'월'+ startDate.getDate()+'일';
+        th.textContent = 'Day ' + i + ' : '  +(startDate.getMonth()+1)+'월'+ startDate.getDate()+'일';
 
         // 헤더 셀에 스타일 추가
-        th.style.height = '50px';
-        th.style.width = '300px';
-        th.style.maxHeight = '50px';
+        th.style.height = '57px';
+        th.style.width = '600px';
+        th.style.maxHeight = '57px';
+        th.style.minWidth = '200px';
         th.style.whiteSpace = 'nowrap';
         th.classList.add("fixed");
 
@@ -64,9 +65,9 @@
             td.textContent = "";
             
             // 바디 셀에 스타일 추가
-            td.style.height = '50px';
+            td.style.height = '57px';
             td.style.width = '300px';
-            td.style.maxHeight = '50px';
+            td.style.maxHeight = '57px';
             td.style.whiteSpace = 'nowrap';
            
             //행 열 아이디 부여
