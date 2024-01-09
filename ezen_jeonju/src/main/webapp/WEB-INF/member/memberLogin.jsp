@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="../css/navbar.css">
 <link rel="stylesheet"  href="../css/memberLogin.css">
 <script src="http://code.jquery.com/jquery-3.1.0.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 </head>
 <body>
 <script type="text/javascript">
@@ -17,15 +18,44 @@ $(document).ready( function() {
 	$('#footers').load("../nav/footer.jsp");
 });
 
+$(document).ready( function() {
+	$('#memberId').on('input', function() {
+		if($('#memberId').val() == '') {
+			$('.resetBtn1').css({'display':'none'});
+		}else {
+			$('.resetBtn1').css({'display':'inline-block'});
+		}
+	});
+})
+$(document).ready( function() {
+	$('#memberPwd').on('input', function() {
+		if($('#memberPwd').val() == '') {
+			$('.resetBtn2').css({'display':'none'});
+		}else {
+			$('.resetBtn2').css({'display':'inline-block'});
+		}
+	});
+})
+
+function disappear1() {
+	document.getElementById("memberId").value = '';
+	$('.resetBtn1').css({'display':'none'});
+}
+
+function disappear2() {
+	document.getElementById("memberPwd").value = '';
+	$('.resetBtn2').css({'display':'none'});
+}
+
 function check(){
 	var fm = document.frm;
 	
 	if(fm.memberId.value ==""){
-		alert("아이디를 입력하세요");
+		alert("아이디를 입력하세요.");
 		fm.memberId.focus();
 		return;
 	} else if(fm.memberPwd.value ==""){
-		alert("비밀번호를 입력하세요");
+		alert("비밀번호를 입력하세요.");
 		fm.memberPwd.focus();
 		return;
 	}
@@ -41,45 +71,41 @@ function check(){
 <div class="contents">
 	<form name="frm" action="" method="" value="">
 		<div class="loginBox" id="loginBox">
-			<div>
+			<div class="loginPart">
 			<section id="toptitle" class="toptitle">
 				<div class="innerwrap">
 					<h4 class="tit">Login</h4>
 				</div>
 			</section>
-			<table class="loginInput">
-				<tr>
-					<th id="loginId">ID</th>
-				</tr>
-				<tr>
-					<td><input type="text" name="memberId" id="memberId" value="" placeholder="아이디 입력"></td>
-				</tr>
-				<tr>
-				<td height="10px"></td>
-				</tr>
-				<tr>
-					<th id="LoginPassword">Password</th>
-				</tr>
-				<tr>
-					<td><input type="password" name="memberPwd" id="memberPwd" value=""	placeholder="비밀번호 입력" onkeypress="if(event.keyCode == 13){ check(); return;}"></td>
-				</tr>
-				<tr>
-					<td style="text-align: center">
-						<div style="margin-top:20px;">
-							<button type="button" class="loginbtn" onclick="check();"><span>로그인</span></button>
-						</div>
-					</td>
-				</tr>
-			</table>
+			<div class="idInputBox" id="idInputBox">
+				<span class="id_icon">
+					<i class="fa fa-user" aria-hidden="true"></i>
+				</span>
+				<input type="text" name="memberId" id="memberId" value="" placeholder="아이디">
+				<button type="button" class="resetBtn1" style="display:none;" onclick="disappear1();">X</button>
+			</div>
+			<div class="pwdInputBox" id="pwdInputBox">
+				<span class="pwd_icon">
+					<i class="fa fa-lock" aria-hidden="true"></i>
+				</span>
+				<input type="password" name="memberPwd" id="memberPwd" value=""	placeholder="비밀번호" onkeypress="if(event.keyCode == 13){ check(); return;}">
+				<button type="button" class="resetBtn2" style="display:none;" onclick="disappear2();">X</button>
+			</div>
+			<button type="button" class="loginbtn" onclick="check();">
+				<span>로그인</span>
+			</button>
+
 			<div class="wrap">
 				<a href="<%=request.getContextPath()%>/member/findInfo.do">아이디 / 비밀번호 찾기</a>
-				<br><br>
+				&emsp;
+				|
+				&emsp;
 				<a href="<%=request.getContextPath()%>/member/memberJoin.do">회원가입</a>
 			</div>
 			</div>
 	
-			<div class="seperator">
-				<h4>Social login</h4>
+			<div class="socialPart">
+				<h4>Social Login</h4>
 				<div class="socialLogin">
 					<ul class="login_sns">
 						<li>
