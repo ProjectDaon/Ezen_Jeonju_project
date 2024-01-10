@@ -16,6 +16,9 @@
 <script src="http://code.jquery.com/jquery-3.1.0.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
 </head>
 <body>
 <script type="text/javascript">
@@ -80,8 +83,18 @@ function likeCheck(){
 		success : function(data){
 			if(data.value != 0){
 				$('.ck').attr('class','ck-on');
+				swal(
+					'',
+					'<b style="font-weight:bold;">좋아요가 추가되었습니다.</b>',
+					'success'
+				)
 			}else{
 				$('.ck-on').attr('class','ck');
+				swal(
+					'',
+					'<b style="font-weight:bold;">좋아요가 취소되었습니다.</b>',
+					'success'
+					)
 			}
 			$('#likeCnt').html(data.likeCount);
 		},
@@ -100,7 +113,7 @@ function likeThis(event){
 		},
 		cache : false,
 		success : function(data){
-			alert(data.value);
+			/* alert(data.value); */
 			likeCheck();
 		},
 		error : function(){
@@ -114,10 +127,18 @@ function reviewWrite(){
 	var article = fm.reviewArticle.value;
 	
 	if(score == ""){
-		alert("별점을 등록해주세요");
+		swal(
+			'',
+			'<b style="font-weight:bold;">별점을 등록해주세요.</b>',
+			'warning'
+		)
 		return;
 	}else if(article == ""){
-		alert("리뷰 내용을 작성해주세요");
+		swal(
+			'',
+			'<b style="font-weight:bold;">리뷰내용을 작성해주세요.</b>',
+			'warning'
+		)
 		fm.reviewArticle.focus();
 		return;
 	}
@@ -134,12 +155,20 @@ function reviewWrite(){
 		success : function(data){
 			
 			if(data.bad != null){
-				alert(data.bad+"는 비속어입니다");
+				swal(
+					'',
+					'<b style="font-weight:bold;">'+data.bad+'는 비속어입니다.</b>',
+					'error'
+					)
 				return;
 			}
 			
 			if(data.txt === "pass"){
-				alert("글쓰기 완료");
+				swal(
+					'',
+					'<b style="font-weight:bold;">리뷰가 등록되었습니다.</b>',
+					'success'
+					)
 				$('#writeReview').css('display','none');
 				reviewList();
 			}else{
@@ -234,6 +263,21 @@ function reviewDel(ridx){
 		return false;
 	}
 	
+/* 	Swal.fire({
+	      title: '정말로 그렇게 하시겠습니까?',
+	      text: "다시 되돌릴 수 없습니다. 신중하세요.",
+	      icon: 'warning',
+	      showCancelButton: true,
+	      confirmButtonColor: '#3085d6',
+	      cancelButtonColor: '#d33',
+	      confirmButtonText: '승인',
+	      cancelButtonText: '취소',
+	      reverseButtons: true, // 버튼 순서 거꾸로
+	      
+	    }),
+	    function(result) {
+	    	if (result.isConfirmed) { */
+	
 	$.ajax({
 		type : "post",
 		url : "${pageContext.request.contextPath}/review/reviewDel.do",
@@ -244,7 +288,11 @@ function reviewDel(ridx){
 		cache : false,
 		success : function(data){
 			if(data.txt === "pass"){
-				alert("댓글 삭제 완료");
+				swal(
+					'',
+					'<b style="font-weight:bold;">리뷰가 삭제되었습니다.</b>',
+					'success'
+				)
 				reviewList();
 			}else{
 				alert(data.txt);
@@ -254,8 +302,11 @@ function reviewDel(ridx){
 			alert("통신오류 실패");
 		}		
 	});
+}/* else {
+	return false;
+	}
 }
-
+} */
 	var start = 4; // 시작 인덱스
 	var batchSize = 5; // 한 번에 보여줄 항목의 개수
 function blogReviewLead() {
@@ -314,9 +365,17 @@ function reviewReport(ridx){
         cache: false,
         success: function (data) {
         	if(data.txt === 'noLogin'){
-        		alert("로그인 이후 이용바랍니다");
+        		swal(
+    				'',
+    				'<b style="font-weight:bold;">로그인 후 이용바랍니다.</b>',
+    				'info'
+    			)
         	}else if(data.txt ==='already'){
-        		alert("이미 신고한 댓글입니다.");	
+        		swal(
+        			'',
+        			'<b style="font-weight:bold;">이미 신고한 리뷰입니다.</b>',
+        			'info'
+        		)
         	}else{
 				$('#rev-report').css("display","block");
         		reportArticle(data.review);
@@ -368,7 +427,11 @@ function reportWrite(){
 	}
 	
 	if(reviewReportReason == "other" && otherReason == ""){
-		alert("기타 사유를 작성해주세요");
+		swal(
+			'',
+			'<b style="font-weight:bold;">기타사유를 작성해주세요.</b>',
+			'warning'
+		)
 		return;
 	}
 	$.ajax({
@@ -384,7 +447,11 @@ function reportWrite(){
         },
         cache: false,
         success: function (data) {
-        	alert("신고 완료되었습니다.");
+        	swal(
+            	'',
+           		'<b style="font-weight:bold;">신고가 완료되었습니다.</b>',
+           		'success'
+          	)
         	$('#rev-report').css('display','none');
         },
         error: function () {
