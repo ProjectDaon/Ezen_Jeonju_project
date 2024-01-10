@@ -49,7 +49,10 @@ $(document).ready( function() {
 	<%-- <img src="<spring:url value='/img/notice/${af.storedFilePath}'/>" /> --%>
 	
 	<div class="btn">
+		<% String memberGradeValue = (String) session.getAttribute("memberGrade");	
+		if("관리자".equals(memberGradeValue)) {%>
 		<a href="${pageContext.request.contextPath}/notice/noticeModify.do?nidx=${nv.nidx}">수정하기</a>
+		<%} %>
 		<a href="javascript:window.history.back();">목록</a>
 	</div>
 </div>
