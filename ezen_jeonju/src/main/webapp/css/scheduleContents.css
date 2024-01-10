@@ -54,6 +54,8 @@
 	}
 	#timetbl tr td:first-child{
 		border-left: 2px #FFFFFF solid;
+		border-right: none;
+		
 	}
 	.scheduletbl td{
 		border: 1px solid #FFDEAD;
@@ -61,7 +63,6 @@
 		
 	}
 	.scheduletbl th{
-		border: 2px solid #FFFFFF;
 		border-collapse: collapse;	
 	}
   	 #totaltbl{
@@ -72,7 +73,11 @@
       	background-color: #f2f2f2;
       	font-weight:570;
     }
-
+	.highlight2{
+		background-color:#F5A07F;
+		border: 2px solid red;
+	}
+	
 	th {
 	 	text-align: center;
 	}
@@ -167,10 +172,11 @@
 		padding-top : 7px;
 		padding-right:7px;
 	}
-	#rank{
+	#rankdiv{
 		padding-top : 6px;
 	}
 
 	#map{
 		border: 3px solid #FFDEAD;
 	}
+
