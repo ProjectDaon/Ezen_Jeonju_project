@@ -27,31 +27,67 @@
 
 	table {
 		border-collapse: collapse;
-		
-	}
-
-	th, td {
-		border: 1px solid #ddd;
-	}
-	 #timetbl td,#timetbl th{
-	 	padding: 16px;
-	 }
-
-
-	th {
-		background-color: #f2f2f2;
-	}
-
-	#jj{
-		width:150px;
 	}
 	
+	#timetbl td,#timetbl th{
+	 	padding: 16px;
+	}
+
+	#jj {
+	    width:100%;
+	}
+	#jj p{
+		border: 1px solid #FFDEAD;
+		display: flex;
+		align-items: center;
+		height: 70px;
+		white-space: nowrap;
+	}
+	#jj a{
+		text-decoration: none;
+		font-weight: bold;
+		color:000000;
+	}
+	#jj a:last-child{
+		text-decoration: none;
+		font-weight: bold;
+		color:blue;
+	}
     #schedulePeriod{
         text-align: center;
     }
-
+	thead {
+		font-weight: bold;
+		color: #fff;
+		background:coral;
+	}
+	
+	 td, th {
+	    padding: 1em .5em;
+	    vertical-align: middle;
+	}
+	td {
+	    background: #fff;
+	    border: 1px solid #FFDEAD;
+	}
+	#firstTable th{
+		white-space: nowrap;
+	}
+	
+	#firstTable td:last-child{
+		border-right: 1px solid #FFFFFF;
+		
+	}
+	#timetbl td:first-child{
+		border-left: 1px solid #FFFFFF;
+		border-right:none;
+	}
     #timetbl{
-       width:20%; 
+        width:20%; 
+        text-align: center;
+    }
+    #timetbl th{
+        height: 57px;
     }
     #totaltbl{
     	display: flex; 
@@ -64,28 +100,37 @@
         width: 60%;
         height: 70%;
         overflow: scroll;
-        margin-left: 15%;
+        margin-left: 5%;
     }
 
-    #timetbl td {
-        text-align: center; 
+    #dragDropTable td{
+    	cursor: pointer;
     }
-
+	#dragDropTable{
+	  font-size: .9em;
+	  border-collapse: collapse;
+	  border-radius: 5px;
+	}
+	
     #timetbl th {
         text-align: center;
+        border-collapse: collapse;
+    }
+    #timetbl td{
+    	border-right:none;
     }
     #table-container tbody th {
     width: 300px; /* 각 셀의 너비를 200px로 설정 */
     white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */ 
     }
-
+	#table-container{
+		height: 100%;
+	}
     #table-container tbody td {
     width: 300px; /* 각 셀의 너비를 200px로 설정 */
     white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
 	}
-	table{
-		height:100%;
-	}
+	
 	
 	p {
 	 
@@ -98,13 +143,26 @@
 	display : none;
 		
 	} 
-	
+	#foodBtn a, #placeBtn a, #tourBtn a, #restBtn a{
+	display: inline-block;
+	    margin-right: 10px;
+	    margin-left: 10px;
+	    padding: 6px 9px;
+	    font-size: 13px;
+	    font-weight: bold;
+	    color: coral;
+	    background-color: #FFDEAD;
+	    border-color: #FFDEAD;
+	    border-radius: 4px;
+	    text-decoration-line: none;
+	}
 	#foodBtn.active,
 	#placeBtn.active,
 	#tourBtn.active,
 	#restBtn.active {
   
     display: inline-block;
+    
   	}
 	.customoverlay a{
 		color : black;
@@ -112,13 +170,12 @@
 	}
 	
     .highlight {
-      
        background-color: #f2f2f2;
     }
-    .fixed{
-     position: sticky;
-     top : 0; 
-    }
+   	.highlight2{
+		background-color:#F5A07F;
+		border: 2px solid red;
+	}
     .fixed_1{
      position: sticky;
      white-space:nowrap;
@@ -135,7 +192,7 @@
 	    font-weight: bold;
     }
     #inputs{
-	    width: 80%;
+	    width: 90%;
     	text-align: center;
 	    overflow: hidden;
 	    margin: 0 auto;
@@ -188,3 +245,62 @@
     #table-container td{
     	height:57px;
     }
+	#nDate{
+		border: 3px solid #FFDEAD;
+		width: 400px;
+		padding : 10px;
+		margin-bottom: 2px;
+		font-size: 18px;
+		color : coral;
+		font-weight : bold;
+		text-align:center;
+	}
+	#map{
+		border: 3px solid #FFDEAD;
+		margin-left: 8px;
+		width: 100%;
+	}
+	#preNext{
+		margin:2% 0% 2% 7.5%;
+	}
+	#rest, #tour, #food, #place {
+	    display: inline-block; /* 추가된 부분 */
+	    white-space: nowrap;
+	    margin-right: 0.5%;
+	}
+	#rest a, #tour a , #food a, #place a{
+		display: inline-block;
+	    margin-right: 10px;
+	    padding: 6px 12px;
+	    font-size: 13px;
+	    font-weight: bold;
+	    color: coral;
+	    background-color: #FFDEAD;
+	    border-color: #FFDEAD;
+	    border-radius: 4px;
+	    text-decoration-line: none;
+	}
+	
+	#buttons{
+		width:100%;
+		white-space: nowrap;
+	}
+	
+	#tourselect{
+		border: 3px solid #FFDEAD;
+		padding : 10px;
+	}
+	#sequencediv{
+		display : flex;
+		vertical-align: middle;
+		text-alingn : center;
+		border : 2px solid coral;
+		margin: 0 10px 0px 10px; 
+	}
+	#stars{
+		color:coral;
+	}
+	#top{
+		color:coral;
+		font-weight: bold;
+	}

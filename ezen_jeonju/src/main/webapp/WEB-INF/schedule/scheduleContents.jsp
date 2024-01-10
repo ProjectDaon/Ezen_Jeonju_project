@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,19 +23,20 @@ $(document).ready(function () {
 	
 	//일차에 맞춰 지도나오는 함수
 	getTourCourseNDate(sidx,tourCourseNDate);
-
+    $('#nDate').val("1 일차");
+    $('#timetbl tr').find('td:eq(1)').addClass('highlight');
+    $('#timetbl th:eq(1)').addClass('highlight2');
+    
     $('#selectDate').on('change', function () {
     	hideMarkers();
     	tourCourseNDate = $(this).val();
         getTourCourseNDate(sidx,tourCourseNDate);
         $('#nDate').val(tourCourseNDate+" 일차");
         $(".highlight").removeClass("highlight");
+        $(".highlight2").removeClass("highlight2");
         $('#timetbl tr').find('td:eq('+tourCourseNDate+')').addClass('highlight');
-    });
-
-    $('#nDate').val("1 일차");
-    $('#timetbl tr').find('td:eq(1)').addClass('highlight');
-
+        $('#timetbl th:eq(' + tourCourseNDate + ')').addClass('highlight2');
+    }); 
     $('#timetbl td').on('click', function () {
         var rowIndex = $(this).parent().index();
         var columnIndex = $(this).index();
@@ -44,16 +45,17 @@ $(document).ready(function () {
             return;
         }
         $(".highlight").removeClass("highlight");
+        $(".highlight2").removeClass("highlight2");
         // 첫 번째 행 또는 첫 번째 열인 경우 이벤트 발생하지 않도록 처리
-    	
-        $('#timetbl tr').find('td:eq(' + columnIndex + ')').addClass('highlight');
-    	hideMarkers();
-    	tourCourseNDate = $(this).index();
-    	// n일차 지도출력
-		getTourCourseNDate(sidx,tourCourseNDate);
-    	
-        $('#nDate').val(tourCourseNDate + " 일차");
 
+        $('#timetbl tr').find('td:eq(' + columnIndex + ')').addClass('highlight');
+        $('#timetbl th:eq(' + columnIndex + ')').addClass('highlight2'); // 수정된 부분
+        hideMarkers();
+        tourCourseNDate = columnIndex; // 수정된 부분
+        // n일차 지도출력
+        getTourCourseNDate(sidx, tourCourseNDate);
+
+        $('#nDate').val(tourCourseNDate + " 일차");
     });
     
 });
@@ -186,7 +188,7 @@ function getTourCourseNDate(sidx, tourCourseNDate) {
 		<table id="headtbl">
 		<tr>
 		<th>제목</th>
-		<td>${sv.scheduleSubject}</td>
+		<td>${fn:escapeXml(sv.scheduleSubject)}</td>
 		<th>기간</th>
 		<td style="padding-left:6%">${sv.scheduleStartDate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${sv.scheduleEndDate}</td>
 		<th>조회수</th>
