@@ -241,6 +241,10 @@ function getTourCourseNDate(sidx, tourCourseNDate) {
    </div>
 </div>   
 </div>
+<div id="delbtn">
+<a>일정 삭제</a>
+</div>
+
 
 </div>
 <div id="footers"></div>

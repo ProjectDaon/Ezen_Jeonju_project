@@ -125,6 +125,7 @@
             data.response.body.items.item.slice(startIdx, endIdx).forEach((place) => {
                 let newP = document.createElement("p");
                 let newImage = document.createElement("img");
+                newImage.classList.add("placeimg");
                 let placeName = place['title'];
                 let placelatitude = place['mapy'];
                 let placelongitude = place['mapx'];
@@ -136,7 +137,6 @@
                 	 // 사진없을 때
                     newImage.src = 'https://via.placeholder.com/100x100/CCCCCC/FFFFFF?text=No+Image';
                 }
-
               
                 newP.appendChild(newImage);   
                 newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
@@ -359,8 +359,6 @@
 <div id="headers"></div>
 <div class="innerwrap">
 <h3>일정 만들기</h3>
-
-
 <form name="frm">
 <div id="inputs">
 <hr>
@@ -583,6 +581,7 @@
 }); 
 
 </script>
+</div>
 <div id="footers"></div>
 
 </body>
