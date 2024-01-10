@@ -21,7 +21,18 @@ where rr.reviewReportYN='N' and r.reviewYN='N'
 DELETE FROM reviewreport where rridx = #{rridx}
 </delete>
 
-<update id="reviewDelete" parameterType="int">
+<update id="reviewDelete" parameterType="rrv">
+<selectKey resultType="rrv" keyProperty="ridx,midx" order="BEFORE">
+select ridx,midx from reviewReport where rridx=#{rridx}
+</selectKey>
 UPDATE review SET reviewYN='Y' WHERE ridx=#{ridx}
 </update>
+
+<update id="reviewReportDelete" parameterType="int">
+UPDATE reviewReport set reviewReportYN='Y' where rridx=#{rridx}
+</update>
+
+<insert id="insertNotification" parameterType="rrv">
+insert into notification(rridx, midx, notificationCategory) values(#{rridx},#{midx},"del")
+</insert>
 </mapper>

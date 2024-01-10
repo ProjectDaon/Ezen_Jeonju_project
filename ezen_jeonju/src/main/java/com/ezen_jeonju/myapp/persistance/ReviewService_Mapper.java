@@ -16,4 +16,5 @@ public interface ReviewService_Mapper {
 	public ReviewReportDTO reviewReport(int ridx);
 	public int reviewReportAction(ReviewReportVo rrv);
 	public int reviewReportCheck(ReviewReportVo rrv);
+	public int insertNotification(ReviewReportVo rrv);
 }

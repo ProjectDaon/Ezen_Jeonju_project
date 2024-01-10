@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezen_jeonju.myapp.domain.ReviewReportDTO;
+import com.ezen_jeonju.myapp.domain.ReviewReportVo;
 import com.ezen_jeonju.myapp.service.ReviewReportService;
 
 @Controller
@@ -55,10 +56,10 @@ public class ReviewReportController {
 	
 	@ResponseBody
 	@RequestMapping(value="reviewDelete.do")
-	public JSONObject reviewDelete(@RequestParam("ridx") int ridx) {
+	public JSONObject reviewDelete(ReviewReportVo rrv) {
 		JSONObject js = new JSONObject();
 		String txt = "";
-		int value = rrs.reviewDelete(ridx);
+		int value = rrs.reviewDelete(rrv);
 		if(value != 0) {
 			txt = "리뷰가 삭제되었습니다.";
 		}else {
@@ -67,4 +68,6 @@ public class ReviewReportController {
 		js.put("txt", txt);
 		return js;
 	}
+	
+	
 }

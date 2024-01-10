@@ -61,6 +61,8 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public int reviewReportAction(ReviewReportVo rrv) {
 		int value = rsm.reviewReportAction(rrv);
+		System.out.println("rridx체크"+rrv.getRridx());
+		rsm.insertNotification(rrv);
 		return value;
 	}
 

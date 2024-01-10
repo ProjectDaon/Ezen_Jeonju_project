@@ -47,7 +47,7 @@ function reportListPrint(data){
 			+ "<td style='text-align:left; width:835px;'>"+this.reviewArticle+"</td>"
 			+ "<td>"+this.reviewReportDate+"</td>"
 			+ "<td><button class='cancelBtn' onclick='reportCancel("+this.rridx+")'>반려</button>"
-			+ "<button class='deleteBtn' onclick='reviewDelete("+this.ridx+")'>삭제</button></td></tr>";
+			+ "<button class='deleteBtn' onclick='reviewDelete("+this.rridx+")'>삭제</button></td></tr>";
 	});
 	txt = txt + "</tbody></table>";
 	$('#reportList').html(txt);
@@ -76,7 +76,7 @@ function reportCancel(rridx){
 	});
 }
 
-function reviewDelete(ridx){
+function reviewDelete(rridx){
 	if(!confirm("리뷰를 삭제하시겠습니까?")){
 		return false;
 	}
@@ -85,7 +85,7 @@ function reviewDelete(ridx){
 		type : "post",
 		url : "${pageContext.request.contextPath}/reviewReport/reviewDelete.do",
 		data: {
-			"ridx": ridx
+			"rridx": rridx
 		},
 		dataType : "json",
 		cache : false,

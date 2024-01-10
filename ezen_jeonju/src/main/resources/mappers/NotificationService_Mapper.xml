@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ezen_jeonju.myapp.persistance.NotificationService_Mapper">
+
+<select id="notifCheck" resultType="int" parameterType="int">
+select count(ntidx)
+from notification 
+where opencheck = false and midx=#{midx}
+</select>
+
+<select id="notifList" parameterType="int" resultType="ntd">
+ select nt.ntidx, nt.notificationCategory, rr.reviewReportReason, c.contentsSubject, concat(substring(r.reviewArticle,1,8),'...') as reviewArticle
+ from notification nt
+ join reviewreport rr on nt.rridx=rr.rridx
+ join contents c on rr.cidx=c.cidx
+ join review r on c.cidx=r.cidx
+ where nt.midx=#{midx} and r.midx=#{midx}
+ and (nt.openCheck = false or notificationDate BETWEEN DATE_ADD(NOW(),INTERVAL -7 DAY ) AND NOW())
+ order by nt.ntidx desc
+</select>
+
+<update id="openNotification" parameterType="int">
+ update notification set openCheck = true where midx=#{midx}
+</update>
+</mapper>

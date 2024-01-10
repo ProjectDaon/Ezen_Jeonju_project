@@ -3,16 +3,17 @@
  
 <configuration> 
 <typeAliases>
- <typeAlias alias="mpv" type="com.ezen_jeonju.myapp.domain.MainPageVo"/>
  <typeAlias alias="mv" type="com.ezen_jeonju.myapp.domain.MemberVo"/>
+ <typeAlias alias="mpv" type="com.ezen_jeonju.myapp.domain.MainPageVo"/>
  <typeAlias alias="mpd" type="com.ezen_jeonju.myapp.domain.MypageReviewDTO"/>
  <typeAlias alias="mlcri" type="com.ezen_jeonju.myapp.domain.MypageLikeCriteria"/>
+
  <typeAlias alias="nv" type="com.ezen_jeonju.myapp.domain.NoticeVo"/>
+ <typeAlias alias="ntd" type="com.ezen_jeonju.myapp.domain.NotificationDTO"/>
+
  <typeAlias alias="cv" type="com.ezen_jeonju.myapp.domain.ContentsVo"/>
  <typeAlias alias="cld" type="com.ezen_jeonju.myapp.domain.ContentsListDTO"/>
  <typeAlias alias="clv" type="com.ezen_jeonju.myapp.domain.ContentsLikeVo"/>
- <typeAlias alias="sv" type="com.ezen_jeonju.myapp.domain.ScheduleRootVo"/>
- <typeAlias alias="tv" type="com.ezen_jeonju.myapp.domain.TourCourseVo"/>
 
  <typeAlias alias="kd" type="com.ezen_jeonju.myapp.domain.KakaoDTO"/>
  <typeAlias alias="nd" type="com.ezen_jeonju.myapp.domain.NaverDTO"/>
@@ -28,7 +29,9 @@
  <typeAlias alias="rrd" type="com.ezen_jeonju.myapp.domain.ReviewReportDTO"/>
  <typeAlias alias="rrv" type="com.ezen_jeonju.myapp.domain.ReviewReportVo"/>
  
+ <typeAlias alias="sv" type="com.ezen_jeonju.myapp.domain.ScheduleRootVo"/>
+ <typeAlias alias="tv" type="com.ezen_jeonju.myapp.domain.TourCourseVo"/>
  <typeAlias alias="sscri" type="com.ezen_jeonju.myapp.domain.ScheduleCriteria"/>
- 
+  
 </typeAliases>
 </configuration>

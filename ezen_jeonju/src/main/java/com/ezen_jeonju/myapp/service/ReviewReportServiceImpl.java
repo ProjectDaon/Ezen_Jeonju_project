@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import com.ezen_jeonju.myapp.domain.ReviewReportDTO;
+import com.ezen_jeonju.myapp.domain.ReviewReportVo;
 import com.ezen_jeonju.myapp.persistance.ReviewReportService_Mapper;
 
 @Service
@@ -31,8 +32,10 @@ public class ReviewReportServiceImpl implements ReviewReportService{
 	}
 
 	@Override
-	public int reviewDelete(int ridx) {
-		int value = rrsm.reviewDelete(ridx);
+	public int reviewDelete(ReviewReportVo rrv) {
+		int value = rrsm.reviewDelete(rrv);
+		rrsm.reviewReportDelete(rrv.getRridx());
+		rrsm.insertNotification(rrv);
 		return value;
 	}
 	

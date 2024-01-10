@@ -21,6 +21,79 @@
 
 <body>
 <script src="${pageContext.request.contextPath}/js/nav-bar.js"></script>
+<script>
+$(document).ready(function(){
+	notifCheck();
+	
+	$('#noticeBtn').click(function(){
+		var cssD = $('#notification').css("display");
+		if(cssD == 'block'){
+			$('#notification').css("display","none");
+		}else{
+			$('#notification').css("display","block");
+			notificationList();
+			
+		}
+	});
+});
+function notifCheck(){
+	$.ajax({
+        type: "post",
+        url: "${pageContext.request.contextPath}/notification/notificationCheck.do",
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+        	if(data.value){
+        		if(data.value > 0){
+        			var txt = "<span class='note-num'>"+data.value+"</span>"
+        			$('#note-num').html(txt);
+        		}
+        	}else{
+    			$('#note-num').html("<span></span>");
+    		}
+        },
+        error: function () {
+            alert("통신 오류 실패");
+        }
+    });
+}
+
+function notificationList(){
+	$.ajax({
+        type: "post",
+        url: "${pageContext.request.contextPath}/notification/notificationList.do",
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+        	if(data.ntlist && data.ntlist.length > 0){
+        		notificationPrint(data.ntlist);
+        	}else{
+        		$('.notifList').html("<div class='noneNotif'>일주일 이내 알림이 없습니다.</div>");
+        	}
+        	notifCheck();
+        },
+        error: function () {
+            alert("통신 오류 실패");
+        }
+    });
+}
+
+function notificationPrint(data){
+	var txt = "<ul>";
+	$(data).each(function(){
+		if(this.notificationCategory === 'report'){
+			txt = txt + "<li><Strong>"+this.contentsSubject+"</Strong>에 작성한 댓글 '"+this.reviewArticle
+				+ "'이 "+this.reviewReportReason+"의 사유로 <Strong>신고</Strong>되었습니다.</li>";
+		}else{
+			txt = txt + "<li><Strong>"+this.contentsSubject+"</Strong>에 작성한 댓글 '"+this.reviewArticle
+			+ "'이 "+this.reviewReportReason+"의 사유로 <span>삭제</span>되었습니다.</li>";
+		}
+	});
+	txt= txt+"</ul>"
+	$('.notifList').html(txt);
+}
+
+</script>
 <header class="navigation" id="navigation">
     <nav class="nav-bar">
         <h1>
@@ -69,12 +142,20 @@
         </div>
         <div class="my-menu-element">
             <div class="login-element">
-                <%if(session.getAttribute("midx")==null){%>
-                <a class="login" href="<%=request.getContextPath()%>member/memberLogin.do">로그인</a>
-                <%} else{ %>
-                <a href="<%=request.getContextPath()%>/member/memberLogout.do">로그아웃</a>
-                <%} 
+                <%
                 String memberGradeValue = (String) session.getAttribute("memberGrade");		
+                if(session.getAttribute("midx")==null){%>
+                <a class="login" href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a>
+                <%} else{ 
+                	if(!"관리자".equals(memberGradeValue)){%>
+		                <div id="note-num"><span></span></div>
+		                <div class="noticeImg"><button id="noticeBtn"><img src="/images/notification.png"></button></div>
+		                <div id="notification" class="notification" style="display:none;">
+		                	<div class="notifList"></div>
+		                </div>
+		          	<%}%>
+                <a href="${pageContext.request.contextPath}/member/memberLogout.do">로그아웃</a>
+                <%} 
     			if ("관리자".equals(memberGradeValue)) {%>
                 <a href="${pageContext.request.contextPath}/mypage/userMypage.do">관리페이지</a>
                 <%} else{ %>

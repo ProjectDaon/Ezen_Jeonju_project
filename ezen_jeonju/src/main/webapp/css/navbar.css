@@ -115,6 +115,8 @@ img {
 
 .login-element{
 	float: left;
+	display: flex;
+	align-content: center;
 }
 
 .login-element a{
@@ -346,3 +348,94 @@ img {
     }
 
 }    
+
+.noticeImg{
+	margin-left: 20px;
+	color: #555;
+	font-size: 27px !important;
+	width: 35px;
+	height: 25px;
+	display: flex;
+	justify-content: center;
+}
+.noticeImg button{
+	background: transparent;
+	border:none;
+	cursor: pointer;
+	
+}
+.noticeImg img{
+	width: 23px;
+}
+#note-num{
+	width: 20px;
+}
+.note-num {
+    position: relative;
+    top: -5px;
+    right: -60px;
+    z-index: 3;
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+    text-align: center;
+    background-color: red;
+    border-radius: 15px;
+    display: inline-block;
+    color: white;
+}
+
+.notification{
+	display: block;
+    position: absolute;
+    width: 368px;
+    height: 205px;
+    left: 25px;
+    bottom: -223px;
+    background: #fff0cd;
+    color: black;
+    border: 1px solid #fff0cd;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+.notifList{
+	height: 190px;
+    overflow-y:scroll; 
+}
+.notifList::-webkit-scrollbar{
+	width: 8px;
+}
+.notifList::-webkit-scrollbar-thumb{
+	height: 30%;
+	background: #dcbb78;
+	border-radius: 10px;
+}
+.notification:after{
+	border-top: 0px solid transparent;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid #fff0cd;
+    content: "";
+    position: absolute;
+    top: -15px;
+    left: 17px;
+}
+
+.notification ul li{
+	background: white;
+	border-radius: 10px;
+	width: 105%;
+	position: relative;
+	left: -29px;
+	line-height: 20px;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+.notification ul li span{
+	color: red;
+	font-weight: bold;
+}
+.noneNotif{
+	margin: 20px 0 0 20px;
+}

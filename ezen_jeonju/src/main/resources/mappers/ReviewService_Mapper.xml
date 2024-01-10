@@ -32,8 +32,15 @@ where r.ridx=#{ridx}
 </select>
 
 <insert id="reviewReportAction" parameterType="rrv">
+<selectKey resultType="int" keyProperty="rridx" order="AFTER">
+select max(rridx) as rridx from reviewReport
+</selectKey>
 INSERT INTO reviewReport(ridx, cidx, midx, midx2, reviewReportReason)
 VALUES(#{ridx},#{cidx},#{midx},#{midx2},#{reviewReportReason})
+</insert>
+
+<insert id="insertNotification" parameterType="rrv">
+insert into notification(rridx, midx, notificationCategory) values(#{rridx},#{midx},"report")
 </insert>
 
 <select id="reviewReportCheck" parameterType="rrv" resultType="int">
@@ -41,4 +48,5 @@ select count(rridx)
 from reviewreport
 where ridx=#{ridx} and midx2=#{midx2}
 </select>
+
 </mapper>
