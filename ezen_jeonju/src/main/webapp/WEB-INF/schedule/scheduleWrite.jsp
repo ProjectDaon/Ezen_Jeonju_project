@@ -15,7 +15,6 @@
 	
 	});
 
-
 	//랭크 추가 함수
 	function addRankToTable(tableId) {
 	var table = document.getElementById(tableId);
@@ -55,7 +54,9 @@
     const itemsPerPage = 10;
     let perPage = 850;
     let filteredDataCnt = 0;
+    //맛집추천
     function getFood() {
+    	event.preventDefault();
         let obj = document.getElementById("jj");
         let existingPs = obj.querySelectorAll('p');
         existingPs.forEach((p) => {
@@ -81,13 +82,17 @@
                 let placeName = place['식당명'];
                 let placelatitude = place['식당위도'];
                 let placelongitude = place['식당경도'];
-                let placeScore = place['네이버 인기도'];
+                let placeScore = Math.floor(place['네이버 인기도']); // 정수로 내림
 
+                // 별 특수문자로 갯수 표현
+                let stars = "★".repeat(placeScore);
+                let emptyStars = "☆".repeat(5 - placeScore); // 비어있는 별
+                
                 newP.innerHTML = "<a href='#' onclick='addToTable(\"" + placeName + "," + placelatitude + "," + placelongitude + "\")'>" + placeName + "</a>";
                 newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
-                newP.innerHTML += "네이버 별점 : " + placeScore
+                newP.innerHTML += "별점 : <span id='stars'>" + stars + emptyStars + "</span>(" +place['네이버 인기도']+")" ;
                 newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
-                newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도 자세히보기</a>';
+                newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도</a>';
 
                 obj.appendChild(newP);
             });
@@ -100,7 +105,9 @@
             $('#restBtn').removeClass('active');
         })
     }
+    //음식점
     function getRest() {
+    	event.preventDefault();
         let obj = document.getElementById("jj");
         let existingPs = obj.querySelectorAll('p');
         existingPs.forEach((p) => {
@@ -122,9 +129,6 @@
                 let placelatitude = place['mapy'];
                 let placelongitude = place['mapx'];
                 let placeImage = place['firstimage'];
-                newP.innerHTML = "<a href='#' onclick='addToTable(\"" + placeName + "," + placelatitude + "," + placelongitude + "\")'>" + placeName + "</a>";
-                newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
-                newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도 자세히보기</a>';
 				
                 if (placeImage) {
                     newImage.src = placeImage;
@@ -134,7 +138,12 @@
                 }
 
               
-                newP.appendChild(newImage);                   
+                newP.appendChild(newImage);   
+                newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
+                newP.innerHTML += "<a href='#' onclick='addToTable(\"" + placeName + "," + placelatitude + "," + placelongitude + "\")'>" + placeName + "</a>";
+                newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
+                newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도</a>';
+                
                 obj.appendChild(newP);
             });
         })
@@ -146,8 +155,9 @@
             $('#restBtn').addClass('active');
         });
     }
-    
+    //관광지
     function getTour() {
+    	event.preventDefault();
         let obj = document.getElementById("jj");
         let existingPs = obj.querySelectorAll('p');
         existingPs.forEach((p) => {
@@ -168,10 +178,6 @@
                     let placelatitude = place['mapy'];
                     let placelongitude = place['mapx'];
                     let placeImage = place['firstimage'];
-                    newP.innerHTML = "<a href='#' onclick='addToTable(\"" + placeName + "," + placelatitude + "," + placelongitude + "\")'>" + placeName + "</a>";
-                    newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
-                    newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도 자세히보기</a>';
-					
                     if (placeImage) {
                         newImage.src = placeImage;
                     } else {
@@ -179,7 +185,13 @@
                         newImage.src = 'https://via.placeholder.com/100x100/CCCCCC/FFFFFF?text=No+Image';
                     }
 
-                    newP.appendChild(newImage);                   
+                    newP.appendChild(newImage);  
+                    newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
+                    newP.innerHTML += "<a href='#' onclick='addToTable(\"" + placeName + "," + placelatitude + "," + placelongitude + "\")'>" + placeName + "</a>";
+                    newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
+                    newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도</a>';
+					
+                 
                     obj.appendChild(newP);
                 });
             })
@@ -191,10 +203,12 @@
                 $('#restBtn').removeClass('active');
             });
     }
-    
+    //명소
     function getPlace() {
+    	event.preventDefault();
         let obj = document.getElementById("jj");
         let existingPs = obj.querySelectorAll('p');
+        let top = 0;
         existingPs.forEach((p) => {
             p.remove();
         });
@@ -206,13 +220,15 @@
             .then((response) => response.json())
             .then((data) => {
                 data.data.slice(startIdx, endIdx).forEach((place) => {
+                	top++;
                     let newP = document.createElement("p");
                     let placeName = place['관광명소명'];
                     let placelatitude = place['위도'];
                     let placelongitude = place['경도'];
-                    newP.innerHTML =  "<a href='#' onclick='addToTable(\"" + placeName +","+placelatitude +","+ placelongitude +"\")'>" + placeName + "</a>";
+                    newP.innerHTML = "<span id='top'>Top" + top +" : &nbsp;</span>";
+                    newP.innerHTML +=  "<a href='#' onclick='addToTable(\"" + placeName +","+placelatitude +","+ placelongitude +"\")'>" + placeName + "</a>";
                     newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
-                    newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도 자세히보기</a>';
+                    newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도</a>';
 
                     obj.appendChild(newP);
                 });
@@ -315,6 +331,7 @@
 	//X눌렀을 때 사라지게하기
 	function Xclose(cell, placeName) {
 	    // 부모 노드인 <td>를 찾아서 삭제
+	    event.preventDefault();
 	    cell.parentNode.innerHTML = '';
 	    var xx;
 	
@@ -362,38 +379,52 @@
     <input id="write" type="button" value="저장" onclick="goWrite()"> <br>
 <hr>    
 </div>
-<div id="buttons">
-	<button id="rest" onclick="getRest()">음식점</button>
-	<button id="tour" onclick="getTour()">관광지</button>
-	<button id="food" onclick="getFood()">맛집 추천</button>
-	<button id="place" onclick="getPlace()">명소 추천</button>
-	
-	<div id="restBtn">
-	<button onclick="prevPageRest()">Previous</button>
-	<b id=pageIndexRest></b>
-	<button onclick="nextPageRest()">Next</button>
+
+	<div id="preNext">
+		<div id="restBtn">
+		    <a href="#" onclick="prevPageRest()"><</a>
+		    <b id="pageIndexRest"></b>
+		    <a href="#" onclick="nextPageRest()">></a>
+		</div>
+		
+		<div id="foodBtn">
+		    <a href="#" onclick="prevPage()"><</a>
+		    <b id="pageIndex"></b>
+		    <a href="#" onclick="nextPage()">></a>
+		</div>
+		
+		<div id="placeBtn">
+		    <a href="#"><</a>
+		    <b id="pageIndexPlace"></b>
+		    <a href="#" onclick="nextPagePlace()">></a>
+		</div>
+		
+		<div id="tourBtn">
+		    <a href="#" onclick="prevPageTour()"><</a>
+		    <b id="pageIndexTour"></b>
+		    <a href="#" onclick="nextPageTour()">></a>
+		</div>
 	</div>
-	
-	<div id="foodBtn">
-	<button onclick="prevPage()">Previous</button>
-	<b id=pageIndex></b>
-	<button onclick="nextPage()">Next</button>
-	</div>
-	
-	<div id="placeBtn">
-	<button>Previous</button>
-	<b id=pageIndexPlace></b>
-	<button onclick="nextPagePlace()">Next</button>
-	</div>
-	
-	<div id="tourBtn">
-	<button onclick="prevPageTour()">Previous</button>
-	<b id=pageIndexTour></b>
-	<button onclick="nextPageTour()">Next</button>
-	</div>
-</div>
 	<div id="totaltbl">
+		<div id="tourselect">
+		<div id="buttons">
+			<div id="rest">
+			<a href="#" onclick="getRest()">음식점</a>
+			</div>
+			<div id="tour">
+			<a href="#" onclick="getTour()">관광지</a>
+			</div>
+			<div id="food">
+			<a href="#" onclick="getFood()">맛집 추천</a>
+			</div>
+			<div id="place">
+			<a href="#" onclick="getPlace()">명소 추천</a>
+			</div>
+		</div>
+		
 		<div id="jj"></div>
+		</div>
+		<br>
 			<div id = "scheduletbl">
 			<table id="timetbl">
 			        <thead><th class="fixed">시간</th></thead>
@@ -418,7 +449,7 @@
 			</table>
 		
 			<div id="table-container">
-				<table>
+				<table id="firstTable">
 					<thead>
 						<th class="fixed" style="height:57px; width:1200px">기간을 먼저 등록해주세요 ! </th>
 					<thead>
@@ -444,7 +475,10 @@
 			</div>
 			</div>
 		</form>
-		<div id="map" style="width:500px;height:400px;"></div>
+		<div id="mapDate">
+		<input id="nDate" readonly="true"></input>
+		<div id="map" style="width:400px;height:400px;"></div>
+		</div>
 </div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=24905b65af4a0e247d268677c3972e9d&libraries=services"></script>
 <script src="../js/scheduleWrite-map.js"></script>

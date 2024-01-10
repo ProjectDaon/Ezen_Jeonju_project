@@ -163,11 +163,13 @@
 	    markers = [];
 		positions =[];
 	    $(".highlight").removeClass("highlight");
+	    $(".highlight2").removeClass("highlight2");
 	    var columnIndex = $(this).index();
 	
 	    // 모든 행에 대해 현재 열에 해당하는 td에 highlight 클래스 추가
 	    $('#dragDropTable tr:not(:eq(1))').find('td:eq(' + columnIndex + ')').addClass('highlight');
-
+		$('#dragDropTable th:eq(' + columnIndex + ')').addClass('highlight2');
+		$('#nDate').val((columnIndex+1)+" 일차");
 	    // 새로운 marker 생성
 	    $("tr").each(function (index) {
 	        var $highlightedCell = $(this).find('.highlight');
@@ -178,7 +180,7 @@
 	        var placeName = inputs.eq(0).val();
 	        var tourCourseLatitude = inputs.eq(1).val();
 	        var tourCourseLongitude = inputs.eq(2).val();
-	
+			
 	        if (cellText !== "") {
 	            // 마커 이미지 생성
 	            var markerImage = new kakao.maps.MarkerImage(
@@ -206,8 +208,6 @@
     return false;
 }
 
-
-
     // 드래그 종료 시 발생하는 이벤트 핸들러
     function handleDragEnd() {
         // 드래그 중인 행의 투명도 클래스 제거
@@ -228,11 +228,12 @@
     markers = [];
 	positions = [];
     $(".highlight").removeClass("highlight");
+    $(".highlight2").removeClass("highlight2");
     var columnIndex = $(this).index();
-
+	$('#nDate').val((columnIndex+1)+" 일차");
     // 모든 행에 대해 현재 열에 해당하는 td에 highlight 클래스 추가
     $('#dragDropTable tr:not(:eq(1))').find('td:eq(' + columnIndex + ')').addClass('highlight');
-
+    $('#dragDropTable th:eq(' + columnIndex + ')').addClass('highlight2');
     // 새로운 marker 생성
     $("tr").each(function (index) {
         var $highlightedCell = $(this).find('.highlight');
