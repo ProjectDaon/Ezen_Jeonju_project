@@ -11,6 +11,14 @@
 <script src="http://code.jquery.com/jquery-3.1.0.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+<style type="text/css">
+.swal2-popup .swal2-content {
+    font-weight: bold;
+}
+</style>
 </head>
 <body>
 <script>
@@ -87,7 +95,7 @@ function reviewListPrint(data){
 		}
 		str = str + "</div><div class='rev-date'>"+this.reviewWriteday+"</div>"
 			+"<div class='rev-art'>"+this.reviewArticle+"</div></div></td>"
-			+"<td class='revBtn' width='20%''><div class='rev-del'><button onclick='revDel("+this.ridx+")'>삭제</button></div></td></tr>";
+			+"<td class='revBtn' width='20%''><div class='rev-del'><button onclick='revDel("+this.ridx+")'><i class='fa fa-trash' aria-hidden='true'></i>&ensp;삭제</button></div></td></tr>";
 	});
 	str = str + "</table>";
 	$('.revCon').html(str);
@@ -130,24 +138,45 @@ function reviewPaging(data){
 }
 
 function revDel(ridx){
-	if(!confirm('리뷰를 삭제하시겠습니까?')){
-        return false;
-    }
-	$.ajax({
-		type : "post",
-		url : "${pageContext.request.contextPath}/mypage/reviewDelete.do",
-		dataType : "json",
-		data : {
-				"ridx" : ridx
-		},
-		cache : false,
-		success : function(data){
-			alert(data.txt);
-			reviewList();
-		},
-		error : function(){
-			alert("통신오류 실패");
-		}		
+	swal({
+		title: "",
+		text: "리뷰를 삭제하시겠습니까?",
+		type: "question",
+		showCancelButton: true,
+		confirmButtonText: "Yes",
+		cancelButtonText: "Cancel"
+	}). then ((result) => {
+		/* alert(JSON.stringify(result)); */
+		if(result.value){
+			$.ajax({
+				type : "post",
+				url : "${pageContext.request.contextPath}/mypage/reviewDelete.do",
+				dataType : "json",
+				data : {
+						"ridx" : ridx
+				},
+				cache : false,
+				success : function(data){
+					if(data.txt === "댓글을 삭제하였습니다."){
+						swal(
+							'',
+							'<b style="font-weight:bold;">리뷰가 삭제되었습니다.</b>',
+							'success'
+						);
+						reviewList();
+					}else{
+						alert(data.txt);
+					}
+				},
+				error : function(){
+					swal(
+						'',
+						'<b style="font-weight:bold;">통신오류 실패</b>',
+						'error'
+					);
+				}
+			});
+		}
 	});
 }
 
@@ -195,7 +224,7 @@ function likeListPrint(data){
 		liketxt = liketxt + "<div class='likeCon'><div class='likeImg'>"
 				+"<img width='350px' height='210px' src='${pageContext.request.contextPath}/thumbnailLoading.do?aidx="+this.aidx+"'>"
 				+"</div><div class='likeImgName'>"+this.contentsSubject+"</div>"
-				+"<div class='likeCancel'><button onclick='likeDel("+this.clidx+")'>좋아요취소</button></div></div>";
+				+"<div class='likeCancel'><button onclick='likeDel("+this.clidx+")'><i class='fa fa-heart' aria-hidden='true'></i>&ensp;좋아요 취소</button></div></div>";
 	});
 	
 	$('#likeList').html(liketxt);
@@ -221,26 +250,51 @@ function likePaging(data){
 }
 
 function likeDel(clidx){
-	if(!confirm('좋아요를 취소하시겠습니까?')){
+/* 	if(!confirm('좋아요를 취소하시겠습니까?')){
         return false;
-    }
-	$.ajax({
-		type : "post",
-		url : "${pageContext.request.contextPath}/mypage/likeDelete.do",
-		dataType : "json",
-		data : {
-				"clidx" : clidx
-		},
-		cache : false,
-		success : function(data){
-			alert(data.txt);
-			likeList();
-		},
-		error : function(){
-			alert("통신오류 실패");
-		}		
+    } */
+    swal({
+		title: "",
+		text: "좋아요를 취소하시겠습니까?",
+		type: "question",
+		showCancelButton: true,
+		confirmButtonText: "Yes",
+		cancelButtonText: "Cancel"
+	}). then ((result) => {
+		/* alert(JSON.stringify(result)); */
+		if(result.value){
+			$.ajax({
+				type : "post",
+				url : "${pageContext.request.contextPath}/mypage/likeDelete.do",
+				dataType : "json",
+				data : {
+						"clidx" : clidx
+				},
+				cache : false,
+				success : function(data){
+					if(data.txt === "좋아요를 취소하였습니다."){
+						swal(
+							'',
+							'<b style="font-weight:bold;">좋아요가 취소되었습니다.</b>',
+							'success'
+						);
+						likeList();
+					}else{
+						alert(data.txt);
+					}
+				},
+				error : function(){
+					swal(
+						'',
+						'<b style="font-weight:bold;">통신오류 실패</b>',
+						'error'
+					);
+				}		
+			});
+		}
 	});
 }
+
 /*------------------------------스케줄-----------------------------*/
 function scheList(){
 	$.ajax({
@@ -277,9 +331,9 @@ function scheListTable(data){
 <div id="headers"></div>
 
 <div class="mypage">
-	<div class="mypage-head">
+<!-- 	<div class="mypage-head">
 		<div class="head-title">마이페이지</div>
-	</div>
+	</div> -->
 	<div class="mypage-contents">
 		<strong>${sessionScope.memberName}</strong>님의 전주여행
 	</div>
