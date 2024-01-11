@@ -9,6 +9,9 @@ import java.util.ArrayList;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
@@ -32,6 +35,7 @@ import com.ezen_jeonju.myapp.domain.PageMaker;
 import com.ezen_jeonju.myapp.service.AttachFileService;
 import com.ezen_jeonju.myapp.service.ContentsService;
 import com.ezen_jeonju.myapp.util.UploadFileUtiles;
+
 
 @Controller
 @RequestMapping(value = "/contents")
@@ -121,8 +125,9 @@ public class ContentsController {
 
 	
 	@RequestMapping(value = "/contentsArticle.do")
-	public String contentsArticle(@RequestParam("cidx") int cidx, Model model) throws Exception {
-		cs.contentsViewCountUpdate(cidx);
+	public String contentsArticle(@RequestParam("cidx") int cidx, Model model, HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		viewCountUp(cidx, req, res);
 		ContentsVo cv = cs.contentsArticle(cidx);
 		String hashtagList = cv.getContentsHashtag();
 		JSONParser parser = new JSONParser();
@@ -139,7 +144,41 @@ public class ContentsController {
 		return "/contents/contentsArticle";
 	}
 	
+	
+	private void viewCountUp(int cidx, HttpServletRequest req, HttpServletResponse res) {
 
+        Cookie oldCookie = null;
+
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("boardView")) {
+                    oldCookie = cookie;
+                }
+            }
+        }
+
+        if (oldCookie != null) {
+            if (!oldCookie.getValue().contains("[" + Integer.toString(cidx) + "]")) {
+            	cs.contentsViewCountUpdate(cidx);
+                oldCookie.setValue(oldCookie.getValue() + "_[" + cidx + "]");
+                oldCookie.setPath("/");
+               System.out.println("쿠키체크:"+oldCookie.toString());
+                oldCookie.setMaxAge(60 * 60 * 24);
+                res.addCookie(oldCookie);
+            }else {
+            	System.out.println("쿠키있음");
+            }
+        } else {
+        	cs.contentsViewCountUpdate(cidx);
+            Cookie newCookie = new Cookie("boardView","[" + cidx + "]");
+            newCookie.setPath("/");
+            System.out.println("쿠키:"+newCookie.toString());
+            newCookie.setMaxAge(60 * 60 * 24);
+            res.addCookie(newCookie);
+        }
+    }
+	
 	@RequestMapping(value="/contentsModify.do")
 	public String contentsModify(@RequestParam("cidx") int cidx, Model model) throws Exception {		
 		
