@@ -435,14 +435,13 @@ textarea{
 	text-align: center;
 }
 .delBtn{
-	font-weight: 300;
-    font-size: 16px;
+	font-size: 14px;
     border: 1px solid #818181;
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: 8px;
+    padding: 7px;
     background: #818181;
     color: white;
-}
+} 
 
 .paging {
     text-align: center;
@@ -496,6 +495,18 @@ textarea{
 }
 
 /*리뷰신고*/
+.reportBtn {
+	font-size: 14px;
+    border: 1px solid red;
+    border-radius: 8px;
+    padding: 7px;
+    color: red;
+}
+
+.reportBtn i {
+	color: red;
+}
+
 .rev-report{
 	position: fixed;
 	top:0; left: 0; bottom: 0; right: 0;
@@ -545,3 +556,4 @@ textarea{
 	padding-bottom: 10px;
 	border-bottom: 1px solid #e4e4e4;
 }
+
