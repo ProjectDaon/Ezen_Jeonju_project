@@ -163,7 +163,6 @@ public class ContentsController {
             	cs.contentsViewCountUpdate(cidx);
                 oldCookie.setValue(oldCookie.getValue() + "_[" + cidx + "]");
                 oldCookie.setPath("/");
-               System.out.println("쿠키체크:"+oldCookie.toString());
                 oldCookie.setMaxAge(60 * 60 * 24);
                 res.addCookie(oldCookie);
             }else {
@@ -173,7 +172,6 @@ public class ContentsController {
         	cs.contentsViewCountUpdate(cidx);
             Cookie newCookie = new Cookie("boardView","[" + cidx + "]");
             newCookie.setPath("/");
-            System.out.println("쿠키:"+newCookie.toString());
             newCookie.setMaxAge(60 * 60 * 24);
             res.addCookie(newCookie);
         }

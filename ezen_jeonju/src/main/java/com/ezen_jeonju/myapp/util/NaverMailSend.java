@@ -43,8 +43,6 @@ public final class NaverMailSend {
                     // 인증번호 생성
                	    authenCode = makeAuthenticationCode();
                	    
-               
-			
 		    Message message = new MimeMessage(session);
 		    
 		    // 발신자 설정
@@ -62,11 +60,9 @@ public final class NaverMailSend {
 		    // Send the message
 		    Transport.send(message);
 
-
 	        // 세션에 authenCode 저장
 	        forsession.setAttribute("authenCode", authenCode);
 	        forsession.setMaxInactiveInterval(180); //세션 시간 (초)
-	        
 
 	        Message message1 = new MimeMessage(session);
 		} catch (MessagingException e) {

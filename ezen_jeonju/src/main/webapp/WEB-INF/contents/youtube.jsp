@@ -28,7 +28,7 @@
         <div class="total_cnt" id="total_cnt">전체&nbsp;</div>
         <table class="video-table" id="results"></table>
         <div class="innerwrap">
-        	<a class="pagination" id="pagination"></a>
+        	<div class="pagination" id="pagination"></div>
         </div>
     </div>
 </div>    
@@ -67,7 +67,6 @@
                 order: 'date',
             }).then(response => {
                 const playlistItems = response.result.items;
-                playlistItems.reverse();
                 if (playlistItems) {
 
                 	playlistItems.forEach(item => {
@@ -77,34 +76,33 @@
                 	
                 	let tableRows = '';
                     let tableCell = '';
-                    var size = playlistItems.length;
+                    var size = playlistItems.length; //가져온 총 영상 갯수
                     var total_cnt = "<span> "+size+" </span>건";
                     $('#total_cnt').append(total_cnt);
 			    	console.log("size: "+size);
-			    	var totalpage = Math.ceil(size/12);
+			    	var totalpage = Math.ceil(size/12); //생성될 총 페이지
 			    	console.log("totalpage: "+totalpage);
-					var startnum = (page - 1)*12;
+					var startnum = (page - 1)*12; //각 페이지별 시작할 영상index
 					var endnum = startnum + 11;
-			    	console.log("startnum: "+startnum);
-			    	console.log("endnum: "+endnum);
                     for (let i = startnum; i <= endnum; i++) {
                     	if (i < size) {
 	                        const playlistItem = playlistItems[i];
 	                        // 각 아이템에서 제목, 썸네일 및 영상 링크 가져오기
-	                        const videoTitle = playlistItem.snippet.title;
-	                        const thumbnailUrl = playlistItem.snippet.thumbnails.maxres.url;
-	                        const videoId = playlistItem.snippet.resourceId.videoId;
-	                        const videoLink = 'https://www.youtube.com/watch?v=' + videoId;
+	                        const videoTitle = playlistItem.snippet.title; //제목
+	                        const thumbnailUrl = playlistItem.snippet.thumbnails.maxres.url; //썸네일
+	                        const videoId = playlistItem.snippet.resourceId.videoId; //영상id
+	                        const videoLink = 'https://www.youtube.com/watch?v=' + videoId; //영상링크
 	
 	                        // 테이블에 추가할 HTML 생성
-	                        tableCell += '<td><div><a href="' + videoLink + '" target="_blank"><img class="video-thumbnail" src="'
-	                            + thumbnailUrl + '" alt="' + videoTitle + '"></a><p>' + videoTitle + '</p></div></td>';
+	                        tableCell += '<td><div><a href="' + videoLink + '" target="_blank">'
+	                        		  +'<img class="video-thumbnail" src="'
+	                            	  + thumbnailUrl + '" alt="' + videoTitle + '"></a><p>' + videoTitle 
+	                            	  + '</p></div></td>';
 	                        if ((i+1) % 4 === 0) {
 	                            // 각 행의 시작에 새로운 <tr> 추가
 	                            tableRows += '<tr>' + tableCell + '</tr>';
 	                            tableCell = ''; // 행 초기화
 	                        }
-	                    
                     	}else{
                     		break;
                     	}
