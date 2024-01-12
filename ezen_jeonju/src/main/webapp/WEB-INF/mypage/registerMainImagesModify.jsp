@@ -13,7 +13,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://kit.fontawesome.com/7430509f6d.js" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-3.1.0.js"></script>
-
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+<style type="text/css">
+.swal2-popup .swal2-content {
+    font-weight: bold;
+}
+</style>
 </head>
 <body>
 <script type="text/javascript">
@@ -31,64 +38,119 @@ $(document).ready( function() {
 <div id="headers"></div>
 <script>
 function goModify(){
-	var isConfirmed = confirm('배너를 수정하겠습니까?');
-	if (isConfirmed) {
-		var fm = document.frm;
-		var fileUploadedElement = document.querySelector('.fileUploaded'); 
-		
-		if(fm.mainPageSubject.value==""){
-			alert('배너 제목을 입력해주세요');
-			fm.mainPageSubject.focus();
+	swal({
+		title: "",
+		text: "배너를 수정하시겠습니까?",
+		type: "question",
+		showCancelButton: true,
+		confirmButtonText: "Yes",
+		cancelButtonText: "Cancel"
+	}). then ((result) => {
+		if(result.value){
+			var fm = document.frm;
+			var fileUploadedElement = document.querySelector('.fileUploaded'); 
+			
+			if(fm.mainPageSubject.value==""){
+				swal(
+					'',
+					'<b style="font-weight:bold;">배너 제목을 입력해주세요.</b>',
+					'warning'
+				);
+				fm.mainPageSubject.focus();
+				return;
+			}else if(fm.mainPageLink.value==""){
+				swal(
+					'',
+					'<b style="font-weight:bold;">배너 링크를 입력해주세요.</b>',
+					'warning'
+				);
+				fm.mainPageLink.focus();
 			return;
-		}else if(fm.mainPageLink.value==""){
-			alert('배너 링크를 입력해주세요');
-			fm.mainPageLink.focus();
-		return;
-		}else if(fm.uploadFileName.value==""){
-			alert('새로운 이미지를 첨부해주세요');
-			fm.uploadFileName.focus();
-		return;
-		}else if(fileUploadedElement.style.display !== "none"){
-			alert('기존 배너 이미지를 삭제해주세요');
-		return;
-		}
-		
-		fm.action ="<%=request.getContextPath()%>/main/mainVannerModifyAction.do";
-	    fm.method = "post"; 
-	    fm.enctype= "multipart/form-data";
-	    fm.submit();
-	    return;
-	};
+			}else if(fm.uploadFileName.value==""){
+				swal(
+					'',
+					'<b style="font-weight:bold;">새로운 배너 이미지를 첨부해주세요.</b>',
+					'warning'
+				);
+				fm.uploadFileName.focus();
+			return;
+			}else if(fileUploadedElement.style.display !== "none"){
+				swal(
+					'',
+					'<b style="font-weight:bold;">기존 배너 이미지를 삭제해주세요.</b>',
+					'warning'
+				);
+			return;
+			}
+			
+			swal(
+				'',
+				'<b style="font-weight:bold;">배너가 수정되었습니다.</b>',
+				'success'
+			);
+			
+			fm.action ="<%=request.getContextPath()%>/main/mainVannerModifyAction.do";
+		    fm.method = "post"; 
+		    fm.enctype= "multipart/form-data";
+		    fm.submit();
+		    return;
+		}		
+	});
 }
 
 function goDelete(mpidx){
-	var isConfirmed = confirm('등록된 배너를 삭제하겠습니까?');
-	if (isConfirmed) {
-		var fm = document.frm;
-		fm.action ="<%=request.getContextPath()%>/main/mainVannerDeleteAction.do?mpidx="+mpidx;
-	    fm.method = "post";
-		fm.enctype= "multipart/form-data";
-	    fm.submit();
-	    return;
-	}
-};
-
+	swal({
+		title: "",
+		text: "등록된 배너를 삭제하시겠습니까?",
+		type: "question",
+		showCancelButton: true,
+		confirmButtonText: "Yes",
+		cancelButtonText: "Cancel"
+	}). then ((result) => {
+		if(result.value){
+			swal(
+				'',
+				'<b style="font-weight:bold;">배너가 삭제되었습니다.</b>',
+				'success'
+			)
+			var fm = document.frm;
+			fm.action ="<%=request.getContextPath()%>/main/mainVannerDeleteAction.do?mpidx="+mpidx;
+			fm.method = "post";
+			fm.enctype= "multipart/form-data";
+			fm.submit();
+			return;
+		}
+	});
+}
 
 
 function fileDelete(){
-	var isConfirmed = confirm('기존 배너 이미지를 삭제하겠습니까?');
-	if (isConfirmed) {
-		var fileUploadedElement = document.querySelector('.fileUploaded');
-		if (fileUploadedElement) {
-			// fileUploaded 클래스의 display 속성을 none으로 변경
-			fileUploadedElement.style.display = 'none';
-            if ($("#fileImg").val() === "") {
-                $(".select_img img").attr("src", "");
-                $(".select_img").css('height', '500px');
-            }
+	swal({
+		title: "",
+		text: "기존 배너 이미지를 삭제하시겠습니까?",
+		type: "question",
+		showCancelButton: true,
+		confirmButtonText: "Yes",
+		cancelButtonText: "Cancel"
+	}). then ((result) => {
+		if(result.value){
+			swal(
+				'',
+				'<b style="font-weight:bold;">배너가 삭제되었습니다.</b>',
+				'success'
+			)
+			var fileUploadedElement = document.querySelector('.fileUploaded');
+			if (fileUploadedElement) {
+				// fileUploaded 클래스의 display 속성을 none으로 변경
+				fileUploadedElement.style.display = 'none';
+	            if ($("#fileImg").val() === "") {
+	                $(".select_img img").attr("src", "");
+	                $(".select_img").css('height', '500px');
+	            }
+			}
 		}
-	}
-}   
+	});
+} 
 
 
 </script>

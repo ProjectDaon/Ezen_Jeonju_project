@@ -48,6 +48,7 @@
 	display: flex;
 	border-top: 1px solid coral;
     border-bottom: 1px solid coral;
+    margin-top: 5%;
 }
 
 .attach {

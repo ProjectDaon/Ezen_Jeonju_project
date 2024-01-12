@@ -13,7 +13,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-3.1.0.js"></script>
-
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+<style type="text/css">
+.swal2-popup .swal2-content {
+    font-weight: bold;
+}
+</style>
 </head>
 <body>
 <script type="text/javascript">
@@ -32,28 +39,55 @@ $(document).ready( function() {
 <div id="headers"></div>
 <script>
 function goWrite(){
-	var isConfirmed = confirm('배너를 등록하겠습니까?');
-	if (isConfirmed) {
-		var fm = document.frm;
-		if(fm.mainPageSubject.value==""){
-			alert('배너 제목을 입력해주세요');
-			fm.mainPageSubject.focus();
-			return;
-		}else if(fm.mainPageLink.value==""){
-			alert('배너 링크를 입력해주세요');
-			fm.mainPageLink.focus();
-			return;
-		}else if(fm.uploadFileName.value==""){
-			alert('이미지를 첨부해주세요');
-			fm.uploadFileName.focus();
-			return;
-		}
-		fm.action ="<%=request.getContextPath()%>/main/mainVannerRegisterAction.do"; 
-	    fm.method = "post"; 
-	    fm.enctype= "multipart/form-data";
-	    fm.submit();
-	    return;
-	};
+	swal({
+		title: "",
+		text: "배너를 등록하시겠습니까?",
+		type: "question",
+		showCancelButton: true,
+		confirmButtonText: "Yes",
+		cancelButtonText: "Cancel"
+	}). then ((result) => {
+		if(result.value){
+			var fm = document.frm;
+			if(fm.mainPageSubject.value==""){
+				swal(
+					'',
+					'<b style="font-weight:bold;">배너 제목을 입력해주세요.</b>',
+					'warning'
+				);
+				fm.mainPageSubject.focus();
+				return;
+			}else if(fm.mainPageLink.value==""){
+				swal(
+					'',
+					'<b style="font-weight:bold;">배너 링크를 입력해주세요.</b>',
+					'warning'
+				);
+				fm.mainPageLink.focus();
+				return;
+			}else if(fm.uploadFileName.value==""){
+				swal(
+					'',
+					'<b style="font-weight:bold;">이미지를 첨부해주세요.</b>',
+					'warning'
+				);
+				fm.uploadFileName.focus();
+				return;
+			}
+			
+			swal(
+				'',
+				'<b style="font-weight:bold;">배너가 등록되었습니다.</b>',
+				'success'
+			);
+			
+			fm.action ="<%=request.getContextPath()%>/main/mainVannerRegisterAction.do"; 
+		    fm.method = "post"; 
+		    fm.enctype= "multipart/form-data";
+		    fm.submit();
+		    return;
+		}		
+	});
 }
 </script>
 
