@@ -68,11 +68,19 @@ function revWriteOpen(){
 			if(data.txt === "pass"){
 				$('#writeReview').css('display','block');
 			}else{
-				alert(data.txt);
+				swal(
+					'',
+					'<b style="font-weight:bold;">로그인 후 이용바랍니다.</b>',
+					'info'
+				) 
 			}
 		},
 		error : function(){
-			alert("통신오류 실패");
+			swal(
+				'',
+				'<b style="font-weight:bold;">통신오류 실패</b>',
+				'error'
+			);
 		}		
 	});
 	
@@ -96,7 +104,11 @@ function likeCheck(){
 			$('#likeCnt').html(data.likeCount);
 		},
 		error : function(){
-			alert("통신오류 실패");
+			swal(
+				'',
+				'<b style="font-weight:bold;">통신오류 실패</b>',
+				'error'
+			);
 		}		
 	});
 }
@@ -110,7 +122,6 @@ function likeThis(event){
 		},
 		cache : false,
 		success : function(data){
-			/* alert(data.value); */
 			if(data.value === "좋아요") {
 				 swal(
 					'',
@@ -133,7 +144,11 @@ function likeThis(event){
 			likeCheck();
 		},
 		error : function(){
-			alert("통신오류 실패");
+			swal(
+				'',
+				'<b style="font-weight:bold;">통신오류 실패</b>',
+				'error'
+			);
 		}		
 	});
 }
@@ -214,7 +229,11 @@ function reviewList(){
 			reviewPaging(data.pm);
 		},
 		error : function(){
-			alert("통신오류 실패");
+			swal(
+				'',
+				'<b style="font-weight:bold;">통신오류 실패</b>',
+				'error'
+			);
 		}		
 	});
 }
@@ -232,7 +251,11 @@ function reviewListPaging(page){
 			reviewPaging(data.pm);
 		},
 		error : function(){
-			alert("통신오류 실패");
+			swal(
+				'',
+				'<b style="font-weight:bold;">통신오류 실패</b>',
+				'error'
+			);
 		}		
 	});
 }
@@ -366,7 +389,11 @@ function blogReviewLead() {
             displayBlogItems(data);
         },
         error: function () {
-            alert("통신 오류 실패");
+        	swal(
+    			'',
+    			'<b style="font-weight:bold;">통신오류 실패</b>',
+    			'error'
+    		);
         }
     });
 }
@@ -470,7 +497,6 @@ function reportWrite(){
 		confirmButtonText: "Yes",
 		cancelButtonText: "Cancel"
 	}). then ((result) => {
-		/* alert(JSON.stringify(result)); */
 		if(result.value){
 			var fm = document.reportFrm;
 			var ridx = fm.ridx.value;
@@ -513,7 +539,11 @@ function reportWrite(){
 		        	$('#rev-report').css('display','none');
 		        },
 		        error: function () {
-		            alert("통신 오류 실패");
+		        	swal(
+		    			'',
+		    			'<b style="font-weight:bold;">통신오류 실패</b>',
+		    			'error'
+		   			);
 		        }
 		    });
 		}
@@ -658,7 +688,7 @@ function reportWrite(){
 	<div class="rev-report" id="rev-report" style="display:none;">
 		<div class="reportReview">
 			<div class="report-top">
-				<h5 class="modal-title" style="color: #fff;font-size: 1.3rem;">댓글 신고하기</h5>
+				<h5 class="modal-title" style="color: #fff;font-size: 1.3rem;">리뷰 신고하기</h5>
 			</div>
 			<div class="report-contents">
 				<form name="reportFrm">

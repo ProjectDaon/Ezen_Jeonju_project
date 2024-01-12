@@ -7,10 +7,10 @@
 <meta charset="utf-8">
 <title>컨텐츠 수정</title>
 <script src="http://code.jquery.com/jquery-latest.js"></script> 
-<link rel="stylesheet" href="../css/navbar.css">
-<link rel="stylesheet" href="../css/contentsWrite.css">
 <!-- include libraries(jQuery, bootstrap) -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../css/navbar.css">
+<link rel="stylesheet" href="../css/contentsWrite.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
