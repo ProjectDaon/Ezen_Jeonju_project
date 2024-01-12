@@ -132,8 +132,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .noticeCalendar li {
     float: left;
     width: calc(33.33% - 1px);
-    /* margin: 0 44px 0 20px;
-    height: auto; */
+    height: 600px;
 }
 
 .noticeCalendar li span {
@@ -155,6 +154,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     margin-bottom: 10px;
     font-weight: 500;
     /* height: 51px; */
+    width: 300px;
     overflow: hidden;
 }
 
