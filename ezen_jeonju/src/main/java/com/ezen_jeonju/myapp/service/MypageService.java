@@ -8,7 +8,6 @@ import com.ezen_jeonju.myapp.domain.ReviewCriteria;
 import com.ezen_jeonju.myapp.domain.ScheduleRootVo;
 
 public interface MypageService {
-	public String getMemberPhone(int midx);
 	
 	//mypage 리뷰리스트
 	public ArrayList<MypageReviewDTO> reviewList(ReviewCriteria rcri);

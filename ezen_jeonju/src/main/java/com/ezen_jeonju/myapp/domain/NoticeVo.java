@@ -9,9 +9,6 @@ public class NoticeVo extends AttachFileVo{
 	private String noticeSubject;
 	private String noticeCategory;
 	private String noticeArticle;
-	private MultipartFile noticeFileName;
-	private String noticeUploadedFileName;
-	private String noticeFilePath;
 	private String noticeWriteday;
 	private String noticeYN;
 	private String noticeHashtag;
@@ -46,12 +43,6 @@ public class NoticeVo extends AttachFileVo{
 	public void setNoticeArticle(String noticeArticle) {
 		this.noticeArticle = noticeArticle;
 	}
-	public String getNoticeFilePath() {
-		return noticeFilePath;
-	}
-	public void setNoticeFilePath(String noticeFilePath) {
-		this.noticeFilePath = noticeFilePath;
-	}
 	public String getNoticeWriteday() {
 		return noticeWriteday;
 	}
@@ -63,18 +54,6 @@ public class NoticeVo extends AttachFileVo{
 	}
 	public void setNoticeYN(String noticeYN) {
 		this.noticeYN = noticeYN;
-	}
-	public MultipartFile getNoticeFileName() {
-		return noticeFileName;
-	}
-	public void setNoticeFileName(MultipartFile noticeFileName) {
-		this.noticeFileName = noticeFileName;
-	}
-	public String getNoticeUploadedFileName() {
-		return noticeUploadedFileName;
-	}
-	public void setNoticeUploadedFileName(String noticeUploadedFileName) {
-		this.noticeUploadedFileName = noticeUploadedFileName;
 	}
 	public String getNoticeHashtag() {
 		return noticeHashtag;
