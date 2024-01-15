@@ -358,6 +358,9 @@
 	    addRankToTable('dragDropTable');
 	}
 
+	
+
+
 </script>
 
 </head>
@@ -424,6 +427,111 @@
 			<div id="place">
 			<a href="#" onclick="getPlace()">명소 추천</a>
 			</div>
+		</div>
+		<div class="searchPlace">
+			<select name="searchP" class="searchP">
+				<option value="food">음식점</option>
+				<option value="place">관광지</option>
+			</select>
+			<input type="text" name="searchK">
+			<button type="button" name="searchPBtn" onclick="javascript:searchKeyword()">검색</button>
+			<script>
+			function searchKeyword(){
+			    var category = $('select[name=searchP]').val();
+			    var keyword = $('input[name=searchK]').val();
+			    
+			    let obj = document.getElementById("jj");
+		        let existingPs = obj.querySelectorAll('p');
+		        existingPs.forEach((p) => {
+		            p.remove();
+		        });
+		        
+			    if(category==='food'){
+				    let currentPageRest = 1;
+				    let startIdx = (currentPageRest - 1) * itemsPerPage;
+			        let endIdx = startIdx + itemsPerPage; 
+					let totalElemental = 0;
+			        fetch("http://apis.data.go.kr/B551011/KorService1/areaBasedList1?numOfRows=122&pageNo=1&MobileOS=ETC&MobileApp=AppTest&ServiceKey=%2BUFeyGq0yCyRGAnfn2BZHmpxwulEWArLYaKEKRMZZSGW85K8Gxlkum5LSZjUcypheIifRSpj1kFDOTS3yFa5wQ%3D%3D&listYN=Y&arrange=A&contentTypeId=39&areaCode=37&sigunguCode=12&cat1=&cat2=&cat3=&_type=json")
+			        .then((response) => response.json())
+			        .then((data) => {
+			            // items -> item 배열을 가져와서 forEach
+			            data.response.body.items.item.slice(startIdx, endIdx).forEach((place) => {
+				            let newP = document.createElement("p");
+			                let newImage = document.createElement("img");
+			                newImage.classList.add("placeimg");
+			                let placeName = place['title'];
+			                let placelatitude = place['mapy'];
+			                let placelongitude = place['mapx'];
+			                let placeImage = place['firstimage'];
+							
+			                if (placeImage) {
+			                    newImage.src = placeImage;
+			                } else {
+			                	 // 사진없을 때
+			                    newImage.src = 'https://via.placeholder.com/100x100/CCCCCC/FFFFFF?text=No+Image';
+			                }
+			              	if(placeName.includes(keyword)){
+				                newP.appendChild(newImage);   
+				                newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
+				                newP.innerHTML += "<a href='#' onclick='addToTable(\"" + placeName + "," + placelatitude + "," + placelongitude + "\")'>" + placeName + "</a>";
+				                newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
+				                newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도</a>';
+				                obj.appendChild(newP);
+				                totalElemental += 1;
+			              	}
+			            });
+			        })
+			        .then(() => {
+			            $('#pageIndexRest').text("검색결과 총 "+totalElemental+"개");
+			            $('#placeBtn').removeClass('active');
+			            $('#foodBtn').removeClass('active');
+			            $('#tourBtn').removeClass('active');
+			            $('#restBtn').addClass('active');
+			        });
+			    }else{
+			    	let currentPageTour = 1;
+			    	let startIdx = (currentPageTour - 1) * itemsPerPage;
+			        let endIdx = startIdx + itemsPerPage; 	
+			        let totalTourElemental = 0;
+			        fetch("https://apis.data.go.kr/B551011/KorService1/areaBasedList1?numOfRows=82&pageNo=1&MobileOS=ETC&MobileApp=AppTest&ServiceKey=%2BUFeyGq0yCyRGAnfn2BZHmpxwulEWArLYaKEKRMZZSGW85K8Gxlkum5LSZjUcypheIifRSpj1kFDOTS3yFa5wQ%3D%3D&listYN=Y&arrange=A&contentTypeId=12&areaCode=37&sigunguCode=12&cat1=&cat2=&cat3=&_type=json")
+			            .then((response) => response.json())
+			            .then((data) => {
+			                // items -> item 배열을 가져와서 forEach
+			                data.response.body.items.item.slice(startIdx, endIdx).forEach((place) => {
+			                    let newP = document.createElement("p");
+			                    let newImage = document.createElement("img");
+			                    newImage.classList.add("placeimg");
+			                    let placeName = place['title'];
+			                    let placelatitude = place['mapy'];
+			                    let placelongitude = place['mapx'];
+			                    let placeImage = place['firstimage'];
+			                    if (placeImage) {
+			                        newImage.src = placeImage;
+			                    } else {
+			                        // 사진없을 때
+			                        newImage.src = 'https://via.placeholder.com/100x100/CCCCCC/FFFFFF?text=No+Image';
+			                    }
+			                    if(placeName.includes(keyword)){
+				                    newP.appendChild(newImage);  
+				                    newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
+				                    newP.innerHTML += "<a href='#' onclick='addToTable(\"" + placeName + "," + placelatitude + "," + placelongitude + "\")'>" + placeName + "</a>";
+				                    newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
+				                    newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도</a>';
+				                    obj.appendChild(newP);
+				                    totalTourElemental += 1;
+			                    }
+			                });
+			            })
+			            .then(() => {
+			                $('#pageIndexTour').text("검색결과 총 "+totalTourElemental+"개");
+			                $('#placeBtn').removeClass('active');
+			                $('#foodBtn').removeClass('active');
+			                $('#tourBtn').addClass('active');
+			                $('#restBtn').removeClass('active');
+			            });
+			    }
+			}
+			</script>
 		</div>
 		
 		<div id="jj"></div>
@@ -590,6 +698,5 @@
 </script>
 </div>
 <div id="footers" ondragstart="return false;"></div>
-
 </body>
 </html>

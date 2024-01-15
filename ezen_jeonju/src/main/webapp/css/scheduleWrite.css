@@ -339,3 +339,10 @@
        	border:2px solid coral; 
     	outline: none;
 	}
+	
+	.searchPlace{
+		margin-top: 10px;
+	}
+	.searchP{
+		border: none;
+	}
