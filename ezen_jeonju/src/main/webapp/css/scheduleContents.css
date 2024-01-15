@@ -106,7 +106,7 @@
 	    max-width: 1500px;
 	    width: 100%;
 	    margin: 5% auto;
-	    padding: 0 5%;
+	    padding: 0 5% 2% 0%;
 	    overflow: hidden;
 	    word-wrap: break-word;
 	}
@@ -117,20 +117,6 @@
 		padding : 10px;
 		margin-bottom: 2px;
 		font-size: 18px;
-	}
-	.btn a {
-	    border: 1px solid transparent;
-	    display: inline-block;
-	    margin-right: 10px;
-	    padding: 6px 12px;
-	    font-size: 13px;
-	    font-weight: bold;
-	    color: coral;
-	    background-color: #FFDEAD;
-	    border-color: #FFDEAD;
-	    border-radius: 4px;
-	    text-decoration-line: none;
-    	
 	}
 	
 	#nDate, #selectDate{
@@ -179,4 +165,35 @@
 	#map{
 		border: 3px solid #FFDEAD;
 	}
+	#delbtn a{
+	    padding: 8px 10px 8px 10px;
+	    font-size: 18px;
+	    color: coral;
+	    background-color: #FFDEAD;
+	    border-color: #FFDEAD;
+	    border-radius: 4px;
+	    text-decoration-line: none;
+	}
+	.listbtn a {
+	    padding: 8px 10px 8px 10px;
+	    font-size: 18px;
+	    color: coral;
+	    background-color: #FFDEAD;
+	    border-color: #FFDEAD;
+	    border-radius: 4px;
+	    text-decoration-line: none;
 
+	}
+	
+	#delbtn{
+		margin-left:1.5%;
+	}
+	
+	#Dates{
+	    display: flex;
+    	justify-content: end;
+	}
+	#listdel{
+	    display: flex;
+    	justify-content: end;
+	}
