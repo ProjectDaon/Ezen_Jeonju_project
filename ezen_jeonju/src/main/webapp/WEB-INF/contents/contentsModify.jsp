@@ -24,6 +24,14 @@
 <!-- 폴리필 (구버젼 브라우저 지원) -->
 <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+<style type="text/css">
+.swal2-popup .swal2-content {
+    font-weight: bold;
+}
+</style>
 </head>
 <body>
 <script type="text/javascript">
@@ -50,36 +58,80 @@ function goModify(){
 	var fm = document.frm; //문서객체안의 폼객체이름
 	
 	if(fm.contentsCategorySelected.value ==""){
-		alert("카레고리를 선택하세요.");
+		swal(
+			'',
+			'<b style="font-weight:bold;">카테고리를 선택해주세요.</b>',
+			'warning'
+		);
 		fm.contentsSubject.focus();
 		return;
 	}else if (fm.contentsSubject.value ==""){
-		alert("제목을 입력하세요.");
+		swal(
+			'',
+			'<b style="font-weight:bold;">제목을 입력해주세요.</b>',
+			'warning'
+		);
 		fm.contentsArticle.focus();
 		return;
 	}else if (fm.contentsArticle.value ==""){
-		alert("내용을 입력하세요.");
+		swal(
+			'',
+			'<b style="font-weight:bold;">내용을 입력해주세요.</b>',
+			'warning'
+		);
 		fm.contentsArticle.focus();
 		return;
-	}		
-	fm.action ="${pageContext.request.contextPath}/contents/contentsModifyAction.do";  
-	fm.method = "post";  //이동하는 방식  get 노출시킴 post 감추어서 전달
-	fm.enctype= "multipart/form-data";
-	fm.submit(); //전송시킴
-	return;
+	}
+	swal({
+		title: "",
+		text: "컨텐츠를 수정하시겠습니까?",
+		type: "question",
+		showCancelButton: true,
+		confirmButtonText: "Yes",
+		cancelButtonText: "Cancel"
+	}). then ((result) => {
+		if(result.value){
+			swal(
+				'',
+				'<b style="font-weight:bold;">컨텐츠가 수정되었습니다.</b>',
+				'success'
+			).then(function(){
+				fm.action ="${pageContext.request.contextPath}/contents/contentsModifyAction.do";  
+				fm.method = "post";  //이동하는 방식  get 노출시킴 post 감추어서 전달
+				fm.enctype= "multipart/form-data";
+				fm.submit(); //전송시킴
+				return;
+			});
+		}
+	});
 }
 
 function goDelete(){
-	alert("컨텐츠를 삭제하시겠습니까?");
-	
-	var fm = document.frm; //문서객체안의 폼객체이름
-	var category = fm.contentsCategorySelected.value;
-	var cidx = fm.cidx.value;
- 	//처리하기위해 이동하는 주소
-	fm.action ="${pageContext.request.contextPath}/contents/contentsDeleteAction.do?cidx="+cidx+"&category="+category;  
-	fm.method = "post";  //이동하는 방식  get 노출시킴 post 감추어서 전달
-	fm.submit(); //전송시킴
-	return;
+	swal({
+		title: "",
+		text: "컨텐츠를 삭제하시겠습니까?",
+		type: "question",
+		showCancelButton: true,
+		confirmButtonText: "Yes",
+		cancelButtonText: "Cancel"
+	}). then ((result) => {
+		if(result.value){
+			swal(
+				'',
+				'<b style="font-weight:bold;">컨텐츠가 삭제되었습니다.</b>',
+				'success'
+			).then(function(){
+				var fm = document.frm; //문서객체안의 폼객체이름
+				var category = fm.contentsCategorySelected.value;
+				var cidx = fm.cidx.value;
+			 	//처리하기위해 이동하는 주소
+				fm.action ="${pageContext.request.contextPath}/contents/contentsDeleteAction.do?cidx="+cidx+"&category="+category;  
+				fm.method = "post";  //이동하는 방식  get 노출시킴 post 감추어서 전달
+				fm.submit(); //전송시킴
+				return;
+			});
+		}
+	});
 }
 
 function readURL(input) {
