@@ -22,6 +22,14 @@
 <!-- 폴리필 (구버젼 브라우저 지원) -->
 <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+<style type="text/css">
+.swal2-popup .swal2-content {
+    font-weight: bold;
+}
+</style>
 </head>
 <body>
 <script type="text/javascript">
@@ -37,16 +45,36 @@ function goWrite(){
 	var fm = document.frm;
 	
 	if(fm.noticeSubject.value==""){
-		alert('제목을 입력해주세요');
+		swal(
+			'',
+			'<b style="font-weight:bold;">제목을 입력해주세요.</b>',
+			'warning'
+		);
 		fm.noticeSubject.focus();
 		return;
 	}
-	
-	fm.action ="<%=request.getContextPath()%>/notice/noticeWriteAction.do"; 
-    fm.method = "post"; 
-    fm.enctype= "multipart/form-data";
-    fm.submit();
-    return;
+	swal({
+		title: "",
+		text: "공지사항을 등록하시겠습니까?",
+		type: "question",
+		showCancelButton: true,
+		confirmButtonText: "Yes",
+		cancelButtonText: "Cancel"
+	}). then ((result) => {
+		if(result.value){
+			swal(
+				'',
+				'<b style="font-weight:bold;">공지사항이 등록되었습니다.</b>',
+				'success'
+			).then(function(){
+				fm.action ="<%=request.getContextPath()%>/notice/noticeWriteAction.do"; 
+			    fm.method = "post"; 
+			    fm.enctype= "multipart/form-data";
+			    fm.submit();
+			    return;
+			});
+		}
+	});
 }
 </script>
 <div id="headers"></div>

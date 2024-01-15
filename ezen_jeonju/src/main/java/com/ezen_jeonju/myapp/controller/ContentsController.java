@@ -257,12 +257,12 @@ public class ContentsController {
 		if(category.equals("명소")) {
 			
 			cs.contentsDelete(cidx);
-			return "redirect:/contents/sightsList.do";
+			return "redirect:/contents/sight/contentsList.do";
 			
 		}else {
 			
 			cs.contentsDelete(cidx);
-			return "redirect:/contents/foodList.do";
+			return "redirect:/contents/food/contentsList.do";
 		}
 				
 	}
