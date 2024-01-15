@@ -454,15 +454,12 @@
 		        });
 		        
 			    if(category==='food'){
-				    let currentPageRest = 1;
-				    let startIdx = (currentPageRest - 1) * itemsPerPage;
-			        let endIdx = startIdx + itemsPerPage; 
 					let totalElemental = 0;
 			        fetch("http://apis.data.go.kr/B551011/KorService1/areaBasedList1?numOfRows=122&pageNo=1&MobileOS=ETC&MobileApp=AppTest&ServiceKey=%2BUFeyGq0yCyRGAnfn2BZHmpxwulEWArLYaKEKRMZZSGW85K8Gxlkum5LSZjUcypheIifRSpj1kFDOTS3yFa5wQ%3D%3D&listYN=Y&arrange=A&contentTypeId=39&areaCode=37&sigunguCode=12&cat1=&cat2=&cat3=&_type=json")
 			        .then((response) => response.json())
 			        .then((data) => {
 			            // items -> item 배열을 가져와서 forEach
-			            data.response.body.items.item.slice(startIdx, endIdx).forEach((place) => {
+			            data.response.body.items.item.slice(0, 850).forEach((place) => {
 				            let newP = document.createElement("p");
 			                let newImage = document.createElement("img");
 			                newImage.classList.add("placeimg");
@@ -496,15 +493,12 @@
 			            $('#restBtn').addClass('active');
 			        });
 			    }else{
-			    	let currentPageTour = 1;
-			    	let startIdx = (currentPageTour - 1) * itemsPerPage;
-			        let endIdx = startIdx + itemsPerPage; 	
 			        let totalTourElemental = 0;
 			        fetch("https://apis.data.go.kr/B551011/KorService1/areaBasedList1?numOfRows=82&pageNo=1&MobileOS=ETC&MobileApp=AppTest&ServiceKey=%2BUFeyGq0yCyRGAnfn2BZHmpxwulEWArLYaKEKRMZZSGW85K8Gxlkum5LSZjUcypheIifRSpj1kFDOTS3yFa5wQ%3D%3D&listYN=Y&arrange=A&contentTypeId=12&areaCode=37&sigunguCode=12&cat1=&cat2=&cat3=&_type=json")
 			            .then((response) => response.json())
 			            .then((data) => {
 			                // items -> item 배열을 가져와서 forEach
-			                data.response.body.items.item.slice(startIdx, endIdx).forEach((place) => {
+			                data.response.body.items.item.slice(0, 850).forEach((place) => {
 			                    let newP = document.createElement("p");
 			                    let newImage = document.createElement("img");
 			                    newImage.classList.add("placeimg");
