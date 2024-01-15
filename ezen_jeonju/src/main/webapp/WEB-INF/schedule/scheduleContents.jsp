@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ page import="com.ezen_jeonju.myapp.domain.*" %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -178,6 +179,26 @@ function getTourCourseNDate(sidx, tourCourseNDate) {
     });
 }
 
+function goDelete() {
+    // 사용자에게 삭제 여부를 확인하는 경고창 표시
+    var confirmDelete = confirm("삭제하시겠습니까?");
+    
+    // 사용자가 확인을 누른 경우에만 삭제 진행
+    if (confirmDelete) {
+        // 현재 URL에서 sidx 값을 추출
+        var urlParams = new URLSearchParams(window.location.search);
+        var sidx = urlParams.get('sidx');
+        
+        // sidx 값을 확인한 후에 삭제 페이지로 이동
+        if (sidx) {
+            // 삭제 페이지로 이동
+            alert("일정이 삭제 되었습니다");
+            window.location.href = "<%=request.getContextPath()%>/schedule/scheduleDelete.do?sidx=" + sidx;
+        } else {
+            alert("삭제 실패");
+        }
+    }
+}
 </script>
 
 </head>
@@ -232,7 +253,6 @@ function getTourCourseNDate(sidx, tourCourseNDate) {
 <input id="nDate" readonly="true"></input>
 <div id="map" style="width:500px;height:85%;"></div>
    <div id="Dates">
-   <div class="btn"><a href="${pageContext.request.contextPath}/schedule/scheduleList.do">목록</a></div>
    <select name="selectDate" id="selectDate">
    	<c:forEach var="tl" items="${tlist}">
        <option value="${tl.tourCourseNDate}">${tl.tourCourseNDate} 일차</option>
@@ -240,11 +260,31 @@ function getTourCourseNDate(sidx, tourCourseNDate) {
    </select>
    </div>
 </div>   
-</div>
-<div id="delbtn">
-<a>일정 삭제</a>
-</div>
 
+</div>
+<div id=listdel>
+	<div class="listbtn"><a href="${pageContext.request.contextPath}/schedule/scheduleList.do">목록</a></div>
+	
+	<%
+	String memberGradeValue = (String) session.getAttribute("memberGrade");
+	Integer sessionMidxObj = (Integer) session.getAttribute("midx"); // Integer로 타입 캐스팅
+	
+	// sessionMidx가 null이 아닐 때에만 int로 변환
+	int sessionMidx = (sessionMidxObj != null) ? sessionMidxObj.intValue() : -1; // 적절한 기본값으로 변경
+	
+	ScheduleRootVo sv = (ScheduleRootVo) request.getAttribute("sv");
+	
+	// sv가 null이 아니고, 작성자인 경우 또는 관리자인 경우에만 삭제 버튼 표시
+	if (sv != null && ("관리자".equals(memberGradeValue) || sessionMidx == sv.getMidx())) {
+	%>
+	    <div id="delbtn">
+	        <a href="javascript:goDelete();">일정 삭제</a>
+	    </div>
+	<%
+	}
+	%>
+	
+</div>
 
 </div>
 <div id="footers"></div>

@@ -1,10 +1,12 @@
 package com.ezen_jeonju.myapp.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -19,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ezen_jeonju.myapp.domain.Criteria;
 import com.ezen_jeonju.myapp.domain.PageMaker;
 import com.ezen_jeonju.myapp.domain.ScheduleCriteria;
 import com.ezen_jeonju.myapp.domain.ScheduleRootVo;
@@ -33,11 +34,32 @@ public class ScheduleController {
 	@Autowired
 	ScheduleService ss;
 	
+	//Controller에서 script했을시 문자깨지는거 방지 메소드
+	private String escapeJavaScript(String input) {
+	    StringBuilder result = new StringBuilder();
+	    for (char c : input.toCharArray()) {
+	        if (c <= 0x7F) {
+	            result.append(c);
+	        } else {
+	            result.append(String.format("\\u%04x", (int) c));
+	        }
+	    }
+	    return result.toString();
+	}
+	
 	@RequestMapping(value = "/scheduleWrite.do")
-	public String scheduleWrite() {
-
-		
-		return "schedule/scheduleWrite";
+	public String scheduleWrite(HttpServletResponse response,HttpServletRequest request) throws IOException {
+		HttpSession session = request.getSession();
+		PrintWriter out = response.getWriter();
+		if (session.getAttribute("midx") == null) {
+	        String contextPath = request.getContextPath();
+	        String alertMessage = "로그인 이후 이용바랍니다.";
+	        String alertScript = "alert('" + escapeJavaScript(alertMessage) + "');location.href='" + contextPath + "/member/memberLogin.do';";
+	        out.println("<script>" + alertScript + "</script>");
+	        return null;
+	    }
+	    
+	    return "schedule/scheduleWrite";
 	}
 	@RequestMapping(value = "/scheduleWriteAction.do")
 	public String scheduleWriteAction(ScheduleRootVo sv ,HttpSession session,
@@ -181,13 +203,19 @@ public class ScheduleController {
         result.put("tourCourses", array);
     	return array;
     }
-    
-    
-    
-    @RequestMapping(value="/map.do")
-    public String map() {
-    	
-    	return "/schedule/map";
-    }
-    
+	@RequestMapping(value = "/scheduleDelete.do")
+	public String scheduleDelete(@RequestParam("sidx") int sidx,HttpServletResponse response,HttpServletRequest request) throws IOException {
+		
+		HttpSession session = request.getSession();
+		PrintWriter out = response.getWriter();
+		int value = ss.scheduleDelete(sidx);
+		ScheduleRootVo sv = ss.scheduleContents(sidx);
+		
+		if(value == 1) {
+			return "redirect:/schedule/scheduleList.do";
+		}
+	
+		return "";
+	}
+
 }

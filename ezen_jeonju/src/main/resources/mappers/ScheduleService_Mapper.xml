@@ -35,7 +35,9 @@ order by t.tourCourseDate asc, t.tourCourseTime asc;
 update scheduleroot set scheduleViewCount=scheduleViewCount+1 where sidx = #{sidx};
 </update>
 
-
+<update id="scheduleDelete" parameterType="int">
+update scheduleroot set scheduleDelYN='Y' where sidx = #{sidx};
+</update>
 
 <insert id="tourCourseInsert" parameterType="tv">
 insert into tourcourse(sidx,tourCourseDate,tourCourseTime,tourCoursePlace,tourCourseLatitude,tourCourseLongitude,tourCourseNDate) 

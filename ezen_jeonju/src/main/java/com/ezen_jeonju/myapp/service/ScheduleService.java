@@ -24,6 +24,7 @@ public interface ScheduleService {
 	
 	public int scheduleTotalCount();
 
+	public int scheduleDelete(int sidx);
 	
 
 }

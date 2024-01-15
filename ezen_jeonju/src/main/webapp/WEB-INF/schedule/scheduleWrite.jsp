@@ -88,6 +88,7 @@
                 let stars = "★".repeat(placeScore);
                 let emptyStars = "☆".repeat(5 - placeScore); // 비어있는 별
                 
+                
                 newP.innerHTML = "<a href='#' onclick='addToTable(\"" + placeName + "," + placelatitude + "," + placelongitude + "\")'>" + placeName + "</a>";
                 newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
                 newP.innerHTML += "별점 : <span id='stars'>" + stars + emptyStars + "</span>(" +place['네이버 인기도']+")" ;
@@ -174,6 +175,7 @@
                 data.response.body.items.item.slice(startIdx, endIdx).forEach((place) => {
                     let newP = document.createElement("p");
                     let newImage = document.createElement("img");
+                    newImage.classList.add("placeimg");
                     let placeName = place['title'];
                     let placelatitude = place['mapy'];
                     let placelongitude = place['mapx'];
@@ -316,6 +318,11 @@
     	    let tableCell = document.getElementById("addSchedule");
     	    let placeArray = placeName.split(',');
     	    // 이름 추가
+    	    if(tableCell == null){
+				alert('기간을 먼저 등록해주세요');
+				return
+    	    }
+    	    
     	    tableCell.innerHTML = placeArray[0];
     	    
     	    // X 버튼 및 추가 정보를 담은 input 태그 추가
@@ -324,8 +331,7 @@
     	    tableCell.innerHTML += "<input type='hidden' value='" + placeArray[2] + "'>";
     	    tableCell.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' style='text-decoration:none'; onclick='Xclose(this, \"" + placeArray[0] + "\");'>X</a>";
 
-    	    // 이후 작업 수행 (panTo 함수 호출 등)
-    	 //   panTo(placeArray[0], placeArray[1], placeArray[2]);
+
     }
     
 	//X눌렀을 때 사라지게하기
@@ -356,7 +362,7 @@
 
 </head>
 <body>
-<div id="headers"></div>
+<div id="headers" ondragstart="return false;"></div>
 <div class="innerwrap">
 <h3>일정 만들기</h3>
 <form name="frm">
@@ -378,7 +384,7 @@
 <hr>    
 </div>
 
-	<div id="preNext">
+	<div id="preNext" ondragstart="return false;">
 		<div id="restBtn">
 		    <a href="#" onclick="prevPageRest()"><</a>
 		    <b id="pageIndexRest"></b>
@@ -404,7 +410,7 @@
 		</div>
 	</div>
 	<div id="totaltbl">
-		<div id="tourselect">
+		<div id="tourselect" ondragstart="return false;">
 		<div id="buttons">
 			<div id="rest">
 			<a href="#" onclick="getRest()">음식점</a>
@@ -486,6 +492,7 @@
 
     <!-- 글 작성 함수 -->
     function goWrite() {
+    	
         var fm = document.frm;
         var tbodyCells = document.querySelectorAll('#dragDropTable tbody td');
         var tourCourseTime 
@@ -582,7 +589,7 @@
 
 </script>
 </div>
-<div id="footers"></div>
+<div id="footers" ondragstart="return false;"></div>
 
 </body>
 </html>
