@@ -54,8 +54,6 @@ public class MypageController {
 		if(session.getAttribute("memberEmail")!=null) {
 			mv.setMemberEmail(session.getAttribute("memberEmail").toString());
 		}
-		String memberPhone = "";
-		memberPhone = ms.getMemberPhone(midx);
 		
 		mv.setMemberName(memberName);
 		

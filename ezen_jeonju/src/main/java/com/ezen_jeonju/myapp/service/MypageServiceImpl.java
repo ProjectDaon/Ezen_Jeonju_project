@@ -22,12 +22,6 @@ public class MypageServiceImpl implements MypageService{
 		this.msm = sqlSession.getMapper(MypageService_Mapper.class);
 	}
 	
-	@Override
-	public String getMemberPhone(int midx) {
-		String memberPhone = "";
-		memberPhone = msm.getMemberPhone(midx);
-		return memberPhone;
-	}
 
 	@Override
 	public ArrayList<MypageReviewDTO> reviewList(ReviewCriteria rcri) {

@@ -19,6 +19,11 @@
 <!-- SweetAlert2 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+<style type="text/css">
+.swal2-popup .swal2-content {
+    font-weight: bold;
+}
+</style>
 </head>
 <body>
 <script type="text/javascript">
@@ -33,13 +38,14 @@ $(document).ready(function(){
 	/*좋아요 체크*/
 	likeCheck();
 	
+	/* 지도크기 재설정 */
+	$('#tab2').click(function(){
+		relayout();
+	});
+
 	/*리뷰창 로딩*/
 	$('#tab3').click(function(){
 		reviewList();
-	});
-	
-	$('#tab2').click(function(){
-		relayout();
 	});
 	
 	$('#tab4').click(function(){
@@ -50,6 +56,7 @@ $(document).ready(function(){
 	    blogReviewLead();
 	});
 });
+
 /*리뷰글쓰기창 열기*/
 function revWriteOpen(){
 	$.ajax({
@@ -61,11 +68,19 @@ function revWriteOpen(){
 			if(data.txt === "pass"){
 				$('#writeReview').css('display','block');
 			}else{
-				alert(data.txt);
+				swal(
+					'',
+					'<b style="font-weight:bold;">로그인 후 이용바랍니다.</b>',
+					'info'
+				) 
 			}
 		},
 		error : function(){
-			alert("통신오류 실패");
+			swal(
+				'',
+				'<b style="font-weight:bold;">통신오류 실패</b>',
+				'error'
+			);
 		}		
 	});
 	
@@ -83,23 +98,17 @@ function likeCheck(){
 		success : function(data){
 			if(data.value != 0){
 				$('.ck').attr('class','ck-on');
-				swal(
-					'',
-					'<b style="font-weight:bold;">좋아요가 추가되었습니다.</b>',
-					'success'
-				)
 			}else{
 				$('.ck-on').attr('class','ck');
-				swal(
-					'',
-					'<b style="font-weight:bold;">좋아요가 취소되었습니다.</b>',
-					'success'
-					)
 			}
 			$('#likeCnt').html(data.likeCount);
 		},
 		error : function(){
-			alert("통신오류 실패");
+			swal(
+				'',
+				'<b style="font-weight:bold;">통신오류 실패</b>',
+				'error'
+			);
 		}		
 	});
 }
@@ -113,11 +122,33 @@ function likeThis(event){
 		},
 		cache : false,
 		success : function(data){
-			/* alert(data.value); */
+			if(data.value === "좋아요") {
+				 swal(
+					'',
+					'<b style="font-weight:bold;">좋아요가 추가되었습니다.</b>',
+					'success'
+				) 
+			}else if(data.value === "좋아요 취소") {
+				swal(
+					'',
+					'<b style="font-weight:bold;">좋아요가 취소되었습니다.</b>',
+					'success'
+				)
+			}else if(data.value === "로그인 후 이용바랍니다.") {
+				swal(
+					'',
+					'<b style="font-weight:bold;">로그인 후 이용바랍니다.</b>',
+					'info'
+				)
+			}
 			likeCheck();
 		},
 		error : function(){
-			alert("통신오류 실패");
+			swal(
+				'',
+				'<b style="font-weight:bold;">통신오류 실패</b>',
+				'error'
+			);
 		}		
 	});
 }
@@ -157,7 +188,7 @@ function reviewWrite(){
 			if(data.bad != null){
 				swal(
 					'',
-					'<b style="font-weight:bold;">'+data.bad+'는 비속어입니다.</b>',
+					'<b style="font-weight:bold;">금지어('+data.bad+')가 포함되어 있습니다.</b>',
 					'error'
 					)
 				return;
@@ -176,7 +207,11 @@ function reviewWrite(){
 			}
 		},
 		error : function(){
-			alert("통신오류 실패");
+			swal(
+				'',
+				'<b style="font-weight:bold;">통신오류 실패</b>',
+				'error'
+			);
 		}		
 	});
 }
@@ -194,7 +229,11 @@ function reviewList(){
 			reviewPaging(data.pm);
 		},
 		error : function(){
-			alert("통신오류 실패");
+			swal(
+				'',
+				'<b style="font-weight:bold;">통신오류 실패</b>',
+				'error'
+			);
 		}		
 	});
 }
@@ -212,7 +251,11 @@ function reviewListPaging(page){
 			reviewPaging(data.pm);
 		},
 		error : function(){
-			alert("통신오류 실패");
+			swal(
+				'',
+				'<b style="font-weight:bold;">통신오류 실패</b>',
+				'error'
+			);
 		}		
 	});
 }
@@ -223,9 +266,9 @@ function reviewListPrint(data){
 	
 	$(data).each(function(){
 		if(loginMidx==this.midx){
-			delbtn = "<button class='delBtn' onclick='reviewDel("+this.ridx+")'>삭제</button>";
+			delbtn = "<button class='delBtn' onclick='reviewDel("+this.ridx+")'><i class='fa fa-trash' aria-hidden='true'></i>&ensp;삭제</button>";
 		}else{
-			delbtn= "<button id='reportBtn' class='reportBtn' onclick='reviewReport("+this.ridx+")'><i class='fa fa-bell' aria-hidden='true'></i></button>";
+			delbtn= "<button id='reportBtn' class='reportBtn' onclick='reviewReport("+this.ridx+")'><i class='fa fa-bell' aria-hidden='true'></i>&ensp;신고</button>";
 		}
 		str = str+"<tr><td class='rev-writer'><div class='writer-wrap'><div class='rev-name'>"+this.memberName
 			+"</div><div class='rev-date'>"+this.reviewWriteday
@@ -259,24 +302,9 @@ function reviewPaging(data){
 	$('#paging').html(paging);
 }
 function reviewDel(ridx){
-	if(!confirm("댓글을 삭제하시겠습니까?")){
+/* 	if(!confirm("댓글을 삭제하시겠습니까?")){
 		return false;
 	}
-	
-/* 	Swal.fire({
-	      title: '정말로 그렇게 하시겠습니까?',
-	      text: "다시 되돌릴 수 없습니다. 신중하세요.",
-	      icon: 'warning',
-	      showCancelButton: true,
-	      confirmButtonColor: '#3085d6',
-	      cancelButtonColor: '#d33',
-	      confirmButtonText: '승인',
-	      cancelButtonText: '취소',
-	      reverseButtons: true, // 버튼 순서 거꾸로
-	      
-	    }),
-	    function(result) {
-	    	if (result.isConfirmed) { */
 	
 	$.ajax({
 		type : "post",
@@ -301,12 +329,50 @@ function reviewDel(ridx){
 		error : function(){
 			alert("통신오류 실패");
 		}		
+	}); */
+	
+	swal({
+		title: "",
+		text: "리뷰를 삭제하시겠습니까?",
+		type: "question",
+		showCancelButton: true,
+		confirmButtonText: "Yes",
+		cancelButtonText: "Cancel"
+	}). then ((result) => {
+		/* alert(JSON.stringify(result)); */
+		if(result.value){
+			$.ajax({
+				type : "post",
+				url : "${pageContext.request.contextPath}/review/reviewDel.do",
+				dataType : "json",
+				data : {
+						"ridx" : ridx
+				},
+				cache : false,
+				success : function(data){
+					if(data.txt === "pass"){
+						swal(
+							'',
+							'<b style="font-weight:bold;">리뷰가 삭제되었습니다.</b>',
+							'success'
+						);
+						reviewList();
+					}else{
+						alert(data.txt);
+					}
+				},
+				error : function(){
+					swal(
+						'',
+						'<b style="font-weight:bold;">통신오류 실패</b>',
+						'error'
+					);
+				}
+			});
+		}
 	});
-}/* else {
-	return false;
-	}
 }
-} */
+
 	var start = 4; // 시작 인덱스
 	var batchSize = 5; // 한 번에 보여줄 항목의 개수
 function blogReviewLead() {
@@ -323,7 +389,11 @@ function blogReviewLead() {
             displayBlogItems(data);
         },
         error: function () {
-            alert("통신 오류 실패");
+        	swal(
+    			'',
+    			'<b style="font-weight:bold;">통신오류 실패</b>',
+    			'error'
+    		);
         }
     });
 }
@@ -382,7 +452,11 @@ function reviewReport(ridx){
         	}
         },
         error: function () {
-            alert("통신 오류 실패");
+        	swal(
+				'',
+				'<b style="font-weight:bold;">통신오류 실패</b>',
+				'error'
+			);
         }
     });
 }
@@ -411,54 +485,69 @@ function selectOther(){
 	}
 }
 function reportWrite(){
-	if(!confirm("해당 리뷰를 신고하시겠습니까?")){
+	/* if(!confirm("해당 리뷰를 신고하시겠습니까?")){
 		return false;
-	}
-	var fm = document.reportFrm;
-	var ridx = fm.ridx.value;
-	var cidx = fm.cidx.value;
-	var midx = fm.midx.value;
-	var midx2 = fm.midx2.value;
-	var reviewReportReason = fm.reviewReportReason.value;
-	var otherReason = fm.otherReason.value;
+	} */
 	
-	if(reviewReportReason == "other" && otherReason != ""){
-		reviewReportReason = otherReason;
-	}
-	
-	if(reviewReportReason == "other" && otherReason == ""){
-		swal(
-			'',
-			'<b style="font-weight:bold;">기타사유를 작성해주세요.</b>',
-			'warning'
-		)
-		return;
-	}
-	$.ajax({
-        type: "post",
-        url: "${pageContext.request.contextPath}/review/reviewReportAction.do",
-        dataType: "json",
-        data: {
-            "ridx": ridx,
-            "cidx": cidx,
-            "midx": midx,
-            "midx2": midx2,
-            "reviewReportReason": reviewReportReason
-        },
-        cache: false,
-        success: function (data) {
-        	swal(
-            	'',
-           		'<b style="font-weight:bold;">신고가 완료되었습니다.</b>',
-           		'success'
-          	)
-        	$('#rev-report').css('display','none');
-        },
-        error: function () {
-            alert("통신 오류 실패");
-        }
-    });
-	
+	swal({
+		title: "",
+		text: "해당 리뷰를 신고하시겠습니까?",
+		type: "question",
+		showCancelButton: true,
+		confirmButtonText: "Yes",
+		cancelButtonText: "Cancel"
+	}). then ((result) => {
+		if(result.value){
+			var fm = document.reportFrm;
+			var ridx = fm.ridx.value;
+			var cidx = fm.cidx.value;
+			var midx = fm.midx.value;
+			var midx2 = fm.midx2.value;
+			var reviewReportReason = fm.reviewReportReason.value;
+			var otherReason = fm.otherReason.value;
+			
+			if(reviewReportReason == "other" && otherReason != ""){
+				reviewReportReason = otherReason;
+			}
+			
+			if(reviewReportReason == "other" && otherReason == ""){
+				swal(
+					'',
+					'<b style="font-weight:bold;">기타사유를 작성해주세요.</b>',
+					'warning'
+				)
+				return;
+			}
+			$.ajax({
+		        type: "post",
+		        url: "${pageContext.request.contextPath}/review/reviewReportAction.do",
+		        dataType: "json",
+		        data: {
+		            "ridx": ridx,
+		            "cidx": cidx,
+		            "midx": midx,
+		            "midx2": midx2,
+		            "reviewReportReason": reviewReportReason
+		        },
+		        cache: false,
+		        success: function (data) {
+		        	swal(
+		            	'',
+		           		'<b style="font-weight:bold;">신고가 완료되었습니다.</b>',
+		           		'success'
+		          	)
+		        	$('#rev-report').css('display','none');
+		        },
+		        error: function () {
+		        	swal(
+		    			'',
+		    			'<b style="font-weight:bold;">통신오류 실패</b>',
+		    			'error'
+		   			);
+		        }
+		    });
+		}
+	});
 }
 </script>
 <div id="headers"></div>
@@ -599,7 +688,7 @@ function reportWrite(){
 	<div class="rev-report" id="rev-report" style="display:none;">
 		<div class="reportReview">
 			<div class="report-top">
-				<h5 class="modal-title" style="color: #fff;font-size: 1.3rem;">댓글 신고하기</h5>
+				<h5 class="modal-title" style="color: #fff;font-size: 1.3rem;">리뷰 신고하기</h5>
 			</div>
 			<div class="report-contents">
 				<form name="reportFrm">

@@ -13,7 +13,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-3.1.0.js"></script>
-
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+<style type="text/css">
+.swal2-popup .swal2-content {
+    font-weight: bold;
+}
+</style>
 </head>
 <body>
 <script type="text/javascript">
@@ -26,15 +33,38 @@ $(document).ready( function() {
 });
 
 function vannersDelete(mpidx){
-	var isConfirmed = confirm('등록된 배너를 삭제하겠습니까?');
+<%-- 	var isConfirmed = confirm('등록된 배너를 삭제하겠습니까?');
 	if (isConfirmed) {
 		var fm = document.frm;
 		fm.action ="<%=request.getContextPath()%>/main/mainVannerDeleteAction.do?mpidx="+mpidx;
 	    fm.method = "post";
 	    fm.submit();
 	    return;
-	}
-};
+	} --%>
+	
+	swal({
+		title: "",
+		text: "등록된 배너를 삭제하시겠습니까?",
+		type: "question",
+		showCancelButton: true,
+		confirmButtonText: "Yes",
+		cancelButtonText: "Cancel"
+	}). then ((result) => {
+		if(result.value){
+			swal(
+				'',
+				'<b style="font-weight:bold;">배너가 삭제되었습니다.</b>',
+				'success'
+			)
+			var fm = document.frm;
+			fm.action ="<%=request.getContextPath()%>/main/mainVannerDeleteAction.do?mpidx="+mpidx;
+		    fm.method = "post";
+		    fm.submit();
+			
+		    return;	
+		}
+	});
+}
 
 </script>
 <div id="headers"></div>

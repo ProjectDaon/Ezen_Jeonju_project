@@ -130,9 +130,7 @@ function mailAuth(){
 		alert("이메일 형식이 유효하지 않습니다.");
 		return;
 	}
-    
 	
-    
 	$.ajax({
 		type: "post",
 		url: "<%=request.getContextPath()%>/member/mailAuth.do",
