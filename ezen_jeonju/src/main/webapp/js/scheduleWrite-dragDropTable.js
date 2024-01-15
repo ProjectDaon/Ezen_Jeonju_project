@@ -220,24 +220,33 @@
     }
 	
 	//클릭 했을 시 발생하는 이벤트 핸들러
+	var bounds = new kakao.maps.LatLngBounds();
+	function clearBounds() {
+    bounds = new kakao.maps.LatLngBounds();
+	}
+	
+	function setBounds() {
+	    map.setBounds(bounds);
+	}
+	
 	function handleClick() {
     for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
     }
-    // markers 초기화
     markers = [];
-	positions = [];
+    positions = [];
+    clearBounds(); // Clear bounds before adding new markers
+
     $(".highlight").removeClass("highlight");
     $(".highlight2").removeClass("highlight2");
     var columnIndex = $(this).index();
-	$('#nDate').val((columnIndex+1)+" 일차");
-    // 모든 행에 대해 현재 열에 해당하는 td에 highlight 클래스 추가
+    $('#nDate').val((columnIndex + 1) + " 일차");
+
     $('#dragDropTable tr:not(:eq(1))').find('td:eq(' + columnIndex + ')').addClass('highlight');
     $('#dragDropTable th:eq(' + columnIndex + ')').addClass('highlight2');
-    // 새로운 marker 생성
+
     $("tr").each(function (index) {
         var $highlightedCell = $(this).find('.highlight');
-
         var cellText = $highlightedCell.text();
 
         var inputs = $highlightedCell.find('input');
@@ -246,7 +255,6 @@
         var tourCourseLongitude = inputs.eq(2).val();
 
         if (cellText !== "") {
-            // 마커 이미지 생성
             var markerImage = new kakao.maps.MarkerImage(
                 'https://placehold.jp/23/3d4070/ffffff/25x25.png?text=' + (markers.length + 1),
                 new kakao.maps.Size(25, 25),
@@ -257,22 +265,22 @@
             var marker = new kakao.maps.Marker({
                 position: markerPosition,
                 title: placeName,
-                image: markerImage  // 마커에 이미지 설정
+                image: markerImage
             });
 
             marker.setMap(map);
-            panTo(tourCourseLatitude, tourCourseLongitude);
             markers.push(marker);
             positions.push(markerPosition);
-            drawLine(positions);
-        }
-        else{
-       		content = '<div class="dotOverlay distanceInfo">total : <span class="number">0</span>m</div>';
-        	panTo(35.8240808, 127.1481404);
+            bounds.extend(markerPosition);
+        } else {
+            content = '<div class="dotOverlay distanceInfo">total : <span class="number">0</span>m</div>';
             positions.push(new kakao.maps.LatLng(35.8240808, 127.1481404));
-            drawLine(positions);
+            bounds.extend(new kakao.maps.LatLng(35.8240808, 127.1481404));
         }
     });
+
+    setBounds(); // Set bounds after adding new markers
+    drawLine(positions);
 }
 
     // 테이블의 모든 행을 선택하여 드래그 이벤트 리스너 등록
@@ -290,34 +298,36 @@
 
 }
 
-
     function createPeriod() {
-        let schedulePeriod = document.getElementById("schedulePeriod");
-        let startDatePeriod = document.getElementById("startDate").value;
-        let endDatePeriod = document.getElementById("endDate").value;
-
-        let startDate = new Date(document.getElementById("startDate").value);
-        let endDate = new Date(document.getElementById("endDate").value);
-
-        if (startDate > endDate || endDatePeriod == "" || startDatePeriod == "") {
-            alert("날짜 설정을 제대로 해주세요");
-            return;
-        }
-
-        var timeDifference = endDate.getTime() - startDate.getTime(); // 밀리초 단위의 차이
-        var dayDifference = timeDifference / (1000 * 60 * 60 * 24);
-
-        if (dayDifference > 7) {
-            alert("기간은 최대 일주일까지 가능합니다");
-            return;
-        }
-
-        // 추가: 동적으로 테이블 생성
-        if(endDatePeriod == startDatePeriod){
-            createTable('table-container', 1);
-        }
-        else{
-        createTable('table-container', dayDifference+1);
+    	var confirmCreate = confirm("기존의 스케줄이 삭제됩니다. 진행하시겠습니까?");
+    	if(confirmCreate){
+	        let schedulePeriod = document.getElementById("schedulePeriod");
+	        let startDatePeriod = document.getElementById("startDate").value;
+	        let endDatePeriod = document.getElementById("endDate").value;
+	
+	        let startDate = new Date(document.getElementById("startDate").value);
+	        let endDate = new Date(document.getElementById("endDate").value);
+	
+	        if (startDate > endDate || endDatePeriod == "" || startDatePeriod == "") {
+	            alert("날짜 설정을 제대로 해주세요");
+	            return;
+	        }
+	
+	        var timeDifference = endDate.getTime() - startDate.getTime(); // 밀리초 단위의 차이
+	        var dayDifference = timeDifference / (1000 * 60 * 60 * 24);
+	
+	        if (dayDifference > 7) {
+	            alert("기간은 최대 일주일까지 가능합니다");
+	            return;
+	        }
+	
+	        // 추가: 동적으로 테이블 생성
+	        if(endDatePeriod == startDatePeriod){
+	            createTable('table-container', 1);
+	        }
+	        else{
+	        createTable('table-container', dayDifference+1);
+	        }
         }
     }
 	function panTo(latitude, longitude) {
@@ -333,32 +343,38 @@
 	var distanceOverlay = null;
 
 	function drawLine(positions) {
-		
-	    if (polyline) {
-        	polyline.setMap(null);
-    	}
-		
-	    // Polyline을 그리기 위한 좌표 배열 생성
-	    var polylinePath = [];
-	    for (var i = 0; i < positions.length; i++) {
-	        polylinePath.push(positions[i]);
-	    }
-	
-	    // 새로운 Polyline 생성
-	    polyline = new kakao.maps.Polyline({
-	        map: map,
-	        path: polylinePath,
-	        strokeWeight: 3,
-	        strokeColor: '#db4040',
-	        strokeOpacity: 1,
-	        strokeStyle: 'solid'
-	    });
-	
-	    // Polyline에 대한 거리 정보 계산 및 표시
-	    showDistanceInfo(polyline);
-	
-	    // 결과로 얻은 content를 어딘가에 사용할 수 있음
-	}
+    // Exclude specific position
+    var filteredPositions = positions.filter(function (position) {
+        return !(position instanceof kakao.maps.LatLng &&
+                 position.getLat() === 35.8240808 &&
+                 position.getLng() === 127.1481404);
+    });
+
+    if (polyline) {
+        polyline.setMap(null);
+    }
+
+    // Polyline을 그리기 위한 좌표 배열 생성
+    var polylinePath = [];
+    for (var i = 0; i < filteredPositions.length; i++) {
+        polylinePath.push(filteredPositions[i]);
+    }
+
+    // 새로운 Polyline 생성
+    polyline = new kakao.maps.Polyline({
+        map: map,
+        path: polylinePath,
+        strokeWeight: 3,
+        strokeColor: '#db4040',
+        strokeOpacity: 1,
+        strokeStyle: 'solid'
+    });
+
+    // Polyline에 대한 거리 정보 계산 및 표시
+    showDistanceInfo(polyline);
+
+    // 결과로 얻은 content를 어딘가에 사용할 수 있음
+}
 	
 	function showDistanceInfo(polyline) {
 	    // 선의 총 거리를 계산

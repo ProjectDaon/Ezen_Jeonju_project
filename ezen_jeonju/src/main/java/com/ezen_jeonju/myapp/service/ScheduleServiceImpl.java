@@ -90,4 +90,10 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return value;
 	}
 	
+	@Override
+	public int scheduleDelete(int sidx) {
+		int value = ssm.scheduleDelete(sidx);
+		
+		return value;
+	}
 }

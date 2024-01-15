@@ -28,4 +28,5 @@ public interface ScheduleService_Mapper {
 	
 	public int scheduleTotalCount();
 
+	public int scheduleDelete(int sidx);
 }
