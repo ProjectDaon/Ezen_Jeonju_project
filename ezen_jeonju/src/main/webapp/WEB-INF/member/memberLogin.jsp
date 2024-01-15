@@ -19,6 +19,7 @@ $(document).ready( function() {
 });
 
 $(document).ready( function() {
+	alert('[관리자 정보]\n아이디: test\n비밀번호: 1234');
 	$('#memberId').on('input', function() {
 		if($('#memberId').val() == '') {
 			$('.resetBtn1').css({'display':'none'});
