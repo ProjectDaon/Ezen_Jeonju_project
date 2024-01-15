@@ -17,6 +17,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="https://apis.google.com/js/api.js"></script>
+<style type="text/css">
+.notification ul li{
+	width: 100%;
+	left: 0px;
+}
+</style>
 </head>
 
 <body>

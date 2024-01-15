@@ -67,7 +67,7 @@ public class MemberController {
 		StringBuffer url = new StringBuffer();
 		url.append("https://kauth.kakao.com/oauth/authorize?");
 		url.append("client_id=7c4b169b2f736ed6cc05e445e9a99cf9");
-		url.append("&redirect_uri=http://localhost:8080/member/KakaoMemberLoginAction.do");
+		url.append("&redirect_uri=http://192.168.0.30:8080/member/KakaoMemberLoginAction.do");
 		url.append("&response_type=code");
 		return "redirect:"+url;
 	}
@@ -118,7 +118,7 @@ public class MemberController {
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=7c4b169b2f736ed6cc05e445e9a99cf9");  //본인이 발급받은 key
-            sb.append("&redirect_uri=http://localhost:8080/member/KakaoMemberLoginAction.do");     // 본인이 설정해 놓은 경로
+            sb.append("&redirect_uri=http://192.168.0.30:8080/member/KakaoMemberLoginAction.do");     // 본인이 설정해 놓은 경로
             sb.append("&code=" + authorize_code);
             bw.write(sb.toString());
             bw.flush();
@@ -214,7 +214,7 @@ public class MemberController {
 		url.append("https://nid.naver.com/oauth2.0/authorize?");
 		url.append("response_type=code");
 		url.append("&client_id=p9KIpMowzVUIil3HnoAJ");
-		url.append("&state=STATE_STRING&redirect_uri=http://localhost:8080/member/naverMemberLoginAction.do");
+		url.append("&state=STATE_STRING&redirect_uri=http://192.168.0.30:8080/member/naverMemberLoginAction.do");
 		return "redirect:"+url;
 	}
 	 
@@ -358,7 +358,7 @@ public class MemberController {
 		StringBuffer url = new StringBuffer();
 		url.append("https://accounts.google.com/o/oauth2/v2/auth?");
 		url.append("client_id=859504643059-8kf72j9o22utqp8e7ovqohcpsjigmhfa.apps.googleusercontent.com");
-		url.append("&redirect_uri=http://localhost:8080/member/googleLoginAction.do&response_type=code&scope=email profile openid");
+		url.append("&redirect_uri=http://192.168.0.30:8080/member/googleLoginAction.do&response_type=code&scope=email profile openid");
 		return "redirect:"+url;
 	}
 	
@@ -370,7 +370,7 @@ public class MemberController {
 				.clientId("859504643059-8kf72j9o22utqp8e7ovqohcpsjigmhfa.apps.googleusercontent.com")
 				.clientSecret("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")
 				.code(code)
-				.redirectUri("http://localhost:8080/member/googleLoginAction.do")
+				.redirectUri("http://192.168.0.30:8080/member/googleLoginAction.do")
 				.grantType("authorization_code").build();
 		
 		ResponseEntity<GoogleResponse> resultEntity = restTemplate.postForEntity("https://oauth2.googleapis.com/token", googleOAuthRequestParam, GoogleResponse.class);

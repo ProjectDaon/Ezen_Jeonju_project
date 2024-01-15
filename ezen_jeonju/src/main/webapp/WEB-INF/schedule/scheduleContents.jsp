@@ -12,7 +12,7 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <link rel="stylesheet" href="../css/scheduleContents.css">
 <link rel="stylesheet" href="../css/navbar.css">
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=24905b65af4a0e247d268677c3972e9d"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dbee45d6252968c16f0f651bb901ef42"></script>
 <script>
 $(document).ready(function () {
 	$('#headers').load("../nav/nav.jsp");

@@ -59,7 +59,7 @@ VALUES(#{memberId}, #{memberPwd}, #{memberName}, #{memberEmail}, "naver")
 </insert>
 
 <select id="NaverMemberLogin" parameterType="String" resultType="mv">
-SELECT midx, memberId, MemberName, MemberGrade, MemberEmail, MemberPhone from member
+SELECT midx, memberId, MemberName, MemberGrade, MemberEmail from member
 WHERE memberId=#{memberId}
 </select>
 

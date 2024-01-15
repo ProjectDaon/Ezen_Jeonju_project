@@ -596,7 +596,7 @@
 			<button type="button" onclick="openSearchMap()">지도로 찾기</button>
 		</div>
 </div>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=24905b65af4a0e247d268677c3972e9d&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dbee45d6252968c16f0f651bb901ef42&libraries=services"></script>
 <script src="../js/scheduleWrite-map.js"></script>
 <script type="text/javascript" src ="../js/scheduleWrite-dragDropTable.js"></script>
 
