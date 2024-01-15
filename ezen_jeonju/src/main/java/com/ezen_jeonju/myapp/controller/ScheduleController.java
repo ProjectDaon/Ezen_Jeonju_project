@@ -61,6 +61,13 @@ public class ScheduleController {
 	    
 	    return "schedule/scheduleWrite";
 	}
+	
+	@RequestMapping(value="/searchMapPopup.do")
+	public String searchMamPopup() {
+		
+		return "schedule/searchMapPopup";
+	}
+	
 	@RequestMapping(value = "/scheduleWriteAction.do")
 	public String scheduleWriteAction(ScheduleRootVo sv ,HttpSession session,
 			@RequestParam("Array") String rootValue,

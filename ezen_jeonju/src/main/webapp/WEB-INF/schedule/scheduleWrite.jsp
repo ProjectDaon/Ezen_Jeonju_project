@@ -89,7 +89,7 @@
                 let emptyStars = "☆".repeat(5 - placeScore); // 비어있는 별
                 
                 
-                newP.innerHTML = "<a href='#' onclick='addToTable(\"" + placeName + "," + placelatitude + "," + placelongitude + "\")'>" + placeName + "</a>";
+                newP.innerHTML = "<a href='javascript:addToTable(\"" + placeName + "," + placelatitude + "," + placelongitude + "\")'>" + placeName + "</a>";
                 newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
                 newP.innerHTML += "별점 : <span id='stars'>" + stars + emptyStars + "</span>(" +place['네이버 인기도']+")" ;
                 newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
@@ -141,7 +141,7 @@
               
                 newP.appendChild(newImage);   
                 newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
-                newP.innerHTML += "<a href='#' onclick='addToTable(\"" + placeName + "," + placelatitude + "," + placelongitude + "\")'>" + placeName + "</a>";
+                newP.innerHTML += "<a href='javascript:addToTable(\"" + placeName + "," + placelatitude + "," + placelongitude + "\")'>" + placeName + "</a>";
                 newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
                 newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도</a>';
                 
@@ -189,7 +189,7 @@
 
                     newP.appendChild(newImage);  
                     newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
-                    newP.innerHTML += "<a href='#' onclick='addToTable(\"" + placeName + "," + placelatitude + "," + placelongitude + "\")'>" + placeName + "</a>";
+                    newP.innerHTML += "<a href='javascript:addToTable(\"" + placeName + "," + placelatitude + "," + placelongitude + "\")'>" + placeName + "</a>";
                     newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
                     newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도</a>';
 					
@@ -228,7 +228,7 @@
                     let placelatitude = place['위도'];
                     let placelongitude = place['경도'];
                     newP.innerHTML = "<span id='top'>Top" + top +" : &nbsp;</span>";
-                    newP.innerHTML +=  "<a href='#' onclick='addToTable(\"" + placeName +","+placelatitude +","+ placelongitude +"\")'>" + placeName + "</a>";
+                    newP.innerHTML +=  "<a href='javascript:addToTable(\"" + placeName +","+placelatitude +","+ placelongitude +"\")'>" + placeName + "</a>";
                     newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
                     newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도</a>';
 
@@ -311,8 +311,9 @@
 
     // 음식점 이름을 클릭하면 테이블 셀에 정보를 추가
     function addToTable(placeName, placeLatitude, placeLongitude) {
-    	 	event.preventDefault();
-    	
+    		if(placeLatitude){
+    			placeName = placeName+","+placeLatitude+","+placeLongitude;
+    		}
     		$("#scheduletbl").scrollTop(0);
     		$("#scheduletbl").scrollLeft(0);
     	    let tableCell = document.getElementById("addSchedule");
@@ -321,6 +322,10 @@
     	    if(tableCell == null){
 				alert('기간을 먼저 등록해주세요');
 				return
+    	    }else{
+    	    	if (childWindow && !childWindow.closed) {
+    	            childWindow.close();
+    	        }
     	    }
     	    
     	    tableCell.innerHTML = placeArray[0];
@@ -357,8 +362,10 @@
 	    }
 	    addRankToTable('dragDropTable');
 	}
-
-	
+	var childWindow;
+	function openSearchMap(){
+		childWindow = window.open('${pageContext.request.contextPath}/schedule/searchMapPopup.do','childForm','width= 1024, height=585');
+	}
 
 
 </script>
@@ -473,7 +480,7 @@
 			              	if(placeName.includes(keyword)){
 				                newP.appendChild(newImage);   
 				                newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
-				                newP.innerHTML += "<a href='#' onclick='addToTable(\"" + placeName + "," + placelatitude + "," + placelongitude + "\")'>" + placeName + "</a>";
+				                newP.innerHTML += "<a href='javascript:addToTable(\"" + placeName + "," + placelatitude + "," + placelongitude + "\")'>" + placeName + "</a>";
 				                newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
 				                newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도</a>';
 				                obj.appendChild(newP);
@@ -514,7 +521,7 @@
 			                    if(placeName.includes(keyword)){
 				                    newP.appendChild(newImage);  
 				                    newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
-				                    newP.innerHTML += "<a href='#' onclick='addToTable(\"" + placeName + "," + placelatitude + "," + placelongitude + "\")'>" + placeName + "</a>";
+				                    newP.innerHTML += "<a href='javascript:addToTable(\"" + placeName + "," + placelatitude + "," + placelongitude + "\")'>" + placeName + "</a>";
 				                    newP.innerHTML += "&nbsp;&nbsp;&nbsp;"
 				                    newP.innerHTML += '<a href=\'https://map.kakao.com/link/map/' + placeName + ',' + placelatitude + ',' + placelongitude + '\'>지도</a>';
 				                    obj.appendChild(newP);
@@ -590,6 +597,9 @@
 		<div id="mapDate">
 		<input id="nDate" readonly="true"></input>
 		<div id="map" style="width:400px;height:400px;"></div>
+		</div>
+		<div class="searchMap">
+			<button type="button" onclick="openSearchMap()">지도로 찾기</button>
 		</div>
 </div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=24905b65af4a0e247d268677c3972e9d&libraries=services"></script>
