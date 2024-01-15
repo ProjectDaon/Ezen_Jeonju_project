@@ -55,13 +55,14 @@ function vannersDelete(mpidx){
 				'',
 				'<b style="font-weight:bold;">배너가 삭제되었습니다.</b>',
 				'success'
-			)
-			var fm = document.frm;
-			fm.action ="<%=request.getContextPath()%>/main/mainVannerDeleteAction.do?mpidx="+mpidx;
-		    fm.method = "post";
-		    fm.submit();
-			
-		    return;	
+			).then(function(){
+				var fm = document.frm;
+				fm.action ="<%=request.getContextPath()%>/main/mainVannerDeleteAction.do?mpidx="+mpidx;
+			    fm.method = "post";
+			    fm.submit();
+				
+			    return;	
+			});
 		}
 	});
 }
@@ -98,7 +99,7 @@ function vannersDelete(mpidx){
 								<td>${mpv.mainPageSequence}</td>
 								<td class="registeredVannersSubject"><a class="contentsBtn" href="${pageContext.request.contextPath}/main/mainVannerContents.do?mpidx=${mpv.mpidx}">${mpv.mainPageSubject}</a></td>
 								<td class="registeredVannersDay">${mpv.fileUploadDay}</td>
-								<td><a href="#" class="registeredVannersDelete" onclick="vannersDelete(${mpv.mpidx})">배너 삭제</a></td>
+								<td><a href="javascript:vannersDelete(${mpv.mpidx})" class="registeredVannersDelete" >배너 삭제</a></td>
 							</tr>
 						</c:forEach>
 						<c:if test="${fn:length(mpvlist) > 0}">

@@ -87,13 +87,15 @@ function goModify(){
 				'',
 				'<b style="font-weight:bold;">배너가 수정되었습니다.</b>',
 				'success'
-			);
+			).then(function(){
+				fm.action ="<%=request.getContextPath()%>/main/mainVannerModifyAction.do";
+			    fm.method = "post"; 
+			    fm.enctype= "multipart/form-data";
+			    fm.submit();
+			    return;
+				
+			});
 			
-			fm.action ="<%=request.getContextPath()%>/main/mainVannerModifyAction.do";
-		    fm.method = "post"; 
-		    fm.enctype= "multipart/form-data";
-		    fm.submit();
-		    return;
 		}		
 	});
 }
@@ -112,13 +114,15 @@ function goDelete(mpidx){
 				'',
 				'<b style="font-weight:bold;">배너가 삭제되었습니다.</b>',
 				'success'
-			)
-			var fm = document.frm;
-			fm.action ="<%=request.getContextPath()%>/main/mainVannerDeleteAction.do?mpidx="+mpidx;
-			fm.method = "post";
-			fm.enctype= "multipart/form-data";
-			fm.submit();
-			return;
+			).then(function(){
+				var fm = document.frm;
+				fm.action ="<%=request.getContextPath()%>/main/mainVannerDeleteAction.do?mpidx="+mpidx;
+				fm.method = "post";
+				fm.enctype= "multipart/form-data";
+				fm.submit();
+				return;
+				
+			});
 		}
 	});
 }

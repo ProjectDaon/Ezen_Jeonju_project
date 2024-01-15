@@ -79,13 +79,14 @@ function goWrite(){
 				'',
 				'<b style="font-weight:bold;">배너가 등록되었습니다.</b>',
 				'success'
-			);
+			).then(function(){
 			
 			fm.action ="<%=request.getContextPath()%>/main/mainVannerRegisterAction.do"; 
 		    fm.method = "post"; 
 		    fm.enctype= "multipart/form-data";
 		    fm.submit();
 		    return;
+			});
 		}		
 	});
 }
