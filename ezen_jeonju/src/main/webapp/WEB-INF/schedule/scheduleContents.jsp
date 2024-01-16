@@ -8,11 +8,18 @@
 <head>
 <meta charset="UTF-8">
 <title>여행 일정</title>
-
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <link rel="stylesheet" href="../css/scheduleContents.css">
 <link rel="stylesheet" href="../css/navbar.css">
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dbee45d6252968c16f0f651bb901ef42"></script>
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+<style type="text/css">
+.swal2-popup .swal2-content {
+    font-weight: bold;
+}
+</style>
 <script>
 $(document).ready(function () {
 	$('#headers').load("../nav/nav.jsp");
@@ -181,23 +188,39 @@ function getTourCourseNDate(sidx, tourCourseNDate) {
 
 function goDelete() {
     // 사용자에게 삭제 여부를 확인하는 경고창 표시
-    var confirmDelete = confirm("삭제하시겠습니까?");
-    
-    // 사용자가 확인을 누른 경우에만 삭제 진행
-    if (confirmDelete) {
-        // 현재 URL에서 sidx 값을 추출
-        var urlParams = new URLSearchParams(window.location.search);
-        var sidx = urlParams.get('sidx');
-        
-        // sidx 값을 확인한 후에 삭제 페이지로 이동
-        if (sidx) {
-            // 삭제 페이지로 이동
-            alert("일정이 삭제 되었습니다");
-            window.location.href = "<%=request.getContextPath()%>/schedule/scheduleDelete.do?sidx=" + sidx;
-        } else {
-            alert("삭제 실패");
-        }
-    }
+    swal({
+		title: "",
+		text: "여행일정을 삭제하시겠습니까?",
+		type: "question",
+		showCancelButton: true,
+		confirmButtonText: "Yes",
+		cancelButtonText: "Cancel"
+	}). then ((result) => {
+	    // 사용자가 확인을 누른 경우에만 삭제 진행
+	    if(result.value){
+	        // 현재 URL에서 sidx 값을 추출
+	        var urlParams = new URLSearchParams(window.location.search);
+	        var sidx = urlParams.get('sidx');
+	        
+	        // sidx 값을 확인한 후에 삭제 페이지로 이동
+	        if (sidx) {
+	            // 삭제 페이지로 이동
+	            swal(
+					'',
+					'<b style="font-weight:bold;">여행일정이 삭제되었습니다.</b>',
+					'success'
+				).then(function(){
+					window.location.href = "<%=request.getContextPath()%>/schedule/scheduleDelete.do?sidx=" + sidx;
+				});
+	        } else {
+	        	swal(
+	    			'',
+	    			'<b style="font-weight:bold;">삭제실패</b>',
+	    			'warning'
+	   			);
+	        }
+	    }
+	});
 }
 </script>
 
