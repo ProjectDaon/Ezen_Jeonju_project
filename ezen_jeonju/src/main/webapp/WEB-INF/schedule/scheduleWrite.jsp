@@ -6,6 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>일정 만들기</title>
+<style>
+body{
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* 인터넷익스플로러 */
+    user-select: none;
+}
+</style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!-- SweetAlert2 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
@@ -416,7 +424,7 @@
 <hr>
 <div id="period">
       기간 <input id="startDate" type="date" name="scheduleStartDate"> ~ <input id="endDate" type="date" name="scheduleEndDate">
-    <div id="periodBtn"><a href="javascript:createPeriod()">기간등록</a></div>  
+    <button type="button" onclick="createPeriod()">기간등록</button>
 </div>
     <input id="write" type="button" value="저장" onclick="goWrite()"> <br>
 <hr>    
