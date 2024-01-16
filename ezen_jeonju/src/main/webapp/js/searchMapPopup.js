@@ -291,13 +291,13 @@ function displayCenterInfo(result, status) {
 function passPlace(){
 	var latitude = $('#contentsLatitude').val();
 	var longitude = $('#contentsLongitude').val();
-	var searchedPlaedName = $('input[name=searchedPlaedName]').val();
-	if(searchedPlaedName ==""){
+	var searchedPlacedName = $('input[name=searchedPlacedName]').val();
+	if(searchedPlacedName ==""){
 		alert("입력할 장소의 이름을 작성해주세요");
 		return;
 	}else if(longitude == ""){
 		alert("장소를 선택해주세요");
 		return;
 	}
-	window.opener.addToTable(searchedPlaedName, latitude, longitude);
+	window.opener.addToTable(searchedPlacedName, latitude, longitude);
 }
