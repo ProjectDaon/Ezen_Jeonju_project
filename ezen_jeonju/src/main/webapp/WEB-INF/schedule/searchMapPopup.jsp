@@ -47,7 +47,7 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dbee45d6252968c16f0f651bb901ef42&libraries=services"></script>
-	<script src="../js/searchMapPopup.js"></script>
+	<script src="../js/searchMapPopup.js" charset="utf-8"></script>
 </div>
 <div>
 </div>
