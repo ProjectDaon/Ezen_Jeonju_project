@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>배너 수정 페이지</title>
+<title>[EZEN-JEONJU]배너 수정</title>
+<link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/images/favicon-32x32.png">
 <link rel="stylesheet" href="../css/navbar.css">
 <link rel="stylesheet" href="../css/registerMainImagesModify.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">

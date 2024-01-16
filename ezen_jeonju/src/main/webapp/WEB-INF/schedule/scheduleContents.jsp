@@ -7,7 +7,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>여행 일정</title>
+<title>[EZEN-JEONJU]여행 일정</title>
+<link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/images/favicon-32x32.png">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <link rel="stylesheet" href="../css/scheduleContents.css">
 <link rel="stylesheet" href="../css/navbar.css">

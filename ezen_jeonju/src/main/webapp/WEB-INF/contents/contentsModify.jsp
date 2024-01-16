@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>컨텐츠 수정</title>
+<title>[EZEN-JEONJU]컨텐츠 수정</title>
+<link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/images/favicon-32x32.png">
 <script src="http://code.jquery.com/jquery-latest.js"></script> 
 <!-- include libraries(jQuery, bootstrap) -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">

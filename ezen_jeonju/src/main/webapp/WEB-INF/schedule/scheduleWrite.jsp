@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>일정 만들기</title>
+<title>[EZEN-JEONJU]여행일정 만들기</title>
+<link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/images/favicon-32x32.png">
 <style>
 body{
     -webkit-touch-callout: none; /* iOS Safari */

@@ -6,7 +6,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항 조회</title>
+<title>[EZEN-JEONJU]공지사항 상세보기</title>
+<link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/images/favicon-32x32.png">
 <link rel="stylesheet" href="../css/navbar.css">
 <link rel="stylesheet" href="../css/noticeContents.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">

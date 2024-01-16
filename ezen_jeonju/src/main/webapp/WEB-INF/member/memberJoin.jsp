@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>[EZEN-JEONJU]회원가입</title>
+<link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/images/favicon-32x32.png">
 <link rel="stylesheet" href="../css/navbar.css">
 <link rel="stylesheet" href="../css/memberJoin.css">
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>

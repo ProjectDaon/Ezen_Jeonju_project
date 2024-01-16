@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>장소 등록하기</title>
+<title>[EZEN-JEONJU]장소 등록하기</title>
+<link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/images/favicon-32x32.png">
 <link rel="stylesheet" href="../css/searchMapPopup.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 

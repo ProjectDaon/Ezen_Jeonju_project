@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/youtube.css">
     <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
-    <title>Insert title here</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/images/favicon-32x32.png">
+    <title>[EZEN-JEONJU]전주에가면 유튜브 영상</title>
 </head>
 <body>
     <script type="text/javascript">

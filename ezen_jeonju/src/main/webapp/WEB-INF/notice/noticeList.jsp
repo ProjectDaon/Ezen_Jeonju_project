@@ -6,7 +6,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항</title>
+<title>[EZEN-JEONJU]공지사항 목록</title>
+<link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/images/favicon-32x32.png">
 <link rel="stylesheet" href="../css/navbar.css">
 <link rel="stylesheet" href="../css/noticeList.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
