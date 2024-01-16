@@ -7,6 +7,14 @@
 <meta charset="UTF-8">
 <title>일정 만들기</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+<style type="text/css">
+.swal2-popup .swal2-content {
+    font-weight: bold;
+}
+</style>
 <script>
 
 	$(document).ready( function() {
@@ -248,7 +256,11 @@
 
     function nextPage() {
         if (currentPageFood > 1) {
-            alert('마지막 페이지입니다.');
+        	swal(
+    			'',
+    			'<b style="font-weight:bold;">마지막 페이지입니다.</b>',
+    			'warning'
+    		);
         } else {
             currentPageFood++;
             getFood();
@@ -266,7 +278,11 @@
     
     function nextPageTour() {
         if (currentPageTour > 8) {
-            alert('마지막 페이지입니다.');
+        	swal(
+       			'',
+       			'<b style="font-weight:bold;">마지막 페이지입니다.</b>',
+        		'warning'
+        	);
         } else {
             currentPageTour++;
             getTour();
@@ -284,7 +300,11 @@
     
     function nextPagePlace() {
         if (currentPagePlace > 0) {
-            alert('마지막 페이지입니다.');
+        	swal(
+        		'',
+        		'<b style="font-weight:bold;">마지막 페이지입니다.</b>',
+        		'warning'
+       		);
         } else {
             currentPagePlace++;
             getPlace();
@@ -301,7 +321,11 @@
     
     function nextPageRest() {
         if (currentPageRest > 12) {
-            alert('마지막 페이지입니다.');
+        	swal(
+        		'',
+        		'<b style="font-weight:bold;">마지막 페이지입니다.</b>',
+        		'warning'
+       		);
         } else {
             currentPageRest++;
             getRest();
@@ -320,7 +344,11 @@
     	    let placeArray = placeName.split(',');
     	    // 이름 추가
     	    if(tableCell == null){
-				alert('기간을 먼저 등록해주세요');
+    	    	swal(
+    	    		'',
+    	    		'<b style="font-weight:bold;">기간을 먼저 등록해주세요.</b>',
+    	    		'warning'
+    	   		);
 				return
     	    }else{
     	    	if (childWindow && !childWindow.closed) {
@@ -604,95 +632,123 @@
 
     <!-- 글 작성 함수 -->
     function goWrite() {
-    	
-        var fm = document.frm;
-        var tbodyCells = document.querySelectorAll('#dragDropTable tbody td');
-        var tourCourseTime 
-        var tourCourseDate 
-        var tourCourseNDate
-        var jsonArray 	= new Array();
-    	var scheduleSubject = fm.scheduleSubject.value;
-	    var scheduleStartDate = fm.scheduleStartDate.value;
-	    var scheduleEndDate = fm.scheduleEndDate.value;
-	    var scheduleShareYN = fm.scheduleShareYN.value;
-    	//각 td 엘리먼트를 순회하면서 텍스트가 있는지 확인
-    	tbodyCells.forEach(function(td) {
-    	 // 텍스트가 있는 경우
-    	 
-	    	 if ((td.textContent.trim() !== "") &&(td.textContent !== "장소를 누르시고 원하는 시간대에 드래그하세요")) {
-	    	     // 원하는 작업 수행
-
-	    	     	var jsonObj = new Object();
-
-	    	     	var inputs = td.getElementsByTagName('input');
-	    	     	var tourCoursePlace = inputs[0].value;
-	    	     	var tourCourseLatitude = inputs[1].value;
-	    	     	var tourCourseLongitude = inputs[2].value;
-		    		  		
-		    	    nameArray = td.getAttribute('name').split('_');
-		    	    tourCourseDate = nameArray[0];
-		    	    tourCourseTime = nameArray[1];
-		    	    tourCourseNDate = nameArray[2];
-
-					jsonObj.tourCourseDate = tourCourseDate;
-					jsonObj.tourCourseTime = tourCourseTime;
-					jsonObj.tourCourseNDate = tourCourseNDate;
-					jsonObj.tourCoursePlace = tourCoursePlace;
-					jsonObj.tourCourseLatitude = tourCourseLatitude;
-					jsonObj.tourCourseLongitude = tourCourseLongitude;
+    	swal({
+    		title: "",
+    		text: "여행일정을 등록하시겠습니까?",
+    		type: "question",
+    		showCancelButton: true,
+    		confirmButtonText: "Yes",
+    		cancelButtonText: "Cancel"
+    	}). then ((result) => {
+    		if(result.value){
+			
+	        var fm = document.frm;
+	        var tbodyCells = document.querySelectorAll('#dragDropTable tbody td');
+	        var tourCourseTime 
+	        var tourCourseDate 
+	        var tourCourseNDate
+	        var jsonArray 	= new Array();
+	    	var scheduleSubject = fm.scheduleSubject.value;
+		    var scheduleStartDate = fm.scheduleStartDate.value;
+		    var scheduleEndDate = fm.scheduleEndDate.value;
+		    var scheduleShareYN = fm.scheduleShareYN.value;
+	    	//각 td 엘리먼트를 순회하면서 텍스트가 있는지 확인
+	    	tbodyCells.forEach(function(td) {
+	    	 // 텍스트가 있는 경우
+	    	 
+		    	 if ((td.textContent.trim() !== "") &&(td.textContent !== "장소를 누르시고 원하는 시간대에 드래그하세요")) {
+		    	     // 원하는 작업 수행
+	
+		    	     	var jsonObj = new Object();
+	
+		    	     	var inputs = td.getElementsByTagName('input');
+		    	     	var tourCoursePlace = inputs[0].value;
+		    	     	var tourCourseLatitude = inputs[1].value;
+		    	     	var tourCourseLongitude = inputs[2].value;
+			    		  		
+			    	    nameArray = td.getAttribute('name').split('_');
+			    	    tourCourseDate = nameArray[0];
+			    	    tourCourseTime = nameArray[1];
+			    	    tourCourseNDate = nameArray[2];
+	
+						jsonObj.tourCourseDate = tourCourseDate;
+						jsonObj.tourCourseTime = tourCourseTime;
+						jsonObj.tourCourseNDate = tourCourseNDate;
+						jsonObj.tourCoursePlace = tourCoursePlace;
+						jsonObj.tourCourseLatitude = tourCourseLatitude;
+						jsonObj.tourCourseLongitude = tourCourseLongitude;
+						
+						jsonObj = JSON.stringify(jsonObj);
+						jsonArray.push(JSON.parse(jsonObj));
+	
+	    	 			
+	    	 	}
+	    	});
+	    	let arrays = JSON.stringify(jsonArray);
+	    	
+	        if (fm.scheduleSubject.value == "") {
+	        	swal(
+	        			'',
+	        		'<b style="font-weight:bold;">제목을 입력해주세요.</b>',
+	        		'warning'
+	       		);
+	            fm.scheduleSubject.focus();
+	            return;
+	        }
+	        else if (fm.scheduleStartDate.value == "" || fm.scheduleEndDate.value == "") {
+	        	swal(
+	        		'',
+	        		'<b style="font-weight:bold;">날짜를 입력해주세요.</b>',
+	        		'warning'
+	       		);
+	            fm.scheduleStartDate.focus();
+	            return;
+	         
+	        }	  
+	        $.ajax({
+				type : "post",
+				url : "<%=request.getContextPath()%>/schedule/scheduleWriteAction.do",
+				data : {
+					scheduleShareYN:scheduleShareYN,
+					scheduleSubject:scheduleSubject,
+					scheduleStartDate:scheduleStartDate,
+					scheduleEndDate:scheduleEndDate,
+					tourCourseDate:tourCourseDate,
+					tourCourseTime:tourCourseTime,
+					tourCourseNDate:tourCourseNDate,
 					
-					jsonObj = JSON.stringify(jsonObj);
-					jsonArray.push(JSON.parse(jsonObj));
-
-    	 			
-    	 	}
-    	});
-    	let arrays = JSON.stringify(jsonArray);
-    	
-        if (fm.scheduleSubject.value == "") {
-            alert('제목을 입력해주세요');
-            fm.scheduleSubject.focus();
-            return;
-        }
-        else if (fm.scheduleStartDate.value == "" || fm.scheduleEndDate.value == "") {
-            alert('날짜를 입력해주세요');
-            fm.scheduleStartDate.focus();
-            return;
-         
-        }	  
-        $.ajax({
-			type : "post",
-			url : "<%=request.getContextPath()%>/schedule/scheduleWriteAction.do",
-			data : {
-				scheduleShareYN:scheduleShareYN,
-				scheduleSubject:scheduleSubject,
-				scheduleStartDate:scheduleStartDate,
-				scheduleEndDate:scheduleEndDate,
-				tourCourseDate:tourCourseDate,
-				tourCourseTime:tourCourseTime,
-				tourCourseNDate:tourCourseNDate,
-				
-				Array:arrays
-			},
-			dataType : "json",
-			success : function(data){
-    			if(data.value == 0){
-					alert("입력오류");	    				
-    			}else{
-	    			//alert("완료");
-    			}				
-			},
-			error : function(request, status, error){
-				//alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					Array:arrays
+				},
+				dataType : "json",
+				success : function(data){
+	    			if(data.value == 0){
+	    				swal(
+	    		    		'',
+	    		    		'<b style="font-weight:bold;">입력오류</b>',
+	    		   			'error'
+	    		   		);	    				
+	    			}else{
+		    			//alert("완료");
+	    			}				
+				},
+				error : function(request, status, error){
+					//alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					return;
+				} 
+			});
+			swal(
+				'',
+				'<b style="font-weight:bold;">여행일정이 등록되었습니다.</b>',
+				'success'
+			).then(function(){
+				var loc = "<%=request.getContextPath()%>/schedule/scheduleList.do";
+				location.href=loc;
 				return;
-			} 
+			});
+		}
 	});
-        alert("글이 작성되었습니다");
-        
-        var loc = "<%=request.getContextPath()%>/schedule/scheduleList.do";
-		location.href=loc;
-	   	return;
 }
+
  $(document).ready(function(){
 	  getRest();
 	 //getFood();

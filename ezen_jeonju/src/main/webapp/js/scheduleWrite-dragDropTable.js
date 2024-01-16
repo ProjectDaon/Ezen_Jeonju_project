@@ -299,8 +299,15 @@
 }
 
     function createPeriod() {
-    	var confirmCreate = confirm("기존의 스케줄이 삭제됩니다. 진행하시겠습니까?");
-    	if(confirmCreate){
+    	swal({
+		title: "",
+		text: "기존의 스케줄이 삭제됩니다. 진행하시겠습니까?",
+		type: "question",
+		showCancelButton: true,
+		confirmButtonText: "Yes",
+		cancelButtonText: "Cancel"
+	}). then ((result) => {
+		if(result.value){
 	        let schedulePeriod = document.getElementById("schedulePeriod");
 	        let startDatePeriod = document.getElementById("startDate").value;
 	        let endDatePeriod = document.getElementById("endDate").value;
@@ -309,7 +316,11 @@
 	        let endDate = new Date(document.getElementById("endDate").value);
 	
 	        if (startDate > endDate || endDatePeriod == "" || startDatePeriod == "") {
-	            alert("날짜 설정을 제대로 해주세요");
+	            swal(
+	    			'',
+	    			'<b style="font-weight:bold;">등록된 날짜를 확인해주세요.</b>',
+	    			'warning'
+	    		);
 	            return;
 	        }
 	
@@ -317,7 +328,11 @@
 	        var dayDifference = timeDifference / (1000 * 60 * 60 * 24);
 	
 	        if (dayDifference > 7) {
-	            alert("기간은 최대 일주일까지 가능합니다");
+	           swal(
+					'',
+					'<b style="font-weight:bold;">기간은 최대 일주일까지 등록가능합니다.</b>',
+					'warning'
+				)
 	            return;
 	        }
 	
@@ -329,7 +344,9 @@
 	        createTable('table-container', dayDifference+1);
 	        }
         }
-    }
+ 	});
+}
+
 	function panTo(latitude, longitude) {
 	    // 이동할 위도 경도 위치를 생성합니다 
 	    var moveLatLon = new kakao.maps.LatLng(latitude, longitude);
