@@ -176,7 +176,7 @@ public class ReviewController {
 			//게시글 내용
 			Elements contentsDiv = option.select(".dsc_area");
 			realContents = contentsDiv.select("a").text();
-			if(realContents.length()>=30) realContents = realContents.substring(0, 80);
+			if(realContents.length()>=80) realContents = realContents.substring(0, 80);
 			//블로그 이름
 			Elements blognameDiv = option.select(".user_info");
 			blogName = blognameDiv.select("a").text();
