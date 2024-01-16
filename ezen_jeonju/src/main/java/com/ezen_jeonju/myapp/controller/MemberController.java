@@ -358,7 +358,7 @@ public class MemberController {
 		StringBuffer url = new StringBuffer();
 		url.append("https://accounts.google.com/o/oauth2/v2/auth?");
 		url.append("client_id=859504643059-8kf72j9o22utqp8e7ovqohcpsjigmhfa.apps.googleusercontent.com");
-		url.append("&redirect_uri=http://192.168.0.30:8080/member/googleLoginAction.do&response_type=code&scope=email profile openid");
+		url.append("&redirect_uri=http://localhost:8080/member/googleLoginAction.do&response_type=code&scope=email profile openid");
 		return "redirect:"+url;
 	}
 	
@@ -370,7 +370,7 @@ public class MemberController {
 				.clientId("859504643059-8kf72j9o22utqp8e7ovqohcpsjigmhfa.apps.googleusercontent.com")
 				.clientSecret("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")
 				.code(code)
-				.redirectUri("http://192.168.0.30:8080/member/googleLoginAction.do")
+				.redirectUri("http://localhost:8080/member/googleLoginAction.do")
 				.grantType("authorization_code").build();
 		
 		ResponseEntity<GoogleResponse> resultEntity = restTemplate.postForEntity("https://oauth2.googleapis.com/token", googleOAuthRequestParam, GoogleResponse.class);
