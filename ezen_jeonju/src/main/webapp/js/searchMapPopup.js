@@ -90,7 +90,7 @@ function displayPlaces(places, bounds) {
 
         // 마커를 생성하고 지도에 표시합니다
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-            marker = addMarker(placePosition, i), 
+            marker = addMarker(placePosition, i, places[i].place_name), 
             itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
@@ -176,13 +176,14 @@ function onMarkerClick(marker, index) {
 	setmarker.setMap(null);
     // 클릭한 마커의 정보를 출력하거나 원하는 작업을 수행합니다.
     var clickedPosition = marker.getPosition();
+    var contentName = marker.getTitle();
     
     var contentsLatitude = clickedPosition.getLat();
     var contentsLongitude = clickedPosition.getLng();
 
     setmarker.setMap(map);
     setmarker.setPosition(clickedPosition);
-	
+	$('.searchedPlacedName').val(contentName);
     $('#contentsLatitude').val(contentsLatitude);
     $('#contentsLongitude').val(contentsLongitude);
 }
@@ -199,6 +200,7 @@ function addMarker(position, idx, title) {
         markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
             marker = new kakao.maps.Marker({
             position: position, // 마커의 위치
+            title: title,
             image: markerImage 
         });
 
@@ -291,13 +293,13 @@ function displayCenterInfo(result, status) {
 function passPlace(){
 	var latitude = $('#contentsLatitude').val();
 	var longitude = $('#contentsLongitude').val();
-	var searchedPlaedName = $('input[name=searchedPlaedName]').val();
-	if(searchedPlaedName ==""){
+	var searchedPlacedName = $('input[name=searchedPlacedName]').val();
+	if(searchedPlacedName ==""){
 		alert("입력할 장소의 이름을 작성해주세요");
 		return;
 	}else if(longitude == ""){
 		alert("장소를 선택해주세요");
 		return;
 	}
-	window.opener.addToTable(searchedPlaedName, latitude, longitude);
+	window.opener.addToTable(searchedPlacedName, latitude, longitude);
 }

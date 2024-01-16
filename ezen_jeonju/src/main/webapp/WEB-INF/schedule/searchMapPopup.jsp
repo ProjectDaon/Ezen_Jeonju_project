@@ -22,8 +22,8 @@
 	<div id="searchedPlace" class="searchedPlace">
 		<input type="hidden" id="contentsLatitude" value="">
 		<input type="hidden" id="contentsLongitude">
-		<input type="text" class="searchedPlaedName" name="searchedPlaedName" placeholder="장소이름">
-		<button type="botton" class="passPlaceBtn" onclick="passPlace()">등록</button>
+		<input type="text" class="searchedPlacedName" name="searchedPlacedName" placeholder="장소이름">
+		<button type="button" class="passPlaceBtn" onclick="passPlace()">등록</button>
 	</div>
 	</div>
 	<div class="map_wrap">
