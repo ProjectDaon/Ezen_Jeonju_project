@@ -326,15 +326,9 @@ function download(canvas, filename) {
 
 const targetElement = document.getElementById("scheduletbl");
 
-// Scroll to capture overflow content
-const originalScrollY = window.scrollY;
-window.scrollTo(0, targetElement.offsetTop);
-
-// Wait for a brief moment to let the content load
+//로드 되는거 좀 기다려야함
 setTimeout(() => {
     html2canvas(targetElement).then((canvas) => {
-        // Reset the scroll position
-        window.scrollTo(0, originalScrollY);
 
         download(canvas, "scheduleCapture");
     });
