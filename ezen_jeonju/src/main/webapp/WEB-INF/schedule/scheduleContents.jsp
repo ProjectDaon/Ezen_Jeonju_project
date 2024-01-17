@@ -16,6 +16,7 @@
 <!-- SweetAlert2 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 <style type="text/css">
 .swal2-popup .swal2-content {
     font-weight: bold;
@@ -80,6 +81,8 @@ $(window).on('load', function() {
 function addRankToTable(tableId) {
 
 	var table = document.getElementById(tableId);
+	
+	//행 배열
 	var rows = table.getElementsByTagName('tr');
 	
 	for (var j = 0; j < rows[0].cells.length; j++) {
@@ -223,6 +226,7 @@ function goDelete() {
 	    }
 	});
 }
+	
 </script>
 
 </head>
@@ -287,6 +291,7 @@ function goDelete() {
 
 </div>
 <div id=listdel>
+	<div class="downbtn"><a id="download" href="#">일정 다운로드</a></div>
 	<div class="listbtn"><a href="${pageContext.request.contextPath}/schedule/scheduleList.do">목록</a></div>
 	
 	<%
@@ -311,6 +316,30 @@ function goDelete() {
 </div>
 
 </div>
+<script>
+function download(canvas, filename) {
+    const data = canvas.toDataURL("image/png;base64");
+    const downloadLink = document.querySelector("#download");  
+    downloadLink.download = filename;
+    downloadLink.href = data;
+}
+
+const targetElement = document.getElementById("scheduletbl");
+
+// Scroll to capture overflow content
+const originalScrollY = window.scrollY;
+window.scrollTo(0, targetElement.offsetTop);
+
+// Wait for a brief moment to let the content load
+setTimeout(() => {
+    html2canvas(targetElement).then((canvas) => {
+        // Reset the scroll position
+        window.scrollTo(0, originalScrollY);
+
+        download(canvas, "scheduleCapture");
+    });
+}, 500);
+</script>
 <div id="footers"></div>
 <script type="text/javascript" charset="UTF-8" src="../js/scheduleContents-map.js"></script>
 </body>
