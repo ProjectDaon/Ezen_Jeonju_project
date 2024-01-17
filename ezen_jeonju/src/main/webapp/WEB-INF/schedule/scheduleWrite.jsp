@@ -58,7 +58,7 @@ body{
 		}
 	}
 	
-	//드래그시 랭크부여
+	//dragend시 랭크부여
 	document.addEventListener("dragend", function (event) {
 	    addRankToTable('dragDropTable');
 	});
