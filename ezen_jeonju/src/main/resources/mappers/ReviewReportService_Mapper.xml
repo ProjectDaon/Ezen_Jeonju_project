@@ -17,9 +17,9 @@ join contents c on rr.cidx=c.cidx
 where rr.reviewReportYN='N' and r.reviewYN='N'
 </select>
 
-<delete id="reportCancel" parameterType="int">
-DELETE FROM reviewreport where rridx = #{rridx}
-</delete>
+<update id="reportCancel" parameterType="int">
+update reviewReport set reviewReportYN = 'Y' where rridx=#{rridx}
+</update>
 
 <update id="reviewDelete" parameterType="rrv">
 <selectKey resultType="rrv" keyProperty="ridx,midx" order="BEFORE">
