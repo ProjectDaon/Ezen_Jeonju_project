@@ -29,7 +29,6 @@ $(document).ready( function() {
 	window.history.replaceState({}, document.title, 'http://192.168.0.30:8080');
 	//가져올때 navbar.css도 같이 가져올 것
 	$('#headers').load("../nav/nav.jsp");
-	$('#footers').load("../nav/footer.jsp");
 });
 
 $(document).ready( function() {
@@ -195,7 +194,6 @@ function fileDelete(){
         </div>
     </div>
 </form>
-<div id="footers"></div>
 
 <script>
     $("#fileImg").change(function(){
